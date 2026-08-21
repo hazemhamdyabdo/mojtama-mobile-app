@@ -11,7 +11,7 @@ export default function RegisterRoleScreen() {
 
   const handleRolePress = (role: Role) => {
     router.push({
-      pathname: "/register",
+      pathname: "/language-choice",
       params: { role },
     });
   };
