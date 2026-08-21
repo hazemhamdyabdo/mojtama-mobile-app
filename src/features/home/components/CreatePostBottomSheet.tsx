@@ -67,7 +67,7 @@ const CreatePostBottomSheet = forwardRef<
       enablePanDownToClose
       handleComponent={null}
       backgroundStyle={{
-        backgroundColor: "#F8FAFC",
+        backgroundColor: "#fff",
       }}
     >
       <BottomSheetView
@@ -106,11 +106,11 @@ const CreatePostBottomSheet = forwardRef<
             accessibilityRole="button"
             className="mb-3 flex-row items-center rounded-2xl border border-[#E4E4E7] bg-white p-4 active:opacity-[0.92]"
           >
-            <View className="mr-4 size-12 items-center justify-center rounded-full bg-[#F0EDFF]">
+            <View className="mr-4  items-center justify-center rounded-full bg-[#F0EDFF]">
               <Image
                 source={option.icon}
                 contentFit="contain"
-                style={{ width: 24, height: 24 }}
+                style={{ width: 30, height: 30 }}
               />
             </View>
 
