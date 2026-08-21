@@ -1,5 +1,7 @@
 import type { ImageSourcePropType } from "react-native";
 
+export type PostType = "announcements" | "news" | "poll" | "meeting";
+
 export type Post = {
   id: string;
   authorName: string;

@@ -37,8 +37,9 @@ export function getDeviceLanguage(): SupportedLanguage {
 }
 
 async function getStoredLanguage(): Promise<SupportedLanguage | null> {
-  const storedLanguage = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
-  return storedLanguage ? resolveLanguage(storedLanguage) : null;
+  // const storedLanguage = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
+  // return storedLanguage ? resolveLanguage(storedLanguage) : null;
+  return "en";
 }
 
 export async function getInitialLanguage(): Promise<SupportedLanguage> {
