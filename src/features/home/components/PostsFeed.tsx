@@ -1,9 +1,22 @@
-import { Text, View } from "react-native";
+import PostCard from "@/features/home/components/PostCard";
+import { DUMMY_POSTS } from "@/features/home/constants/dummy";
+import type { Post } from "@/features/home/types";
+import { View } from "react-native";
 
-export default function PostsFeed() {
+type PostsFeedProps = {
+  posts?: Post[];
+  onMenuPress?: (postId: string) => void;
+};
+
+export default function PostsFeed({
+  posts = DUMMY_POSTS,
+  onMenuPress,
+}: PostsFeedProps) {
   return (
-    <View>
-      <Text>PostsFeed</Text>
+    <View className="gap-4">
+      {posts.map((post) => (
+        <PostCard key={post.id} post={post} onMenuPress={onMenuPress} />
+      ))}
     </View>
   );
 }
