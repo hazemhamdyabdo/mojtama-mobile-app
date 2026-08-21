@@ -4,7 +4,7 @@ import {
   getDeviceLanguage,
   type SupportedLanguage,
 } from "@/localization/i18n";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { Image, ImageBackground, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -33,7 +33,7 @@ export default function LanguageChoice() {
   const handleContinue = async () => {
     await changeLanguage(selectedLanguage);
     router.push({
-      pathname: "/register",
+      pathname: "/login",
       params: role ? { role } : undefined,
     });
   };
