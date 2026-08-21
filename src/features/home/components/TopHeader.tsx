@@ -34,7 +34,7 @@ export default function TopHeader({
           <Text className="text-sm font-medium text-[#90A1B9]">
             Welcome {name} 👋
           </Text>
-          <Text className="text-base font-bold text-[#1E3A5F]">{unit}</Text>
+          <Text className="text-base font-semibold text-[#1E3A5F]">{unit}</Text>
         </View>
       </View>
 

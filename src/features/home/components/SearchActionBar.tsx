@@ -38,8 +38,7 @@ export default function SearchActionBar({
           className="rounded-xl border border-[#E4E4E7] bg-white pl-11 pr-4 text-base text-[#1F1F1F]"
           style={{
             textAlign,
-            minHeight: 48,
-            paddingVertical: 12,
+            paddingVertical: 10,
           }}
         />
       </View>
@@ -48,7 +47,7 @@ export default function SearchActionBar({
         onPress={onAddPostPress}
         accessibilityRole="button"
         accessibilityLabel="Add post"
-        className="items-center justify-center rounded-xl bg-[#7B61FF] px-8 py-4 active:opacity-[0.92]"
+        className="items-center justify-center rounded-xl bg-[#7B61FF] px-8 py-3 active:opacity-[0.92]"
       >
         <Text className="text-sm font-bold text-white">+ Add Post</Text>
       </Pressable>
