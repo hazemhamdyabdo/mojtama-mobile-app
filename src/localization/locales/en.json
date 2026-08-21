@@ -72,6 +72,31 @@
       "oman": "Oman",
       "jordan": "Jordan",
       "syria": "Syria"
+    },
+    "forgetPassword": {
+      "title": "Forgot Password",
+      "subtitle": "Enter Your Email Address To Receive Reset Password Link",
+      "email": "Email",
+      "emailPlaceholder": "Email Address",
+      "sendResetLink": "Send Reset Link",
+      "validation": {
+        "emailRequired": "Email is required",
+        "emailInvalid": "Enter a valid email address"
+      }
+    },
+    "resetPassword": {
+      "title": "Reset Your Password",
+      "password": "Enter your Password",
+      "passwordPlaceholder": "Password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Password",
+      "resetButton": "Reset Password",
+      "validation": {
+        "passwordRequired": "Password is required",
+        "passwordMin": "Password must be at least 8 characters",
+        "confirmPasswordRequired": "Confirm password is required",
+        "passwordsMustMatch": "Passwords must match"
+      }
     }
   },
   "errors": {

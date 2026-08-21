@@ -72,6 +72,31 @@
       "oman": "عُمان",
       "jordan": "الأردن",
       "syria": "سوريا"
+    },
+    "forgetPassword": {
+      "title": "نسيت كلمة المرور",
+      "subtitle": "أدخل بريدك الإلكتروني لتلقي رابط إعادة تعيين كلمة المرور",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "البريد الإلكتروني",
+      "sendResetLink": "إرسال رابط إعادة التعيين",
+      "validation": {
+        "emailRequired": "البريد الإلكتروني مطلوب",
+        "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا"
+      }
+    },
+    "resetPassword": {
+      "title": "إعادة تعيين كلمة المرور",
+      "password": "أدخل كلمة المرور",
+      "passwordPlaceholder": "كلمة المرور",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "confirmPasswordPlaceholder": "كلمة المرور",
+      "resetButton": "إعادة تعيين كلمة المرور",
+      "validation": {
+        "passwordRequired": "كلمة المرور مطلوبة",
+        "passwordMin": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+        "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
+        "passwordsMustMatch": "كلمتا المرور غير متطابقتين"
+      }
     }
   },
   "errors": {

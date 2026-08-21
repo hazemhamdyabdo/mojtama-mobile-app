@@ -1,8 +1,8 @@
 import AuthScreenLayout from "@/features/auth/components/AuthScreenLayout";
-import ForgetPasswordForm from "@/features/auth/components/ForgetPasswordForm";
+import ResetPasswordForm from "@/features/auth/components/ResetPasswordForm";
 import { useRouter, type Href } from "expo-router";
 
-export default function ForgetPasswordScreen() {
+export default function ResetPasswordScreen() {
   const router = useRouter();
 
   const handleBack = () => {
@@ -11,12 +11,12 @@ export default function ForgetPasswordScreen() {
       return;
     }
 
-    router.replace("/login" as Href);
+    router.replace("/forget-password" as Href);
   };
 
   return (
     <AuthScreenLayout onBack={handleBack}>
-      <ForgetPasswordForm />
+      <ResetPasswordForm />
     </AuthScreenLayout>
   );
 }
