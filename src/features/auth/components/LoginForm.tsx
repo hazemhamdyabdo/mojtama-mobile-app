@@ -45,7 +45,7 @@ function AuthTextField({
         keyboardType={keyboardType}
         autoCapitalize="none"
         autoCorrect={false}
-        className={`w-full rounded-xl border bg-white px-4 text-base text-[#1F1F1F] ${
+        className={`w-full rounded-xl border bg-white px-4 text-base text-[#1F1F1F] placeholder:ps-4 ${
           error ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
         }`}
         style={{
