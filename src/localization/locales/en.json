@@ -1,0 +1,22 @@
+{
+  "common": {
+    "appName": "Mojtama",
+    "appNameArabic": "مجتمع"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "registerAs": "Register as",
+    "roles": {
+      "resident": "a Resident",
+      "manager": "a Manager",
+      "residentLabel": "Resident",
+      "managerLabel": "Manager"
+    },
+    "continueAs": "Continue as {{role}}",
+    "chooseRole": "Choose a role to continue"
+  },
+  "errors": {
+    "notFound": "Page not found"
+  }
+}

@@ -1,9 +1,10 @@
 import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
 import {
+  I18nManager,
   Image,
   ImageBackground,
   Pressable,
-  StyleSheet,
   Text,
   View,
 } from "react-native";
@@ -13,6 +14,7 @@ type Role = "resident" | "manager";
 
 type RoleCardProps = {
   title: string;
+  subtitle: string;
   imageSource: number;
   imagePosition: "left" | "right";
   backgroundColor: string;
@@ -21,8 +23,17 @@ type RoleCardProps = {
   onPress: () => void;
 };
 
+function mirrorImagePosition(position: "left" | "right"): "left" | "right" {
+  if (!I18nManager.isRTL) {
+    return position;
+  }
+
+  return position === "left" ? "right" : "left";
+}
+
 function RoleCard({
   title,
+  subtitle,
   imageSource,
   imagePosition,
   backgroundColor,
@@ -30,28 +41,39 @@ function RoleCard({
   subtitleColor,
   onPress,
 }: RoleCardProps) {
+  const resolvedImagePosition = mirrorImagePosition(imagePosition);
+
   const textContent = (
-    <View style={styles.cardText}>
-      <Text style={[styles.cardSubtitle, { color: subtitleColor }]}>
-        Register as
+    <View className="flex-1 justify-center px-4.5 py-4">
+      <Text
+        className="mb-1 text-sm font-normal"
+        style={{ color: subtitleColor }}
+      >
+        {subtitle}
       </Text>
-      <Text style={[styles.cardTitle, { color: titleColor }]}>{title}</Text>
+      <Text
+        className="text-2xl font-bold tracking-[-0.3px]"
+        style={{ color: titleColor }}
+      >
+        {title}
+      </Text>
     </View>
   );
 
   const imageContent = (
-    <Image source={imageSource} style={styles.cardImage} resizeMode="cover" />
+    <Image
+      source={imageSource}
+      className="w-full h-full"
+      resizeMode="contain"
+    />
   );
 
   return (
     <Pressable
-      onPress={onPress}
-      style={({ pressed }) => [
-        styles.card,
-        { backgroundColor, opacity: pressed ? 0.92 : 1 },
-      ]}
+      className="flex-row items-stretch overflow-hidden rounded-[14px] active:opacity-[0.92]"
+      style={{ backgroundColor }}
     >
-      {imagePosition === "left" ? (
+      {resolvedImagePosition === "left" ? (
         <>
           {imageContent}
           {textContent}
@@ -67,6 +89,7 @@ function RoleCard({
 }
 
 export default function RegisterRoleScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const handleRolePress = (role: Role) => {
@@ -77,115 +100,92 @@ export default function RegisterRoleScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView
+      className="flex-1"
+      style={{
+        backgroundColor: "#fff",
+        height: "100%",
+      }}
+    >
       <ImageBackground
-        source={require("@/assets/images/auth/background-waves.png")}
-        style={styles.background}
+        source={require("@/assets/images/auth/onboarding-waves.png")}
         resizeMode="cover"
+        className="flex-1 px-6 justify-center gap-20 "
+        style={{ flex: 1 }}
       >
-        <View style={styles.logoSection}>
+        <View className=" items-center justify-center ">
           <Image
-            source={require("@/assets/images/auth/logo-mark.png")}
-            style={styles.logoMark}
+            source={require("@/assets/images/auth/logo-text.png")}
             resizeMode="contain"
+            className=" w-full"
           />
-          <Text style={styles.brandName}>Mojtama</Text>
-          <Text style={styles.brandNameArabic}>مجتمع</Text>
         </View>
+        <View className=" items-center justify-center px-4">
+          <View className="w-full gap-18">
+            {/* Resident Role Card */}
+            <View className="relative bg-[#7B61FF] w-full rounded-2xl min-h-31.5 justify-center pl-28 pr-4 py-4">
+              <Image
+                source={require("@/assets/images/auth/still-life-keys-new-home.png")}
+                resizeMode="contain"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: 100,
+                  height: 127,
+                  zIndex: 10,
+                }}
+              />
 
-        <View style={styles.cardContainer}>
-          <RoleCard
-            title="a Resident"
-            imageSource={require("@/assets/images/auth/resident-keys.png")}
-            imagePosition="left"
-            backgroundColor="#6F57FF"
-            titleColor="#FFFFFF"
-            subtitleColor="rgba(255, 255, 255, 0.85)"
-            onPress={() => handleRolePress("resident")}
-          />
+              <View className="flex-col items-center  ">
+                <View className="flex-col items-center">
+                  <Text className="text-[#E2E8F0] text-sm font-normal z-0 mb-1">
+                    {t("auth.registerAs")}
+                  </Text>
+                  <Text className="text-white text-2xl font-bold z-0 tracking-[-0.3px]">
+                    {t("auth.roles.resident")}
+                  </Text>
+                </View>
+              </View>
+              <Image
+                source={require("@/assets/images/auth/white-lines.png")}
+                className="w-full h-full absolute bottom-3 right-0"
+              />
+            </View>
 
-          <RoleCard
-            title="a Manager"
-            imageSource={require("@/assets/images/auth/manager-house.png")}
-            imagePosition="right"
-            backgroundColor="#ECE9FF"
-            titleColor="#1F1F1F"
-            subtitleColor="#5C5C5C"
-            onPress={() => handleRolePress("manager")}
-          />
+            {/* Manager Role Card */}
+            <View className="relative bg-[#EBE8FF] w-full rounded-2xl min-h-31.5 justify-center pl-6 pr-4 py-4">
+              <Image
+                source={require("@/assets/images/auth/hand-presenting-model-house-home-loan-campaign.png")}
+                resizeMode="contain"
+                style={{
+                  position: "absolute",
+                  top: -20,
+                  right: 0,
+                  width: 150,
+                  height: 132,
+                  zIndex: 10,
+                }}
+              />
+
+              <View className="flex-col items-start  justify-start w-full">
+                <Image
+                  source={require("@/assets/images/auth/blue-lines.png")}
+                  className=" absolute -top-8.25 left-18"
+                />
+                <View className="flex-col items-start justify-start text-left w-full">
+                  <Text className="text-[#2E2E2E] text-sm font-normal z-0 mb-1">
+                    {t("auth.registerAs")}
+                  </Text>
+                  <Text className="text-[#2E2E2E] text-2xl font-bold z-0 tracking-[-0.3px]">
+                    {t("auth.roles.manager")}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
         </View>
       </ImageBackground>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: "#F7F7F8",
-  },
-  background: {
-    flex: 1,
-    paddingHorizontal: 24,
-  },
-  logoSection: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 24,
-    paddingBottom: 32,
-  },
-  logoMark: {
-    width: 72,
-    height: 72,
-    marginBottom: 16,
-  },
-  brandName: {
-    fontSize: 32,
-    fontWeight: "700",
-    color: "#1F1F1F",
-    letterSpacing: -0.5,
-  },
-  brandNameArabic: {
-    marginTop: 4,
-    fontSize: 28,
-    fontWeight: "600",
-    color: "#1F1F1F",
-  },
-  cardContainer: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "#E4E4E7",
-    padding: 16,
-    gap: 12,
-    marginBottom: 24,
-  },
-  card: {
-    minHeight: 104,
-    borderRadius: 14,
-    overflow: "hidden",
-    flexDirection: "row",
-    alignItems: "stretch",
-  },
-  cardImage: {
-    width: "42%",
-    minHeight: 104,
-  },
-  cardText: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 18,
-    paddingVertical: 16,
-  },
-  cardSubtitle: {
-    fontSize: 14,
-    fontWeight: "400",
-    marginBottom: 4,
-  },
-  cardTitle: {
-    fontSize: 24,
-    fontWeight: "700",
-    letterSpacing: -0.3,
-  },
-});

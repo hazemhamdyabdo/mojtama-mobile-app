@@ -1,0 +1,22 @@
+{
+  "common": {
+    "appName": "Mojtama",
+    "appNameArabic": "مجتمع"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "التسجيل",
+    "registerAs": "سجّل كـ",
+    "roles": {
+      "resident": "مقيم",
+      "manager": "مدير",
+      "residentLabel": "مقيم",
+      "managerLabel": "مدير"
+    },
+    "continueAs": "المتابعة ك{{role}}",
+    "chooseRole": "اختر دورًا للمتابعة"
+  },
+  "errors": {
+    "notFound": "الصفحة غير موجودة"
+  }
+}

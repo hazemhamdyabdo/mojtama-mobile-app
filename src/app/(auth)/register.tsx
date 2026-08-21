@@ -1,52 +1,42 @@
 import { useLocalSearchParams } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
+import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type RegisterRole = "resident" | "manager";
 
-function isRegisterRole(value: string | string[] | undefined): value is RegisterRole {
+function isRegisterRole(
+  value: string | string[] | undefined,
+): value is RegisterRole {
   return value === "resident" || value === "manager";
 }
 
 export default function Register() {
+  const { t } = useTranslation();
   const { role } = useLocalSearchParams<{ role?: string }>();
   const selectedRole = isRegisterRole(role) ? role : null;
 
+  const roleLabel =
+    selectedRole === "resident"
+      ? t("auth.roles.residentLabel")
+      : t("auth.roles.managerLabel");
+
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Register</Text>
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-1 items-center justify-center px-6">
+        <Text className="text-[28px] font-bold text-[#1F1F1F]">
+          {t("auth.register")}
+        </Text>
         {selectedRole ? (
-          <Text style={styles.subtitle}>
-            Continue as {selectedRole === "resident" ? "Resident" : "Manager"}
+          <Text className="mt-2 text-base text-[#5C5C5C]">
+            {t("auth.continueAs", { role: roleLabel })}
           </Text>
         ) : (
-          <Text style={styles.subtitle}>Choose a role to continue</Text>
+          <Text className="mt-2 text-base text-[#5C5C5C]">
+            {t("auth.chooseRole")}
+          </Text>
         )}
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 24,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: "#1F1F1F",
-  },
-  subtitle: {
-    marginTop: 8,
-    fontSize: 16,
-    color: "#5C5C5C",
-  },
-});
