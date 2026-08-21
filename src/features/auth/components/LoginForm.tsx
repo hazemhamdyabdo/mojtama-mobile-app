@@ -84,6 +84,7 @@ function LoginFormFields() {
   const onSubmit = (values: LoginFormValues) => {
     // TODO: connect to auth API
     console.log("login", values);
+    router.push("/(tabs)" as Href);
   };
 
   return (

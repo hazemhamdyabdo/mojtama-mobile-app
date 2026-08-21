@@ -8,7 +8,8 @@ export default function Index() {
   useEffect(() => {
     async function resolveInitialRoute() {
       const pendingHref = await consumePendingHref();
-      setTarget((pendingHref as Href | null) ?? "/(auth)/onboarding");
+      // setTarget((pendingHref as Href | null) ?? "/(auth)/onboarding");
+      setTarget((pendingHref as Href | null) ?? "/(tabs)");
     }
 
     void resolveInitialRoute();
