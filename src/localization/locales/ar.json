@@ -33,6 +33,45 @@
         "passwordMin": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
         "incorrectPassword": "كلمة المرور غير صحيحة"
       }
+    },
+    "phoneLogin": {
+      "welcomeBack": "مرحباً في مجتمع",
+      "subtitle": "قم بالوصول إلى حسابك عن طريق تسجيل الدخول",
+      "phoneLabel": "رقم الهاتف",
+      "phonePlaceholder": "100 123 7891",
+      "countrySheetTitle": "الدولة/المنطقة",
+      "searchPlaceholder": "بحث",
+      "nextButton": "التالي",
+      "or": "أو",
+      "loginWithEmail": "تسجيل الدخول بالبريد الإلكتروني",
+      "validation": {
+        "phoneRequired": "رقم الهاتف مطلوب",
+        "phoneInvalid": "أدخل رقم هاتف صالح"
+      }
+    },
+    "verifyOtp": {
+      "title": "تحقق من رقمك",
+      "subtitle": "أدخل رمز OTP المرسل إلى {{phone}}",
+      "changeNumber": "تغيير الرقم",
+      "didNotReceive": "لم تستلم رمز OTP؟",
+      "retryIn": "أعد المحاولة خلال {{time}}",
+      "resend": "إعادة الإرسال",
+      "loginButton": "تسجيل دخول",
+      "or": "أو",
+      "loginWithEmail": "تسجيل الدخول بالبريد الإلكتروني",
+      "validation": {
+        "otpLength": "أدخل رمز OTP المكون من 5 أرقام"
+      }
+    },
+    "countries": {
+      "egypt": "مصر",
+      "saudiArabia": "المملكة العربية السعودية",
+      "unitedArabEmirates": "الإمارات العربية المتحدة",
+      "qatar": "قطر",
+      "lebanon": "لبنان",
+      "oman": "عُمان",
+      "jordan": "الأردن",
+      "syria": "سوريا"
     }
   },
   "errors": {

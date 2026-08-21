@@ -33,6 +33,45 @@
         "passwordMin": "Password must be at least 8 characters",
         "incorrectPassword": "Incorrect Password"
       }
+    },
+    "phoneLogin": {
+      "welcomeBack": "Welcome Back",
+      "subtitle": "Access Your Account By Signing In",
+      "phoneLabel": "Phone number",
+      "phonePlaceholder": "100 123 7891",
+      "countrySheetTitle": "Country/Region",
+      "searchPlaceholder": "Search",
+      "nextButton": "Next",
+      "or": "Or",
+      "loginWithEmail": "Login with Email",
+      "validation": {
+        "phoneRequired": "Phone number is required",
+        "phoneInvalid": "Enter a valid phone number"
+      }
+    },
+    "verifyOtp": {
+      "title": "Verify Your Number",
+      "subtitle": "Enter The OTP Code Sent To {{phone}}",
+      "changeNumber": "Change Number",
+      "didNotReceive": "Didn't Receive The OTP?",
+      "retryIn": "Retry In {{time}}",
+      "resend": "Resend",
+      "loginButton": "Login",
+      "or": "Or",
+      "loginWithEmail": "Login with Email",
+      "validation": {
+        "otpLength": "Enter the 5-digit OTP code"
+      }
+    },
+    "countries": {
+      "egypt": "Egypt",
+      "saudiArabia": "Saudi Arabia",
+      "unitedArabEmirates": "United Arab Emirates",
+      "qatar": "Qatar",
+      "lebanon": "Lebanon",
+      "oman": "Oman",
+      "jordan": "Jordan",
+      "syria": "Syria"
     }
   },
   "errors": {
