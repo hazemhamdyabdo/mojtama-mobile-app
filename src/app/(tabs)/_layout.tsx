@@ -1,10 +1,13 @@
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Tabs } from "expo-router";
-import { StyleSheet, View, type ColorValue } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { styled } from "nativewind";
+import { View, type ColorValue } from "react-native";
+import { SafeAreaView as RNSSafeAreaView } from "react-native-safe-area-context";
 
 const ACTIVE_COLOR = "#7B61FF";
 const INACTIVE_COLOR = "#9CA3AF";
+
+const SafeAreaView = styled(RNSSafeAreaView);
 
 type TabIconName = React.ComponentProps<typeof MaterialDesignIcons>["name"];
 
@@ -34,7 +37,7 @@ function TabBarIcon({ name, color, size, focused }: TabBarIconProps) {
 
 export default function TabsLayout() {
   return (
-    <SafeAreaView style={styles.container} edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-white" edges={["top"]}>
       <Tabs
         screenOptions={{
           headerShown: false,
@@ -104,10 +107,3 @@ export default function TabsLayout() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});
