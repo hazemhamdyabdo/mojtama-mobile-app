@@ -31,11 +31,23 @@ export default function LanguageChoice() {
     useState<SupportedLanguage>(getDeviceLanguage);
 
   const handleContinue = async () => {
-    await changeLanguage(selectedLanguage);
-    router.push({
-      pathname: "/login",
-      params: role ? { role } : undefined,
-    });
+    const params = new URLSearchParams({ language: selectedLanguage });
+    if (role) {
+      params.set("role", role);
+    }
+
+    const pendingHref = `/login?${params.toString()}`;
+    const didReload = await changeLanguage(selectedLanguage, pendingHref);
+
+    if (!didReload) {
+      router.push({
+        pathname: "/login",
+        params: {
+          language: selectedLanguage,
+          ...(role ? { role } : {}),
+        },
+      });
+    }
   };
 
   return (

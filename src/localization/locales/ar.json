@@ -14,7 +14,26 @@
       "managerLabel": "مدير"
     },
     "continueAs": "المتابعة ك{{role}}",
-    "chooseRole": "اختر دورًا للمتابعة"
+    "chooseRole": "اختر دورًا للمتابعة",
+    "loginForm": {
+      "welcomeBack": "مرحباً في مجتمع",
+      "subtitle": "قم بالوصول إلى حسابك عن طريق تسجيل الدخول",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "passwordPlaceholder": "كلمة المرور",
+      "forgotPassword": "هل نسيت كلمة المرور؟",
+      "loginButton": "تسجيل دخول",
+      "or": "أو",
+      "loginWithPhone": "سجل الدخول باستخدام رقم الهاتف",
+      "validation": {
+        "emailRequired": "البريد الإلكتروني مطلوب",
+        "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا",
+        "passwordRequired": "كلمة المرور مطلوبة",
+        "passwordMin": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+        "incorrectPassword": "كلمة المرور غير صحيحة"
+      }
+    }
   },
   "errors": {
     "notFound": "الصفحة غير موجودة"

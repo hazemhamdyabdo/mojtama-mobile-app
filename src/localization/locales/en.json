@@ -14,7 +14,26 @@
       "managerLabel": "Manager"
     },
     "continueAs": "Continue as {{role}}",
-    "chooseRole": "Choose a role to continue"
+    "chooseRole": "Choose a role to continue",
+    "loginForm": {
+      "welcomeBack": "Welcome Back",
+      "subtitle": "Access Your Account By Signing In",
+      "email": "Email",
+      "emailPlaceholder": "Email Address",
+      "password": "Password",
+      "passwordPlaceholder": "Password",
+      "forgotPassword": "Forgot Password?",
+      "loginButton": "Login",
+      "or": "Or",
+      "loginWithPhone": "Login with Phone number",
+      "validation": {
+        "emailRequired": "Email is required",
+        "emailInvalid": "Enter a valid email address",
+        "passwordRequired": "Password is required",
+        "passwordMin": "Password must be at least 8 characters",
+        "incorrectPassword": "Incorrect Password"
+      }
+    }
   },
   "errors": {
     "notFound": "Page not found"

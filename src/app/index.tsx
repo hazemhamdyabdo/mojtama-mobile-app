@@ -1,5 +1,22 @@
-import { Redirect } from "expo-router";
+import { consumePendingHref } from "@/localization/i18n";
+import { Redirect, type Href } from "expo-router";
+import { useEffect, useState } from "react";
 
 export default function Index() {
-  return <Redirect href="/(auth)/onboarding" />;
+  const [target, setTarget] = useState<Href | null>(null);
+
+  useEffect(() => {
+    async function resolveInitialRoute() {
+      const pendingHref = await consumePendingHref();
+      setTarget((pendingHref as Href | null) ?? "/(auth)/onboarding");
+    }
+
+    void resolveInitialRoute();
+  }, []);
+
+  if (!target) {
+    return null;
+  }
+
+  return <Redirect href={target} />;
 }
