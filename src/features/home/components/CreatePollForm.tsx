@@ -1,0 +1,407 @@
+import {
+  createPollSchema,
+  POLL_FORM_LIMITS,
+  type CreatePollFormValues,
+} from "@/features/home/schemas/createPollSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useState } from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
+import {
+  I18nManager,
+  Platform,
+  Pressable,
+  ScrollView,
+  Switch,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+
+type FormLabelProps = {
+  label: string;
+  required?: boolean;
+  className?: string;
+};
+
+function FormLabel({ label, required = false, className }: FormLabelProps) {
+  return (
+    <Text className={`mb-2 text-sm font-medium text-[#2E2E2E] ${className}`}>
+      {label}
+      {required ? <Text className="text-[#EF4444]">*</Text> : null}
+    </Text>
+  );
+}
+
+type SettingToggleProps = {
+  label: string;
+  value: boolean;
+  onChange: (value: boolean) => void;
+  showDivider?: boolean;
+};
+
+function SettingToggle({
+  label,
+  value,
+  onChange,
+  showDivider = false,
+}: SettingToggleProps) {
+  return (
+    <View
+      className={`flex-row items-center justify-between py-4 ${
+        showDivider ? "border-b border-[#F1F5F9]" : ""
+      }`}
+    >
+      <Text className="flex-1 pr-4 text-base text-[#62748E]">{label}</Text>
+      <Switch
+        value={value}
+        onValueChange={onChange}
+        trackColor={{ false: "#E4E4E7", true: "#C4B5FD" }}
+        thumbColor={value ? "#7B61FF" : "#FFFFFF"}
+      />
+    </View>
+  );
+}
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function formatTime(date: Date) {
+  return date.toLocaleTimeString(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+type CreatePollFormProps = {
+  onSubmit: (values: CreatePollFormValues) => void | Promise<void>;
+};
+
+export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
+  const textAlign = I18nManager.isRTL ? "right" : "left";
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<CreatePollFormValues>({
+    resolver: zodResolver(createPollSchema()),
+    defaultValues: {
+      title: "",
+      deadlineDate: null,
+      deadlineTime: null,
+      isEmergency: true,
+      options: [{ label: "" }, { label: "" }],
+      allowMembersToAddOptions: true,
+      allowMultipleChoice: true,
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "options",
+  });
+
+  return (
+    <View className="flex-1">
+      <ScrollView
+        className="flex-1"
+        contentContainerClassName="pb-6"
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <Text className="mb-6 text-2xl font-bold text-[#1F1F1F]">
+          Create Poll
+        </Text>
+
+        <View className="mb-5">
+          <FormLabel label="Title" required />
+
+          <Controller
+            control={control}
+            name="title"
+            render={({ field: { value, onChange, onBlur } }) => (
+              <TextInput
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                placeholder="Type Announcement title"
+                placeholderTextColor="#90A1B9"
+                className={`rounded-xl border bg-white px-4 text-base text-[#1F1F1F] ${
+                  errors.title ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                }`}
+                style={{
+                  textAlign,
+                  minHeight: 52,
+                  paddingVertical: 14,
+                }}
+              />
+            )}
+          />
+
+          {errors.title ? (
+            <Text className="mt-2 text-sm text-[#EF4444]">
+              {errors.title.message}
+            </Text>
+          ) : null}
+        </View>
+
+        <View className="mb-5">
+          <FormLabel label="Deadline" />
+
+          <View className="flex-row gap-3">
+            <Controller
+              control={control}
+              name="deadlineDate"
+              render={({ field: { value, onChange } }) => (
+                <View className="flex-1">
+                  <Pressable
+                    onPress={() => setShowDatePicker(true)}
+                    accessibilityRole="button"
+                    className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
+                      errors.deadlineDate
+                        ? "border-[#FCA5A5]"
+                        : "border-[#E4E4E7]"
+                    }`}
+                  >
+                    <Text
+                      className={`text-base ${
+                        value ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+                      }`}
+                    >
+                      {value ? formatDate(value) : "Select Date"}
+                    </Text>
+                    <MaterialDesignIcons
+                      name="calendar-blank-outline"
+                      color="#64748B"
+                      size={20}
+                    />
+                  </Pressable>
+
+                  {showDatePicker ? (
+                    <DateTimePicker
+                      value={value ?? new Date()}
+                      mode="date"
+                      display={Platform.OS === "ios" ? "spinner" : "default"}
+                      onValueChange={(_event, selectedDate) => {
+                        onChange(selectedDate);
+
+                        if (Platform.OS === "android") {
+                          setShowDatePicker(false);
+                        }
+                      }}
+                      onDismiss={() => setShowDatePicker(false)}
+                    />
+                  ) : null}
+                </View>
+              )}
+            />
+
+            <Controller
+              control={control}
+              name="deadlineTime"
+              render={({ field: { value, onChange } }) => (
+                <View className="flex-1">
+                  <Pressable
+                    onPress={() => setShowTimePicker(true)}
+                    accessibilityRole="button"
+                    className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
+                      errors.deadlineTime
+                        ? "border-[#FCA5A5]"
+                        : "border-[#E4E4E7]"
+                    }`}
+                  >
+                    <Text
+                      className={`text-base ${
+                        value ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+                      }`}
+                    >
+                      {value ? formatTime(value) : "Select Time"}
+                    </Text>
+                    <MaterialDesignIcons
+                      name="clock-outline"
+                      color="#64748B"
+                      size={20}
+                    />
+                  </Pressable>
+
+                  {showTimePicker ? (
+                    <DateTimePicker
+                      value={value ?? new Date()}
+                      mode="time"
+                      display={Platform.OS === "ios" ? "spinner" : "default"}
+                      onValueChange={(_event, selectedTime) => {
+                        onChange(selectedTime);
+
+                        if (Platform.OS === "android") {
+                          setShowTimePicker(false);
+                        }
+                      }}
+                      onDismiss={() => setShowTimePicker(false)}
+                    />
+                  ) : null}
+                </View>
+              )}
+            />
+          </View>
+
+          {errors.deadlineDate ? (
+            <Text className="mt-2 text-sm text-[#EF4444]">
+              {errors.deadlineDate.message}
+            </Text>
+          ) : null}
+        </View>
+
+        <Controller
+          control={control}
+          name="isEmergency"
+          render={({ field: { value, onChange } }) => (
+            <View className="mb-5 flex-col items-start rounded-xl border border-[#E4E4E7] bg-[#F8FAFC] px-4 py-3">
+              <View className="flex-row items-center">
+                <View className="size-10 items-center justify-center rounded-full">
+                  <MaterialDesignIcons
+                    name="alert-outline"
+                    color="#7B61FF"
+                    size={22}
+                  />
+                </View>
+
+                <View className="flex-1">
+                  <Text className="text-base font-bold text-[#1F1F1F]">
+                    Emergency Feed
+                  </Text>
+                </View>
+
+                <Switch
+                  value={value}
+                  onValueChange={onChange}
+                  trackColor={{ false: "#E4E4E7", true: "#C4B5FD" }}
+                  thumbColor={value ? "#7B61FF" : "#FFFFFF"}
+                />
+              </View>
+              <Text className="text-sm text-[#90A1B9]">
+                Mark as Urgent for immediate attention
+              </Text>
+            </View>
+          )}
+        />
+
+        <View className="mb-5">
+          <FormLabel label="Poll options" />
+
+          <View className="gap-3">
+            {fields.map((field, index) => (
+              <View key={field.id} className="flex-row items-center gap-2">
+                <View className="size-5 rounded-full border-2 border-[#CBD5E1]" />
+
+                <Controller
+                  control={control}
+                  name={`options.${index}.label`}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <TextInput
+                      value={value}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      placeholder={`Option ${index + 1}`}
+                      placeholderTextColor="#90A1B9"
+                      className={`flex-1 rounded-xl border bg-white px-4 py-3 text-base text-[#1F1F1F] ${
+                        errors.options?.[index]?.label
+                          ? "border-[#FCA5A5]"
+                          : "border-[#E4E4E7]"
+                      }`}
+                      style={{ textAlign }}
+                    />
+                  )}
+                />
+
+                <Pressable
+                  onPress={() =>
+                    fields.length > POLL_FORM_LIMITS.minOptions && remove(index)
+                  }
+                  disabled={fields.length <= POLL_FORM_LIMITS.minOptions}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Remove option ${index + 1}`}
+                  className="size-8 items-center justify-center active:opacity-[0.92] disabled:opacity-30"
+                >
+                  <MaterialDesignIcons name="close" color="#64748B" size={20} />
+                </Pressable>
+              </View>
+            ))}
+          </View>
+
+          {errors.options?.root ? (
+            <Text className="mt-2 text-sm text-[#EF4444]">
+              {errors.options.root.message}
+            </Text>
+          ) : null}
+
+          {errors.options?.message ? (
+            <Text className="mt-2 text-sm text-[#EF4444]">
+              {errors.options.message}
+            </Text>
+          ) : null}
+
+          <Pressable
+            onPress={() => append({ label: "" })}
+            disabled={fields.length >= POLL_FORM_LIMITS.maxOptions}
+            accessibilityRole="button"
+            className="mt-3 flex-row items-center justify-center gap-2 rounded-xl border border-[#7B61FF] py-3 active:opacity-[0.92] disabled:opacity-50"
+          >
+            <MaterialDesignIcons name="plus" color="#7B61FF" size={20} />
+            <Text className="text-base font-semibold text-[#7B61FF]">
+              Add Option
+            </Text>
+          </Pressable>
+        </View>
+
+        <View className="mb-2">
+          <FormLabel label="Settings" className="mb-0" />
+
+          <View className="rounded-xl  bg-white  ">
+            <Controller
+              control={control}
+              name="allowMembersToAddOptions"
+              render={({ field: { value, onChange } }) => (
+                <SettingToggle
+                  label="Allow members to add options"
+                  value={value}
+                  onChange={onChange}
+                  showDivider
+                />
+              )}
+            />
+
+            <Controller
+              control={control}
+              name="allowMultipleChoice"
+              render={({ field: { value, onChange } }) => (
+                <SettingToggle
+                  label="Allow people to choose multiple option"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
+          </View>
+        </View>
+      </ScrollView>
+
+      <Pressable
+        onPress={handleSubmit(onSubmit)}
+        disabled={isSubmitting}
+        accessibilityRole="button"
+        className="mt-4 items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
+      >
+        <Text className="text-base font-bold text-white">Create Poll</Text>
+      </Pressable>
+    </View>
+  );
+}

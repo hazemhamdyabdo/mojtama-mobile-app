@@ -76,8 +76,8 @@ function LoginFormFields() {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "hazem.hamdy@gmail.com",
+      password: "12345678",
     },
   });
 

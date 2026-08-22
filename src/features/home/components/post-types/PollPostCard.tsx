@@ -4,8 +4,10 @@ import {
 } from "@/features/home/components/post-types/PostCardShared";
 import type { PollPost } from "@/features/home/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Pressable, Text, View } from "react-native";
+
+const MAX_VISIBLE_OPTIONS = 3;
 
 type PollPostCardProps = {
   post: PollPost;
@@ -22,6 +24,17 @@ export default function PollPostCard({
 }: PollPostCardProps) {
   const [selectedOptionId, setSelectedOptionId] = useState(post.options[0]?.id);
   const [liked, setLiked] = useState(false);
+  const [showAllOptions, setShowAllOptions] = useState(false);
+
+  const hiddenOptionsCount = Math.max(0, post.options.length - MAX_VISIBLE_OPTIONS);
+
+  const visibleOptions = useMemo(() => {
+    if (showAllOptions || hiddenOptionsCount === 0) {
+      return post.options;
+    }
+
+    return post.options.slice(0, MAX_VISIBLE_OPTIONS);
+  }, [hiddenOptionsCount, post.options, showAllOptions]);
 
   return (
     <PostCardShell onPress={() => onPress?.(post.id)}>
@@ -41,7 +54,7 @@ export default function PollPostCard({
       </Text>
 
       <View className="gap-2">
-        {post.options.map((option) => {
+        {visibleOptions.map((option) => {
           const isSelected = option.id === selectedOptionId;
 
           return (
@@ -56,7 +69,7 @@ export default function PollPostCard({
                   : "border-[#E4E4E7] bg-white"
               }`}
             >
-              <View className="flex-row items-center gap-3">
+              <View className="mr-3 flex-1 flex-row items-center gap-3">
                 <View
                   className={`size-5 items-center justify-center rounded-full border-2 ${
                     isSelected ? "border-[#7B61FF]" : "border-[#CBD5E1]"
@@ -66,7 +79,10 @@ export default function PollPostCard({
                     <View className="size-2.5 rounded-full bg-[#7B61FF]" />
                   ) : null}
                 </View>
-                <Text className="text-base font-semibold text-[#1F1F1F]">
+                <Text
+                  numberOfLines={1}
+                  className="flex-1 text-base font-semibold text-[#1F1F1F]"
+                >
                   {option.label}
                 </Text>
               </View>
@@ -78,6 +94,20 @@ export default function PollPostCard({
           );
         })}
       </View>
+
+      {hiddenOptionsCount > 0 ? (
+        <Pressable
+          onPress={() => setShowAllOptions((prev) => !prev)}
+          accessibilityRole="button"
+          className="mt-2 self-start active:opacity-[0.92]"
+        >
+          <Text className="text-sm font-medium text-[#7B61FF]">
+            {showAllOptions
+              ? "Show less"
+              : `+ ${hiddenOptionsCount} more option${hiddenOptionsCount === 1 ? "" : "s"}`}
+          </Text>
+        </Pressable>
+      ) : null}
 
       <View className="mt-4 flex-row items-center gap-5">
         <Pressable

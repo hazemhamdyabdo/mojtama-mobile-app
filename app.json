@@ -12,9 +12,8 @@
     },
     "android": {
       "adaptiveIcon": {
-          "backgroundColor": "#fff",
-          "foregroundImage": "./assets/images/auth/mojtama-logo.png"
-       
+        "backgroundColor": "#fff",
+        "foregroundImage": "./assets/images/auth/mojtama-logo.png"
       },
       "predictiveBackGestureEnabled": false
     },
@@ -43,7 +42,8 @@
         {
           "photosPermission": "Allow Mojtama to access your photos to upload announcement images."
         }
-      ]
+      ],
+      "@react-native-community/datetimepicker"
     ],
     "experiments": {
       "typedRoutes": true,
