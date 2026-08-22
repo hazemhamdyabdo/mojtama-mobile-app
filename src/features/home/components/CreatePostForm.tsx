@@ -1,13 +1,14 @@
 import type { AnnouncementType } from "@/features/home/constants/announcementTypes";
 import { ANNOUNCEMENT_TYPE_OPTIONS } from "@/features/home/constants/announcementTypes";
 import {
-  createAnnouncementSchema,
-  type CreateAnnouncementFormValues,
-} from "@/features/home/schemas/createAnnouncementSchema";
+  createPostSchema,
+  type CreatePostFormValues,
+} from "@/features/home/schemas/createPostSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
+import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   I18nManager,
@@ -18,6 +19,23 @@ import {
   TextInput,
   View,
 } from "react-native";
+
+export type CreatePostFormVariant = "announcement" | "news";
+
+const FORM_COPY = {
+  announcement: {
+    heading: "Create Announcement",
+    typeLabel: "Announcement type",
+    titlePlaceholder: "Type Announcement title",
+    contentPlaceholder: "Type announcement content",
+  },
+  news: {
+    heading: "Create News",
+    typeLabel: "News type",
+    titlePlaceholder: "Type News title",
+    contentPlaceholder: "Type news content",
+  },
+} as const;
 
 type FormLabelProps = {
   label: string;
@@ -33,17 +51,17 @@ function FormLabel({ label, required = false }: FormLabelProps) {
   );
 }
 
-type AnnouncementTypeChipProps = {
+type CategoryTypeChipProps = {
   label: string;
   selected: boolean;
   onPress: () => void;
 };
 
-function AnnouncementTypeChip({
+function CategoryTypeChip({
   label,
   selected,
   onPress,
-}: AnnouncementTypeChipProps) {
+}: CategoryTypeChipProps) {
   return (
     <Pressable
       onPress={onPress}
@@ -66,14 +84,21 @@ function AnnouncementTypeChip({
   );
 }
 
-type CreateAnnouncementFormProps = {
-  onSubmit: (values: CreateAnnouncementFormValues) => void | Promise<void>;
+type CreatePostFormProps = {
+  variant: CreatePostFormVariant;
+  onSubmit: (values: CreatePostFormValues) => void | Promise<void>;
 };
 
-export default function CreateAnnouncementForm({
+export default function CreatePostForm({
+  variant,
   onSubmit,
-}: CreateAnnouncementFormProps) {
+}: CreatePostFormProps) {
+  const copy = FORM_COPY[variant];
   const textAlign = I18nManager.isRTL ? "right" : "left";
+  const schema = useMemo(
+    () => createPostSchema(copy.typeLabel),
+    [copy.typeLabel],
+  );
 
   const {
     control,
@@ -81,10 +106,10 @@ export default function CreateAnnouncementForm({
     setValue,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm<CreateAnnouncementFormValues>({
-    resolver: zodResolver(createAnnouncementSchema()),
+  } = useForm<CreatePostFormValues>({
+    resolver: zodResolver(schema),
     defaultValues: {
-      announcementType: "general",
+      categoryType: "general",
       title: "",
       content: "",
       image: null,
@@ -134,19 +159,19 @@ export default function CreateAnnouncementForm({
         showsVerticalScrollIndicator={false}
       >
         <Text className="mb-6 text-2xl font-bold text-[#1F1F1F]">
-          Create Announcement
+          {copy.heading}
         </Text>
 
         <View className="mb-5">
-          <FormLabel label="Announcement type" required />
+          <FormLabel label={copy.typeLabel} required />
 
           <Controller
             control={control}
-            name="announcementType"
+            name="categoryType"
             render={({ field: { value, onChange } }) => (
               <View className="flex-row flex-wrap gap-2">
                 {ANNOUNCEMENT_TYPE_OPTIONS.map((option) => (
-                  <AnnouncementTypeChip
+                  <CategoryTypeChip
                     key={option.id}
                     label={option.label}
                     selected={value === option.id}
@@ -157,9 +182,9 @@ export default function CreateAnnouncementForm({
             )}
           />
 
-          {errors.announcementType ? (
+          {errors.categoryType ? (
             <Text className="mt-2 text-sm text-[#EF4444]">
-              {errors.announcementType.message}
+              {errors.categoryType.message}
             </Text>
           ) : null}
         </View>
@@ -175,7 +200,7 @@ export default function CreateAnnouncementForm({
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                placeholder="Type Announcement title"
+                placeholder={copy.titlePlaceholder}
                 placeholderTextColor="#90A1B9"
                 className={`rounded-xl border bg-white px-4 text-base text-[#1F1F1F] ${
                   errors.title ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
@@ -207,7 +232,7 @@ export default function CreateAnnouncementForm({
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                placeholder="Type announcement content"
+                placeholder={copy.contentPlaceholder}
                 placeholderTextColor="#90A1B9"
                 multiline
                 textAlignVertical="top"
@@ -282,7 +307,7 @@ export default function CreateAnnouncementForm({
           render={({ field: { value, onChange } }) => (
             <View className="flex-col items-start rounded-xl border border-[#E4E4E7] bg-[#F8FAFC] px-4 py-3">
               <View className="flex-row items-center">
-                <View className=" size-10 items-center justify-center rounded-full ">
+                <View className="size-10 items-center justify-center rounded-full">
                   <MaterialDesignIcons
                     name="alert-outline"
                     color="#7B61FF"
@@ -303,7 +328,7 @@ export default function CreateAnnouncementForm({
                   thumbColor={value ? "#7B61FF" : "#FFFFFF"}
                 />
               </View>
-              <Text className=" text-sm text-[#90A1B9]">
+              <Text className="text-sm text-[#90A1B9]">
                 Mark as Urgent for immediate attention
               </Text>
             </View>

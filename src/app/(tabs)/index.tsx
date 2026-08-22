@@ -39,6 +39,8 @@ export default function HomeScreen() {
         router.push("/create-announcement" as Href);
         break;
       case "news":
+        router.push("/create-news" as Href);
+        break;
       case "poll":
       case "meeting":
         console.log("selected post type:", type);
