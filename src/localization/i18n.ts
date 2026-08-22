@@ -3,7 +3,7 @@ import { getLocales } from "expo-localization";
 import * as Updates from "expo-updates";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import { I18nManager } from "react-native";
+import { DevSettings, I18nManager } from "react-native";
 
 import ar from "./locales/ar.json";
 import en from "./locales/en.json";
@@ -13,7 +13,7 @@ export type SupportedLanguage = (typeof supportedLanguages)[number];
 
 const LANGUAGE_STORAGE_KEY = "@mojtama/language";
 const PENDING_HREF_STORAGE_KEY = "@mojtama/pending_href";
-const RTL_APPLIED_FOR_KEY = "@mojtama/rtl_applied_for";
+const RTL_RELOAD_GUARD_KEY = "@mojtama/rtl_reload_guard";
 
 const resources = {
   en: { translation: en },
@@ -37,9 +37,12 @@ export function getDeviceLanguage(): SupportedLanguage {
 }
 
 async function getStoredLanguage(): Promise<SupportedLanguage | null> {
-  // const storedLanguage = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
-  // return storedLanguage ? resolveLanguage(storedLanguage) : null;
-  return "en";
+  try {
+    const storedLanguage = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
+    return storedLanguage ? resolveLanguage(storedLanguage) : null;
+  } catch {
+    return null;
+  }
 }
 
 export async function getInitialLanguage(): Promise<SupportedLanguage> {
@@ -47,14 +50,45 @@ export async function getInitialLanguage(): Promise<SupportedLanguage> {
   return storedLanguage ?? getDeviceLanguage();
 }
 
-function syncRTLSettings(language: SupportedLanguage) {
-  const isRTL = language === "ar";
-  I18nManager.allowRTL(isRTL);
-  I18nManager.forceRTL(isRTL);
+export function isRTLLanguage(language: SupportedLanguage) {
+  return language === "ar";
 }
 
-function needsRTL(language: SupportedLanguage) {
-  return language === "ar";
+export function getActiveLanguage(): SupportedLanguage {
+  return resolveLanguage(i18n.language);
+}
+
+/**
+ * Persists the native layout direction. The new direction only takes effect
+ * after the app reloads, so `I18nManager.isRTL` keeps reporting the old value
+ * for the rest of this session.
+ */
+function applyDirectionPreference(language: SupportedLanguage) {
+  const shouldBeRTL = isRTLLanguage(language);
+  I18nManager.allowRTL(shouldBeRTL);
+  I18nManager.forceRTL(shouldBeRTL);
+}
+
+/**
+ * `Updates.reloadAsync` rejects in Expo Go and development builds, so fall back
+ * to the dev-server reload there. Returns false when no reload could be run.
+ */
+async function reloadApp(): Promise<boolean> {
+  if (__DEV__) {
+    try {
+      DevSettings.reload();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  try {
+    await Updates.reloadAsync();
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 async function initI18nInstance(language: SupportedLanguage) {
@@ -79,22 +113,30 @@ async function initI18nInstance(language: SupportedLanguage) {
 
 export async function initializeI18n() {
   const language = await getInitialLanguage();
-  const shouldBeRTL = needsRTL(language);
-  syncRTLSettings(language);
 
-  // Never reload in a loop: if RTL was already applied for this language,
-  // continue even when Expo Go reports isRTL incorrectly after reload.
-  if (I18nManager.isRTL !== shouldBeRTL) {
-    const rtlAppliedFor = await AsyncStorage.getItem(RTL_APPLIED_FOR_KEY);
+  // Translations are applied first so text is always localized, even when the
+  // runtime refuses to flip the native layout direction.
+  await initI18nInstance(language);
+  applyDirectionPreference(language);
 
-    if (rtlAppliedFor !== language) {
-      await AsyncStorage.setItem(RTL_APPLIED_FOR_KEY, language);
-      await Updates.reloadAsync();
-      return;
-    }
+  if (I18nManager.isRTL === isRTLLanguage(language)) {
+    await AsyncStorage.removeItem(RTL_RELOAD_GUARD_KEY);
+    return;
   }
 
-  await initI18nInstance(language);
+  // Direction is stale and needs one reload. The guard stops a reload loop on
+  // runtimes (such as Expo Go) that never apply the new direction.
+  const guard = await AsyncStorage.getItem(RTL_RELOAD_GUARD_KEY);
+
+  if (guard === language) {
+    return;
+  }
+
+  await AsyncStorage.setItem(RTL_RELOAD_GUARD_KEY, language);
+
+  if (!(await reloadApp())) {
+    await AsyncStorage.removeItem(RTL_RELOAD_GUARD_KEY);
+  }
 }
 
 export async function consumePendingHref(): Promise<string | null> {
@@ -107,31 +149,41 @@ export async function consumePendingHref(): Promise<string | null> {
   return pendingHref;
 }
 
+/**
+ * Switches the app language. Returns true when a reload was triggered to apply
+ * a new layout direction, in which case the caller should not keep navigating.
+ */
 export async function changeLanguage(
   language: SupportedLanguage,
   pendingHref?: string,
 ): Promise<boolean> {
-  const currentLanguage = resolveLanguage(i18n.language);
-  const currentShouldBeRTL = needsRTL(currentLanguage);
-  const nextShouldBeRTL = needsRTL(language);
-  const rtlDirectionChanged = currentShouldBeRTL !== nextShouldBeRTL;
+  const directionChanged = I18nManager.isRTL !== isRTLLanguage(language);
 
   await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, language);
-  syncRTLSettings(language);
   await initI18nInstance(language);
+  applyDirectionPreference(language);
 
-  if (!rtlDirectionChanged) {
+  if (!directionChanged) {
+    await AsyncStorage.removeItem(RTL_RELOAD_GUARD_KEY);
     return false;
   }
 
-  await AsyncStorage.setItem(RTL_APPLIED_FOR_KEY, language);
+  await AsyncStorage.setItem(RTL_RELOAD_GUARD_KEY, language);
 
   if (pendingHref) {
     await AsyncStorage.setItem(PENDING_HREF_STORAGE_KEY, pendingHref);
   }
 
-  await Updates.reloadAsync();
-  return true;
+  if (await reloadApp()) {
+    return true;
+  }
+
+  await AsyncStorage.multiRemove([
+    RTL_RELOAD_GUARD_KEY,
+    PENDING_HREF_STORAGE_KEY,
+  ]);
+
+  return false;
 }
 
 export default i18n;

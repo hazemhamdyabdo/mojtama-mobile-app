@@ -1,52 +1,75 @@
 import LanguageOptionCard from "@/features/auth/components/LanguageOptionCard";
 import {
   changeLanguage,
-  getDeviceLanguage,
+  getActiveLanguage,
   type SupportedLanguage,
 } from "@/localization/i18n";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Image, ImageBackground, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const languageOptions = [
   {
     code: "en" as const,
-    title: "English",
-    subtitle: "English (United States)",
+    titleKey: "auth.languageChoice.english",
+    subtitleKey: "auth.languageChoice.englishSubtitle",
     flag: require("@/assets/images/auth/circle-flags_lang-en-us.png"),
   },
   {
     code: "ar" as const,
-    title: "Arabic",
-    subtitle: "العربية (المملكة العربية السعودية)",
+    titleKey: "auth.languageChoice.arabic",
+    subtitleKey: "auth.languageChoice.arabicSubtitle",
     flag: require("@/assets/images/auth/circle-flags_sa.png"),
   },
 ];
 
 export default function LanguageChoice() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { role } = useLocalSearchParams<{ role?: string }>();
   const [selectedLanguage, setSelectedLanguage] =
-    useState<SupportedLanguage>(getDeviceLanguage);
+    useState<SupportedLanguage>(getActiveLanguage);
+  const [isApplying, setIsApplying] = useState(false);
+
+  const goToLogin = () => {
+    router.push({
+      pathname: "/login",
+      params: {
+        language: selectedLanguage,
+        ...(role ? { role } : {}),
+      },
+    });
+  };
 
   const handleContinue = async () => {
+    if (isApplying) {
+      return;
+    }
+
+    setIsApplying(true);
+
     const params = new URLSearchParams({ language: selectedLanguage });
     if (role) {
       params.set("role", role);
     }
 
-    const pendingHref = `/login?${params.toString()}`;
-    const didReload = await changeLanguage(selectedLanguage, pendingHref);
+    try {
+      const didReload = await changeLanguage(
+        selectedLanguage,
+        `/login?${params.toString()}`,
+      );
 
-    if (!didReload) {
-      router.push({
-        pathname: "/login",
-        params: {
-          language: selectedLanguage,
-          ...(role ? { role } : {}),
-        },
-      });
+      // A reload replaces this screen, so only navigate when it did not happen.
+      if (!didReload) {
+        goToLogin();
+      }
+    } catch (error) {
+      console.warn("Failed to change language", error);
+      goToLogin();
+    } finally {
+      setIsApplying(false);
     }
   };
 
@@ -74,17 +97,19 @@ export default function LanguageChoice() {
         <View className=" items-center justify-center px-4">
           <View className="w-full gap-6">
             <View className="w-full gap-1">
-              <Text className="text-2xl font-semibold">Choose Language</Text>
+              <Text className="text-2xl font-semibold">
+                {t("auth.languageChoice.title")}
+              </Text>
               <Text className="text-sm text-[#90A1B9]">
-                Select the language you prefer to use in the app
+                {t("auth.languageChoice.subtitle")}
               </Text>
             </View>
             <View className="w-full flex-col gap-4">
               {languageOptions.map((option) => (
                 <LanguageOptionCard
                   key={option.code}
-                  title={option.title}
-                  subtitle={option.subtitle}
+                  title={t(option.titleKey)}
+                  subtitle={t(option.subtitleKey)}
                   flagSource={option.flag}
                   selected={selectedLanguage === option.code}
                   onPress={() => setSelectedLanguage(option.code)}
@@ -94,9 +119,13 @@ export default function LanguageChoice() {
 
             <Pressable
               onPress={() => void handleContinue()}
-              className="mt-2 w-full items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+              disabled={isApplying}
+              accessibilityRole="button"
+              className="mt-2 w-full items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
             >
-              <Text className="text-base font-bold text-white">Continue</Text>
+              <Text className="text-base font-bold text-white">
+                {t("auth.languageChoice.continue")}
+              </Text>
             </Pressable>
           </View>
         </View>

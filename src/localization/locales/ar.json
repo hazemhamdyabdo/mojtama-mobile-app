@@ -15,6 +15,15 @@
     },
     "continueAs": "المتابعة ك{{role}}",
     "chooseRole": "اختر دورًا للمتابعة",
+    "languageChoice": {
+      "title": "اختر اللغة",
+      "subtitle": "اختر اللغة التي تفضل استخدامها في التطبيق",
+      "continue": "متابعة",
+      "english": "الإنجليزية",
+      "englishSubtitle": "English (United States)",
+      "arabic": "العربية",
+      "arabicSubtitle": "العربية (المملكة العربية السعودية)"
+    },
     "loginForm": {
       "welcomeBack": "مرحباً في مجتمع",
       "subtitle": "قم بالوصول إلى حسابك عن طريق تسجيل الدخول",

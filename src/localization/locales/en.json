@@ -15,6 +15,15 @@
     },
     "continueAs": "Continue as {{role}}",
     "chooseRole": "Choose a role to continue",
+    "languageChoice": {
+      "title": "Choose Language",
+      "subtitle": "Select the language you prefer to use in the app",
+      "continue": "Continue",
+      "english": "English",
+      "englishSubtitle": "English (United States)",
+      "arabic": "Arabic",
+      "arabicSubtitle": "العربية (المملكة العربية السعودية)"
+    },
     "loginForm": {
       "welcomeBack": "Welcome Back",
       "subtitle": "Access Your Account By Signing In",

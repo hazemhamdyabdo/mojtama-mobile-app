@@ -25,6 +25,8 @@ export default function RootLayout() {
 
       try {
         await runStartupTasks();
+      } catch (error) {
+        console.warn("Startup tasks failed", error);
       } finally {
         setIsReady(true);
       }
