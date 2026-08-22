@@ -72,6 +72,14 @@ export type PostLike = {
   avatar?: ImageSourcePropType;
 };
 
+export type Member = {
+  id: string;
+  name: string;
+  role: string;
+  email: string;
+  avatar?: ImageSourcePropType;
+};
+
 export type PostComment = {
   id: string;
   authorName: string;

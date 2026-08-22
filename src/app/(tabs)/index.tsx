@@ -45,7 +45,7 @@ export default function HomeScreen() {
         router.push("/create-poll" as Href);
         break;
       case "meeting":
-        console.log("selected post type:", type);
+        router.push("/create-meeting" as Href);
         break;
       default: {
         const _exhaustive: never = type;

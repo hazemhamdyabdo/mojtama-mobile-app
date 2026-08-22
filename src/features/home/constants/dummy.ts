@@ -1,4 +1,4 @@
-import type { Post, PostComment, PostLike } from "@/features/home/types";
+import type { Member, Post, PostComment, PostLike } from "@/features/home/types";
 
 const mojtamaAvatar = require("@/features/home/constants/mojtama-avatar.png");
 const dummyFeedImage = require("@/features/home/constants/dummy-feed.jpg");
@@ -114,6 +114,48 @@ export const DUMMY_LIKES: PostLike[] = [
     avatar: dummyUserAvatar,
   },
   { id: "7", name: "Jade Smith", unit: "2A/B", time: "Yesterday - 6:30PM" },
+];
+
+export const DUMMY_MEMBERS: Member[] = [
+  {
+    id: "1",
+    name: "Priya Sharma",
+    role: "Finance officer",
+    email: "priya.sharma@gmail.com",
+  },
+  {
+    id: "2",
+    name: "Jade Smith",
+    role: "Community manager",
+    email: "jadesmith@gmail.com",
+    avatar: dummyUserAvatar,
+  },
+  {
+    id: "3",
+    name: "Omar Ali",
+    role: "Maintenance lead",
+    email: "omar.ali@gmail.com",
+    avatar: dummyUserAvatar,
+  },
+  {
+    id: "4",
+    name: "Manar Khaled",
+    role: "Events coordinator",
+    email: "manar.khaled@gmail.com",
+  },
+  {
+    id: "5",
+    name: "Ahmed Fawzy",
+    role: "Security officer",
+    email: "ahmed.fawzy@gmail.com",
+    avatar: dummyUserAvatar,
+  },
+  {
+    id: "6",
+    name: "Jana Saeed",
+    role: "Resident representative",
+    email: "jana.saeed@gmail.com",
+  },
 ];
 
 export const DUMMY_COMMENTS: PostComment[] = [
