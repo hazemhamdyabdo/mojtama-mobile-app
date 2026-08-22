@@ -244,7 +244,11 @@ export default function CreateAnnouncementForm({
               <Image
                 source={{ uri: selectedImage.uri }}
                 contentFit="cover"
-                className="mb-3 h-32 w-full rounded-lg"
+                style={{
+                  height: 128,
+                  width: "100%",
+                  borderRadius: 8,
+                }}
               />
             ) : (
               <MaterialDesignIcons
