@@ -1,5 +1,7 @@
 import "../../global.css";
 
+import AppLoadingScreen from "@/components/AppLoadingScreen";
+import { initializeI18n } from "@/localization/i18n";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -7,25 +9,32 @@ import { useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { initializeI18n } from "@/localization/i18n";
-
 SplashScreen.preventAutoHideAsync();
+
+async function runStartupTasks() {
+  await initializeI18n();
+  // Auth token restore can be added here when session handling is implemented.
+}
 
 export default function RootLayout() {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     async function prepare() {
-      await initializeI18n();
-      setIsReady(true);
       await SplashScreen.hideAsync();
+
+      try {
+        await runStartupTasks();
+      } finally {
+        setIsReady(true);
+      }
     }
 
     void prepare();
   }, []);
 
   if (!isReady) {
-    return null;
+    return <AppLoadingScreen />;
   }
 
   return (
