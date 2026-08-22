@@ -37,19 +37,43 @@ export type NewsPost = BasePost & {
   image: ImageSourcePropType;
 };
 
+export type AttendeeStatus = "attending" | "declined" | "awaiting";
+
+export type MeetingAttendee = {
+  id: string;
+  name: string;
+  unit: string;
+  avatar?: ImageSourcePropType;
+  status: AttendeeStatus;
+  group: "team" | "residents";
+};
+
+export type AgendaItem = {
+  id: string;
+  title: string;
+  timeRange: string;
+};
+
 export type MeetingPost = BasePost & {
   type: "meeting";
   title: string;
   status: string;
   body: string;
+  agenda: string;
   leadBy: {
     name: string;
     avatar: ImageSourcePropType;
   };
+  createdBy: string;
   meetingType: string;
   location: string;
+  meetingLink?: string;
   date: string;
   time: string;
+  duration: string;
+  isPublic: boolean;
+  attendees: MeetingAttendee[];
+  agendaItems: AgendaItem[];
 };
 
 export type PollPost = BasePost & {

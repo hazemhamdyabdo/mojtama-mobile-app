@@ -56,6 +56,10 @@ export default function RootLayout() {
               name="post/[id]"
               options={{ headerShown: false, presentation: "card" }}
             />
+            <Stack.Screen
+              name="meeting/[id]"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>

@@ -11,7 +11,7 @@ import { DUMMY_POSTS } from "@/features/home/constants/dummy";
 import type { Post } from "@/features/home/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { Redirect, useLocalSearchParams, useRouter, type Href } from "expo-router";
 import { styled } from "nativewind";
 import { useRef, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
@@ -66,9 +66,12 @@ export default function PostDetailsScreen() {
   const postActionsSheetRef = useRef<PostActionsBottomSheetRef>(null);
 
   const post = DUMMY_POSTS.find((item) => item.id === id) ?? DUMMY_POSTS[0];
+
+  if (post.type === "meeting") {
+    return <Redirect href={`/meeting/${post.id}` as Href} />;
+  }
+
   const displayedLikes = post.likesCount + (liked ? 1 : 0);
-  const showMenu = post.type !== "meeting";
-  const showEngagement = post.type !== "meeting";
 
   return (
     <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
@@ -90,21 +93,19 @@ export default function PostDetailsScreen() {
 
         <Text className="text-lg font-bold text-[#1F1F1F]">Post Details</Text>
 
-        {showMenu ? (
-          <Pressable
-            onPress={() => postActionsSheetRef.current?.open(post.id)}
-            accessibilityRole="button"
-            accessibilityLabel="Post options"
-            hitSlop={8}
-            className="absolute right-0 active:opacity-[0.92]"
-          >
-            <MaterialDesignIcons
-              name="dots-vertical"
-              color="#1F1F1F"
-              size={24}
-            />
-          </Pressable>
-        ) : null}
+        <Pressable
+          onPress={() => postActionsSheetRef.current?.open(post.id)}
+          accessibilityRole="button"
+          accessibilityLabel="Post options"
+          hitSlop={8}
+          className="absolute right-0 active:opacity-[0.92]"
+        >
+          <MaterialDesignIcons
+            name="dots-vertical"
+            color="#1F1F1F"
+            size={24}
+          />
+        </Pressable>
       </View>
 
       <ScrollView
@@ -125,22 +126,9 @@ export default function PostDetailsScreen() {
           />
         ) : null}
 
-        {post.type === "meeting" ? (
-          <View className="mb-3 flex-row items-start justify-between">
-            <Text className="flex-1 text-xl font-bold text-[#1F1F1F]">
-              {post.title}
-            </Text>
-            <View className="rounded-full bg-[#F0EDFF] px-3 py-1">
-              <Text className="text-xs font-semibold text-[#7B61FF]">
-                {post.status}
-              </Text>
-            </View>
-          </View>
-        ) : (
-          <Text className="mb-2 text-xl font-bold text-[#1F1F1F]">
-            {post.title}
-          </Text>
-        )}
+        <Text className="mb-2 text-xl font-bold text-[#1F1F1F]">
+          {post.title}
+        </Text>
 
         <Text
           numberOfLines={expanded ? undefined : 3}
@@ -179,44 +167,7 @@ export default function PostDetailsScreen() {
           </View>
         ) : null}
 
-        {post.type === "meeting" ? (
-          <View className="mt-4">
-            <View className="mb-3 flex-row items-center justify-between">
-              <Text className="text-sm text-[#90A1B9]">Lead by</Text>
-              <View className="flex-row items-center gap-2">
-                <Image
-                  source={post.leadBy.avatar}
-                  contentFit="cover"
-                  style={{ width: 24, height: 24, borderRadius: 100 }}
-                />
-                <Text className="text-sm font-medium text-[#1F1F1F]">
-                  {post.leadBy.name}
-                </Text>
-              </View>
-            </View>
-            <View className="mb-3 flex-row items-center justify-between">
-              <Text className="text-sm text-[#90A1B9]">Location</Text>
-              <Text className="text-sm font-medium text-[#1F1F1F]">
-                {post.location}
-              </Text>
-            </View>
-            <View className="mb-2 flex-row items-center justify-between rounded-xl bg-[#F8FAFC] px-4 py-3">
-              <Text className="text-sm text-[#90A1B9]">Date</Text>
-              <Text className="text-sm font-medium text-[#64748B]">
-                {post.date}
-              </Text>
-            </View>
-            <View className="flex-row items-center justify-between rounded-xl bg-[#F8FAFC] px-4 py-3">
-              <Text className="text-sm text-[#90A1B9]">Time</Text>
-              <Text className="text-sm font-medium text-[#64748B]">
-                {post.time}
-              </Text>
-            </View>
-          </View>
-        ) : null}
-
-        {showEngagement ? (
-          <View className="mt-4 flex-row items-center gap-5">
+        <View className="mt-4 flex-row items-center gap-5">
             <View className="flex-row items-center gap-1.5">
               <Pressable
                 onPress={() => setLiked((prev) => !prev)}
@@ -273,7 +224,6 @@ export default function PostDetailsScreen() {
               </Text>
             </View>
           </View>
-        ) : null}
 
         <Text className="mb-3 mt-6 text-base font-bold text-[#1F1F1F]">
           Post informations
@@ -286,17 +236,15 @@ export default function PostDetailsScreen() {
           <InfoRow label="Visibility" value={post.visibility} />
         </View>
 
-        {showEngagement ? (
-          <Pressable
-            onPress={() => commentsSheetRef.current?.open(post.id)}
-            accessibilityRole="button"
-            className="mt-6 items-center justify-center rounded-xl border border-[#7B61FF] py-4 active:opacity-[0.92]"
-          >
-            <Text className="text-base font-semibold text-[#7B61FF]">
-              View Comments
-            </Text>
-          </Pressable>
-        ) : null}
+        <Pressable
+          onPress={() => commentsSheetRef.current?.open(post.id)}
+          accessibilityRole="button"
+          className="mt-6 items-center justify-center rounded-xl border border-[#7B61FF] py-4 active:opacity-[0.92]"
+        >
+          <Text className="text-base font-semibold text-[#7B61FF]">
+            View Comments
+          </Text>
+        </Pressable>
       </ScrollView>
 
       <LikesBottomSheet ref={likesSheetRef} />
@@ -308,17 +256,15 @@ export default function PostDetailsScreen() {
         }
       />
 
-      {showMenu ? (
-        <PostActionsBottomSheet
-          ref={postActionsSheetRef}
-          onMoveToDraft={(postId) => console.log("move to draft:", postId)}
-          onEditPost={(postId) => console.log("edit post:", postId)}
-          onMarkAsUrgent={(postId, isUrgent) =>
-            console.log("mark as urgent:", postId, isUrgent)
-          }
-          onDeletePost={(postId) => console.log("delete post:", postId)}
-        />
-      ) : null}
+      <PostActionsBottomSheet
+        ref={postActionsSheetRef}
+        onMoveToDraft={(postId) => console.log("move to draft:", postId)}
+        onEditPost={(postId) => console.log("edit post:", postId)}
+        onMarkAsUrgent={(postId, isUrgent) =>
+          console.log("mark as urgent:", postId, isUrgent)
+        }
+        onDeletePost={(postId) => console.log("delete post:", postId)}
+      />
     </SafeAreaView>
   );
 }

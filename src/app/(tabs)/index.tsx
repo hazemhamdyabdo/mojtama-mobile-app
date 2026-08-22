@@ -16,6 +16,7 @@ import PostsFeed from "@/features/home/components/PostsFeed";
 import SearchActionBar from "@/features/home/components/SearchActionBar";
 import TopHeader from "@/features/home/components/TopHeader";
 import type { PostType } from "@/features/home/types";
+import { DUMMY_POSTS } from "@/features/home/constants/dummy";
 import { useRouter, type Href } from "expo-router";
 import { useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
@@ -59,6 +60,13 @@ export default function HomeScreen() {
   };
 
   const handlePostPress = (postId: string) => {
+    const post = DUMMY_POSTS.find((item) => item.id === postId);
+
+    if (post?.type === "meeting") {
+      router.push(`/meeting/${postId}` as Href);
+      return;
+    }
+
     router.push(`/post/${postId}` as Href);
   };
 
