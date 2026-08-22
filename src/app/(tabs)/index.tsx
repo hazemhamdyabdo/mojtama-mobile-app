@@ -100,7 +100,7 @@ export default function HomeScreen() {
         />
       </ScrollView>
 
-      <ChatIcon />
+      <ChatIcon onPress={() => router.push("/ai-chat" as Href)} />
 
       <CreatePostBottomSheet
         ref={createPostSheetRef}

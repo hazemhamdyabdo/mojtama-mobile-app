@@ -71,6 +71,10 @@ export default function RootLayout() {
               name="meeting/[id]"
               options={{ headerShown: false, presentation: "card" }}
             />
+            <Stack.Screen
+              name="ai-chat"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>

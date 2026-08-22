@@ -15,6 +15,7 @@
         "backgroundColor": "#fff",
         "foregroundImage": "./assets/images/auth/mojtama-logo.png"
       },
+      "softwareKeyboardLayoutMode": "pan",
       "predictiveBackGestureEnabled": false
     },
     "web": {
