@@ -2,21 +2,67 @@ import type { ImageSourcePropType } from "react-native";
 
 export type PostType = "announcements" | "news" | "poll" | "meeting";
 
-export type Post = {
+type BasePost = {
   id: string;
-  authorName: string;
-  authorAvatar: ImageSourcePropType;
-  timestamp: string;
-  title: string;
-  body: string;
   likesCount: number;
   commentsCount: number;
   viewsCount: number;
   category: string;
   postedAt: string;
   visibility: string;
-  image?: ImageSourcePropType;
 };
+
+export type PollOption = {
+  id: string;
+  label: string;
+  votes: number;
+};
+
+export type AnnouncementPost = BasePost & {
+  type: "announcements";
+  authorName: string;
+  authorAvatar: ImageSourcePropType;
+  timestamp: string;
+  title: string;
+  body: string;
+};
+
+export type NewsPost = BasePost & {
+  type: "news";
+  authorName: string;
+  authorAvatar: ImageSourcePropType;
+  timestamp: string;
+  title: string;
+  body: string;
+  image: ImageSourcePropType;
+};
+
+export type MeetingPost = BasePost & {
+  type: "meeting";
+  title: string;
+  status: string;
+  body: string;
+  leadBy: {
+    name: string;
+    avatar: ImageSourcePropType;
+  };
+  meetingType: string;
+  location: string;
+  date: string;
+  time: string;
+};
+
+export type PollPost = BasePost & {
+  type: "poll";
+  authorName: string;
+  authorAvatar: ImageSourcePropType;
+  timestamp: string;
+  title: string;
+  body: string;
+  options: PollOption[];
+};
+
+export type Post = AnnouncementPost | NewsPost | MeetingPost | PollPost;
 
 export type PostLike = {
   id: string;

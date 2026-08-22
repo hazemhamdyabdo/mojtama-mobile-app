@@ -8,6 +8,7 @@ import PostActionsBottomSheet, {
   type PostActionsBottomSheetRef,
 } from "@/features/home/components/PostActionsBottomSheet";
 import { DUMMY_POSTS } from "@/features/home/constants/dummy";
+import type { Post } from "@/features/home/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -26,7 +27,7 @@ type InfoRowProps = {
 
 function InfoRow({ label, value, isChip = false }: InfoRowProps) {
   return (
-    <View className={`flex-row items-center justify-between px-4 py-2`}>
+    <View className="flex-row items-center justify-between px-4 py-2">
       <Text className="text-base text-[#64748B]">{label}</Text>
       {isChip ? (
         <View className="rounded-full bg-[#F0EDFF] px-4 py-1.5">
@@ -37,6 +38,21 @@ function InfoRow({ label, value, isChip = false }: InfoRowProps) {
       )}
     </View>
   );
+}
+
+function getPostedBy(post: Post) {
+  switch (post.type) {
+    case "announcements":
+    case "news":
+    case "poll":
+      return post.authorName;
+    case "meeting":
+      return post.leadBy.name;
+    default: {
+      const _exhaustive: never = post;
+      return _exhaustive;
+    }
+  }
 }
 
 export default function PostDetailsScreen() {
@@ -51,6 +67,8 @@ export default function PostDetailsScreen() {
 
   const post = DUMMY_POSTS.find((item) => item.id === id) ?? DUMMY_POSTS[0];
   const displayedLikes = post.likesCount + (liked ? 1 : 0);
+  const showMenu = post.type !== "meeting";
+  const showEngagement = post.type !== "meeting";
 
   return (
     <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
@@ -72,15 +90,21 @@ export default function PostDetailsScreen() {
 
         <Text className="text-lg font-bold text-[#1F1F1F]">Post Details</Text>
 
-        <Pressable
-          onPress={() => postActionsSheetRef.current?.open(post.id)}
-          accessibilityRole="button"
-          accessibilityLabel="Post options"
-          hitSlop={8}
-          className="absolute right-0 active:opacity-[0.92]"
-        >
-          <MaterialDesignIcons name="dots-vertical" color="#1F1F1F" size={24} />
-        </Pressable>
+        {showMenu ? (
+          <Pressable
+            onPress={() => postActionsSheetRef.current?.open(post.id)}
+            accessibilityRole="button"
+            accessibilityLabel="Post options"
+            hitSlop={8}
+            className="absolute right-0 active:opacity-[0.92]"
+          >
+            <MaterialDesignIcons
+              name="dots-vertical"
+              color="#1F1F1F"
+              size={24}
+            />
+          </Pressable>
+        ) : null}
       </View>
 
       <ScrollView
@@ -88,7 +112,7 @@ export default function PostDetailsScreen() {
         contentContainerClassName="px-4 pb-8"
         showsVerticalScrollIndicator={false}
       >
-        {post.image ? (
+        {post.type === "news" ? (
           <Image
             source={post.image}
             contentFit="cover"
@@ -101,9 +125,22 @@ export default function PostDetailsScreen() {
           />
         ) : null}
 
-        <Text className="mb-2 text-xl font-bold text-[#1F1F1F]">
-          {post.title}
-        </Text>
+        {post.type === "meeting" ? (
+          <View className="mb-3 flex-row items-start justify-between">
+            <Text className="flex-1 text-xl font-bold text-[#1F1F1F]">
+              {post.title}
+            </Text>
+            <View className="rounded-full bg-[#F0EDFF] px-3 py-1">
+              <Text className="text-xs font-semibold text-[#7B61FF]">
+                {post.status}
+              </Text>
+            </View>
+          </View>
+        ) : (
+          <Text className="mb-2 text-xl font-bold text-[#1F1F1F]">
+            {post.title}
+          </Text>
+        )}
 
         <Text
           numberOfLines={expanded ? undefined : 3}
@@ -124,59 +161,119 @@ export default function PostDetailsScreen() {
           </Pressable>
         ) : null}
 
-        <View className="mt-4 flex-row items-center gap-5">
-          <View className="flex-row items-center gap-1.5">
+        {post.type === "poll" ? (
+          <View className="mt-4 gap-2">
+            {post.options.map((option) => (
+              <View
+                key={option.id}
+                className="flex-row items-center justify-between rounded-xl border border-[#E4E4E7] px-4 py-3"
+              >
+                <Text className="text-base font-semibold text-[#1F1F1F]">
+                  {option.label}
+                </Text>
+                <Text className="text-sm font-medium text-[#7B61FF]">
+                  {option.votes} Vote
+                </Text>
+              </View>
+            ))}
+          </View>
+        ) : null}
+
+        {post.type === "meeting" ? (
+          <View className="mt-4">
+            <View className="mb-3 flex-row items-center justify-between">
+              <Text className="text-sm text-[#90A1B9]">Lead by</Text>
+              <View className="flex-row items-center gap-2">
+                <Image
+                  source={post.leadBy.avatar}
+                  contentFit="cover"
+                  style={{ width: 24, height: 24, borderRadius: 100 }}
+                />
+                <Text className="text-sm font-medium text-[#1F1F1F]">
+                  {post.leadBy.name}
+                </Text>
+              </View>
+            </View>
+            <View className="mb-3 flex-row items-center justify-between">
+              <Text className="text-sm text-[#90A1B9]">Location</Text>
+              <Text className="text-sm font-medium text-[#1F1F1F]">
+                {post.location}
+              </Text>
+            </View>
+            <View className="mb-2 flex-row items-center justify-between rounded-xl bg-[#F8FAFC] px-4 py-3">
+              <Text className="text-sm text-[#90A1B9]">Date</Text>
+              <Text className="text-sm font-medium text-[#64748B]">
+                {post.date}
+              </Text>
+            </View>
+            <View className="flex-row items-center justify-between rounded-xl bg-[#F8FAFC] px-4 py-3">
+              <Text className="text-sm text-[#90A1B9]">Time</Text>
+              <Text className="text-sm font-medium text-[#64748B]">
+                {post.time}
+              </Text>
+            </View>
+          </View>
+        ) : null}
+
+        {showEngagement ? (
+          <View className="mt-4 flex-row items-center gap-5">
+            <View className="flex-row items-center gap-1.5">
+              <Pressable
+                onPress={() => setLiked((prev) => !prev)}
+                accessibilityRole="button"
+                accessibilityLabel={liked ? "Unlike post" : "Like post"}
+                hitSlop={8}
+                className="active:opacity-[0.92]"
+              >
+                <MaterialDesignIcons
+                  name={liked ? "thumb-up" : "thumb-up-outline"}
+                  color={liked ? "#7B61FF" : "#90A1B9"}
+                  size={18}
+                />
+              </Pressable>
+
+              <Pressable
+                onPress={() => likesSheetRef.current?.open(post.id)}
+                accessibilityRole="button"
+                accessibilityLabel="View likes"
+                hitSlop={8}
+                className="active:opacity-[0.92]"
+              >
+                <Text className="text-sm text-[#90A1B9]">
+                  {displayedLikes.toLocaleString()} Likes
+                </Text>
+              </Pressable>
+            </View>
+
             <Pressable
-              onPress={() => setLiked((prev) => !prev)}
+              onPress={() => commentsSheetRef.current?.open(post.id)}
               accessibilityRole="button"
-              accessibilityLabel={liked ? "Unlike post" : "Like post"}
+              accessibilityLabel="View comments"
               hitSlop={8}
-              className="active:opacity-[0.92]"
+              className="flex-row items-center gap-1.5 active:opacity-[0.92]"
             >
               <MaterialDesignIcons
-                name={liked ? "thumb-up" : "thumb-up-outline"}
-                color={liked ? "#7B61FF" : "#90A1B9"}
+                name="comment-outline"
+                color="#90A1B9"
                 size={18}
               />
-            </Pressable>
-
-            <Pressable
-              onPress={() => likesSheetRef.current?.open(post.id)}
-              accessibilityRole="button"
-              accessibilityLabel="View likes"
-              hitSlop={8}
-              className="active:opacity-[0.92]"
-            >
               <Text className="text-sm text-[#90A1B9]">
-                {displayedLikes.toLocaleString()} Likes
+                {post.commentsCount.toLocaleString()} Comments
               </Text>
             </Pressable>
-          </View>
 
-          <Pressable
-            onPress={() => commentsSheetRef.current?.open(post.id)}
-            accessibilityRole="button"
-            accessibilityLabel="View comments"
-            hitSlop={8}
-            className="flex-row items-center gap-1.5 active:opacity-[0.92]"
-          >
-            <MaterialDesignIcons
-              name="comment-outline"
-              color="#90A1B9"
-              size={18}
-            />
-            <Text className="text-sm text-[#90A1B9]">
-              {post.commentsCount.toLocaleString()} Comments
-            </Text>
-          </Pressable>
-
-          <View className="flex-row items-center gap-1.5">
-            <MaterialDesignIcons name="eye-outline" color="#90A1B9" size={18} />
-            <Text className="text-sm text-[#90A1B9]">
-              {post.viewsCount.toLocaleString()} Views
-            </Text>
+            <View className="flex-row items-center gap-1.5">
+              <MaterialDesignIcons
+                name="eye-outline"
+                color="#90A1B9"
+                size={18}
+              />
+              <Text className="text-sm text-[#90A1B9]">
+                {post.viewsCount.toLocaleString()} Views
+              </Text>
+            </View>
           </View>
-        </View>
+        ) : null}
 
         <Text className="mb-3 mt-6 text-base font-bold text-[#1F1F1F]">
           Post informations
@@ -184,20 +281,22 @@ export default function PostDetailsScreen() {
 
         <View className="rounded-2xl border border-[#E4E4E7] bg-white">
           <InfoRow label="Category" value={post.category} isChip />
-          <InfoRow label="Posted by" value={post.authorName} />
+          <InfoRow label="Posted by" value={getPostedBy(post)} />
           <InfoRow label="Posted at" value={post.postedAt} />
           <InfoRow label="Visibility" value={post.visibility} />
         </View>
 
-        <Pressable
-          onPress={() => commentsSheetRef.current?.open(post.id)}
-          accessibilityRole="button"
-          className="mt-6 items-center justify-center rounded-xl border border-[#7B61FF] py-4 active:opacity-[0.92]"
-        >
-          <Text className="text-base font-semibold text-[#7B61FF]">
-            View Comments
-          </Text>
-        </Pressable>
+        {showEngagement ? (
+          <Pressable
+            onPress={() => commentsSheetRef.current?.open(post.id)}
+            accessibilityRole="button"
+            className="mt-6 items-center justify-center rounded-xl border border-[#7B61FF] py-4 active:opacity-[0.92]"
+          >
+            <Text className="text-base font-semibold text-[#7B61FF]">
+              View Comments
+            </Text>
+          </Pressable>
+        ) : null}
       </ScrollView>
 
       <LikesBottomSheet ref={likesSheetRef} />
@@ -209,15 +308,17 @@ export default function PostDetailsScreen() {
         }
       />
 
-      <PostActionsBottomSheet
-        ref={postActionsSheetRef}
-        onMoveToDraft={(postId) => console.log("move to draft:", postId)}
-        onEditPost={(postId) => console.log("edit post:", postId)}
-        onMarkAsUrgent={(postId, isUrgent) =>
-          console.log("mark as urgent:", postId, isUrgent)
-        }
-        onDeletePost={(postId) => console.log("delete post:", postId)}
-      />
+      {showMenu ? (
+        <PostActionsBottomSheet
+          ref={postActionsSheetRef}
+          onMoveToDraft={(postId) => console.log("move to draft:", postId)}
+          onEditPost={(postId) => console.log("edit post:", postId)}
+          onMarkAsUrgent={(postId, isUrgent) =>
+            console.log("mark as urgent:", postId, isUrgent)
+          }
+          onDeletePost={(postId) => console.log("delete post:", postId)}
+        />
+      ) : null}
     </SafeAreaView>
   );
 }

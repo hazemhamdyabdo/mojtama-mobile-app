@@ -1,4 +1,4 @@
-import PostCard from "@/features/home/components/PostCard";
+import PostCard from "@/features/home/components/post-types/PostCard";
 import { DUMMY_POSTS } from "@/features/home/constants/dummy";
 import type { Post } from "@/features/home/types";
 import { View } from "react-native";
