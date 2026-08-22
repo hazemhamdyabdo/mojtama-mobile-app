@@ -3,6 +3,9 @@ import CreatePostBottomSheet, {
   type CreatePostBottomSheetRef,
 } from "@/features/home/components/CreatePostBottomSheet";
 import FilterChip from "@/features/home/components/FilterChip";
+import PostActionsBottomSheet, {
+  type PostActionsBottomSheetRef,
+} from "@/features/home/components/PostActionsBottomSheet";
 import PostsFeed from "@/features/home/components/PostsFeed";
 import SearchActionBar from "@/features/home/components/SearchActionBar";
 import TopHeader from "@/features/home/components/TopHeader";
@@ -16,6 +19,7 @@ export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
   const createPostSheetRef = useRef<CreatePostBottomSheetRef>(null);
+  const postActionsSheetRef = useRef<PostActionsBottomSheetRef>(null);
 
   const handleAddPostPress = () => {
     createPostSheetRef.current?.open();
@@ -38,6 +42,9 @@ export default function HomeScreen() {
     }
   };
 
+  const handleMenuPress = (postId: string) => {
+    postActionsSheetRef.current?.open(postId);
+  };
   return (
     <View className="relative flex-1 bg-white">
       <ScrollView
@@ -53,7 +60,7 @@ export default function HomeScreen() {
           onAddPostPress={handleAddPostPress}
         />
         <FilterChip selectedId={selectedFilter} onSelect={setSelectedFilter} />
-        <PostsFeed />
+        <PostsFeed onMenuPress={handleMenuPress} />
       </ScrollView>
 
       <ChatIcon />
@@ -62,6 +69,15 @@ export default function HomeScreen() {
         ref={createPostSheetRef}
         onSelectPostType={handleSelectPostType}
       />
-    </View>
-  );
+
+      <PostActionsBottomSheet
+        ref={postActionsSheetRef}
+        onMoveToDraft={(postId) => console.log("move to draft:", postId)}
+        onEditPost={(postId) => console.log("edit post:", postId)}
+        onMarkAsUrgent={(postId, isUrgent) =>
+          console.log("mark as urgent:", postId, isUrgent)
+        }
+        onDeletePost={(postId) => console.log("delete post:", postId)}
+      />
+    </View>  );
 }
