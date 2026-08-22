@@ -1,8 +1,14 @@
 import ChatIcon from "@/features/home/components/ChatIcon";
+import CommentsBottomSheet, {
+  type CommentsBottomSheetRef,
+} from "@/features/home/components/CommentsBottomSheet";
 import CreatePostBottomSheet, {
   type CreatePostBottomSheetRef,
 } from "@/features/home/components/CreatePostBottomSheet";
 import FilterChip from "@/features/home/components/FilterChip";
+import LikesBottomSheet, {
+  type LikesBottomSheetRef,
+} from "@/features/home/components/LikesBottomSheet";
 import PostActionsBottomSheet, {
   type PostActionsBottomSheetRef,
 } from "@/features/home/components/PostActionsBottomSheet";
@@ -20,6 +26,8 @@ export default function HomeScreen() {
   const [selectedFilter, setSelectedFilter] = useState("all");
   const createPostSheetRef = useRef<CreatePostBottomSheetRef>(null);
   const postActionsSheetRef = useRef<PostActionsBottomSheetRef>(null);
+  const likesSheetRef = useRef<LikesBottomSheetRef>(null);
+  const commentsSheetRef = useRef<CommentsBottomSheetRef>(null);
 
   const handleAddPostPress = () => {
     createPostSheetRef.current?.open();
@@ -45,6 +53,18 @@ export default function HomeScreen() {
   const handleMenuPress = (postId: string) => {
     postActionsSheetRef.current?.open(postId);
   };
+
+  const handlePostPress = (postId: string) => {
+    router.push(`/post/${postId}` as Href);
+  };
+
+  const handleLikesPress = (postId: string) => {
+    likesSheetRef.current?.open(postId);
+  };
+
+  const handleCommentsPress = (postId: string) => {
+    commentsSheetRef.current?.open(postId);
+  };
   return (
     <View className="relative flex-1 bg-white">
       <ScrollView
@@ -60,7 +80,12 @@ export default function HomeScreen() {
           onAddPostPress={handleAddPostPress}
         />
         <FilterChip selectedId={selectedFilter} onSelect={setSelectedFilter} />
-        <PostsFeed onMenuPress={handleMenuPress} />
+        <PostsFeed
+          onPostPress={handlePostPress}
+          onMenuPress={handleMenuPress}
+          onLikesPress={handleLikesPress}
+          onCommentsPress={handleCommentsPress}
+        />
       </ScrollView>
 
       <ChatIcon />
@@ -79,5 +104,15 @@ export default function HomeScreen() {
         }
         onDeletePost={(postId) => console.log("delete post:", postId)}
       />
-    </View>  );
+
+      <LikesBottomSheet ref={likesSheetRef} />
+
+      <CommentsBottomSheet
+        ref={commentsSheetRef}
+        onSendComment={(postId, text) =>
+          console.log("send comment:", postId, text)
+        }
+      />
+    </View>
+  );
 }

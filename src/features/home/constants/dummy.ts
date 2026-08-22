@@ -1,7 +1,8 @@
-import type { Post } from "@/features/home/types";
+import type { Post, PostComment, PostLike } from "@/features/home/types";
 
 const mojtamaAvatar = require("@/features/home/constants/mojtama-avatar.png");
 const dummyFeedImage = require("@/features/home/constants/dummy-feed.jpg");
+const dummyUserAvatar = require("@/features/home/constants/dummy-avatar.jpg");
 
 export const DUMMY_POSTS: Post[] = [
   {
@@ -14,6 +15,10 @@ export const DUMMY_POSTS: Post[] = [
     body: "We're excited to announce that new gym equipment will be installed in the community gym starting next week. This upgrade includes treadmills, elliptical machines, and weight training equipment to enhance your fitness experience.",
     likesCount: 1295,
     commentsCount: 638,
+    viewsCount: 405,
+    category: "General",
+    postedAt: "Today , 9:09 PM",
+    visibility: "All Members",
   },
   {
     id: "2",
@@ -24,6 +29,10 @@ export const DUMMY_POSTS: Post[] = [
     body: "The board meeting held on January 15th covered several important topics including budget approval for Q1, upcoming community events, and resident feedback sessions. Key decisions were made regarding maintenance schedules and community improvement projects.",
     likesCount: 1295,
     commentsCount: 638,
+    viewsCount: 405,
+    category: "General",
+    postedAt: "Today , 9:09 PM",
+    visibility: "All Members",
   },
   {
     id: "3",
@@ -34,6 +43,10 @@ export const DUMMY_POSTS: Post[] = [
     body: "We're excited to announce that new gym equipment will be installed in the community gym starting next week. This upgrade includes treadmills, elliptical machines, and weight training equipment to enhance your fitness experience.",
     likesCount: 1295,
     commentsCount: 638,
+    viewsCount: 405,
+    category: "General",
+    postedAt: "Today , 9:09 PM",
+    visibility: "All Members",
   },
   {
     id: "4",
@@ -44,6 +57,10 @@ export const DUMMY_POSTS: Post[] = [
     body: "We're excited to announce that new gym equipment will be installed in the community gym starting next week. This upgrade includes treadmills, elliptical machines, and weight training equipment to enhance your fitness experience.",
     likesCount: 1295,
     commentsCount: 638,
+    viewsCount: 405,
+    category: "General",
+    postedAt: "Today , 9:09 PM",
+    visibility: "All Members",
   },
   {
     id: "5",
@@ -54,6 +71,10 @@ export const DUMMY_POSTS: Post[] = [
     body: "We're excited to announce that new gym equipment will be installed in the community gym starting next week. This upgrade includes treadmills, elliptical machines, and weight training equipment to enhance your fitness experience.",
     likesCount: 1295,
     commentsCount: 638,
+    viewsCount: 405,
+    category: "General",
+    postedAt: "Today , 9:09 PM",
+    visibility: "All Members",
   },
   {
     id: "6",
@@ -64,5 +85,80 @@ export const DUMMY_POSTS: Post[] = [
     body: "We're excited to announce that new gym equipment will be installed in the community gym starting next week. This upgrade includes treadmills, elliptical machines, and weight training equipment to enhance your fitness experience.",
     likesCount: 1295,
     commentsCount: 638,
+    viewsCount: 405,
+    category: "General",
+    postedAt: "Today , 9:09 PM",
+    visibility: "All Members",
+  },
+];
+
+export const DUMMY_LIKES: PostLike[] = [
+  {
+    id: "1",
+    name: "Jade Smith",
+    unit: "2A/B",
+    time: "8:30PM",
+    avatar: dummyUserAvatar,
+  },
+  { id: "2", name: "Priya Sharma", unit: "2A/B", time: "6:30PM" },
+  {
+    id: "3",
+    name: "Omar Ali",
+    unit: "2A/B",
+    time: "3:30PM",
+    avatar: dummyUserAvatar,
+  },
+  {
+    id: "4",
+    name: "Ahmed Fawzy",
+    unit: "2A/B",
+    time: "12:30PM",
+    avatar: dummyUserAvatar,
+  },
+  { id: "5", name: "Manar Khaled", unit: "2A/B", time: "4:30AM" },
+  {
+    id: "6",
+    name: "Jade Smith",
+    unit: "2A/B",
+    time: "Yesterday - 11:30PM",
+    avatar: dummyUserAvatar,
+  },
+  { id: "7", name: "Jade Smith", unit: "2A/B", time: "Yesterday - 6:30PM" },
+];
+
+export const DUMMY_COMMENTS: PostComment[] = [
+  {
+    id: "1",
+    authorName: "Jade Smith",
+    time: "4:30PM",
+    text: "The elevator is currently out of service due to a malfunction. Please use the stairs or contact maintenance assistance.",
+    likesCount: 1295,
+    avatar: dummyUserAvatar,
+    replies: [
+      {
+        id: "1-1",
+        authorName: "Jade Smith",
+        time: "4:30PM",
+        text: "The elevator is currently out of service due to a malfunction. Please use the stairs or contact maintenance assistan cestairs or contact maintenance assistance...",
+        likesCount: 1295,
+        avatar: dummyUserAvatar,
+      },
+      {
+        id: "1-2",
+        authorName: "Jade Smith",
+        time: "4:30PM",
+        text: "The elevator is currently out of service due to a malfunction. Please use the stairs or contact maintenance assistan cestairs or contact maintenance assistance...",
+        likesCount: 1295,
+        avatar: dummyUserAvatar,
+      },
+    ],
+  },
+  {
+    id: "2",
+    authorName: "Jade Smith",
+    time: "4:30PM",
+    text: "The elevator is currently out of service due to a malfunction. Please use the stairs or contact maintenance assistance.",
+    likesCount: 1295,
+    avatar: dummyUserAvatar,
   },
 ];

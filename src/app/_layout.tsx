@@ -40,6 +40,10 @@ export default function RootLayout() {
               name="create-announcement"
               options={{ headerShown: false, presentation: "card" }}
             />
+            <Stack.Screen
+              name="post/[id]"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>

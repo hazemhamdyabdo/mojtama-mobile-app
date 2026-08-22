@@ -6,14 +6,30 @@ import { Pressable, Text, View } from "react-native";
 
 type PostCardProps = {
   post: Post;
+  onPress?: (postId: string) => void;
   onMenuPress?: (postId: string) => void;
+  onLikesPress?: (postId: string) => void;
+  onCommentsPress?: (postId: string) => void;
 };
 
-export default function PostCard({ post, onMenuPress }: PostCardProps) {
+export default function PostCard({
+  post,
+  onPress,
+  onMenuPress,
+  onLikesPress,
+  onCommentsPress,
+}: PostCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const [liked, setLiked] = useState(false);
+
+  const displayedLikes = post.likesCount + (liked ? 1 : 0);
 
   return (
-    <View className="rounded-2xl border border-[#E4E4E7] bg-white p-4">
+    <Pressable
+      onPress={() => onPress?.(post.id)}
+      accessibilityRole="button"
+      className="rounded-2xl border border-[#E4E4E7] bg-white p-4 active:opacity-[0.96]"
+    >
       <View className="mb-3 flex-row items-center">
         <Image
           source={post.authorAvatar}
@@ -76,17 +92,40 @@ export default function PostCard({ post, onMenuPress }: PostCardProps) {
 
       <View className="mt-4 flex-row items-center gap-5">
         <View className="flex-row items-center gap-1.5">
-          <MaterialDesignIcons
-            name="thumb-up-outline"
-            color="#90A1B9"
-            size={18}
-          />
-          <Text className="text-sm text-[#90A1B9]">
-            {post.likesCount.toLocaleString()} Likes
-          </Text>
+          <Pressable
+            onPress={() => setLiked((prev) => !prev)}
+            accessibilityRole="button"
+            accessibilityLabel={liked ? "Unlike post" : "Like post"}
+            hitSlop={8}
+            className="active:opacity-[0.92]"
+          >
+            <MaterialDesignIcons
+              name={liked ? "thumb-up" : "thumb-up-outline"}
+              color={liked ? "#7B61FF" : "#90A1B9"}
+              size={18}
+            />
+          </Pressable>
+
+          <Pressable
+            onPress={() => onLikesPress?.(post.id)}
+            accessibilityRole="button"
+            accessibilityLabel="View likes"
+            hitSlop={8}
+            className="active:opacity-[0.92]"
+          >
+            <Text className="text-sm text-[#90A1B9]">
+              {displayedLikes.toLocaleString()} Likes
+            </Text>
+          </Pressable>
         </View>
 
-        <View className="flex-row items-center gap-1.5">
+        <Pressable
+          onPress={() => onCommentsPress?.(post.id)}
+          accessibilityRole="button"
+          accessibilityLabel="View comments"
+          hitSlop={8}
+          className="flex-row items-center gap-1.5 active:opacity-[0.92]"
+        >
           <MaterialDesignIcons
             name="comment-outline"
             color="#90A1B9"
@@ -95,8 +134,8 @@ export default function PostCard({ post, onMenuPress }: PostCardProps) {
           <Text className="text-sm text-[#90A1B9]">
             {post.commentsCount.toLocaleString()} Comments
           </Text>
-        </View>
+        </Pressable>
       </View>
-    </View>
+    </Pressable>
   );
 }
