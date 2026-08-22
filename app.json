@@ -37,7 +37,13 @@
         }
       ],
       "expo-localization",
-      "@react-native-vector-icons/material-design-icons"
+      "@react-native-vector-icons/material-design-icons",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Mojtama to access your photos to upload announcement images."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

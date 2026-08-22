@@ -36,6 +36,10 @@ export default function RootLayout() {
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="create-announcement"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>

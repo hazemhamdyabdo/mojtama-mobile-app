@@ -7,10 +7,12 @@ import PostsFeed from "@/features/home/components/PostsFeed";
 import SearchActionBar from "@/features/home/components/SearchActionBar";
 import TopHeader from "@/features/home/components/TopHeader";
 import type { PostType } from "@/features/home/types";
+import { useRouter, type Href } from "expo-router";
 import { useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 
 export default function HomeScreen() {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
   const createPostSheetRef = useRef<CreatePostBottomSheetRef>(null);
@@ -20,7 +22,20 @@ export default function HomeScreen() {
   };
 
   const handleSelectPostType = (type: PostType) => {
-    console.log("selected post type:", type);
+    switch (type) {
+      case "announcements":
+        router.push("/create-announcement" as Href);
+        break;
+      case "news":
+      case "poll":
+      case "meeting":
+        console.log("selected post type:", type);
+        break;
+      default: {
+        const _exhaustive: never = type;
+        console.log("selected post type:", _exhaustive);
+      }
+    }
   };
 
   return (
