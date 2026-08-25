@@ -3,3 +3,81 @@
 @import "tailwindcss/utilities.css";
 
 @import "nativewind/theme";
+
+@theme {
+  /* Text */
+  --color-main-text: #f2f0ff;
+  --color-sec-text: #90a1b9;
+  --color-input-text: #cad5e2;
+
+  /* Primary */
+  --color-primary: #7b61ff;
+  --color-primary-50: #f2f0ff; /* badges BG */
+  --color-primary-100: #e9e4ff;
+  --color-primary-200: #d3caff;
+  --color-primary-300: #bdb0ff;
+  --color-primary-400: #a795ff;
+  --color-primary-500: #917bff;
+  --color-primary-600: #7b61ff;
+  --color-primary-700: #6650d4;
+  --color-primary-800: #5240aa;
+  --color-primary-900: #3d307f;
+  --color-primary-950: #292055;
+  --color-primary-1000: #14102a;
+
+  /* Slate */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0; /* cards border */
+  --color-slate-300: #cad5e2;
+  --color-slate-400: #90a1b9;
+  --color-slate-500: #62748e;
+  --color-slate-600: #45556c;
+  --color-slate-700: #314158;
+  --color-slate-800: #1d293d;
+  --color-slate-900: #0f172b;
+  --color-slate-950: #020618;
+  --color-card-border: #e2e8f0;
+
+  /* Pending */
+  --color-pending: #fbbf24;
+  --color-pending-50: #fff6de; /* badges BG */
+  --color-pending-100: #ffe8b1; /* badges border */
+  --color-pending-200: #fddf91;
+  --color-pending-300: #fcd46d;
+  --color-pending-400: #fbc948;
+  --color-pending-500: #fbbf24;
+  --color-pending-600: #d19f1e;
+  --color-pending-700: #a77f18;
+  --color-pending-800: #7d5f12;
+  --color-pending-900: #533f0c;
+  --color-pending-950: #291f06;
+
+  /* Approved */
+  --color-approved: #34d399;
+  --color-approved-50: #e1f9f0; /* badges BG */
+  --color-approved-100: #c7f4e3; /* badges border */
+  --color-approved-200: #99e9cc;
+  --color-approved-300: #77e1bb;
+  --color-approved-400: #55daaa;
+  --color-approved-500: #34d399;
+  --color-approved-600: #2baf7f;
+  --color-approved-700: #228c66;
+  --color-approved-800: #1a694c;
+  --color-approved-900: #114633;
+  --color-approved-950: #082319;
+
+  /* Rejected */
+  --color-rejected: #f87171;
+  --color-rejected-50: #ffe6e6; /* badges BG */
+  --color-rejected-100: #fed5d5; /* badges border */
+  --color-rejected-200: #fbb8b8;
+  --color-rejected-300: #faa0a0;
+  --color-rejected-400: #f98888;
+  --color-rejected-500: #f87171;
+  --color-rejected-600: #ce5e5e;
+  --color-rejected-700: #a54b4b;
+  --color-rejected-800: #7c3838;
+  --color-rejected-900: #522525;
+  --color-rejected-950: #291212;
+}
