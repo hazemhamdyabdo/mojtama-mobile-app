@@ -21,6 +21,9 @@ export default function SettingsScreen() {
 
   const handleSettingsPress = (itemId: string) => {
     switch (itemId) {
+      case "profile":
+        router.push("/profile" as Href);
+        break;
       case "language":
         router.push("/language-choice" as Href);
         break;

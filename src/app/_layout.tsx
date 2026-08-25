@@ -75,6 +75,10 @@ export default function RootLayout() {
               name="ai-chat"
               options={{ headerShown: false, presentation: "card" }}
             />
+            <Stack.Screen
+              name="profile"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>
