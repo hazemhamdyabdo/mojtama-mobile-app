@@ -7,6 +7,7 @@ import PaymentDetailsLineItemsCard from "@/features/payments/components/PaymentD
 import PaymentDetailsTitleSection from "@/features/payments/components/PaymentDetailsTitleSection";
 import PaymentDetailsTotalRow from "@/features/payments/components/PaymentDetailsTotalRow";
 import type { PaymentBillDetails } from "@/features/payments/types";
+import { useRouter, type Href } from "expo-router";
 import { styled } from "nativewind";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
@@ -20,8 +21,10 @@ type PaymentDetailsScreenProps = {
 export default function PaymentDetailsScreen({
   bill,
 }: PaymentDetailsScreenProps) {
+  const router = useRouter();
+
   const handlePayPress = () => {
-    console.log("pay invoice:", bill.id);
+    router.push(`/payment/${bill.id}/methods` as Href);
   };
 
   const handleDownloadPress = () => {

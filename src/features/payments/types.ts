@@ -1,3 +1,5 @@
+import type { ImageSourcePropType } from "react-native";
+
 export type PaymentTab = "overview" | "history";
 
 export type PaymentBillStatus = "pending" | "overdue" | "paid";
@@ -50,4 +52,20 @@ export type PaymentBillDetails = PaymentBill & {
   total: string;
   company: PaymentCompanyInfo;
   receipt?: PaymentReceiptInfo;
+};
+
+export type PaymentMethodType = "bank-transfer" | "digital-wallet";
+
+export type PaymentBank = {
+  id: string;
+  name: string;
+  nameAr: string;
+  logo: ImageSourcePropType;
+};
+
+export type PaymentWallet = {
+  id: string;
+  name: string;
+  nameAr: string;
+  logo: ImageSourcePropType;
 };

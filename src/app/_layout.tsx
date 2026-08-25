@@ -131,6 +131,10 @@ export default function RootLayout() {
               name="payment/[id]"
               options={{ headerShown: false, presentation: "card" }}
             />
+            <Stack.Screen
+              name="payment/[id]/methods"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>
