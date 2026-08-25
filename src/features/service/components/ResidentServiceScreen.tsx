@@ -16,6 +16,11 @@ export default function ResidentServiceScreen() {
       return;
     }
 
+    if (itemId === "payments") {
+      router.push("/payments" as Href);
+      return;
+    }
+
     console.log("resident service pressed:", itemId);
   };
 

@@ -123,6 +123,14 @@ export default function RootLayout() {
               name="update-phone-new"
               options={{ headerShown: false, presentation: "card" }}
             />
+            <Stack.Screen
+              name="payments"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="payment/[id]"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>

@@ -17,6 +17,11 @@ export default function AdminServiceScreen() {
       return;
     }
 
+    if (itemId === "payments") {
+      router.push("/payments" as Href);
+      return;
+    }
+
     console.log("admin service pressed:", itemId);
   };
 
