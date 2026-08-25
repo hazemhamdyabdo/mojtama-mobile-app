@@ -79,6 +79,10 @@ export default function RootLayout() {
               name="profile"
               options={{ headerShown: false, presentation: "card" }}
             />
+            <Stack.Screen
+              name="notification-preferences"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>

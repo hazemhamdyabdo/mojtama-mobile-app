@@ -29,6 +29,9 @@ export default function SettingsScreen() {
       case "language":
         setIsLanguageSettingsOpen(true);
         break;
+      case "notifications":
+        router.push("/notification-preferences" as Href);
+        break;
       default:
         console.log("settings item pressed:", itemId);
     }
