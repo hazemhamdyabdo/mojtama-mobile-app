@@ -32,6 +32,12 @@ export default function SettingsScreen() {
       case "notifications":
         router.push("/notification-preferences" as Href);
         break;
+      case "privacy":
+        router.push("/privacy" as Href);
+        break;
+      case "help":
+        router.push("/help" as Href);
+        break;
       default:
         console.log("settings item pressed:", itemId);
     }

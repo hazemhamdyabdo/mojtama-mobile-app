@@ -87,6 +87,14 @@ export default function RootLayout() {
               name="notifications"
               options={{ headerShown: false, presentation: "card" }}
             />
+            <Stack.Screen
+              name="privacy"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="help"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>
