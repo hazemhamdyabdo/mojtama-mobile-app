@@ -81,7 +81,7 @@ export default function TabsLayout() {
             title: "Service",
             tabBarIcon: ({ color, size, focused }) => (
               <TabBarIcon
-                name="tools"
+                name="account-group-outline"
                 color={color}
                 size={size ?? 24}
                 focused={focused}

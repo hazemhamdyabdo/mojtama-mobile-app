@@ -3,6 +3,10 @@ import {
   OTP_LENGTH,
   type OtpFormValues,
 } from "@/features/auth/schemas/otpSchema";
+import {
+  mapAuthRoleToServiceRole,
+  saveUserRole,
+} from "@/features/service/storage/userRole";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, type Href } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -22,9 +26,10 @@ const RESEND_SECONDS = 18;
 
 type VerifyOtpFormProps = {
   phone: string;
+  authRole?: string;
 };
 
-function VerifyOtpFormFields({ phone }: VerifyOtpFormProps) {
+function VerifyOtpFormFields({ phone, authRole }: VerifyOtpFormProps) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const inputRefs = useRef<Array<TextInputType | null>>([]);
@@ -83,9 +88,16 @@ function VerifyOtpFormFields({ phone }: VerifyOtpFormProps) {
     }
   };
 
-  const onSubmit = (values: OtpFormValues) => {
+  const onSubmit = async (values: OtpFormValues) => {
     // TODO: connect to auth API
     console.log("verify otp", { phone, otp: values.otp });
+
+    const serviceRole = mapAuthRoleToServiceRole(authRole);
+    if (serviceRole) {
+      await saveUserRole(serviceRole);
+    }
+
+    router.push("/(tabs)" as Href);
   };
 
   const formattedTimer = `00:${String(Math.max(secondsLeft, 0)).padStart(2, "0")}`;
@@ -184,10 +196,14 @@ function VerifyOtpFormFields({ phone }: VerifyOtpFormProps) {
   );
 }
 
-export default function VerifyOtpForm({ phone }: VerifyOtpFormProps) {
+export default function VerifyOtpForm({ phone, authRole }: VerifyOtpFormProps) {
   const { i18n } = useTranslation();
   return (
-    <VerifyOtpFormFields key={`${i18n.language}-${phone}`} phone={phone} />
+    <VerifyOtpFormFields
+      key={`${i18n.language}-${phone}-${authRole ?? "default"}`}
+      phone={phone}
+      authRole={authRole}
+    />
   );
 }
 

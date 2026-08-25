@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export default function VerifyOtpScreen() {
   const router = useRouter();
-  const { phone } = useLocalSearchParams<{ phone?: string }>();
+  const { phone, role } = useLocalSearchParams<{ phone?: string; role?: string }>();
 
   useEffect(() => {
     if (!phone) {
@@ -28,7 +28,7 @@ export default function VerifyOtpScreen() {
 
   return (
     <AuthScreenLayout onBack={handleBack}>
-      <VerifyOtpForm phone={phone} />
+      <VerifyOtpForm phone={phone} authRole={role} />
     </AuthScreenLayout>
   );
 }

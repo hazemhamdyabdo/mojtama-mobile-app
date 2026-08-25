@@ -20,7 +20,7 @@ export default function LoginWithPhoneScreen() {
 
   return (
     <AuthScreenLayout onBack={handleBack}>
-      <LoginWithPhoneForm />
+      <LoginWithPhoneForm authRole={role} />
     </AuthScreenLayout>
   );
 }

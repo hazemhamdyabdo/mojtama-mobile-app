@@ -20,7 +20,7 @@ export default function Login() {
 
   return (
     <AuthScreenLayout onBack={handleBack}>
-      <LoginForm />
+      <LoginForm authRole={role} />
     </AuthScreenLayout>
   );
 }

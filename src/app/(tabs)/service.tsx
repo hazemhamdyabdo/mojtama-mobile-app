@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import ServiceScreen from "@/features/service/components/ServiceScreen";
 
-export default function ServiceScreen() {
-  return (
-    <View>
-      <Text>Service</Text>
-    </View>
-  );
+export default function ServiceRoute() {
+  return <ServiceScreen />;
 }

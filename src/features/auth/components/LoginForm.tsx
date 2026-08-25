@@ -2,6 +2,10 @@ import {
   createLoginSchema,
   type LoginFormValues,
 } from "@/features/auth/schemas/loginSchema";
+import {
+  mapAuthRoleToServiceRole,
+  saveUserRole,
+} from "@/features/service/storage/userRole";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, type Href } from "expo-router";
 import { useMemo } from "react";
@@ -63,7 +67,11 @@ function AuthTextField({
   );
 }
 
-function LoginFormFields() {
+type LoginFormFieldsProps = {
+  authRole?: string;
+};
+
+function LoginFormFields({ authRole }: LoginFormFieldsProps) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
@@ -81,9 +89,15 @@ function LoginFormFields() {
     },
   });
 
-  const onSubmit = (values: LoginFormValues) => {
+  const onSubmit = async (values: LoginFormValues) => {
     // TODO: connect to auth API
     console.log("login", values);
+
+    const serviceRole = mapAuthRoleToServiceRole(authRole);
+    if (serviceRole) {
+      await saveUserRole(serviceRole);
+    }
+
     router.push("/(tabs)" as Href);
   };
 
@@ -162,7 +176,12 @@ function LoginFormFields() {
       </View>
 
       <Pressable
-        onPress={() => router.push("/login-with-phone" as Href)}
+        onPress={() =>
+          router.push({
+            pathname: "/login-with-phone",
+            params: authRole ? { role: authRole } : undefined,
+          } as Href)
+        }
         className="w-full items-center justify-center rounded-2xl border border-[#7B61FF] py-4 active:opacity-[0.92]"
       >
         <Text className="text-base font-bold text-[#7B61FF]">
@@ -173,8 +192,14 @@ function LoginFormFields() {
   );
 }
 
-export default function LoginForm() {
+type LoginFormProps = {
+  authRole?: string;
+};
+
+export default function LoginForm({ authRole }: LoginFormProps) {
   const { i18n } = useTranslation();
 
-  return <LoginFormFields key={i18n.language} />;
+  return (
+    <LoginFormFields key={`${i18n.language}-${authRole ?? "default"}`} authRole={authRole} />
+  );
 }

@@ -28,11 +28,13 @@ import CountryFlag from "react-native-country-flag";
 type PhoneLoginFormFieldsProps = {
   selectedCountry: AuthCountry;
   onOpenCountryPicker: () => void;
+  authRole?: string;
 };
 
 function PhoneLoginFormFields({
   selectedCountry,
   onOpenCountryPicker,
+  authRole,
 }: PhoneLoginFormFieldsProps) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
@@ -62,7 +64,10 @@ function PhoneLoginFormFields({
 
     router.push({
       pathname: "/verify-otp",
-      params: { phone: formattedPhone },
+      params: {
+        phone: formattedPhone,
+        ...(authRole ? { role: authRole } : {}),
+      },
     });
   };
 
@@ -166,7 +171,11 @@ function PhoneLoginFormFields({
   );
 }
 
-export default function LoginWithPhoneForm() {
+type LoginWithPhoneFormProps = {
+  authRole?: string;
+};
+
+export default function LoginWithPhoneForm({ authRole }: LoginWithPhoneFormProps) {
   const { i18n } = useTranslation();
   const countryPickerRef = useRef<CountryPickerBottomSheetRef>(null);
   const [selectedCountry, setSelectedCountry] =
@@ -181,9 +190,10 @@ export default function LoginWithPhoneForm() {
       />
 
       <PhoneLoginFormFields
-        key={`${i18n.language}-${selectedCountry.isoCode}`}
+        key={`${i18n.language}-${selectedCountry.isoCode}-${authRole ?? "default"}`}
         selectedCountry={selectedCountry}
         onOpenCountryPicker={() => countryPickerRef.current?.open()}
+        authRole={authRole}
       />
     </>
   );

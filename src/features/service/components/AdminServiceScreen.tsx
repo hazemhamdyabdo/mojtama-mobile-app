@@ -1,0 +1,46 @@
+import CommunityOverviewSection from "@/features/service/components/CommunityOverviewSection";
+import ManageServicesSection from "@/features/service/components/ManageServicesSection";
+import ServiceHeader from "@/features/service/components/ServiceHeader";
+import {
+  ADMIN_SERVICE_ITEMS,
+  SERVICE_USER,
+} from "@/features/service/constants/dummy";
+import { useRouter, type Href } from "expo-router";
+import { ScrollView } from "react-native";
+
+export default function AdminServiceScreen() {
+  const router = useRouter();
+
+  const handleServicePress = (itemId: string) => {
+    if (itemId === "emergency") {
+      router.push("/help" as Href);
+      return;
+    }
+
+    console.log("admin service pressed:", itemId);
+  };
+
+  return (
+    <ScrollView
+      className="flex-1 bg-white"
+      contentContainerClassName="px-4 pb-28 pt-4"
+      showsVerticalScrollIndicator={false}
+    >
+      <ServiceHeader
+        name={SERVICE_USER.name}
+        role="admin"
+        subtitle="Community Management"
+        avatar={SERVICE_USER.avatar}
+        notificationCount={SERVICE_USER.notificationCount}
+        onNotificationsPress={() => router.push("/notifications" as Href)}
+      />
+
+      <CommunityOverviewSection />
+
+      <ManageServicesSection
+        items={ADMIN_SERVICE_ITEMS}
+        onItemPress={handleServicePress}
+      />
+    </ScrollView>
+  );
+}
