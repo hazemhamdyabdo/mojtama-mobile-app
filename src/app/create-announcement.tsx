@@ -1,4 +1,4 @@
-import CreatePostForm from "@/features/home/components/CreatePostForm";
+import CreateAnnouncementForm from "@/features/home/components/CreateAnnouncementForm";
 import CreatePostScreenLayout from "@/features/home/components/CreatePostScreenLayout";
 import { createAnnouncementPost } from "@/features/home/api";
 import type { CreateAnnouncementFormValues } from "@/features/home/schemas/createAnnouncementSchema";
@@ -14,7 +14,7 @@ export default function CreateAnnouncementScreen() {
 
   return (
     <CreatePostScreenLayout>
-      <CreatePostForm variant="announcement" onSubmit={handleSubmit} />
+      <CreateAnnouncementForm onSubmit={handleSubmit} />
     </CreatePostScreenLayout>
   );
 }
