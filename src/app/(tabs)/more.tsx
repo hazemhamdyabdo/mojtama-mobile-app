@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import SettingsScreen from "@/features/settings/components/SettingsScreen";
 
 export default function MoreScreen() {
-  return (
-    <View>
-      <Text>More</Text>
-    </View>
-  );
+  return <SettingsScreen />;
 }
