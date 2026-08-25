@@ -85,7 +85,9 @@ export default function HomeScreen() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <TopHeader />
+        <TopHeader
+          onNotificationsPress={() => router.push("/notifications" as Href)}
+        />
         <SearchActionBar
           value={searchQuery}
           onChangeText={setSearchQuery}
