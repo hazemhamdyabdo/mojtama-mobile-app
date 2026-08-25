@@ -108,6 +108,16 @@
       }
     }
   },
+  "settings": {
+    "language": {
+      "title": "Language",
+      "back": "Go back",
+      "selectTitle": "Select Language",
+      "selectSubtitle": "Choose Your Preferred Language For The App",
+      "infoTitle": "Language Settings",
+      "infoDescription": "Changing The Language Will Update The App Interface Immediately. Some Content May Remain In The Original Language."
+    }
+  },
   "errors": {
     "notFound": "Page not found"
   }
