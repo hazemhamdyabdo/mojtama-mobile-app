@@ -95,6 +95,34 @@ export default function RootLayout() {
               name="help"
               options={{ headerShown: false, presentation: "card" }}
             />
+            <Stack.Screen
+              name="update-name"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="update-email-current"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="update-email-verify"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="update-email-new"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="update-phone-current"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="update-phone-verify"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="update-phone-new"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>

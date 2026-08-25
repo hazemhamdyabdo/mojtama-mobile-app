@@ -38,6 +38,15 @@ export default function SettingsScreen() {
       case "help":
         router.push("/help" as Href);
         break;
+      case "update-name":
+        router.push("/update-name" as Href);
+        break;
+      case "update-email":
+        router.push("/update-email-current" as Href);
+        break;
+      case "update-phone":
+        router.push("/update-phone-current" as Href);
+        break;
       default:
         console.log("settings item pressed:", itemId);
     }
