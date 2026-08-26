@@ -2,8 +2,11 @@ import VisitorForm from "@/features/visitors/components/VisitorForm";
 import VisitorFormHeader from "@/features/visitors/components/VisitorFormHeader";
 import type { VisitorFormValues } from "@/features/visitors/schemas/visitorSchema";
 import { useRouter } from "expo-router";
+import { styled } from "nativewind";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
+
+const SafeAreaView = styled(RNSafeAreaView);
 
 export default function CreateVisitorScreen() {
   const router = useRouter();
