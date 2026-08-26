@@ -2,7 +2,13 @@ import MaterialDesignIcons from "@react-native-vector-icons/material-design-icon
 import { useRouter } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
-export default function RequestDetailsHeader() {
+type RequestDetailsHeaderProps = {
+  title?: string;
+};
+
+export default function RequestDetailsHeader({
+  title = "Request Details",
+}: RequestDetailsHeaderProps) {
   const router = useRouter();
 
   return (
@@ -18,7 +24,7 @@ export default function RequestDetailsHeader() {
         </View>
       </Pressable>
 
-      <Text className="text-lg font-bold text-[#1F1F1F]">Request Details</Text>
+      <Text className="text-lg font-bold text-[#1F1F1F]">{title}</Text>
     </View>
   );
 }

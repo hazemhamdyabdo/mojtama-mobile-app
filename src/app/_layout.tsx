@@ -164,7 +164,11 @@ export default function RootLayout() {
               options={{ headerShown: false, presentation: "card" }}
             />
             <Stack.Screen
-              name="request/[id]"
+              name="request/[id]/index"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="request/[id]/edit"
               options={{ headerShown: false, presentation: "card" }}
             />
           </Stack>

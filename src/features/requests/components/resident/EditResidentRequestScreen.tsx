@@ -1,7 +1,11 @@
 import CreateRequestForm from "@/features/requests/components/CreateRequestForm";
 import type { CreateRequestFormValues } from "@/features/requests/schemas/createRequestSchema";
-import { addRequestToState } from "@/features/requests/store/requestState";
-import { buildServiceRequestFromForm } from "@/features/requests/utils/createRequest";
+import { updateRequestInState } from "@/features/requests/store/requestState";
+import type { ServiceRequest } from "@/features/requests/types";
+import {
+  applyFormValuesToRequest,
+  mapRequestToFormValues,
+} from "@/features/requests/utils/createRequest";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
 import { styled } from "nativewind";
@@ -10,11 +14,17 @@ import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
-export default function CreateManagerRequestScreen() {
+type EditResidentRequestScreenProps = {
+  request: ServiceRequest;
+};
+
+export default function EditResidentRequestScreen({
+  request,
+}: EditResidentRequestScreenProps) {
   const router = useRouter();
 
   const handleSubmit = (values: CreateRequestFormValues) => {
-    addRequestToState(buildServiceRequestFromForm(values));
+    updateRequestInState(applyFormValuesToRequest(request, values));
     router.back();
   };
 
@@ -37,12 +47,14 @@ export default function CreateManagerRequestScreen() {
             </View>
           </Pressable>
 
-          <Text className="text-lg font-bold text-[#1F1F1F]">
-            Create Request
-          </Text>
+          <Text className="text-lg font-bold text-[#1F1F1F]">Edit Request</Text>
         </View>
 
-        <CreateRequestForm onSubmit={handleSubmit} />
+        <CreateRequestForm
+          variant="edit"
+          defaultValues={mapRequestToFormValues(request)}
+          onSubmit={handleSubmit}
+        />
       </View>
     </SafeAreaView>
   );

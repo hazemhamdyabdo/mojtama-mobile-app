@@ -1,0 +1,42 @@
+export const AUTHORITY_CONTACTS = [
+  {
+    id: "fire",
+    label: "Fire Emergency",
+    phone: "911",
+    icon: "fire" as const,
+    iconColor: "#EF4444",
+    iconBackground: "bg-[#FEE2E2]",
+  },
+  {
+    id: "water-damage",
+    label: "Water Damage",
+    phone: "911",
+    icon: "water" as const,
+    iconColor: "#2563EB",
+    iconBackground: "bg-[#DBEAFE]",
+  },
+  {
+    id: "medical",
+    label: "Medical Emergency",
+    phone: "911",
+    icon: "hospital-box-outline" as const,
+    iconColor: "#16A34A",
+    iconBackground: "bg-[#DCFCE7]",
+  },
+  {
+    id: "security-threat",
+    label: "Security threat",
+    phone: "911",
+    icon: "shield-star-outline" as const,
+    iconColor: "#F97316",
+    iconBackground: "bg-[#FFEDD5]",
+  },
+  {
+    id: "electrical",
+    label: "Electrical Emerency",
+    phone: "911",
+    icon: "lightbulb-outline" as const,
+    iconColor: "#EAB308",
+    iconBackground: "bg-[#FEF9C3]",
+  },
+];

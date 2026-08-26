@@ -2,6 +2,7 @@ import CreateRequestForm from "@/features/requests/components/CreateRequestForm"
 import type { CreateRequestFormValues } from "@/features/requests/schemas/createRequestSchema";
 import { addRequestToState } from "@/features/requests/store/requestState";
 import { buildServiceRequestFromForm } from "@/features/requests/utils/createRequest";
+import { SERVICE_USER } from "@/features/service/constants/dummy";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
 import { styled } from "nativewind";
@@ -10,11 +11,16 @@ import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
-export default function CreateManagerRequestScreen() {
+export default function CreateResidentRequestScreen() {
   const router = useRouter();
 
   const handleSubmit = (values: CreateRequestFormValues) => {
-    addRequestToState(buildServiceRequestFromForm(values));
+    const newRequest = buildServiceRequestFromForm(values, {
+      submittedByName: SERVICE_USER.name,
+      submittedByAvatar: SERVICE_USER.avatar,
+    });
+
+    addRequestToState(newRequest);
     router.back();
   };
 

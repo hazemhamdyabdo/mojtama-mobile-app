@@ -1,5 +1,6 @@
 import type {
   RequestFilter,
+  RequestIssueType,
   RequestPriority,
   RequestPriorityOption,
   RequestTypeOption,
@@ -84,6 +85,13 @@ export const REQUEST_PRIORITY_LABELS: Record<RequestPriority, string> = {
   high: "High Priority Request",
   medium: "Medium Priority Request",
   low: "low Priority Request",
+};
+
+export const REQUEST_PRIORITY_SHORT_LABELS: Record<RequestPriority, string> = {
+  urgent: "Urgent",
+  high: "High",
+  medium: "Medium",
+  low: "low",
 };
 
 export const MAINTENANCE_ISSUE_TYPES = [
@@ -217,6 +225,49 @@ export const DUMMY_REQUESTS: ServiceRequest[] = [
     },
     activities: [],
   },
+  {
+    id: "r5",
+    date: "Oct 21, 2025",
+    title: "Gas Leak",
+    description:
+      "The elevator is currently out of service due to a malfunction. Please use the stairs or contact maintenance assistance.",
+    fullDescription:
+      "Strong smell of gas reported near the building entrance. Immediate attention required. Residents have been advised to evacuate the area.",
+    requestType: "emergency",
+    issueType: "fire",
+    priority: "urgent",
+    status: "assigned",
+    location: "5A/B",
+    submittedBy: {
+      name: "Jade Smith",
+      unit: "5A/B",
+      avatar: dummyAvatar,
+    },
+    assignedTo: {
+      name: "Jade Smith",
+      avatar: dummyAvatar,
+    },
+    activities: [
+      {
+        id: "a5-1",
+        title: "Status Changed",
+        actor: "Alex Gargov",
+        timestamp: "Oct 24, 2025 at 4:30PM",
+        occurredAt: 1_761_312_000_000,
+        actorAvatar: dummyAvatar,
+        fromStatus: "submitted",
+        toStatus: "in-progress",
+      },
+      {
+        id: "a5-2",
+        title: "Request Submitted",
+        actor: "Alex Gargov",
+        timestamp: "Oct 24, 2025 at 4:30PM",
+        occurredAt: 1_761_308_400_000,
+        actorAvatar: dummyAvatar,
+      },
+    ],
+  },
 ];
 
 export function getRequestById(requestId: string): ServiceRequest | undefined {
@@ -246,3 +297,30 @@ export const REQUEST_TYPE_LABELS: Record<ServiceRequest["requestType"], string> 
     security: "Security",
     billing: "Billing",
   };
+
+export const REQUEST_ISSUE_TYPE_LABELS: Record<RequestIssueType, string> = {
+  electricity: "Electricity",
+  plumbing: "Plumbing",
+  hvac: "HVAC",
+  delivery: "Delivery",
+  fire: "Fire",
+  "water-damage": "Water damage",
+  medical: "Medical",
+  "security-threat": "Security Threat",
+  electrical: "Electrical",
+  other: "Other",
+};
+
+export function getIssueTypeOptionsForRequestType(
+  requestType: ServiceRequest["requestType"] | "",
+) {
+  if (requestType === "maintenance") {
+    return MAINTENANCE_ISSUE_TYPES;
+  }
+
+  if (requestType === "emergency") {
+    return EMERGENCY_ISSUE_TYPES;
+  }
+
+  return [];
+}
