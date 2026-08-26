@@ -27,6 +27,11 @@ export default function AdminServiceScreen() {
       return;
     }
 
+    if (itemId === "documents") {
+      router.push("/documents" as Href);
+      return;
+    }
+
     console.log("admin service pressed:", itemId);
   };
 

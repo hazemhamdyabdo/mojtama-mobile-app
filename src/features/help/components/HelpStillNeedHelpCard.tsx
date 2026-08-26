@@ -20,7 +20,9 @@ async function handleContactPress(contact: HelpSupportContact) {
         );
         break;
       case "support":
-        await Linking.openURL(`tel:${HELP_SUPPORT_CONTACTS[0]?.value.replace(/\s/g, "") ?? ""}`);
+        await Linking.openURL(
+          `tel:${HELP_SUPPORT_CONTACTS[0]?.value.replace(/\s/g, "") ?? ""}`,
+        );
         break;
       default: {
         const exhaustive: never = contact.action;
@@ -43,8 +45,8 @@ export default function HelpStillNeedHelpCard({
   };
 
   return (
-    <View className="mt-2 rounded-2xl bg-[#F8F6FF] p-5">
-      <View className="mb-4 items-center">
+    <View className="mt-2 justify-start rounded-2xl bg-[#F8F6FF] p-5">
+      <View className="mb-4 flex-row items-center gap-3">
         <View className="size-12 items-center justify-center rounded-full bg-[#F0EDFF]">
           <MaterialDesignIcons
             name="comment-question-outline"
@@ -52,12 +54,14 @@ export default function HelpStillNeedHelpCard({
             size={26}
           />
         </View>
-        <Text className="mt-3 text-lg font-bold text-[#1F1F1F]">
-          Still Need Help?
-        </Text>
-        <Text className="mt-1 text-center text-sm text-[#64748B]">
-          Can't Find What You're Looking For? Contact Our Support Team:
-        </Text>
+        <View className="flex-1">
+          <Text className="mt-3 text-lg font-bold text-[#1F1F1F]">
+            Still Need Help?
+          </Text>
+          <Text className="mt-1 text-start text-sm text-[#64748B]">
+            Can't Find What You're Looking For? Contact Our Support Team:
+          </Text>
+        </View>
       </View>
 
       <View className="gap-3">

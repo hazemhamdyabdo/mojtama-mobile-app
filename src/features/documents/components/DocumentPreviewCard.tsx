@@ -1,0 +1,50 @@
+import DocumentCategoryBadge from "@/features/documents/components/DocumentCategoryBadge";
+import DocumentFileTypeIcon from "@/features/documents/components/DocumentFileTypeIcon";
+import type { CommunityDocument } from "@/features/documents/types";
+import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { Pressable, Text, View } from "react-native";
+
+type DocumentPreviewCardProps = {
+  document: CommunityDocument;
+  onRemove?: () => void;
+  bordered?: boolean;
+};
+
+export default function DocumentPreviewCard({
+  document,
+  onRemove,
+  bordered = false,
+}: DocumentPreviewCardProps) {
+  return (
+    <View
+      className={`flex-row items-center gap-3 rounded-2xl bg-white p-3 ${
+        bordered ? "border border-[#E4E4E7]" : ""
+      }`}
+    >
+      <DocumentFileTypeIcon fileType={document.fileType} size="sm" />
+
+      <View className="flex-1">
+        <Text className="text-sm font-semibold text-[#1F1F1F]">
+          {document.title}
+        </Text>
+        <View className="mt-1 flex-row flex-wrap items-center gap-1.5">
+          <DocumentCategoryBadge category={document.category} />
+          <Text className="text-xs text-[#90A1B9]">
+            {document.size} • {document.date}
+          </Text>
+        </View>
+      </View>
+
+      {onRemove ? (
+        <Pressable
+          onPress={onRemove}
+          accessibilityRole="button"
+          accessibilityLabel="Remove file"
+          className="size-8 items-center justify-center active:opacity-[0.92]"
+        >
+          <MaterialDesignIcons name="close" color="#90A1B9" size={20} />
+        </Pressable>
+      ) : null}
+    </View>
+  );
+}

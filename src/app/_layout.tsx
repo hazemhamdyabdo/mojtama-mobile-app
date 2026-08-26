@@ -151,6 +151,10 @@ export default function RootLayout() {
               name="visitor/[id]/edit"
               options={{ headerShown: false, presentation: "card" }}
             />
+            <Stack.Screen
+              name="documents"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>

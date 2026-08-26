@@ -92,6 +92,12 @@ export const ADMIN_SERVICE_ITEMS: ServiceItem[] = [
     description: "Securely Manage All Community Payments.",
     icon: "cash-multiple",
   },
+  {
+    id: "documents",
+    title: "Documents",
+    description: "Access Community Documents And Resources.",
+    icon: "file-document-outline",
+  },
 ];
 
 export const RESIDENT_SERVICE_ITEMS: ServiceItem[] = [
@@ -124,5 +130,11 @@ export const RESIDENT_SERVICE_ITEMS: ServiceItem[] = [
     title: "Payments",
     description: "Securely Manage All Community Payments.",
     icon: "cash-multiple",
+  },
+  {
+    id: "documents",
+    title: "Documents",
+    description: "Access Community Documents And Resources.",
+    icon: "file-document-outline",
   },
 ];
