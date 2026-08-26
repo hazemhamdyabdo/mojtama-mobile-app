@@ -155,6 +155,18 @@ export default function RootLayout() {
               name="documents"
               options={{ headerShown: false, presentation: "card" }}
             />
+            <Stack.Screen
+              name="requests"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="requests/create"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="request/[id]"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>
