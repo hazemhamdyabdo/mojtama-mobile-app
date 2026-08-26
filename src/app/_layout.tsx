@@ -135,6 +135,22 @@ export default function RootLayout() {
               name="payment/[id]/methods"
               options={{ headerShown: false, presentation: "card" }}
             />
+            <Stack.Screen
+              name="visitors"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="create-visitor"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="visitor/[id]"
+              options={{ headerShown: false, presentation: "card" }}
+            />
+            <Stack.Screen
+              name="visitor/[id]/edit"
+              options={{ headerShown: false, presentation: "card" }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </SafeAreaProvider>

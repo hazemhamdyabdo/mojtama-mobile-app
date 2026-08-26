@@ -21,6 +21,11 @@ export default function ResidentServiceScreen() {
       return;
     }
 
+    if (itemId === "visitors") {
+      router.push("/visitors" as Href);
+      return;
+    }
+
     console.log("resident service pressed:", itemId);
   };
 

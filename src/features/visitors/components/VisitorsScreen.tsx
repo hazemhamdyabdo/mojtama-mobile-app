@@ -1,0 +1,99 @@
+import VisitorCard from "@/features/visitors/components/VisitorCard";
+import VisitorQrBottomSheet, {
+  type VisitorQrBottomSheetRef,
+} from "@/features/visitors/components/VisitorQrBottomSheet";
+import VisitorsHeader from "@/features/visitors/components/VisitorsHeader";
+import VisitorsTabs from "@/features/visitors/components/VisitorsTabs";
+import {
+  DUMMY_VISITORS,
+  getVisitorById,
+} from "@/features/visitors/constants/dummy";
+import type { VisitorsTab } from "@/features/visitors/types";
+import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useRouter, type Href } from "expo-router";
+import { styled } from "nativewind";
+import { useMemo, useRef, useState } from "react";
+import { Pressable, ScrollView, Text, View } from "react-native";
+import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
+
+const SafeAreaView = styled(RNSafeAreaView);
+
+export default function VisitorsScreen() {
+  const router = useRouter();
+  const qrSheetRef = useRef<VisitorQrBottomSheetRef>(null);
+  const [activeTab, setActiveTab] = useState<VisitorsTab>("upcoming");
+
+  const visibleVisitors = useMemo(
+    () =>
+      DUMMY_VISITORS.filter((visitor) =>
+        activeTab === "upcoming"
+          ? visitor.status !== "complete"
+          : visitor.status === "complete",
+      ),
+    [activeTab],
+  );
+
+  const handleQrPress = (visitorId: string) => {
+    const visitor = getVisitorById(visitorId);
+
+    if (visitor) {
+      qrSheetRef.current?.open(visitor);
+    }
+  };
+
+  return (
+    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+      <View className="flex-1 px-4 pt-4">
+        <VisitorsHeader />
+        <VisitorsTabs activeTab={activeTab} onTabChange={setActiveTab} />
+
+        <ScrollView
+          className="flex-1"
+          contentContainerClassName="pb-24"
+          showsVerticalScrollIndicator={false}
+        >
+          {visibleVisitors.length === 0 ? (
+            <View className="items-center py-12">
+              <Text className="text-base font-medium text-[#1F1F1F]">
+                No Visitors
+              </Text>
+              <Text className="mt-1 text-center text-sm text-[#90A1B9]">
+                {activeTab === "upcoming"
+                  ? "Upcoming visits will appear here."
+                  : "Previous visits will appear here."}
+              </Text>
+            </View>
+          ) : (
+            visibleVisitors.map((visitor) => (
+              <VisitorCard
+                key={visitor.id}
+                visitor={visitor}
+                onDetailsPress={(visitorId) =>
+                  router.push(`/visitor/${visitorId}` as Href)
+                }
+                onQrPress={handleQrPress}
+                onSharePress={(visitorId) =>
+                  console.log("share visit:", visitorId)
+                }
+              />
+            ))
+          )}
+        </ScrollView>
+
+        <Pressable
+          onPress={() => router.push("/create-visitor" as Href)}
+          accessibilityRole="button"
+          accessibilityLabel="Add new visitor"
+          className="absolute bottom-6 right-4 size-14 items-center justify-center rounded-full bg-[#7B61FF] active:opacity-[0.92]"
+        >
+          <MaterialDesignIcons name="plus" color="#FFFFFF" size={28} />
+        </Pressable>
+      </View>
+
+      <VisitorQrBottomSheet
+        ref={qrSheetRef}
+        onDownload={(visitorId) => console.log("download qr:", visitorId)}
+      />
+    </SafeAreaView>
+  );
+}

@@ -22,6 +22,11 @@ export default function AdminServiceScreen() {
       return;
     }
 
+    if (itemId === "visitors") {
+      router.push("/visitors" as Href);
+      return;
+    }
+
     console.log("admin service pressed:", itemId);
   };
 
