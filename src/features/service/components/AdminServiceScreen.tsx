@@ -37,6 +37,11 @@ export default function AdminServiceScreen() {
       return;
     }
 
+    if (itemId === "residents") {
+      router.push("/residents" as Href);
+      return;
+    }
+
     console.log("admin service pressed:", itemId);
   };
 
