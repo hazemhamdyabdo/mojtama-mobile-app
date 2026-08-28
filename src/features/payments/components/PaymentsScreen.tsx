@@ -1,3 +1,4 @@
+import ListSkeleton from "@/components/skeleton/ListSkeleton";
 import PaymentFilterChips from "@/features/payments/components/PaymentFilterChips";
 import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import PaymentSummarySection from "@/features/payments/components/PaymentSummarySection";
@@ -5,7 +6,9 @@ import PaymentsBillListSection from "@/features/payments/components/PaymentsBill
 import PaymentsHeader from "@/features/payments/components/PaymentsHeader";
 import PaymentsSearchBar from "@/features/payments/components/PaymentsSearchBar";
 import PaymentsTabs from "@/features/payments/components/PaymentsTabs";
+import { getPayments } from "@/features/payments/api";
 import { usePaymentsState } from "@/features/payments/hooks/usePaymentsState";
+import { useMockListFetch } from "@/hooks/useMockListFetch";
 import type { PaymentBillFilter, PaymentTab } from "@/features/payments/types";
 import { useRouter, type Href } from "expo-router";
 import { useMemo, useState } from "react";
@@ -36,6 +39,7 @@ export default function PaymentsScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const { bills, history } = usePaymentsState();
+  const isLoadingPayments = useMockListFetch(getPayments);
   const [activeTab, setActiveTab] = useState<PaymentTab>("overview");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<PaymentBillFilter>("all");
@@ -112,7 +116,11 @@ export default function PaymentsScreen() {
           selectedFilter={statusFilter}
           onSelectFilter={setStatusFilter}
         />
-        {renderTabContent()}
+        {isLoadingPayments ? (
+          <ListSkeleton />
+        ) : (
+          renderTabContent()
+        )}
       </ScrollView>
     </ScreenSafeAreaView>
   );

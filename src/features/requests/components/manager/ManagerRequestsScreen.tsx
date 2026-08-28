@@ -1,10 +1,13 @@
+import ListSkeleton from "@/components/skeleton/ListSkeleton";
 import { colors } from "@/theme/colors";
 import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import ManagerRequestCard from "@/features/requests/components/manager/ManagerRequestCard";
 import RequestFilterChips from "@/features/requests/components/RequestFilterChips";
 import RequestsHeader from "@/features/requests/components/RequestsHeader";
+import { getRequests } from "@/features/requests/api";
 import { matchesRequestFilter } from "@/features/requests/constants/dummy";
 import { useRequestsState } from "@/features/requests/hooks/useRequestsState";
+import { useMockListFetch } from "@/hooks/useMockListFetch";
 import type { RequestFilter } from "@/features/requests/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter, type Href } from "expo-router";
@@ -16,6 +19,7 @@ export default function ManagerRequestsScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const requests = useRequestsState();
+  const isLoadingRequests = useMockListFetch(getRequests);
   const [selectedFilter, setSelectedFilter] = useState<RequestFilter>("all");
 
   const visibleRequests = useMemo(
@@ -42,7 +46,9 @@ export default function ManagerRequestsScreen() {
           contentContainerClassName="pb-24"
           showsVerticalScrollIndicator={false}
         >
-          {visibleRequests.length === 0 ? (
+          {isLoadingRequests ? (
+            <ListSkeleton />
+          ) : visibleRequests.length === 0 ? (
             <View className="items-center py-12">
               <Text className="text-base font-medium text-heading">
                 {t("requests.empty.title")}

@@ -15,14 +15,17 @@ import PostActionsBottomSheet, {
 import PostsFeed from "@/features/home/components/PostsFeed";
 import SearchActionBar from "@/features/home/components/SearchActionBar";
 import TopHeader from "@/features/home/components/TopHeader";
+import ListSkeleton from "@/components/skeleton/ListSkeleton";
 import {
   addComment,
   deletePost,
   getComments,
   getLikes,
+  getPosts,
   markPostAsUrgent,
   movePostToDraft,
 } from "@/features/home/api";
+import { useMockListFetch } from "@/hooks/useMockListFetch";
 import { useUserState } from "@/features/settings/hooks/useUserState";
 import { useNotificationsState } from "@/features/notifications/hooks/useNotificationsState";
 import { usePostsState } from "@/features/home/hooks/usePostsState";
@@ -64,6 +67,7 @@ function filterPosts(
 export default function HomeScreen() {
   const router = useRouter();
   const posts = usePostsState();
+  const isLoadingPosts = useMockListFetch(getPosts);
   const user = useUserState();
   const { unreadCount } = useNotificationsState();
   const [searchQuery, setSearchQuery] = useState("");
@@ -156,13 +160,17 @@ export default function HomeScreen() {
           onAddPostPress={handleAddPostPress}
         />
         <FilterChip selectedId={selectedFilter} onSelect={setSelectedFilter} />
-        <PostsFeed
-          posts={visiblePosts}
-          onPostPress={handlePostPress}
-          onMenuPress={handleMenuPress}
-          onLikesPress={(postId) => void handleLikesPress(postId)}
-          onCommentsPress={(postId) => void handleCommentsPress(postId)}
-        />
+        {isLoadingPosts ? (
+          <ListSkeleton />
+        ) : (
+          <PostsFeed
+            posts={visiblePosts}
+            onPostPress={handlePostPress}
+            onMenuPress={handleMenuPress}
+            onLikesPress={(postId) => void handleLikesPress(postId)}
+            onCommentsPress={(postId) => void handleCommentsPress(postId)}
+          />
+        )}
       </ScrollView>
 
       <ChatIcon onPress={() => router.push("/ai-chat" as Href)} />

@@ -1,8 +1,10 @@
 import { colors } from "@/theme/colors";
+import ListSkeleton from "@/components/skeleton/ListSkeleton";
 import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import MeetingsHeader from "@/features/meetings/components/MeetingsHeader";
 import MeetingsTabs from "@/features/meetings/components/MeetingsTabs";
-import { respondToMeeting } from "@/features/meetings/api";
+import { getMeetings, respondToMeeting } from "@/features/meetings/api";
+import { useMockListFetch } from "@/hooks/useMockListFetch";
 import { filterMeetingsByTab, type MeetingsTab } from "@/features/meetings/constants/dummy";
 import { usePostsState } from "@/features/home/hooks/usePostsState";
 import { isMeetingPost } from "@/features/home/utils/buildPostFromForm";
@@ -19,6 +21,7 @@ export default function MeetingsScreen() {
   const router = useRouter();
   const { role } = useUserRole();
   const posts = usePostsState();
+  const isLoadingMeetings = useMockListFetch(getMeetings);
   const [activeTab, setActiveTab] = useState<MeetingsTab>("upcoming");
 
   const visibleMeetings = useMemo(
@@ -44,7 +47,9 @@ export default function MeetingsScreen() {
           contentContainerClassName="pb-24"
           showsVerticalScrollIndicator={false}
         >
-          {visibleMeetings.length === 0 ? (
+          {isLoadingMeetings ? (
+            <ListSkeleton />
+          ) : visibleMeetings.length === 0 ? (
             <View className="items-center py-12">
               <Text className="text-base font-medium text-heading">
                 {t("meetings.empty.title")}

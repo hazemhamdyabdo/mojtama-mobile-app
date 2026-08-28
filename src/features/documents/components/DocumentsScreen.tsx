@@ -1,9 +1,12 @@
+import ListSkeleton from "@/components/skeleton/ListSkeleton";
 import {
   deleteDocument,
+  getDocuments,
   updateDocument,
   uploadDocument,
 } from "@/features/documents/api";
 import { useDocumentsState } from "@/features/documents/hooks/useDocumentsState";
+import { useMockListFetch } from "@/hooks/useMockListFetch";
 import DocumentActionsBottomSheet, {
   type DocumentActionsBottomSheetRef,
 } from "@/features/documents/components/DocumentActionsBottomSheet";
@@ -37,6 +40,7 @@ import { Alert, ScrollView, Text, View } from "react-native";
 export default function DocumentsScreen() {
   const { t } = useTranslation();
   const documents = useDocumentsState();
+  const isLoadingDocuments = useMockListFetch(getDocuments);
   const uploadSheetRef = useRef<UploadDocumentBottomSheetRef>(null);
   const actionsSheetRef = useRef<DocumentActionsBottomSheetRef>(null);
   const editSheetRef = useRef<EditDocumentBottomSheetRef>(null);
@@ -137,7 +141,9 @@ export default function DocumentsScreen() {
             {t("documents.recentDocuments")}
           </Text>
 
-          {filteredDocuments.length === 0 ? (
+          {isLoadingDocuments ? (
+            <ListSkeleton />
+          ) : filteredDocuments.length === 0 ? (
             <View className="items-center py-10">
               <Text className="text-base font-medium text-heading">
                 {t("documents.empty.title")}

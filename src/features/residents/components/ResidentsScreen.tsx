@@ -1,3 +1,4 @@
+import ListSkeleton from "@/components/skeleton/ListSkeleton";
 import { removeResident } from "@/features/residents/api";
 import GenerateInviteLinkCard from "@/features/residents/components/GenerateInviteLinkCard";
 import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
@@ -20,6 +21,8 @@ import {
   matchesResidentFilters,
 } from "@/features/residents/constants/dummy";
 import { useResidentsState } from "@/features/residents/hooks/useResidentsState";
+import { getResidents } from "@/features/residents/api";
+import { useMockListFetch } from "@/hooks/useMockListFetch";
 import type { ResidentFilterCriteria } from "@/features/residents/types";
 import { EMPTY_RESIDENT_FILTER } from "@/features/residents/types";
 import { useRouter, type Href } from "expo-router";
@@ -36,6 +39,7 @@ export default function ResidentsScreen() {
   const removeSheetRef = useRef<RemoveResidentBottomSheetRef>(null);
 
   const residents = useResidentsState();
+  const isLoadingResidents = useMockListFetch(getResidents);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCriteria, setFilterCriteria] =
     useState<ResidentFilterCriteria>(EMPTY_RESIDENT_FILTER);
@@ -101,7 +105,9 @@ export default function ResidentsScreen() {
             <Text className="font-bold text-primary">{residents.length}</Text>
           </Text>
 
-          {filteredResidents.length > 0 ? (
+          {isLoadingResidents ? (
+            <ListSkeleton />
+          ) : filteredResidents.length > 0 ? (
             filteredResidents.map((resident) => (
               <ResidentCard
                 key={resident.id}

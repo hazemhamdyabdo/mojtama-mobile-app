@@ -1,3 +1,4 @@
+import ListSkeleton from "@/components/skeleton/ListSkeleton";
 import { colors } from "@/theme/colors";
 import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import VisitorCard from "@/features/visitors/components/VisitorCard";
@@ -6,8 +7,10 @@ import VisitorQrBottomSheet, {
 } from "@/features/visitors/components/VisitorQrBottomSheet";
 import VisitorsHeader from "@/features/visitors/components/VisitorsHeader";
 import VisitorsTabs from "@/features/visitors/components/VisitorsTabs";
+import { getVisitors } from "@/features/visitors/api";
 import { getVisitorFromState } from "@/features/visitors/store/visitorState";
 import { useVisitorsState } from "@/features/visitors/hooks/useVisitorsState";
+import { useMockListFetch } from "@/hooks/useMockListFetch";
 import type { VisitorsTab } from "@/features/visitors/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter, type Href } from "expo-router";
@@ -20,6 +23,7 @@ export default function VisitorsScreen() {
   const { t } = useTranslation();
   const qrSheetRef = useRef<VisitorQrBottomSheetRef>(null);
   const visitors = useVisitorsState();
+  const isLoadingVisitors = useMockListFetch(getVisitors);
   const [activeTab, setActiveTab] = useState<VisitorsTab>("upcoming");
 
   const visibleVisitors = useMemo(
@@ -51,7 +55,9 @@ export default function VisitorsScreen() {
           contentContainerClassName="pb-24"
           showsVerticalScrollIndicator={false}
         >
-          {visibleVisitors.length === 0 ? (
+          {isLoadingVisitors ? (
+            <ListSkeleton />
+          ) : visibleVisitors.length === 0 ? (
             <View className="items-center py-12">
               <Text className="text-base font-medium text-heading">
                 {t("visitors.empty.title")}
