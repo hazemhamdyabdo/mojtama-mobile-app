@@ -42,6 +42,11 @@ export default function AdminServiceScreen() {
       return;
     }
 
+    if (itemId === "meeting") {
+      router.push("/meetings" as Href);
+      return;
+    }
+
     console.log("admin service pressed:", itemId);
   };
 

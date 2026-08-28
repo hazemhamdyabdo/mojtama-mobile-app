@@ -3,11 +3,15 @@ import type { MeetingPost } from "@/features/home/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
 import type { ReactNode } from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 type MeetingPostCardProps = {
   post: MeetingPost;
   onPress?: (postId: string) => void;
+  variant?: "feed" | "service";
+  onAccept?: () => void;
+  onDecline?: () => void;
+  onDetailsPress?: () => void;
 };
 
 type DetailRowProps = {
@@ -48,18 +52,27 @@ function InfoBlock({ label, value, icon }: InfoBlockProps) {
   );
 }
 
-export default function MeetingPostCard({
-  post,
-  onPress,
-}: MeetingPostCardProps) {
+function MeetingCardContent({ post }: { post: MeetingPost }) {
   return (
-    <PostCardShell onPress={() => onPress?.(post.id)}>
+    <>
       <View className="mb-3 flex-row items-start justify-between">
         <Text className="flex-1 text-lg font-bold text-[#1F1F1F]">
           {post.title}
         </Text>
-        <View className="rounded-full bg-[#F0EDFF] px-3 py-1">
-          <Text className="text-xs font-semibold text-[#7B61FF]">
+        <View
+          className={`rounded-full px-3 py-1 ${
+            post.status.toLowerCase() === "upcoming"
+              ? "bg-[#F0EDFF]"
+              : "bg-[#F1F5F9]"
+          }`}
+        >
+          <Text
+            className={`text-xs font-semibold ${
+              post.status.toLowerCase() === "upcoming"
+                ? "text-[#7B61FF]"
+                : "text-[#64748B]"
+            }`}
+          >
             {post.status}
           </Text>
         </View>
@@ -103,6 +116,59 @@ export default function MeetingPostCard({
         <InfoBlock label="Date" value={post.date} icon="calendar" />
         <InfoBlock label="Time" value={post.time} icon="clock" />
       </View>
+    </>
+  );
+}
+
+export default function MeetingPostCard({
+  post,
+  onPress,
+  variant = "feed",
+  onAccept,
+  onDecline,
+  onDetailsPress,
+}: MeetingPostCardProps) {
+  const isUpcoming = post.status.toLowerCase() === "upcoming";
+
+  if (variant === "service") {
+    return (
+      <View className="mb-4 rounded-2xl border border-[#E4E4E7] bg-white p-4">
+        <MeetingCardContent post={post} />
+
+        {isUpcoming ? (
+          <View className="mt-4 flex-row gap-3">
+            <Pressable
+              onPress={onAccept}
+              accessibilityRole="button"
+              className="flex-1 items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+            >
+              <Text className="text-base font-bold text-white">Accept</Text>
+            </Pressable>
+
+            <Pressable
+              onPress={onDecline}
+              accessibilityRole="button"
+              className="flex-1 items-center rounded-2xl border border-[#E4E4E7] bg-white py-4 active:opacity-[0.92]"
+            >
+              <Text className="text-base font-bold text-[#1F1F1F]">Decline</Text>
+            </Pressable>
+          </View>
+        ) : (
+          <Pressable
+            onPress={onDetailsPress}
+            accessibilityRole="button"
+            className="mt-4 items-center rounded-2xl border border-[#E4E4E7] bg-white py-4 active:opacity-[0.92]"
+          >
+            <Text className="text-base font-bold text-[#62748E]">Details</Text>
+          </Pressable>
+        )}
+      </View>
+    );
+  }
+
+  return (
+    <PostCardShell onPress={() => onPress?.(post.id)}>
+      <MeetingCardContent post={post} />
     </PostCardShell>
   );
 }

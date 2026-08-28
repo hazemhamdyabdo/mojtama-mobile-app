@@ -7,16 +7,17 @@ import LikesBottomSheet, {
 import PostActionsBottomSheet, {
   type PostActionsBottomSheetRef,
 } from "@/features/home/components/PostActionsBottomSheet";
-import { DUMMY_POSTS } from "@/features/home/constants/dummy";
 import type {
   AttendeeStatus,
   MeetingAttendee,
   MeetingPost,
 } from "@/features/home/types";
+import { getMeetingPostById } from "@/features/meetings/constants/dummy";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { Redirect, useLocalSearchParams, useRouter } from "expo-router";
 import { styled } from "nativewind";
+import type { ReactNode } from "react";
 import { useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView as SafeAreaViewRN } from "react-native-safe-area-context";
@@ -24,6 +25,10 @@ import { SafeAreaView as SafeAreaViewRN } from "react-native-safe-area-context";
 const SafeAreaView = styled(SafeAreaViewRN);
 
 type AttendeeTab = "team" | "residents";
+
+type MeetingDetailsScreenProps = {
+  variant?: "feed" | "service";
+};
 
 type InfoRowProps = {
   label: string;
@@ -44,6 +49,44 @@ function InfoRow({ label, value, accent }: InfoRowProps) {
             ({accent})
           </Text>
         ) : null}
+      </View>
+    </View>
+  );
+}
+
+type ServiceInfoRowProps = {
+  label: string;
+  children: ReactNode;
+};
+
+function ServiceInfoRow({ label, children }: ServiceInfoRowProps) {
+  return (
+    <View className="mb-4 flex-row items-center justify-between gap-4">
+      <Text className="w-1/3 text-sm text-[#90A1B9]">{label}</Text>
+      <View className="flex-1 items-start">{children}</View>
+    </View>
+  );
+}
+
+type ScheduleCardProps = {
+  label: string;
+  value: string;
+  icon: "calendar" | "clock";
+};
+
+function ScheduleCard({ label, value, icon }: ScheduleCardProps) {
+  return (
+    <View className="mb-3 flex-row items-center justify-between rounded-2xl bg-[#F8FAFC] p-4">
+      <Text className="text-sm font-semibold text-[#1F1F1F]">{label}</Text>
+      <View className="flex-row items-center gap-1.5">
+        <MaterialDesignIcons
+          name={
+            icon === "calendar" ? "calendar-blank-outline" : "clock-outline"
+          }
+          color="#64748B"
+          size={16}
+        />
+        <Text className="text-sm text-[#64748B]">{value}</Text>
       </View>
     </View>
   );
@@ -98,8 +141,8 @@ function AttendeeStatusBadge({ status }: AttendeeStatusBadgeProps) {
         </View>
       );
     default: {
-      const _exhaustive: never = status;
-      return _exhaustive;
+      const exhaustive: never = status;
+      return exhaustive;
     }
   }
 }
@@ -144,48 +187,55 @@ function AttendeeRow({ attendee }: AttendeeRowProps) {
   );
 }
 
-function getMeetingPost(id: string | undefined): MeetingPost {
-  const post = DUMMY_POSTS.find((item) => item.id === id);
-
-  if (post?.type === "meeting") {
-    return post;
-  }
-
-  const fallback = DUMMY_POSTS.find((item) => item.type === "meeting");
-
-  if (fallback?.type === "meeting") {
-    return fallback;
-  }
-
-  throw new Error("No meeting post found in dummy data");
+function getMeetingPost(id: string | undefined): MeetingPost | undefined {
+  return getMeetingPostById(id);
 }
 
-export default function MeetingDetailsScreen() {
+export default function MeetingDetailsScreen({
+  variant = "feed",
+}: MeetingDetailsScreenProps) {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
+  const meetingId = Array.isArray(id) ? id[0] : id;
   const [liked, setLiked] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<AttendeeTab>("residents");
 
   const likesSheetRef = useRef<LikesBottomSheetRef>(null);
   const commentsSheetRef = useRef<CommentsBottomSheetRef>(null);
   const postActionsSheetRef = useRef<PostActionsBottomSheetRef>(null);
 
-  const meeting = getMeetingPost(id);
-  const displayedLikes = meeting.likesCount + (liked ? 1 : 0);
+  const meeting = getMeetingPost(meetingId);
+  const isService = variant === "service";
+  const isUpcoming = meeting?.status.toLowerCase() === "upcoming";
+
+  const displayedLikes = (meeting?.likesCount ?? 0) + (liked ? 1 : 0);
 
   const teamAttendees = useMemo(
-    () => meeting.attendees.filter((attendee) => attendee.group === "team"),
-    [meeting.attendees],
+    () =>
+      meeting?.attendees.filter((attendee) => attendee.group === "team") ?? [],
+    [meeting?.attendees],
   );
 
   const residentAttendees = useMemo(
     () =>
-      meeting.attendees.filter((attendee) => attendee.group === "residents"),
-    [meeting.attendees],
+      meeting?.attendees.filter((attendee) => attendee.group === "residents") ??
+      [],
+    [meeting?.attendees],
   );
 
   const visibleAttendees =
     activeTab === "team" ? teamAttendees : residentAttendees;
+
+  if (!meeting) {
+    return <Redirect href={isService ? "/meetings" : "/"} />;
+  }
+
+  const shouldTruncate = meeting.body.length > 120;
+  const description =
+    isExpanded || !shouldTruncate
+      ? meeting.body
+      : `${meeting.body.slice(0, 120)}...`;
 
   return (
     <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
@@ -206,18 +256,20 @@ export default function MeetingDetailsScreen() {
         </Pressable>
 
         <Text className="text-lg font-bold text-[#1F1F1F]">
-          Meeting Details
+          {isService ? "Meetings" : "Meeting Details"}
         </Text>
 
-        <Pressable
-          onPress={() => postActionsSheetRef.current?.open(meeting.id)}
-          accessibilityRole="button"
-          accessibilityLabel="Meeting options"
-          hitSlop={8}
-          className="absolute right-0 active:opacity-[0.92]"
-        >
-          <MaterialDesignIcons name="dots-vertical" color="#1F1F1F" size={24} />
-        </Pressable>
+        {!isService ? (
+          <Pressable
+            onPress={() => postActionsSheetRef.current?.open(meeting.id)}
+            accessibilityRole="button"
+            accessibilityLabel="Meeting options"
+            hitSlop={8}
+            className="absolute right-0 active:opacity-[0.92]"
+          >
+            <MaterialDesignIcons name="dots-vertical" color="#1F1F1F" size={24} />
+          </Pressable>
+        ) : null}
       </View>
 
       <ScrollView
@@ -225,100 +277,184 @@ export default function MeetingDetailsScreen() {
         contentContainerClassName="px-4 pb-6"
         showsVerticalScrollIndicator={false}
       >
-        <View className="mb-3 flex-row items-start justify-between gap-3">
-          <Text className="flex-1 text-xl font-bold text-[#1F1F1F]">
-            {meeting.title}
-          </Text>
-          <View className="rounded-full bg-[#F0EDFF] px-3 py-1">
-            <Text className="text-xs font-semibold text-[#7B61FF]">
-              {meeting.category}
+        {isService ? (
+          <>
+            <Text className="text-2xl font-bold text-[#1F1F1F]">
+              {meeting.title}
             </Text>
-          </View>
-        </View>
 
-        <Text className="text-sm leading-5 text-[#64748B]">{meeting.body}</Text>
+            <Text className="mt-3 text-sm leading-5 text-[#64748B]">
+              {description}
+            </Text>
+            {!isExpanded && shouldTruncate ? (
+              <Pressable
+                onPress={() => setIsExpanded(true)}
+                accessibilityRole="button"
+                className="mt-1 active:opacity-[0.92]"
+              >
+                <Text className="text-sm font-semibold text-[#7B61FF]">
+                  View all
+                </Text>
+              </Pressable>
+            ) : null}
 
-        <View className="mt-4 flex-row items-center gap-5">
-          <View className="flex-row items-center gap-1.5">
-            <Pressable
-              onPress={() => setLiked((prev) => !prev)}
-              accessibilityRole="button"
-              accessibilityLabel={liked ? "Unlike meeting" : "Like meeting"}
-              hitSlop={8}
-              className="active:opacity-[0.92]"
-            >
-              <MaterialDesignIcons
-                name={liked ? "thumb-up" : "thumb-up-outline"}
-                color={liked ? "#7B61FF" : "#90A1B9"}
-                size={18}
-              />
-            </Pressable>
+            <View className="mt-6">
+              <ServiceInfoRow label="Lead by">
+                <View className="flex-row items-center gap-2">
+                  <Image
+                    source={meeting.leadBy.avatar}
+                    contentFit="cover"
+                    style={{ width: 24, height: 24, borderRadius: 100 }}
+                  />
+                  <Text className="text-sm font-semibold text-[#1F1F1F]">
+                    {meeting.leadBy.name}
+                  </Text>
+                </View>
+              </ServiceInfoRow>
 
-            <Pressable
-              onPress={() => likesSheetRef.current?.open(meeting.id)}
-              accessibilityRole="button"
-              accessibilityLabel="View likes"
-              hitSlop={8}
-              className="active:opacity-[0.92]"
-            >
-              <Text className="text-sm text-[#90A1B9]">
-                {displayedLikes.toLocaleString()} Likes
+              <ServiceInfoRow label="Type">
+                <Text className="text-sm font-semibold text-[#1F1F1F]">
+                  {meeting.meetingType}
+                </Text>
+              </ServiceInfoRow>
+
+              <ServiceInfoRow label="Location">
+                <View className="flex-row items-center gap-1">
+                  <MaterialDesignIcons
+                    name="map-marker-outline"
+                    color="#1F1F1F"
+                    size={14}
+                  />
+                  <Text className="text-sm font-semibold text-[#1F1F1F]">
+                    {meeting.location}
+                  </Text>
+                </View>
+              </ServiceInfoRow>
+
+              <ServiceInfoRow label="Status">
+                <View
+                  className={`rounded-full px-3 py-1 ${
+                    isUpcoming ? "bg-[#F0EDFF]" : "bg-[#F1F5F9]"
+                  }`}
+                >
+                  <Text
+                    className={`text-xs font-semibold ${
+                      isUpcoming ? "text-[#7B61FF]" : "text-[#64748B]"
+                    }`}
+                  >
+                    {meeting.status}
+                  </Text>
+                </View>
+              </ServiceInfoRow>
+            </View>
+
+            <ScheduleCard label="Date" value={meeting.date} icon="calendar" />
+            <ScheduleCard label="Time" value={meeting.time} icon="clock" />
+          </>
+        ) : (
+          <>
+            <View className="mb-3 flex-row items-start justify-between gap-3">
+              <Text className="flex-1 text-xl font-bold text-[#1F1F1F]">
+                {meeting.title}
               </Text>
-            </Pressable>
-          </View>
+              <View className="rounded-full bg-[#F0EDFF] px-3 py-1">
+                <Text className="text-xs font-semibold text-[#7B61FF]">
+                  {meeting.category}
+                </Text>
+              </View>
+            </View>
 
-          <Pressable
-            onPress={() => commentsSheetRef.current?.open(meeting.id)}
-            accessibilityRole="button"
-            accessibilityLabel="View comments"
-            hitSlop={8}
-            className="flex-row items-center gap-1.5 active:opacity-[0.92]"
-          >
-            <MaterialDesignIcons
-              name="comment-outline"
-              color="#90A1B9"
-              size={18}
-            />
-            <Text className="text-sm text-[#90A1B9]">
-              {meeting.commentsCount.toLocaleString()} Comments
+            <Text className="text-sm leading-5 text-[#64748B]">
+              {meeting.body}
             </Text>
-          </Pressable>
 
-          <View className="flex-row items-center gap-1.5">
-            <MaterialDesignIcons name="eye-outline" color="#90A1B9" size={18} />
-            <Text className="text-sm text-[#90A1B9]">
-              {meeting.viewsCount.toLocaleString()} Views
+            <View className="mt-4 flex-row items-center gap-5">
+              <View className="flex-row items-center gap-1.5">
+                <Pressable
+                  onPress={() => setLiked((prev) => !prev)}
+                  accessibilityRole="button"
+                  accessibilityLabel={liked ? "Unlike meeting" : "Like meeting"}
+                  hitSlop={8}
+                  className="active:opacity-[0.92]"
+                >
+                  <MaterialDesignIcons
+                    name={liked ? "thumb-up" : "thumb-up-outline"}
+                    color={liked ? "#7B61FF" : "#90A1B9"}
+                    size={18}
+                  />
+                </Pressable>
+
+                <Pressable
+                  onPress={() => likesSheetRef.current?.open(meeting.id)}
+                  accessibilityRole="button"
+                  accessibilityLabel="View likes"
+                  hitSlop={8}
+                  className="active:opacity-[0.92]"
+                >
+                  <Text className="text-sm text-[#90A1B9]">
+                    {displayedLikes.toLocaleString()} Likes
+                  </Text>
+                </Pressable>
+              </View>
+
+              <Pressable
+                onPress={() => commentsSheetRef.current?.open(meeting.id)}
+                accessibilityRole="button"
+                accessibilityLabel="View comments"
+                hitSlop={8}
+                className="flex-row items-center gap-1.5 active:opacity-[0.92]"
+              >
+                <MaterialDesignIcons
+                  name="comment-outline"
+                  color="#90A1B9"
+                  size={18}
+                />
+                <Text className="text-sm text-[#90A1B9]">
+                  {meeting.commentsCount.toLocaleString()} Comments
+                </Text>
+              </Pressable>
+
+              <View className="flex-row items-center gap-1.5">
+                <MaterialDesignIcons
+                  name="eye-outline"
+                  color="#90A1B9"
+                  size={18}
+                />
+                <Text className="text-sm text-[#90A1B9]">
+                  {meeting.viewsCount.toLocaleString()} Views
+                </Text>
+              </View>
+            </View>
+
+            <Text className="mb-3 mt-6 text-base font-bold text-[#1F1F1F]">
+              Meeting information
             </Text>
-          </View>
-        </View>
+
+            <View className="rounded-2xl border border-[#E4E4E7] bg-white">
+              <InfoRow label="Agenda" value={meeting.agenda} />
+              <InfoRow label="Date" value={meeting.date} />
+              <InfoRow
+                label="Time"
+                value={meeting.time}
+                accent={meeting.duration}
+              />
+              <InfoRow label="Location" value={meeting.location} />
+              {meeting.meetingLink ? (
+                <InfoRow label="Meeting link" value={meeting.meetingLink} />
+              ) : null}
+              <InfoRow label="Created by" value={meeting.createdBy} />
+              <InfoRow label="Led by" value={meeting.leadBy.name} />
+              <InfoRow
+                label="Visibility"
+                value={meeting.visibility}
+                accent={meeting.isPublic ? "Public" : undefined}
+              />
+            </View>
+          </>
+        )}
 
         <Text className="mb-3 mt-6 text-base font-bold text-[#1F1F1F]">
-          Meeting information
-        </Text>
-
-        <View className="rounded-2xl border border-[#E4E4E7] bg-white">
-          <InfoRow label="Agenda" value={meeting.agenda} />
-          <InfoRow label="Date" value={meeting.date} />
-          <InfoRow
-            label="Time"
-            value={meeting.time}
-            accent={meeting.duration}
-          />
-          <InfoRow label="Location" value={meeting.location} />
-          {meeting.meetingLink ? (
-            <InfoRow label="Meeting link" value={meeting.meetingLink} />
-          ) : null}
-          <InfoRow label="Created by" value={meeting.createdBy} />
-          <InfoRow label="Led by" value={meeting.leadBy.name} />
-          <InfoRow
-            label="Visibility"
-            value={meeting.visibility}
-            accent={meeting.isPublic ? "Public" : undefined}
-          />
-        </View>
-
-        <Text className="mb-3 mt-6 text-base font-bold text-[#1F1F1F]">
-          Attendees
+          {isService ? "Participants" : "Attendees"}
         </Text>
 
         <View className="mb-4 flex-row border-b border-[#E4E4E7]">
@@ -361,71 +497,81 @@ export default function MeetingDetailsScreen() {
           ))}
         </View>
 
-        <Text className="mb-3 mt-2 text-base font-bold text-[#1F1F1F]">
-          Agenda
-        </Text>
+        {!isService ? (
+          <>
+            <Text className="mb-3 mt-2 text-base font-bold text-[#1F1F1F]">
+              Agenda
+            </Text>
 
-        <View className="rounded-2xl border border-[#E4E4E7] bg-white px-4 py-4">
-          {meeting.agendaItems.map((item, index) => (
-            <View key={item.id} className="flex-row">
-              <View className="mr-3 items-center">
-                <View className="size-3 rounded-full bg-[#7B61FF]" />
-                {index < meeting.agendaItems.length - 1 ? (
-                  <View className="my-1 w-px flex-1 bg-[#E4E4E7]" />
-                ) : null}
-              </View>
+            <View className="rounded-2xl border border-[#E4E4E7] bg-white px-4 py-4">
+              {meeting.agendaItems.map((item, index) => (
+                <View key={item.id} className="flex-row">
+                  <View className="mr-3 items-center">
+                    <View className="size-3 rounded-full bg-[#7B61FF]" />
+                    {index < meeting.agendaItems.length - 1 ? (
+                      <View className="my-1 w-px flex-1 bg-[#E4E4E7]" />
+                    ) : null}
+                  </View>
 
-              <View
-                className={`flex-1 ${index < meeting.agendaItems.length - 1 ? "pb-5" : ""}`}
-              >
-                <Text className="text-base font-semibold text-[#1F1F1F]">
-                  {item.title}
-                </Text>
-                <Text className="mt-0.5 text-sm text-[#90A1B9]">
-                  {item.timeRange}
-                </Text>
-              </View>
+                  <View
+                    className={`flex-1 ${index < meeting.agendaItems.length - 1 ? "pb-5" : ""}`}
+                  >
+                    <Text className="text-base font-semibold text-[#1F1F1F]">
+                      {item.title}
+                    </Text>
+                    <Text className="mt-0.5 text-sm text-[#90A1B9]">
+                      {item.timeRange}
+                    </Text>
+                  </View>
+                </View>
+              ))}
             </View>
-          ))}
-        </View>
+          </>
+        ) : null}
       </ScrollView>
 
-      <View className="flex-row gap-3 border-t border-[#E4E4E7] px-4 py-4">
-        <Pressable
-          onPress={() => console.log("accept meeting:", meeting.id)}
-          accessibilityRole="button"
-          className="flex-1 items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
-        >
-          <Text className="text-base font-bold text-white">Accept</Text>
-        </Pressable>
+      {(!isService || isUpcoming) && (
+        <View className="flex-row gap-3 border-t border-[#E4E4E7] px-4 py-4">
+          <Pressable
+            onPress={() => console.log("accept meeting:", meeting.id)}
+            accessibilityRole="button"
+            className="flex-1 items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+          >
+            <Text className="text-base font-bold text-white">Accept</Text>
+          </Pressable>
 
-        <Pressable
-          onPress={() => console.log("decline meeting:", meeting.id)}
-          accessibilityRole="button"
-          className="flex-1 items-center justify-center rounded-2xl border border-[#E4E4E7] bg-white py-4 active:opacity-[0.92]"
-        >
-          <Text className="text-base font-bold text-[#1F1F1F]">Decline</Text>
-        </Pressable>
-      </View>
+          <Pressable
+            onPress={() => console.log("decline meeting:", meeting.id)}
+            accessibilityRole="button"
+            className="flex-1 items-center justify-center rounded-2xl border border-[#E4E4E7] bg-white py-4 active:opacity-[0.92]"
+          >
+            <Text className="text-base font-bold text-[#1F1F1F]">Decline</Text>
+          </Pressable>
+        </View>
+      )}
 
-      <LikesBottomSheet ref={likesSheetRef} />
+      {!isService ? (
+        <>
+          <LikesBottomSheet ref={likesSheetRef} />
 
-      <CommentsBottomSheet
-        ref={commentsSheetRef}
-        onSendComment={(postId, text) =>
-          console.log("send comment:", postId, text)
-        }
-      />
+          <CommentsBottomSheet
+            ref={commentsSheetRef}
+            onSendComment={(postId, text) =>
+              console.log("send comment:", postId, text)
+            }
+          />
 
-      <PostActionsBottomSheet
-        ref={postActionsSheetRef}
-        onMoveToDraft={(postId) => console.log("move to draft:", postId)}
-        onEditPost={(postId) => console.log("edit post:", postId)}
-        onMarkAsUrgent={(postId, isUrgent) =>
-          console.log("mark as urgent:", postId, isUrgent)
-        }
-        onDeletePost={(postId) => console.log("delete post:", postId)}
-      />
+          <PostActionsBottomSheet
+            ref={postActionsSheetRef}
+            onMoveToDraft={(postId) => console.log("move to draft:", postId)}
+            onEditPost={(postId) => console.log("edit post:", postId)}
+            onMarkAsUrgent={(postId, isUrgent) =>
+              console.log("mark as urgent:", postId, isUrgent)
+            }
+            onDeletePost={(postId) => console.log("delete post:", postId)}
+          />
+        </>
+      ) : null}
     </SafeAreaView>
   );
 }
