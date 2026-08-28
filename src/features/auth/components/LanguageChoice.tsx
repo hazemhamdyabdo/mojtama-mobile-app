@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import LanguageOptionCard from "@/features/auth/components/LanguageOptionCard";
 import {
   changeLanguage,
@@ -9,7 +10,6 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Image, ImageBackground, Pressable, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const languageOptions = [
   {
@@ -75,7 +75,7 @@ export default function LanguageChoice() {
   };
 
   return (
-    <SafeAreaView
+    <ScreenSafeAreaView
       className="flex-1"
       style={{
         backgroundColor: colors.white,
@@ -131,6 +131,6 @@ export default function LanguageChoice() {
           </View>
         </View>
       </ImageBackground>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

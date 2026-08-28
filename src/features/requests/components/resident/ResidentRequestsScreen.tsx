@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import RequestFilterChips from "@/features/requests/components/RequestFilterChips";
 import RequestsHeader from "@/features/requests/components/RequestsHeader";
 import ResidentRequestCard from "@/features/requests/components/resident/ResidentRequestCard";
@@ -7,13 +8,8 @@ import { useRequestsState } from "@/features/requests/hooks/useRequestsState";
 import type { RequestFilter } from "@/features/requests/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter, type Href } from "expo-router";
-import { styled } from "nativewind";
 import { useMemo, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 export default function ResidentRequestsScreen() {
   const router = useRouter();
   const requests = useRequestsState();
@@ -28,7 +24,7 @@ export default function ResidentRequestsScreen() {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <RequestsHeader />
         <View>
@@ -74,6 +70,6 @@ export default function ResidentRequestsScreen() {
           <MaterialDesignIcons name="plus" color={colors.white} size={28} />
         </Pressable>
       </View>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

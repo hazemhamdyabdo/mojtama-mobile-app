@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import VisitorCard from "@/features/visitors/components/VisitorCard";
 import VisitorQrBottomSheet, {
   type VisitorQrBottomSheetRef,
@@ -12,13 +13,8 @@ import {
 import type { VisitorsTab } from "@/features/visitors/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter, type Href } from "expo-router";
-import { styled } from "nativewind";
 import { useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 export default function VisitorsScreen() {
   const router = useRouter();
   const qrSheetRef = useRef<VisitorQrBottomSheetRef>(null);
@@ -43,7 +39,7 @@ export default function VisitorsScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <VisitorsHeader />
         <VisitorsTabs activeTab={activeTab} onTabChange={setActiveTab} />
@@ -95,6 +91,6 @@ export default function VisitorsScreen() {
         ref={qrSheetRef}
         onDownload={(visitorId) => console.log("download qr:", visitorId)}
       />
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

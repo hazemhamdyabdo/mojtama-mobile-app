@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import CommentsBottomSheet, {
   type CommentsBottomSheetRef,
 } from "@/features/home/components/CommentsBottomSheet";
@@ -13,13 +14,8 @@ import type { Post } from "@/features/home/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
 import { Redirect, useLocalSearchParams, useRouter, type Href } from "expo-router";
-import { styled } from "nativewind";
 import { useRef, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { SafeAreaView as SafeAreaViewRN } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(SafeAreaViewRN);
-
 type InfoRowProps = {
   label: string;
   value: string;
@@ -75,7 +71,7 @@ export default function PostDetailsScreen() {
   const displayedLikes = post.likesCount + (liked ? 1 : 0);
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="relative mx-4 mb-4 mt-2 flex-row items-center justify-center">
         <Pressable
           onPress={() => router.back()}
@@ -266,6 +262,6 @@ export default function PostDetailsScreen() {
         }
         onDeletePost={(postId) => console.log("delete post:", postId)}
       />
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

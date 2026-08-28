@@ -1,14 +1,11 @@
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import ResidentDetailsHeader from "@/features/residents/components/ResidentDetailsHeader";
 import ResidentPaymentHistoryItemRow from "@/features/residents/components/ResidentPaymentHistoryItemRow";
 import ResidentProfileCard from "@/features/residents/components/ResidentProfileCard";
 import type { Resident } from "@/features/residents/types";
-import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
-import { styled } from "nativewind";
-import { ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 import { colors } from "@/theme/colors";
-
-const SafeAreaView = styled(RNSafeAreaView);
+import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { ScrollView, Text, View } from "react-native";
 
 type ResidentDetailsScreenProps = {
   resident: Resident;
@@ -20,7 +17,7 @@ export default function ResidentDetailsScreen({
   const paymentHistory = resident.paymentHistory ?? [];
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <ResidentDetailsHeader />
 
@@ -68,6 +65,6 @@ export default function ResidentDetailsScreen({
           ) : null}
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

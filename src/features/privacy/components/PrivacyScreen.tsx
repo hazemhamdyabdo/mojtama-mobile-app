@@ -1,14 +1,10 @@
 import PrivacyHeader from "@/features/privacy/components/PrivacyHeader";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import PrivacyIntro from "@/features/privacy/components/PrivacyIntro";
 import PrivacyPolicyAccordionItem from "@/features/privacy/components/PrivacyPolicyAccordionItem";
 import { PRIVACY_POLICIES } from "@/features/privacy/constants/policies";
-import { styled } from "nativewind";
 import { useState } from "react";
 import { ScrollView } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 export default function PrivacyScreen() {
   const [expandedPolicyId, setExpandedPolicyId] = useState<string>(
     PRIVACY_POLICIES[0]?.id ?? "",
@@ -19,7 +15,7 @@ export default function PrivacyScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-4 pb-8 pt-4"
@@ -37,6 +33,6 @@ export default function PrivacyScreen() {
           />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

@@ -1,14 +1,10 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import EditResidentRequestScreen from "@/features/requests/components/resident/EditResidentRequestScreen";
 import { useRequestsState } from "@/features/requests/hooks/useRequestsState";
 import { useUserRole } from "@/features/service/hooks/useUserRole";
 import { Redirect, useLocalSearchParams, type Href } from "expo-router";
-import { styled } from "nativewind";
 import { ActivityIndicator } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 export default function EditRequestRoute() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { role, isLoading } = useUserRole("resident");
@@ -20,9 +16,9 @@ export default function EditRequestRoute() {
 
   if (isLoading) {
     return (
-      <SafeAreaView className="flex-1 items-center justify-center bg-white">
+      <ScreenSafeAreaView className="flex-1 items-center justify-center bg-white">
         <ActivityIndicator color={colors.primary} />
-      </SafeAreaView>
+      </ScreenSafeAreaView>
     );
   }
 

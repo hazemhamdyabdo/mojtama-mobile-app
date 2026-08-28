@@ -1,4 +1,5 @@
 import PaymentFilterChips from "@/features/payments/components/PaymentFilterChips";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import PaymentSummarySection from "@/features/payments/components/PaymentSummarySection";
 import PaymentsBillListSection from "@/features/payments/components/PaymentsBillListSection";
 import PaymentsHeader from "@/features/payments/components/PaymentsHeader";
@@ -7,13 +8,8 @@ import PaymentsTabs from "@/features/payments/components/PaymentsTabs";
 import { PAYMENT_BILLS, PAYMENT_HISTORY } from "@/features/payments/constants/dummy";
 import type { PaymentBillFilter, PaymentTab } from "@/features/payments/types";
 import { useRouter, type Href } from "expo-router";
-import { styled } from "nativewind";
 import { useMemo, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 function filterBills(
   bills: typeof PAYMENT_BILLS,
   searchQuery: string,
@@ -97,7 +93,7 @@ export default function PaymentsScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-4 pb-8 pt-4"
@@ -114,6 +110,6 @@ export default function PaymentsScreen() {
         />
         {renderTabContent()}
       </ScrollView>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

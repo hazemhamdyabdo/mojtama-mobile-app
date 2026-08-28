@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import LanguageOptionCard from "@/features/auth/components/LanguageOptionCard";
 import {
   changeLanguage,
@@ -6,14 +7,9 @@ import {
   type SupportedLanguage,
 } from "@/localization/i18n";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
-import { styled } from "nativewind";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 const SETTINGS_LANGUAGE_HREF = "/(tabs)/more";
 
 const languageOptions = [
@@ -63,7 +59,7 @@ export default function LanguageSettingsView({
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-4 pb-8 pt-4"
@@ -121,6 +117,6 @@ export default function LanguageSettingsView({
           </Text>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

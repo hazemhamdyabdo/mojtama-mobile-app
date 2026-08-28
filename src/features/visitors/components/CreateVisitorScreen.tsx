@@ -1,13 +1,9 @@
 import VisitorForm from "@/features/visitors/components/VisitorForm";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import VisitorFormHeader from "@/features/visitors/components/VisitorFormHeader";
 import type { VisitorFormValues } from "@/features/visitors/schemas/visitorSchema";
 import { useRouter } from "expo-router";
-import { styled } from "nativewind";
 import { View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 export default function CreateVisitorScreen() {
   const router = useRouter();
 
@@ -17,11 +13,11 @@ export default function CreateVisitorScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <VisitorFormHeader title="New Visitor" />
         <VisitorForm submitLabel="Create Visit" onSubmit={handleSubmit} />
       </View>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

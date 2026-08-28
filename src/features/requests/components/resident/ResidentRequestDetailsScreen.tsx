@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import PersonValue from "@/features/requests/components/shared/PersonValue";
 import RequestInfoRow from "@/features/requests/components/shared/RequestInfoRow";
 import RequestActivityTimeline from "@/features/requests/components/RequestActivityTimeline";
@@ -18,13 +19,8 @@ import type { ServiceRequest } from "@/features/requests/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { styled } from "nativewind";
 import { useRef, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 type ResidentRequestDetailsScreenProps = {
   request: ServiceRequest;
   onDelete: (requestId: string) => void;
@@ -60,7 +56,7 @@ export default function ResidentRequestDetailsScreen({
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <RequestDetailsHeader
           title={isEmergency ? "Emergency Details" : "Request Details"}
@@ -217,6 +213,6 @@ export default function ResidentRequestDetailsScreen({
       />
 
       <ContactAuthoritiesBottomSheet ref={authoritiesSheetRef} />
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

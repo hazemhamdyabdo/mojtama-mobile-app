@@ -1,4 +1,5 @@
 import GenerateInviteLinkCard from "@/features/residents/components/GenerateInviteLinkCard";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import InviteLinkGeneratedBottomSheet, {
   type InviteLinkGeneratedBottomSheetRef,
 } from "@/features/residents/components/InviteLinkGeneratedBottomSheet";
@@ -21,14 +22,9 @@ import {
 } from "@/features/residents/constants/dummy";
 import type { ResidentFilterCriteria } from "@/features/residents/types";
 import { EMPTY_RESIDENT_FILTER } from "@/features/residents/types";
-import { styled } from "nativewind";
 import { useRouter, type Href } from "expo-router";
 import { useMemo, useRef, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 export default function ResidentsScreen() {
   const router = useRouter();
   const filterSheetRef = useRef<ResidentFilterBottomSheetRef>(null);
@@ -79,7 +75,7 @@ export default function ResidentsScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <ResidentsHeader />
 
@@ -144,6 +140,6 @@ export default function ResidentsScreen() {
         ref={removeSheetRef}
         onConfirmRemove={handleRemoveResident}
       />
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

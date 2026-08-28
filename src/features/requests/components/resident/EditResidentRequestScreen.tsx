@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import CreateRequestForm from "@/features/requests/components/CreateRequestForm";
 import type { CreateRequestFormValues } from "@/features/requests/schemas/createRequestSchema";
 import { updateRequestInState } from "@/features/requests/store/requestState";
@@ -9,12 +10,7 @@ import {
 } from "@/features/requests/utils/createRequest";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
-import { styled } from "nativewind";
 import { Pressable, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 type EditResidentRequestScreenProps = {
   request: ServiceRequest;
 };
@@ -30,7 +26,7 @@ export default function EditResidentRequestScreen({
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <View className="relative mb-6 flex-row items-center justify-center">
           <Pressable
@@ -57,6 +53,6 @@ export default function EditResidentRequestScreen({
           onSubmit={handleSubmit}
         />
       </View>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

@@ -1,13 +1,9 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
-import { styled } from "nativewind";
 import type { ReactNode } from "react";
 import { Pressable, Text, View } from "react-native";
-import { SafeAreaView as SafeAreaViewType } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(SafeAreaViewType);
-
 type CreatePostScreenLayoutProps = {
   children: ReactNode;
 };
@@ -18,7 +14,7 @@ export default function CreatePostScreenLayout({
   const router = useRouter();
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-2">
         <View className="relative mb-4 flex-row items-center justify-center">
           <Pressable
@@ -41,6 +37,6 @@ export default function CreatePostScreenLayout({
 
         {children}
       </View>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

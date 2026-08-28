@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import MeetingsHeader from "@/features/meetings/components/MeetingsHeader";
 import MeetingsTabs from "@/features/meetings/components/MeetingsTabs";
 import {
@@ -10,13 +11,8 @@ import MeetingPostCard from "@/features/home/components/post-types/MeetingPostCa
 import { useUserRole } from "@/features/service/hooks/useUserRole";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
-import { styled } from "nativewind";
 import { useMemo, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 export default function MeetingsScreen() {
   const router = useRouter();
   const { role } = useUserRole();
@@ -35,7 +31,7 @@ export default function MeetingsScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <MeetingsHeader />
         <MeetingsTabs activeTab={activeTab} onTabChange={setActiveTab} />
@@ -81,6 +77,6 @@ export default function MeetingsScreen() {
           </Pressable>
         ) : null}
       </View>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

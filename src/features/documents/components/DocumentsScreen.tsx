@@ -2,6 +2,7 @@ import DocumentActionsBottomSheet, {
   type DocumentActionsBottomSheetRef,
 } from "@/features/documents/components/DocumentActionsBottomSheet";
 import DocumentCard from "@/features/documents/components/DocumentCard";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import DocumentCategoryChips from "@/features/documents/components/DocumentCategoryChips";
 import DocumentsHeader from "@/features/documents/components/DocumentsHeader";
 import DocumentsSearchBar from "@/features/documents/components/DocumentsSearchBar";
@@ -25,13 +26,8 @@ import {
   viewDocumentFile,
 } from "@/features/documents/utils/documentActions";
 import HelpStillNeedHelpCard from "@/features/help/components/HelpStillNeedHelpCard";
-import { styled } from "nativewind";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 function formatTodayDate(): string {
   const today = new Date();
   const monthNames = [
@@ -149,7 +145,7 @@ export default function DocumentsScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <DocumentsHeader onUploadPress={() => uploadSheetRef.current?.open()} />
 
@@ -219,6 +215,6 @@ export default function DocumentsScreen() {
       />
 
       <EditDocumentBottomSheet ref={editSheetRef} onUpdate={handleUpdate} />
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

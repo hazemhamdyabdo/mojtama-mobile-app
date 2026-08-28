@@ -1,4 +1,5 @@
 import PaymentDetailsActions from "@/features/payments/components/PaymentDetailsActions";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import PaymentDetailsCompanySection from "@/features/payments/components/PaymentDetailsCompanySection";
 import PaymentDetailsHeader from "@/features/payments/components/PaymentDetailsHeader";
 import PaymentDetailsInfoCard from "@/features/payments/components/PaymentDetailsInfoCard";
@@ -8,12 +9,7 @@ import PaymentDetailsTitleSection from "@/features/payments/components/PaymentDe
 import PaymentDetailsTotalRow from "@/features/payments/components/PaymentDetailsTotalRow";
 import type { PaymentBillDetails } from "@/features/payments/types";
 import { useRouter, type Href } from "expo-router";
-import { styled } from "nativewind";
 import { ScrollView, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 type PaymentDetailsScreenProps = {
   bill: PaymentBillDetails;
 };
@@ -36,7 +32,7 @@ export default function PaymentDetailsScreen({
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-4 pb-6 pt-4"
@@ -79,6 +75,6 @@ export default function PaymentDetailsScreen({
           onSharePress={handleSharePress}
         />
       </View>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

@@ -1,4 +1,5 @@
 import EmergencyContactCard from "@/features/help/components/EmergencyContactCard";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import EmergencyTipsCard from "@/features/help/components/EmergencyTipsCard";
 import HelpFaqsTabContent from "@/features/help/components/HelpFaqsTabContent";
 import HelpHeader from "@/features/help/components/HelpHeader";
@@ -10,13 +11,8 @@ import {
 } from "@/features/help/constants/dummy";
 import type { HelpTab } from "@/features/help/types";
 import * as Linking from "expo-linking";
-import { styled } from "nativewind";
 import { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 async function openPhoneDialer(phoneNumber: string) {
   try {
     await Linking.openURL(`tel:${phoneNumber}`);
@@ -96,7 +92,7 @@ export default function HelpScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <HelpHeader />
         <HelpTabs activeTab={activeTab} onTabChange={setActiveTab} />
@@ -113,6 +109,6 @@ export default function HelpScreen() {
           <ReportEmergencyButton onPress={handleReportEmergency} />
         ) : null}
       </View>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

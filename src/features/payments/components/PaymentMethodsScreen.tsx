@@ -2,6 +2,7 @@ import BankPickerBottomSheet, {
   type BankPickerBottomSheetRef,
 } from "@/features/payments/components/BankPickerBottomSheet";
 import BankTransferForm from "@/features/payments/components/BankTransferForm";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import DigitalWalletForm from "@/features/payments/components/DigitalWalletForm";
 import PaymentMethodSelector from "@/features/payments/components/PaymentMethodSelector";
 import PaymentMethodsHeader from "@/features/payments/components/PaymentMethodsHeader";
@@ -27,14 +28,9 @@ import type {
 } from "@/features/payments/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, type Href } from "expo-router";
-import { styled } from "nativewind";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 type PaymentMethodsScreenProps = {
   bill: PaymentBillDetails;
 };
@@ -118,7 +114,7 @@ export default function PaymentMethodsScreen({
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-4 pb-6 pt-4"
@@ -175,6 +171,6 @@ export default function PaymentMethodsScreen({
         ref={successSheetRef}
         onViewDetails={handleViewDetails}
       />
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

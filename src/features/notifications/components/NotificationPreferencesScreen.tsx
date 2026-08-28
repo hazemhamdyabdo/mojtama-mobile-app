@@ -1,4 +1,5 @@
 import NotificationPreferenceCard from "@/features/notifications/components/NotificationPreferenceCard";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import NotificationPreferencesHeader from "@/features/notifications/components/NotificationPreferencesHeader";
 import {
   DEFAULT_NOTIFICATION_PREFERENCES,
@@ -8,13 +9,8 @@ import type {
   NotificationPreferenceKey,
   NotificationPreferencesState,
 } from "@/features/notifications/types";
-import { styled } from "nativewind";
 import { useState } from "react";
 import { ScrollView } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 export default function NotificationPreferencesScreen() {
   const [preferences, setPreferences] = useState<NotificationPreferencesState>(
     DEFAULT_NOTIFICATION_PREFERENCES,
@@ -28,7 +24,7 @@ export default function NotificationPreferencesScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-4 pb-8 pt-4"
@@ -46,6 +42,6 @@ export default function NotificationPreferencesScreen() {
           />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

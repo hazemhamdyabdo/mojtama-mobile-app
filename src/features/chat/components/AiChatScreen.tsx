@@ -1,4 +1,5 @@
 import AiAvatar from "@/features/chat/components/AiAvatar";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import ChatInputBar from "@/features/chat/components/ChatInputBar";
 import ChatSuggestionsSection from "@/features/chat/components/ChatSuggestionsSection";
 import {
@@ -15,7 +16,6 @@ import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
-import { styled } from "nativewind";
 import { useCallback, useRef, useState } from "react";
 import {
   FlatList,
@@ -25,10 +25,6 @@ import {
   Text,
   View,
 } from "react-native";
-import { SafeAreaView as SafeAreaViewType } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(SafeAreaViewType);
-
 export default function AiChatScreen() {
   const router = useRouter();
   const listRef = useRef<FlatList<ChatMessage>>(null);
@@ -171,7 +167,7 @@ export default function AiChatScreen() {
   }, [nextMessageId, scrollToEnd]);
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-slate-50" edges={["top", "bottom"]}>
       <View className="flex-row items-center gap-3 bg-white px-4 py-3">
         <Pressable
           onPress={() => router.back()}
@@ -226,6 +222,6 @@ export default function AiChatScreen() {
           onAttach={() => void handleAttach()}
         />
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

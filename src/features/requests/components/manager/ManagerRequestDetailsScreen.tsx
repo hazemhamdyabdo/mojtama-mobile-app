@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import PersonValue from "@/features/requests/components/shared/PersonValue";
 import RequestInfoRow from "@/features/requests/components/shared/RequestInfoRow";
 import AssignWorkersBottomSheet, {
@@ -18,13 +19,8 @@ import type { ServiceRequest } from "@/features/requests/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { styled } from "nativewind";
 import { useRef, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 type ManagerRequestDetailsScreenProps = {
   request: ServiceRequest;
   onUpdate: (request: ServiceRequest) => void;
@@ -85,7 +81,7 @@ export default function ManagerRequestDetailsScreen({
       : `${request.fullDescription.slice(0, 120)}...`;
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <RequestDetailsHeader />
 
@@ -219,6 +215,6 @@ export default function ManagerRequestDetailsScreen({
         ref={deleteSheetRef}
         onConfirmDelete={handleDelete}
       />
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

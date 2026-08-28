@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import type { ReactNode } from "react";
 import {
   Image,
@@ -9,7 +10,6 @@ import {
   View,
   type ViewStyle,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 type AuthScreenLayoutProps = {
   children: ReactNode;
@@ -23,7 +23,7 @@ export default function AuthScreenLayout({
   contentContainerStyle,
 }: AuthScreenLayoutProps) {
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <ScreenSafeAreaView style={styles.safeArea}>
       <ImageBackground
         source={require("@/assets/images/auth/onboarding-waves.png")}
         resizeMode="cover"
@@ -54,7 +54,7 @@ export default function AuthScreenLayout({
           <View style={styles.formContainer}>{children}</View>
         </ScrollView>
       </ImageBackground>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }
 

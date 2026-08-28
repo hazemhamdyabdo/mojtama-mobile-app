@@ -2,6 +2,7 @@ import DeleteVisitorBottomSheet, {
   type DeleteVisitorBottomSheetRef,
 } from "@/features/visitors/components/DeleteVisitorBottomSheet";
 import VisitorAccessCodeCard from "@/features/visitors/components/VisitorAccessCodeCard";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import VisitorActionsBottomSheet, {
   type VisitorActionsBottomSheetRef,
 } from "@/features/visitors/components/VisitorActionsBottomSheet";
@@ -14,13 +15,8 @@ import VisitorStatusBadge from "@/features/visitors/components/VisitorStatusBadg
 import VisitorTimelineCard from "@/features/visitors/components/VisitorTimelineCard";
 import type { Visitor } from "@/features/visitors/types";
 import { useRouter, type Href } from "expo-router";
-import { styled } from "nativewind";
 import { useRef } from "react";
 import { ScrollView, Text, View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 type VisitorDetailsScreenProps = {
   visitor: Visitor;
 };
@@ -39,7 +35,7 @@ export default function VisitorDetailsScreen({
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <VisitorDetailsHeader
           onMenuPress={() => actionsSheetRef.current?.open()}
@@ -107,6 +103,6 @@ export default function VisitorDetailsScreen({
         ref={qrSheetRef}
         onDownload={(visitorId) => console.log("download qr:", visitorId)}
       />
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

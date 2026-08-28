@@ -2,17 +2,13 @@ import DeleteVisitorBottomSheet, {
   type DeleteVisitorBottomSheetRef,
 } from "@/features/visitors/components/DeleteVisitorBottomSheet";
 import VisitorForm from "@/features/visitors/components/VisitorForm";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import VisitorFormHeader from "@/features/visitors/components/VisitorFormHeader";
 import type { VisitorFormValues } from "@/features/visitors/schemas/visitorSchema";
 import type { Visitor } from "@/features/visitors/types";
 import { useRouter, type Href } from "expo-router";
-import { styled } from "nativewind";
 import { useRef } from "react";
 import { View } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
-
 type EditVisitorScreenProps = {
   visitor: Visitor;
 };
@@ -32,7 +28,7 @@ export default function EditVisitorScreen({ visitor }: EditVisitorScreenProps) {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+    <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <VisitorFormHeader title="Edit Visitor" />
         <VisitorForm
@@ -58,6 +54,6 @@ export default function EditVisitorScreen({ visitor }: EditVisitorScreenProps) {
         ref={deleteSheetRef}
         onConfirmDelete={handleConfirmDelete}
       />
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }

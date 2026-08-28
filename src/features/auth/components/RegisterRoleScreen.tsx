@@ -1,9 +1,9 @@
 import { colors } from "@/theme/colors";
+import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import ManagerRoleCard from "@/features/auth/components/ManagerRoleCard";
 import ResidentRoleCard from "@/features/auth/components/ResidentRoleCard";
 import { useRouter } from "expo-router";
 import { Image, ImageBackground, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 type Role = "resident" | "manager";
 
@@ -18,7 +18,7 @@ export default function RegisterRoleScreen() {
   };
 
   return (
-    <SafeAreaView
+    <ScreenSafeAreaView
       className="flex-1"
       style={{
         backgroundColor: colors.white,
@@ -45,6 +45,6 @@ export default function RegisterRoleScreen() {
           </View>
         </View>
       </ImageBackground>
-    </SafeAreaView>
+    </ScreenSafeAreaView>
   );
 }
