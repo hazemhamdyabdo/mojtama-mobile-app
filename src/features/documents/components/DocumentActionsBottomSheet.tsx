@@ -1,3 +1,4 @@
+import BottomSheetIconActionRow from "@/components/ui/BottomSheetIconActionRow";
 import { colors } from "@/theme/colors";
 import DocumentPreviewCard from "@/features/documents/components/DocumentPreviewCard";
 import type { CommunityDocument } from "@/features/documents/types";
@@ -29,43 +30,6 @@ type DocumentActionsBottomSheetProps = {
   onEdit: (document: CommunityDocument) => void;
   onDelete: (documentId: string) => void;
 };
-
-type ActionRowProps = {
-  label: string;
-  icon:
-    | "eye-outline"
-    | "download-outline"
-    | "pencil-outline"
-    | "trash-can-outline";
-  destructive?: boolean;
-  onPress: () => void;
-};
-
-function ActionRow({
-  label,
-  icon,
-  destructive = false,
-  onPress,
-}: ActionRowProps) {
-  const color = destructive ? colors.rejected : colors.slate500;
-
-  return (
-    <Pressable
-      onPress={onPress}
-      accessibilityRole="button"
-      className="flex-row items-center gap-3 py-4 active:opacity-[0.92]"
-    >
-      <MaterialDesignIcons name={icon} color={color} size={22} />
-      <Text
-        className={`text-base font-medium ${
-          destructive ? "text-rejected-500" : "text-heading"
-        }`}
-      >
-        {label}
-      </Text>
-    </Pressable>
-  );
-}
 
 const DocumentActionsBottomSheet = forwardRef<
   DocumentActionsBottomSheetRef,
@@ -122,7 +86,7 @@ const DocumentActionsBottomSheet = forwardRef<
         {document ? <DocumentPreviewCard document={document} bordered /> : null}
 
         <View className="mt-2">
-          <ActionRow
+          <BottomSheetIconActionRow
             label="View"
             icon="eye-outline"
             onPress={() =>
@@ -130,7 +94,7 @@ const DocumentActionsBottomSheet = forwardRef<
             }
           />
           <View className="h-px bg-slate-200" />
-          <ActionRow
+          <BottomSheetIconActionRow
             label="Download"
             icon="download-outline"
             onPress={() =>
@@ -138,7 +102,7 @@ const DocumentActionsBottomSheet = forwardRef<
             }
           />
           <View className="h-px bg-slate-200" />
-          <ActionRow
+          <BottomSheetIconActionRow
             label="Edit Document"
             icon="pencil-outline"
             onPress={() =>
@@ -146,7 +110,7 @@ const DocumentActionsBottomSheet = forwardRef<
             }
           />
           <View className="h-px bg-slate-200" />
-          <ActionRow
+          <BottomSheetIconActionRow
             label="Delete"
             icon="trash-can-outline"
             destructive

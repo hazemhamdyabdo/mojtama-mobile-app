@@ -1,4 +1,6 @@
 import { colors } from "@/theme/colors";
+import PersonValue from "@/features/requests/components/shared/PersonValue";
+import RequestInfoRow from "@/features/requests/components/shared/RequestInfoRow";
 import AssignWorkersBottomSheet, {
   type AssignWorkersBottomSheetRef,
 } from "@/features/requests/components/manager/AssignWorkersBottomSheet";
@@ -17,7 +19,6 @@ import MaterialDesignIcons from "@react-native-vector-icons/material-design-icon
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { styled } from "nativewind";
-import type { ReactNode } from "react";
 import { useRef, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
@@ -29,41 +30,6 @@ type ManagerRequestDetailsScreenProps = {
   onUpdate: (request: ServiceRequest) => void;
   onDelete: (requestId: string) => void;
 };
-
-type InfoRowProps = {
-  label: string;
-  children: ReactNode;
-};
-
-function InfoRow({ label, children }: InfoRowProps) {
-  return (
-    <View className="mb-4 flex-row items-center justify-between gap-4">
-      <Text className="w-1/3 text-sm text-sec-text">{label}</Text>
-      <View className="flex-1  items-start">{children}</View>
-    </View>
-  );
-}
-
-function PersonValue({
-  person,
-}: {
-  person: { name: string; avatar?: ServiceRequest["submittedBy"]["avatar"] };
-}) {
-  return (
-    <View className="flex-row items-center gap-2">
-      {person.avatar ? (
-        <Image
-          source={person.avatar}
-          contentFit="cover"
-          style={{ width: 24, height: 24, borderRadius: 100 }}
-        />
-      ) : null}
-      <Text className="text-sm font-semibold text-heading">
-        {person.name}
-      </Text>
-    </View>
-  );
-}
 
 export default function ManagerRequestDetailsScreen({
   request: initialRequest,
@@ -148,11 +114,11 @@ export default function ManagerRequestDetailsScreen({
           ) : null}
 
           <View className="mt-6 ">
-            <InfoRow label="Submitted by">
+            <RequestInfoRow label="Submitted by">
               <PersonValue person={request.submittedBy} />
-            </InfoRow>
+            </RequestInfoRow>
 
-            <InfoRow label="Location">
+            <RequestInfoRow label="Location">
               <View className="flex-row items-center gap-1">
                 <MaterialDesignIcons
                   name="map-marker-outline"
@@ -163,35 +129,35 @@ export default function ManagerRequestDetailsScreen({
                   {request.location}
                 </Text>
               </View>
-            </InfoRow>
+            </RequestInfoRow>
 
             {request.scheduledDate ? (
-              <InfoRow label="Scheduled Date">
+              <RequestInfoRow label="Scheduled Date">
                 <Text className="text-sm font-semibold text-heading">
                   {request.scheduledDate}
                 </Text>
-              </InfoRow>
+              </RequestInfoRow>
             ) : null}
 
             {request.assignedTo ? (
-              <InfoRow label="Assigned to">
+              <RequestInfoRow label="Assigned to">
                 <PersonValue person={request.assignedTo} />
-              </InfoRow>
+              </RequestInfoRow>
             ) : null}
 
-            <InfoRow label="Request Type">
+            <RequestInfoRow label="Request Type">
               <RequestTypeBadge requestType={request.requestType} />
-            </InfoRow>
+            </RequestInfoRow>
 
             {request.issueType ? (
-              <InfoRow label="Issue Type">
+              <RequestInfoRow label="Issue Type">
                 <RequestIssueTypeBadge issueType={request.issueType} />
-              </InfoRow>
+              </RequestInfoRow>
             ) : null}
 
-            <InfoRow label="Priority">
+            <RequestInfoRow label="Priority">
               <RequestPriorityBadge priority={request.priority} />
-            </InfoRow>
+            </RequestInfoRow>
           </View>
 
           {request.scheduleTime ? (

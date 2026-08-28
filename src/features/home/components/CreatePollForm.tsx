@@ -1,3 +1,5 @@
+import FormLabel from "@/components/ui/FormLabel";
+import SettingToggle from "@/features/home/components/form/SettingToggle";
 import { colors } from "@/theme/colors";
 import {
   createPollSchema,
@@ -19,51 +21,6 @@ import {
   TextInput,
   View,
 } from "react-native";
-
-type FormLabelProps = {
-  label: string;
-  required?: boolean;
-  className?: string;
-};
-
-function FormLabel({ label, required = false, className }: FormLabelProps) {
-  return (
-    <Text className={`mb-2 text-sm font-medium text-label ${className}`}>
-      {label}
-      {required ? <Text className="text-rejected">*</Text> : null}
-    </Text>
-  );
-}
-
-type SettingToggleProps = {
-  label: string;
-  value: boolean;
-  onChange: (value: boolean) => void;
-  showDivider?: boolean;
-};
-
-function SettingToggle({
-  label,
-  value,
-  onChange,
-  showDivider = false,
-}: SettingToggleProps) {
-  return (
-    <View
-      className={`flex-row items-center justify-between py-4 ${
-        showDivider ? "border-b border-slate-100" : ""
-      }`}
-    >
-      <Text className="flex-1 pr-4 text-base text-slate-500">{label}</Text>
-      <Switch
-        value={value}
-        onValueChange={onChange}
-        trackColor={{ false: colors.slate200, true: colors.primary300 }}
-        thumbColor={value ? colors.primary : colors.white}
-      />
-    </View>
-  );
-}
 
 function formatDate(date: Date) {
   return date.toLocaleDateString(undefined, {

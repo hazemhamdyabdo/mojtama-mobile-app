@@ -1,3 +1,4 @@
+import BottomSheetMenuActionRow from "@/components/ui/BottomSheetMenuActionRow";
 import { colors } from "@/theme/colors";
 import {
   BottomSheetBackdrop,
@@ -12,7 +13,6 @@ import {
   useRef,
   useState,
   type ComponentProps,
-  type ReactNode,
 } from "react";
 import { Pressable, Switch, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -28,32 +28,6 @@ type PostActionsBottomSheetProps = {
   onMarkAsUrgent?: (postId: string, isUrgent: boolean) => void;
   onDeletePost?: (postId: string) => void;
 };
-
-type ActionRowProps = {
-  label: string;
-  onPress?: () => void;
-  labelClassName?: string;
-  rightElement?: ReactNode;
-};
-
-function ActionRow({
-  label,
-  onPress,
-  labelClassName = "text-base text-heading font-semibold",
-  rightElement,
-}: ActionRowProps) {
-  return (
-    <Pressable
-      onPress={onPress}
-      disabled={!onPress}
-      accessibilityRole="button"
-      className="flex-row items-center  justify-between border-b border-slate-100 px-1 py-4 active:opacity-[0.92]"
-    >
-      <Text className={labelClassName}>{label}</Text>
-      {rightElement}
-    </Pressable>
-  );
-}
 
 const PostActionsBottomSheet = forwardRef<
   PostActionsBottomSheetRef,
@@ -128,11 +102,14 @@ const PostActionsBottomSheet = forwardRef<
         className="px-4"
         style={{ paddingBottom: insets.bottom + 16 }}
       >
-        <ActionRow
+        <BottomSheetMenuActionRow
           label="Move To Draft"
           onPress={() => runAction(onMoveToDraft)}
         />
-        <ActionRow label="Edit Post" onPress={() => runAction(onEditPost)} />
+        <BottomSheetMenuActionRow
+          label="Edit Post"
+          onPress={() => runAction(onEditPost)}
+        />
 
         <View className="flex-row items-center justify-between border-b border-slate-100 px-1 py-4">
           <Text className="text-base text-heading font-semibold">

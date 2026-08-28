@@ -1,3 +1,5 @@
+import CategoryTypeChip from "@/components/ui/CategoryTypeChip";
+import FormLabel from "@/components/ui/FormLabel";
 import { colors } from "@/theme/colors";
 import type { AnnouncementType } from "@/features/home/constants/announcementTypes";
 import { ANNOUNCEMENT_TYPE_OPTIONS } from "@/features/home/constants/announcementTypes";
@@ -37,53 +39,6 @@ const FORM_COPY = {
     contentPlaceholder: "Type news content",
   },
 } as const;
-
-type FormLabelProps = {
-  label: string;
-  required?: boolean;
-};
-
-function FormLabel({ label, required = false }: FormLabelProps) {
-  return (
-    <Text className="mb-2 text-sm font-medium text-label">
-      {label}
-      {required ? <Text className="text-rejected">*</Text> : null}
-    </Text>
-  );
-}
-
-type CategoryTypeChipProps = {
-  label: string;
-  selected: boolean;
-  onPress: () => void;
-};
-
-function CategoryTypeChip({
-  label,
-  selected,
-  onPress,
-}: CategoryTypeChipProps) {
-  return (
-    <Pressable
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityState={{ selected }}
-      className={`rounded-full px-4 py-2.5 active:opacity-[0.92] ${
-        selected ? "bg-primary-50" : "border border-slate-200 bg-slate-50"
-      }`}
-    >
-      <Text
-        className={`text-sm ${
-          selected
-            ? "font-semibold text-primary"
-            : "font-medium text-slate-500"
-        }`}
-      >
-        {label}
-      </Text>
-    </Pressable>
-  );
-}
 
 type CreatePostFormProps = {
   variant: CreatePostFormVariant;

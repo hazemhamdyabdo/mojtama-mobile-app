@@ -1,4 +1,6 @@
-import { colors } from "@/theme/colors";
+import FormLabel from "@/components/ui/FormLabel";
+import FieldError from "@/components/ui/FieldError";
+import TimeField from "@/features/home/components/form/TimeField";
 import MembersBottomSheet, {
   type MembersBottomSheetRef,
 } from "@/features/home/components/MembersBottomSheet";
@@ -27,32 +29,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-
-type FormLabelProps = {
-  label: string;
-  required?: boolean;
-};
-
-function FormLabel({ label, required = false }: FormLabelProps) {
-  return (
-    <Text className="mb-2 text-sm font-medium text-label">
-      {label}
-      {required ? <Text className="text-rejected">*</Text> : null}
-    </Text>
-  );
-}
-
-type FieldErrorProps = {
-  message?: string;
-};
-
-function FieldError({ message }: FieldErrorProps) {
-  if (!message) {
-    return null;
-  }
-
-  return <Text className="mt-2 text-sm text-rejected">{message}</Text>;
-}
+import { colors } from "@/theme/colors";
 
 function formatDate(date: Date) {
   return date.toLocaleDateString(undefined, {
@@ -60,39 +37,6 @@ function formatDate(date: Date) {
     month: "long",
     year: "numeric",
   });
-}
-
-function formatTime(date: Date) {
-  return date.toLocaleTimeString(undefined, {
-    hour: "numeric",
-    minute: "2-digit",
-  });
-}
-
-type TimeFieldProps = {
-  value: Date | null;
-  placeholder: string;
-  hasError: boolean;
-  onPress: () => void;
-};
-
-function TimeField({ value, placeholder, hasError, onPress }: TimeFieldProps) {
-  return (
-    <Pressable
-      onPress={onPress}
-      accessibilityRole="button"
-      className={`flex-1 flex-row items-center gap-2 rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-        hasError ? "border-rejected-200" : "border-card-border"
-      }`}
-    >
-      <MaterialDesignIcons name="clock-outline" color={colors.slate500} size={20} />
-      <Text
-        className={`text-base ${value ? "text-heading" : "text-sec-text"}`}
-      >
-        {value ? formatTime(value) : placeholder}
-      </Text>
-    </Pressable>
-  );
 }
 
 type CreateMeetingFormProps = {
