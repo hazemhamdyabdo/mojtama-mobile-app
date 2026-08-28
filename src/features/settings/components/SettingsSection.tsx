@@ -9,8 +9,8 @@ type SettingsSectionProps = {
 export default function SettingsSection({ title, children }: SettingsSectionProps) {
   return (
     <View className="mb-6">
-      <Text className="mb-3 text-sm font-semibold text-[#64748B]">{title}</Text>
-      <View className="overflow-hidden rounded-2xl border border-[#E4E4E7] bg-white">
+      <Text className="mb-3 text-sm font-semibold text-slate-500">{title}</Text>
+      <View className="overflow-hidden rounded-2xl border border-card-border bg-white">
         {children}
       </View>
     </View>

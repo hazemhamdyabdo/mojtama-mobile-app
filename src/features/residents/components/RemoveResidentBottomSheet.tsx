@@ -13,6 +13,7 @@ import {
 } from "react";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { colors } from "@/theme/colors";
 
 export type RemoveResidentBottomSheetRef = {
   open: () => void;
@@ -58,29 +59,29 @@ const RemoveResidentBottomSheet = forwardRef<
       enableDynamicSizing
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
         <View className="items-center pt-2">
-          <View className="size-24 items-center justify-center rounded-full bg-[#FFE6E6]">
+          <View className="size-24 items-center justify-center rounded-full bg-rejected-50">
             <MaterialDesignIcons
               name="trash-can-outline"
-              color="#F87171"
+              color={colors.rejected}
               size={44}
             />
           </View>
 
-          <Text className="mt-5 text-xl font-bold text-[#1F1F1F]">
+          <Text className="mt-5 text-xl font-bold text-heading">
             Remove Resident!
           </Text>
-          <Text className="mt-1 text-center text-sm text-[#90A1B9]">
+          <Text className="mt-1 text-center text-sm text-sec-text">
             Are You Sure You Want To Remove This Resident?
           </Text>
         </View>
@@ -89,15 +90,15 @@ const RemoveResidentBottomSheet = forwardRef<
           <Pressable
             onPress={() => bottomSheetRef.current?.dismiss()}
             accessibilityRole="button"
-            className="flex-1 items-center rounded-2xl border border-[#CAD5E2] bg-white py-4 active:opacity-[0.92]"
+            className="flex-1 items-center rounded-2xl border border-input-text bg-white py-4 active:opacity-[0.92]"
           >
-            <Text className="text-base font-bold text-[#62748E]">Cancel</Text>
+            <Text className="text-base font-bold text-slate-500">Cancel</Text>
           </Pressable>
 
           <Pressable
             onPress={handleConfirm}
             accessibilityRole="button"
-            className="flex-1 items-center rounded-2xl bg-[#F87171] py-4 active:opacity-[0.92]"
+            className="flex-1 items-center rounded-2xl bg-rejected-500 py-4 active:opacity-[0.92]"
           >
             <Text className="text-base font-bold text-white">Yes, Remove</Text>
           </Pressable>

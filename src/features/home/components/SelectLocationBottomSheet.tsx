@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import type { MeetingLocation } from "@/features/home/schemas/createMeetingSchema";
 import {
   BottomSheetBackdrop,
@@ -49,21 +50,21 @@ function LocationOption({
       onPress={onPress}
       accessibilityRole="button"
       className={`flex-row items-center gap-3 rounded-2xl border p-4 active:opacity-[0.92] ${
-        selected ? "border-[#7B61FF] bg-[#F8F6FF]" : "border-[#E4E4E7] bg-white"
+        selected ? "border-primary bg-primary-50" : "border-card-border bg-white"
       }`}
     >
-      <View className="size-12 items-center justify-center rounded-full bg-[#F0EDFF]">
-        <MaterialDesignIcons name={icon} color="#7B61FF" size={24} />
+      <View className="size-12 items-center justify-center rounded-full bg-primary-50">
+        <MaterialDesignIcons name={icon} color={colors.primary} size={24} />
       </View>
 
       <View className="flex-1">
-        <Text className="text-base font-bold text-[#1F1F1F]">{title}</Text>
-        <Text className="mt-0.5 text-sm text-[#90A1B9]">{subtitle}</Text>
+        <Text className="text-base font-bold text-heading">{title}</Text>
+        <Text className="mt-0.5 text-sm text-sec-text">{subtitle}</Text>
       </View>
 
       {selected ? (
-        <View className="size-7 items-center justify-center rounded-full bg-[#7B61FF]">
-          <MaterialDesignIcons name="check-bold" color="#FFFFFF" size={16} />
+        <View className="size-7 items-center justify-center rounded-full bg-primary">
+          <MaterialDesignIcons name="check-bold" color={colors.white} size={16} />
         </View>
       ) : null}
     </Pressable>
@@ -120,17 +121,17 @@ const SelectLocationBottomSheet = forwardRef<
       keyboardBehavior="interactive"
       keyboardBlurBehavior="restore"
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
-        <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 text-center text-base font-bold text-heading">
           Select Location
         </Text>
 
@@ -153,18 +154,18 @@ const SelectLocationBottomSheet = forwardRef<
         </View>
 
         <View className="mt-5">
-          <Text className="mb-2 text-sm font-medium text-[#2E2E2E]">
+          <Text className="mb-2 text-sm font-medium text-label">
             {isVirtual ? "Meeting link" : "Meeting location"}
           </Text>
 
-          <View className="flex-row items-center rounded-xl border border-[#E4E4E7] bg-white px-4">
+          <View className="flex-row items-center rounded-xl border border-card-border bg-white px-4">
             <BottomSheetTextInput
               value={draftValue}
               onChangeText={setDraftValue}
               placeholder={
                 isVirtual ? "Enter meeting link" : "Enter meeting location"
               }
-              placeholderTextColor="#90A1B9"
+              placeholderTextColor={colors.secText}
               autoCapitalize="none"
               keyboardType={isVirtual ? "url" : "default"}
               style={{
@@ -173,13 +174,13 @@ const SelectLocationBottomSheet = forwardRef<
                 minHeight: 52,
                 paddingVertical: 14,
                 fontSize: 16,
-                color: "#1F1F1F",
+                color: colors.heading,
               }}
             />
 
             <MaterialDesignIcons
               name={isVirtual ? "content-copy" : "map-marker-outline"}
-              color="#90A1B9"
+              color={colors.secText}
               size={18}
             />
           </View>
@@ -192,7 +193,7 @@ const SelectLocationBottomSheet = forwardRef<
           }}
           disabled={!canConfirm}
           accessibilityRole="button"
-          className="mt-5 items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-50"
+          className="mt-5 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-50"
         >
           <Text className="text-base font-bold text-white">Add Location</Text>
         </Pressable>

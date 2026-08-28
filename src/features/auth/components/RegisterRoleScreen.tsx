@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import ManagerRoleCard from "@/features/auth/components/ManagerRoleCard";
 import ResidentRoleCard from "@/features/auth/components/ResidentRoleCard";
 import { useRouter } from "expo-router";
@@ -20,7 +21,7 @@ export default function RegisterRoleScreen() {
     <SafeAreaView
       className="flex-1"
       style={{
-        backgroundColor: "#fff",
+        backgroundColor: colors.white,
         height: "100%",
       }}
     >

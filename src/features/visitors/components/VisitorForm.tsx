@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import DateTimePickerSheet, {
   type DateTimePickerSheetRef,
 } from "@/features/home/components/DateTimePickerSheet";
@@ -116,7 +117,7 @@ export default function VisitorForm({
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <Text className="mb-4 text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 text-base font-bold text-heading">
           Visit Details
         </Text>
 
@@ -195,7 +196,7 @@ export default function VisitorForm({
           }
         />
 
-        <Text className="mb-4 mt-2 text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 mt-2 text-base font-bold text-heading">
           Date & Duration
         </Text>
 
@@ -219,7 +220,7 @@ export default function VisitorForm({
           onPress={() => timePickerRef.current?.open()}
         />
 
-        <Text className="mb-4 mt-2 text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 mt-2 text-base font-bold text-heading">
           Contact Information
         </Text>
 
@@ -265,7 +266,7 @@ export default function VisitorForm({
         <Pressable
           onPress={handleSubmit(onSubmit)}
           accessibilityRole="button"
-          className="mt-2 items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+          className="mt-2 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
         >
           <Text className="text-base font-bold text-white">{submitLabel}</Text>
         </Pressable>
@@ -274,14 +275,14 @@ export default function VisitorForm({
           <Pressable
             onPress={onDelete}
             accessibilityRole="button"
-            className="mt-3 flex-row items-center justify-center gap-2 rounded-2xl border border-[#F87171] bg-white py-4 active:opacity-[0.92]"
+            className="mt-3 flex-row items-center justify-center gap-2 rounded-2xl border border-rejected-500 bg-white py-4 active:opacity-[0.92]"
           >
             <MaterialDesignIcons
               name="trash-can-outline"
-              color="#F87171"
+              color={colors.rejected}
               size={20}
             />
-            <Text className="text-base font-bold text-[#F87171]">
+            <Text className="text-base font-bold text-rejected-500">
               Delete Visit
             </Text>
           </Pressable>

@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import {
   createPollSchema,
   POLL_FORM_LIMITS,
@@ -27,9 +28,9 @@ type FormLabelProps = {
 
 function FormLabel({ label, required = false, className }: FormLabelProps) {
   return (
-    <Text className={`mb-2 text-sm font-medium text-[#2E2E2E] ${className}`}>
+    <Text className={`mb-2 text-sm font-medium text-label ${className}`}>
       {label}
-      {required ? <Text className="text-[#EF4444]">*</Text> : null}
+      {required ? <Text className="text-rejected">*</Text> : null}
     </Text>
   );
 }
@@ -50,15 +51,15 @@ function SettingToggle({
   return (
     <View
       className={`flex-row items-center justify-between py-4 ${
-        showDivider ? "border-b border-[#F1F5F9]" : ""
+        showDivider ? "border-b border-slate-100" : ""
       }`}
     >
-      <Text className="flex-1 pr-4 text-base text-[#62748E]">{label}</Text>
+      <Text className="flex-1 pr-4 text-base text-slate-500">{label}</Text>
       <Switch
         value={value}
         onValueChange={onChange}
-        trackColor={{ false: "#E4E4E7", true: "#C4B5FD" }}
-        thumbColor={value ? "#7B61FF" : "#FFFFFF"}
+        trackColor={{ false: colors.slate200, true: colors.primary300 }}
+        thumbColor={value ? colors.primary : colors.white}
       />
     </View>
   );
@@ -118,7 +119,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <Text className="mb-6 text-2xl font-bold text-[#1F1F1F]">
+        <Text className="mb-6 text-2xl font-bold text-heading">
           Create Poll
         </Text>
 
@@ -134,9 +135,9 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
                 onChangeText={onChange}
                 onBlur={onBlur}
                 placeholder="Type Announcement title"
-                placeholderTextColor="#90A1B9"
-                className={`rounded-xl border bg-white px-4 text-base text-[#1F1F1F] ${
-                  errors.title ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                placeholderTextColor={colors.secText}
+                className={`rounded-xl border bg-white px-4 text-base text-heading ${
+                  errors.title ? "border-rejected-200" : "border-card-border"
                 }`}
                 style={{
                   textAlign,
@@ -148,7 +149,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
           />
 
           {errors.title ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">
+            <Text className="mt-2 text-sm text-rejected">
               {errors.title.message}
             </Text>
           ) : null}
@@ -168,20 +169,20 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
                     accessibilityRole="button"
                     className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
                       errors.deadlineDate
-                        ? "border-[#FCA5A5]"
-                        : "border-[#E4E4E7]"
+                        ? "border-rejected-200"
+                        : "border-card-border"
                     }`}
                   >
                     <Text
                       className={`text-base ${
-                        value ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+                        value ? "text-heading" : "text-sec-text"
                       }`}
                     >
                       {value ? formatDate(value) : "Select Date"}
                     </Text>
                     <MaterialDesignIcons
                       name="calendar-blank-outline"
-                      color="#64748B"
+                      color={colors.slate500}
                       size={20}
                     />
                   </Pressable>
@@ -215,20 +216,20 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
                     accessibilityRole="button"
                     className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
                       errors.deadlineTime
-                        ? "border-[#FCA5A5]"
-                        : "border-[#E4E4E7]"
+                        ? "border-rejected-200"
+                        : "border-card-border"
                     }`}
                   >
                     <Text
                       className={`text-base ${
-                        value ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+                        value ? "text-heading" : "text-sec-text"
                       }`}
                     >
                       {value ? formatTime(value) : "Select Time"}
                     </Text>
                     <MaterialDesignIcons
                       name="clock-outline"
-                      color="#64748B"
+                      color={colors.slate500}
                       size={20}
                     />
                   </Pressable>
@@ -254,7 +255,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
           </View>
 
           {errors.deadlineDate ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">
+            <Text className="mt-2 text-sm text-rejected">
               {errors.deadlineDate.message}
             </Text>
           ) : null}
@@ -264,18 +265,18 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
           control={control}
           name="isEmergency"
           render={({ field: { value, onChange } }) => (
-            <View className="mb-5 flex-col items-start rounded-xl border border-[#E4E4E7] bg-[#F8FAFC] px-4 py-3">
+            <View className="mb-5 flex-col items-start rounded-xl border border-card-border bg-slate-50 px-4 py-3">
               <View className="flex-row items-center">
                 <View className="size-10 items-center justify-center rounded-full">
                   <MaterialDesignIcons
                     name="alert-outline"
-                    color="#7B61FF"
+                    color={colors.primary}
                     size={22}
                   />
                 </View>
 
                 <View className="flex-1">
-                  <Text className="text-base font-bold text-[#1F1F1F]">
+                  <Text className="text-base font-bold text-heading">
                     Emergency Feed
                   </Text>
                 </View>
@@ -283,11 +284,11 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
                 <Switch
                   value={value}
                   onValueChange={onChange}
-                  trackColor={{ false: "#E4E4E7", true: "#C4B5FD" }}
-                  thumbColor={value ? "#7B61FF" : "#FFFFFF"}
+                  trackColor={{ false: colors.slate200, true: colors.primary300 }}
+                  thumbColor={value ? colors.primary : colors.white}
                 />
               </View>
-              <Text className="text-sm text-[#90A1B9]">
+              <Text className="text-sm text-sec-text">
                 Mark as Urgent for immediate attention
               </Text>
             </View>
@@ -300,7 +301,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
           <View className="gap-3">
             {fields.map((field, index) => (
               <View key={field.id} className="flex-row items-center gap-2">
-                <View className="size-5 rounded-full border-2 border-[#CBD5E1]" />
+                <View className="size-5 rounded-full border-2 border-slate-300" />
 
                 <Controller
                   control={control}
@@ -311,11 +312,11 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       placeholder={`Option ${index + 1}`}
-                      placeholderTextColor="#90A1B9"
-                      className={`flex-1 rounded-xl border bg-white px-4 py-3 text-base text-[#1F1F1F] ${
+                      placeholderTextColor={colors.secText}
+                      className={`flex-1 rounded-xl border bg-white px-4 py-3 text-base text-heading ${
                         errors.options?.[index]?.label
-                          ? "border-[#FCA5A5]"
-                          : "border-[#E4E4E7]"
+                          ? "border-rejected-200"
+                          : "border-card-border"
                       }`}
                       style={{ textAlign }}
                     />
@@ -331,20 +332,20 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
                   accessibilityLabel={`Remove option ${index + 1}`}
                   className="size-8 items-center justify-center active:opacity-[0.92] disabled:opacity-30"
                 >
-                  <MaterialDesignIcons name="close" color="#64748B" size={20} />
+                  <MaterialDesignIcons name="close" color={colors.slate500} size={20} />
                 </Pressable>
               </View>
             ))}
           </View>
 
           {errors.options?.root ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">
+            <Text className="mt-2 text-sm text-rejected">
               {errors.options.root.message}
             </Text>
           ) : null}
 
           {errors.options?.message ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">
+            <Text className="mt-2 text-sm text-rejected">
               {errors.options.message}
             </Text>
           ) : null}
@@ -353,10 +354,10 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
             onPress={() => append({ label: "" })}
             disabled={fields.length >= POLL_FORM_LIMITS.maxOptions}
             accessibilityRole="button"
-            className="mt-3 flex-row items-center justify-center gap-2 rounded-xl border border-[#7B61FF] py-3 active:opacity-[0.92] disabled:opacity-50"
+            className="mt-3 flex-row items-center justify-center gap-2 rounded-xl border border-primary py-3 active:opacity-[0.92] disabled:opacity-50"
           >
-            <MaterialDesignIcons name="plus" color="#7B61FF" size={20} />
-            <Text className="text-base font-semibold text-[#7B61FF]">
+            <MaterialDesignIcons name="plus" color={colors.primary} size={20} />
+            <Text className="text-base font-semibold text-primary">
               Add Option
             </Text>
           </Pressable>
@@ -398,7 +399,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
         onPress={handleSubmit(onSubmit)}
         disabled={isSubmitting}
         accessibilityRole="button"
-        className="mt-4 items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
+        className="mt-4 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
       >
         <Text className="text-base font-bold text-white">Create Poll</Text>
       </Pressable>

@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { Text, TextInput, View, type TextInputProps } from "react-native";
 
 type VisitorFormTextFieldProps = {
@@ -17,22 +18,22 @@ export default function VisitorFormTextField({
 }: VisitorFormTextFieldProps) {
   return (
     <View className="mb-4">
-      <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
+      <Text className="mb-2 text-sm font-semibold text-heading">
         {label}
-        {required ? <Text className="text-[#EF4444]">*</Text> : null}
+        {required ? <Text className="text-rejected">*</Text> : null}
         {optionalHint ? (
-          <Text className="text-xs font-normal text-[#90A1B9]"> (optional)</Text>
+          <Text className="text-xs font-normal text-sec-text"> (optional)</Text>
         ) : null}
       </Text>
       <TextInput
-        placeholderTextColor="#90A1B9"
-        className={`rounded-xl border bg-white px-4 py-3.5 text-base text-[#1F1F1F] ${
-          error ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+        placeholderTextColor={colors.secText}
+        className={`rounded-xl border bg-white px-4 py-3.5 text-base text-heading ${
+          error ? "border-rejected-200" : "border-card-border"
         }`}
         {...inputProps}
       />
       {error ? (
-        <Text className="mt-2 text-sm text-[#EF4444]">{error}</Text>
+        <Text className="mt-2 text-sm text-rejected">{error}</Text>
       ) : null}
     </View>
   );

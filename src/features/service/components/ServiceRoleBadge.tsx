@@ -12,8 +12,8 @@ const ROLE_LABELS: Record<ServiceRole, string> = {
 
 export default function ServiceRoleBadge({ role }: ServiceRoleBadgeProps) {
   return (
-    <View className="rounded-full bg-[#F0EDFF] px-2.5 py-0.5">
-      <Text className="text-xs font-semibold text-[#7B61FF]">
+    <View className="rounded-full bg-primary-50 px-2.5 py-0.5">
+      <Text className="text-xs font-semibold text-primary">
         {ROLE_LABELS[role]}
       </Text>
     </View>

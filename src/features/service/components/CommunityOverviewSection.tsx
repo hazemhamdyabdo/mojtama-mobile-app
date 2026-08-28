@@ -5,10 +5,10 @@ import { Text, View } from "react-native";
 export default function CommunityOverviewSection() {
   return (
     <View className="mt-8">
-      <Text className="text-lg font-bold text-[#1F1F1F]">
+      <Text className="text-lg font-bold text-heading">
         Community Overview
       </Text>
-      <Text className="mt-1 text-sm text-[#90A1B9]">
+      <Text className="mt-1 text-sm text-sec-text">
         Manage and monitor your community
       </Text>
 

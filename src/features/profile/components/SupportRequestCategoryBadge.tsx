@@ -9,14 +9,14 @@ function getCategoryStyles(category: SupportRequestCategory) {
   switch (category) {
     case "maintenance":
       return {
-        container: "bg-[#0F766E]",
+        container: "bg-approved-700",
         text: "text-white",
         label: "Maintenance",
       };
     case "noise":
       return {
-        container: "bg-[#FEF9C3]",
-        text: "text-[#CA8A04]",
+        container: "bg-pending-50",
+        text: "text-pending-700",
         label: "Noise",
       };
     default: {

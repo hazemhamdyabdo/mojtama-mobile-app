@@ -13,8 +13,8 @@ type InfoCellProps = {
 function InfoCell({ label, value }: InfoCellProps) {
   return (
     <View className="mb-4 flex-1">
-      <Text className="text-sm text-[#90A1B9]">{label}</Text>
-      <Text className="mt-1 text-sm font-semibold text-[#1F1F1F]">{value}</Text>
+      <Text className="text-sm text-sec-text">{label}</Text>
+      <Text className="mt-1 text-sm font-semibold text-heading">{value}</Text>
     </View>
   );
 }

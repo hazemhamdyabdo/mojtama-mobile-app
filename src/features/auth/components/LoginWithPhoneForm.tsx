@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import CountryPickerBottomSheet, {
   type CountryPickerBottomSheetRef,
 } from "@/features/auth/components/CountryPickerBottomSheet";
@@ -76,37 +77,37 @@ function PhoneLoginFormFields({
   return (
     <View className="w-full">
       <View className="mb-14 w-full">
-        <Text className="text-2xl font-semibold text-[#1F1F1F]">
+        <Text className="text-2xl font-semibold text-heading">
           {t("auth.phoneLogin.welcomeBack")}
         </Text>
-        <Text className="mt-1 text-sm text-[#90A1B9]">
+        <Text className="mt-1 text-sm text-sec-text">
           {t("auth.phoneLogin.subtitle")}
         </Text>
       </View>
 
       <View className="mb-6 w-full">
-        <Text className="mb-2 text-sm font-medium text-[#2E2E2E]">
+        <Text className="mb-2 text-sm font-medium text-label">
           {t("auth.phoneLogin.phoneLabel")}
         </Text>
 
         <View
           className={`flex-row items-center overflow-hidden rounded-xl border bg-white ${
-            errors.phone ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+            errors.phone ? "border-rejected-200" : "border-card-border"
           }`}
         >
           <Pressable
             onPress={onOpenCountryPicker}
-            className="flex-row items-center gap-2 border-r border-[#E4E4E7] px-3 py-3.5 active:opacity-[0.92]"
+            className="flex-row items-center gap-2 border-r border-card-border px-3 py-3.5 active:opacity-[0.92]"
           >
             <CountryFlag
               isoCode={selectedCountry.isoCode.toLowerCase()}
               size={20}
               style={{ borderRadius: 10 }}
             />
-            <Text className="text-sm font-medium text-[#1F1F1F]">
+            <Text className="text-sm font-medium text-heading">
               (+{selectedCountry.callingCode})
             </Text>
-            <Text className="text-xs text-[#90A1B9]">▾</Text>
+            <Text className="text-xs text-sec-text">▾</Text>
           </Pressable>
 
           <Controller
@@ -121,9 +122,9 @@ function PhoneLoginFormFields({
                 }}
                 onBlur={onBlur}
                 placeholder={t("auth.phoneLogin.phonePlaceholder")}
-                placeholderTextColor="#90A1B9"
+                placeholderTextColor={colors.secText}
                 keyboardType="phone-pad"
-                className="flex-1 px-3 text-base text-[#1F1F1F]"
+                className="flex-1 px-3 text-base text-heading"
                 style={{
                   textAlign,
                   minHeight: 52,
@@ -135,7 +136,7 @@ function PhoneLoginFormFields({
         </View>
 
         {errors.phone ? (
-          <Text className="mt-2 text-sm text-[#EF4444]" style={{ textAlign }}>
+          <Text className="mt-2 text-sm text-rejected" style={{ textAlign }}>
             {errors.phone.message}
           </Text>
         ) : null}
@@ -144,7 +145,7 @@ function PhoneLoginFormFields({
       <Pressable
         onPress={() => void handleSubmit(onSubmit)()}
         disabled={isSubmitting}
-        className="mb-6 w-full items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
+        className="mb-6 w-full items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
       >
         <Text className="text-base font-bold text-white">
           {t("auth.phoneLogin.nextButton")}
@@ -152,18 +153,18 @@ function PhoneLoginFormFields({
       </Pressable>
 
       <View className="mb-6 flex-row items-center">
-        <View className="h-px flex-1 bg-[#E4E4E7]" />
-        <Text className="mx-3 text-sm text-[#90A1B9]">
+        <View className="h-px flex-1 bg-slate-200" />
+        <Text className="mx-3 text-sm text-sec-text">
           {t("auth.phoneLogin.or")}
         </Text>
-        <View className="h-px flex-1 bg-[#E4E4E7]" />
+        <View className="h-px flex-1 bg-slate-200" />
       </View>
 
       <Pressable
         onPress={() => router.replace("/login" as Href)}
-        className="w-full items-center justify-center rounded-2xl border border-[#7B61FF] py-4 active:opacity-[0.92]"
+        className="w-full items-center justify-center rounded-2xl border border-primary py-4 active:opacity-[0.92]"
       >
-        <Text className="text-base font-bold text-[#7B61FF]">
+        <Text className="text-base font-bold text-primary">
           {t("auth.phoneLogin.loginWithEmail")}
         </Text>
       </Pressable>

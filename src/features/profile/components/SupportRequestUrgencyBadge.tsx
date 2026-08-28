@@ -9,14 +9,14 @@ function getUrgencyStyles(urgency: SupportRequestUrgency) {
   switch (urgency) {
     case "urgent":
       return {
-        container: "bg-[#FEE2E2]",
-        text: "text-[#EF4444]",
+        container: "bg-rejected-50",
+        text: "text-rejected",
         label: "Urgent",
       };
     case "medium":
       return {
-        container: "bg-[#FEF9C3]",
-        text: "text-[#D97706]",
+        container: "bg-pending-50",
+        text: "text-pending-700",
         label: "Medium",
       };
     default: {

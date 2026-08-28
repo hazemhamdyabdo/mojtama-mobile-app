@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { DUMMY_WORKERS } from "@/features/requests/constants/dummy";
 import type { Worker } from "@/features/requests/types";
 import {
@@ -91,11 +92,11 @@ const AssignWorkersBottomSheet = forwardRef<
       snapPoints={["75%"]}
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
@@ -105,20 +106,20 @@ const AssignWorkersBottomSheet = forwardRef<
           paddingBottom: insets.bottom + 16,
         }}
       >
-        <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 text-center text-base font-bold text-heading">
           Assign workers
         </Text>
 
         <View className="relative mb-4">
           <View pointerEvents="none" className="absolute top-3.5 left-4 z-10">
-            <MaterialDesignIcons name="magnify" color="#90A1B9" size={20} />
+            <MaterialDesignIcons name="magnify" color={colors.secText} size={20} />
           </View>
           <TextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
             placeholder="assign workers by name or email"
-            placeholderTextColor="#90A1B9"
-            className="rounded-full border border-[#E4E4E7] bg-white py-3.5 pl-11 pr-4 text-base text-[#1F1F1F]"
+            placeholderTextColor={colors.secText}
+            className="rounded-full border border-card-border bg-white py-3.5 pl-11 pr-4 text-base text-heading"
           />
         </View>
 
@@ -136,7 +137,7 @@ const AssignWorkersBottomSheet = forwardRef<
         <Pressable
           onPress={handleDone}
           accessibilityRole="button"
-          className="mt-4 items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+          className="mt-4 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
         >
           <Text className="text-base font-bold text-white">Done</Text>
         </Pressable>
@@ -161,18 +162,18 @@ function WorkerRow({ worker, isAssigned, onToggle }: WorkerRowProps) {
           style={{ width: 40, height: 40, borderRadius: 100 }}
         />
       ) : (
-        <View className="size-10 items-center justify-center rounded-full bg-[#F0EDFF]">
-          <Text className="text-sm font-semibold text-[#7B61FF]">
+        <View className="size-10 items-center justify-center rounded-full bg-primary-50">
+          <Text className="text-sm font-semibold text-primary">
             {worker.initials ?? worker.name.charAt(0)}
           </Text>
         </View>
       )}
 
       <View className="flex-1">
-        <Text className="text-sm font-semibold text-[#1F1F1F]">
+        <Text className="text-sm font-semibold text-heading">
           {worker.name}
         </Text>
-        <Text className="text-xs text-[#90A1B9]">{worker.role}</Text>
+        <Text className="text-xs text-sec-text">{worker.role}</Text>
       </View>
 
       <Pressable
@@ -180,12 +181,12 @@ function WorkerRow({ worker, isAssigned, onToggle }: WorkerRowProps) {
         accessibilityRole="button"
         accessibilityState={{ selected: isAssigned }}
         className={`rounded-xl px-4 py-2 active:opacity-[0.92] ${
-          isAssigned ? "bg-[#EDE9FF]" : "bg-[#7B61FF]"
+          isAssigned ? "bg-primary-100" : "bg-primary"
         }`}
       >
         <Text
           className={`text-sm font-semibold ${
-            isAssigned ? "text-[#7B61FF]" : "text-white"
+            isAssigned ? "text-primary" : "text-white"
           }`}
         >
           {isAssigned ? "Assigned" : "Assign"}

@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { OTP_LENGTH } from "@/features/auth/schemas/otpSchema";
 import SettingsPrimaryButton from "@/features/settings/components/SettingsPrimaryButton";
 import SettingsUpdateIntro from "@/features/settings/components/SettingsUpdateIntro";
@@ -100,7 +101,7 @@ export default function SettingsOtpForm({
         accessibilityRole="button"
         className="mb-8 self-start active:opacity-[0.92]"
       >
-        <Text className="text-sm font-medium text-[#7B61FF] underline">
+        <Text className="text-sm font-medium text-primary underline">
           {changeLinkLabel}
         </Text>
       </Pressable>
@@ -132,14 +133,14 @@ export default function SettingsOtpForm({
       />
 
       {errors.otp ? (
-        <Text className="mb-4 text-sm text-[#EF4444]">{errors.otp.message}</Text>
+        <Text className="mb-4 text-sm text-rejected">{errors.otp.message}</Text>
       ) : (
         <View className="mb-4" />
       )}
 
-      <Text className="mb-8 text-sm text-[#1F1F1F]">
+      <Text className="mb-8 text-sm text-heading">
         Didn't Receive The OTP?{" "}
-        <Text className="text-[#90A1B9]">
+        <Text className="text-sec-text">
           {secondsLeft > 0 ? `Retry In ${formattedTimer}` : "Resend Code"}
         </Text>
       </Text>
@@ -161,16 +162,16 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 12,
     borderWidth: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colors.white,
     textAlign: "center",
     fontSize: 20,
     fontWeight: "600",
-    color: "#1F1F1F",
+    color: colors.heading,
   },
   otpInputDefault: {
-    borderColor: "#E4E4E7",
+    borderColor: colors.cardBorder,
   },
   otpInputError: {
-    borderColor: "#FCA5A5",
+    borderColor: colors.rejected200,
   },
 });

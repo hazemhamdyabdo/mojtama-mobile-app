@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import DocumentCategoryBadge from "@/features/documents/components/DocumentCategoryBadge";
 import DocumentFileTypeIcon from "@/features/documents/components/DocumentFileTypeIcon";
 import type { CommunityDocument } from "@/features/documents/types";
@@ -16,16 +17,16 @@ export default function DocumentCard({
   onMenuPress,
 }: DocumentCardProps) {
   return (
-    <View className="mb-3 flex-row items-center gap-3 rounded-2xl border border-[#E4E4E7] bg-white p-4">
+    <View className="mb-3 flex-row items-center gap-3 rounded-2xl border border-card-border bg-white p-4">
       <DocumentFileTypeIcon fileType={document.fileType} />
 
       <View className="flex-1">
-        <Text className="text-base font-semibold text-[#1F1F1F]">
+        <Text className="text-base font-semibold text-heading">
           {document.title}
         </Text>
         <View className="mt-1.5 flex-row flex-wrap items-center gap-1.5">
           <DocumentCategoryBadge category={document.category} />
-          <Text className="text-xs text-[#90A1B9]">
+          <Text className="text-xs text-sec-text">
             {document.size} • {document.date}
           </Text>
         </View>
@@ -40,7 +41,7 @@ export default function DocumentCard({
         >
           <MaterialDesignIcons
             name="download-outline"
-            color="#64748B"
+            color={colors.slate500}
             size={22}
           />
         </Pressable>
@@ -53,7 +54,7 @@ export default function DocumentCard({
         >
           <MaterialDesignIcons
             name="dots-vertical"
-            color="#64748B"
+            color={colors.slate500}
             size={22}
           />
         </Pressable>

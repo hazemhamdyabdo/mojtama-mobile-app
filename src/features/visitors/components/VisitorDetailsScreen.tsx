@@ -50,7 +50,7 @@ export default function VisitorDetailsScreen({
           contentContainerClassName="pb-10"
           showsVerticalScrollIndicator={false}
         >
-          <Text className="mb-4 text-2xl font-bold text-[#1F1F1F]">
+          <Text className="mb-4 text-2xl font-bold text-heading">
             {visitor.name}
           </Text>
 
@@ -63,28 +63,28 @@ export default function VisitorDetailsScreen({
             />
           ) : null}
 
-          <View className="mt-4 rounded-2xl bg-[#F8FAFC] p-4">
-            <Text className="text-base font-bold text-[#1F1F1F]">
+          <View className="mt-4 rounded-2xl bg-slate-50 p-4">
+            <Text className="text-base font-bold text-heading">
               Contact Info
             </Text>
             <View className="mt-3 flex-row gap-3">
               <View className="flex-1">
-                <Text className="text-sm text-[#90A1B9]">Phone number</Text>
-                <Text className="mt-1 text-sm font-semibold text-[#1F1F1F]">
+                <Text className="text-sm text-sec-text">Phone number</Text>
+                <Text className="mt-1 text-sm font-semibold text-heading">
                   {visitor.phone}
                 </Text>
               </View>
               <View className="flex-1">
-                <Text className="text-sm text-[#90A1B9]">Email Address</Text>
-                <Text className="mt-1 text-sm font-semibold text-[#1F1F1F]">
+                <Text className="text-sm text-sec-text">Email Address</Text>
+                <Text className="mt-1 text-sm font-semibold text-heading">
                   {visitor.email ?? "—"}
                 </Text>
               </View>
             </View>
           </View>
 
-          <View className="mt-4 flex-row items-center justify-between rounded-2xl bg-[#F8FAFC] p-4">
-            <Text className="text-base font-bold text-[#1F1F1F]">Status</Text>
+          <View className="mt-4 flex-row items-center justify-between rounded-2xl bg-slate-50 p-4">
+            <Text className="text-base font-bold text-heading">Status</Text>
             <VisitorStatusBadge status={visitor.status} />
           </View>
 

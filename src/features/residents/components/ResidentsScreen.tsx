@@ -99,9 +99,9 @@ export default function ResidentsScreen() {
             onFilterPress={() => filterSheetRef.current?.open(filterCriteria)}
           />
 
-          <Text className="mb-4 text-sm text-[#64748B]">
+          <Text className="mb-4 text-sm text-slate-500">
             Total Residents{" "}
-            <Text className="font-bold text-[#7B61FF]">
+            <Text className="font-bold text-primary">
               {TOTAL_RESIDENTS_COUNT}
             </Text>
           </Text>
@@ -117,10 +117,10 @@ export default function ResidentsScreen() {
             ))
           ) : (
             <View className="items-center py-12">
-              <Text className="text-base font-semibold text-[#1F1F1F]">
+              <Text className="text-base font-semibold text-heading">
                 No residents found
               </Text>
-              <Text className="mt-2 text-center text-sm text-[#64748B]">
+              <Text className="mt-2 text-center text-sm text-slate-500">
                 Try adjusting your search or filter.
               </Text>
             </View>

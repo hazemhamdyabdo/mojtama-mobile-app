@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Switch, Text, View } from "react-native";
 
@@ -19,20 +20,20 @@ export default function SettingsToggleRow({
       <View className="flex-row items-center px-4 py-4">
         <MaterialDesignIcons
           name="weather-night"
-          color="#64748B"
+          color={colors.slate500}
           size={22}
         />
-        <Text className="ml-3 flex-1 text-base font-medium text-[#1F1F1F]">
+        <Text className="ml-3 flex-1 text-base font-medium text-heading">
           {label}
         </Text>
         <Switch
           value={value}
           onValueChange={onValueChange}
-          trackColor={{ false: "#E4E4E7", true: "#C4B5FD" }}
-          thumbColor={value ? "#7B61FF" : "#FFFFFF"}
+          trackColor={{ false: colors.slate200, true: colors.primary300 }}
+          thumbColor={value ? colors.primary : colors.white}
         />
       </View>
-      {showDivider ? <View className="ml-12 h-px bg-[#E4E4E7]" /> : null}
+      {showDivider ? <View className="ml-12 h-px bg-slate-200" /> : null}
     </View>
   );
 }

@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import {
   DOCUMENT_CATEGORIES,
   DOCUMENT_CATEGORY_LABELS,
@@ -69,17 +70,17 @@ const DocumentCategoryPickerBottomSheet = forwardRef<
       enableDynamicSizing
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
-        <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 text-center text-base font-bold text-heading">
           Select Category
         </Text>
 
@@ -94,18 +95,18 @@ const DocumentCategoryPickerBottomSheet = forwardRef<
               accessibilityState={{ selected: isSelected }}
               className={`mb-2 flex-row items-center justify-between rounded-2xl border px-4 py-3.5 active:opacity-[0.92] ${
                 isSelected
-                  ? "border-[#7B61FF] bg-[#F8F6FF]"
-                  : "border-[#E4E4E7] bg-white"
+                  ? "border-primary bg-primary-50"
+                  : "border-card-border bg-white"
               }`}
             >
-              <Text className="text-base font-medium text-[#1F1F1F]">
+              <Text className="text-base font-medium text-heading">
                 {DOCUMENT_CATEGORY_LABELS[category]}
               </Text>
               {isSelected ? (
-                <View className="size-6 items-center justify-center rounded-full bg-[#7B61FF]">
+                <View className="size-6 items-center justify-center rounded-full bg-primary">
                   <MaterialDesignIcons
                     name="check-bold"
-                    color="#FFFFFF"
+                    color={colors.white}
                     size={14}
                   />
                 </View>

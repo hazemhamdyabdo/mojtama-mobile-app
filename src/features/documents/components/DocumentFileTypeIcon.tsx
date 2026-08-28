@@ -9,11 +9,11 @@ type DocumentFileTypeIconProps = {
 function getFileTypeStyles(fileType: DocumentFileType) {
   switch (fileType) {
     case "pdf":
-      return { container: "bg-[#FEE2E2]", text: "text-[#EF4444]", label: "PDF" };
+      return { container: "bg-rejected-50", text: "text-rejected", label: "PDF" };
     case "xls":
-      return { container: "bg-[#DCFCE7]", text: "text-[#16A34A]", label: "XLS" };
+      return { container: "bg-approved-50", text: "text-approved-700", label: "XLS" };
     case "doc":
-      return { container: "bg-[#DBEAFE]", text: "text-[#2563EB]", label: "DOC" };
+      return { container: "bg-primary-50", text: "text-primary-700", label: "DOC" };
     default: {
       const exhaustive: never = fileType;
       return exhaustive;

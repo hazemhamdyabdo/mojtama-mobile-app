@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import RequestFilterChips from "@/features/requests/components/RequestFilterChips";
 import RequestsHeader from "@/features/requests/components/RequestsHeader";
 import ResidentRequestCard from "@/features/requests/components/resident/ResidentRequestCard";
@@ -44,10 +45,10 @@ export default function ResidentRequestsScreen() {
         >
           {visibleRequests.length === 0 ? (
             <View className="items-center py-12">
-              <Text className="text-base font-medium text-[#1F1F1F]">
+              <Text className="text-base font-medium text-heading">
                 No Requests Found
               </Text>
-              <Text className="mt-1 text-center text-sm text-[#90A1B9]">
+              <Text className="mt-1 text-center text-sm text-sec-text">
                 Create a request to get started.
               </Text>
             </View>
@@ -68,9 +69,9 @@ export default function ResidentRequestsScreen() {
           onPress={() => router.push("/requests/create" as Href)}
           accessibilityRole="button"
           accessibilityLabel="Create request"
-          className="absolute bottom-6 right-4 size-14 items-center justify-center rounded-full bg-[#7B61FF] active:opacity-[0.92]"
+          className="absolute bottom-6 right-4 size-14 items-center justify-center rounded-full bg-primary active:opacity-[0.92]"
         >
-          <MaterialDesignIcons name="plus" color="#FFFFFF" size={28} />
+          <MaterialDesignIcons name="plus" color={colors.white} size={28} />
         </Pressable>
       </View>
     </SafeAreaView>

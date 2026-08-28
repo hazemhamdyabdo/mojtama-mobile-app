@@ -1,6 +1,7 @@
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
 import { Pressable, Text, View } from "react-native";
+import { colors } from "@/theme/colors";
 
 export default function ResidentsHeader() {
   const router = useRouter();
@@ -13,12 +14,12 @@ export default function ResidentsHeader() {
         accessibilityLabel="Go back"
         className="absolute left-0 active:opacity-[0.92]"
       >
-        <View className="size-10 items-center justify-center rounded-full bg-[#F0EDFF]">
-          <MaterialDesignIcons name="chevron-left" color="#7B61FF" size={24} />
+        <View className="size-10 items-center justify-center rounded-full bg-primary-50">
+          <MaterialDesignIcons name="chevron-left" color={colors.primary} size={24} />
         </View>
       </Pressable>
 
-      <Text className="text-lg font-bold text-[#1F1F1F]">Residents</Text>
+      <Text className="text-lg font-bold text-heading">Residents</Text>
     </View>
   );
 }

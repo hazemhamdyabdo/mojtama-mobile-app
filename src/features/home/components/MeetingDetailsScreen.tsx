@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import CommentsBottomSheet, {
   type CommentsBottomSheetRef,
 } from "@/features/home/components/CommentsBottomSheet";
@@ -39,13 +40,13 @@ type InfoRowProps = {
 function InfoRow({ label, value, accent }: InfoRowProps) {
   return (
     <View className="flex-row items-start justify-between px-4 py-2.5">
-      <Text className="text-base text-[#64748B]">{label}</Text>
+      <Text className="text-base text-slate-500">{label}</Text>
       <View className="max-w-[58%] flex-row flex-wrap items-center justify-end gap-1">
-        <Text className="text-right text-base font-normal text-[#1F1F1F]">
+        <Text className="text-right text-base font-normal text-heading">
           {value}
         </Text>
         {accent ? (
-          <Text className="text-base font-normal text-[#7B61FF]">
+          <Text className="text-base font-normal text-primary">
             ({accent})
           </Text>
         ) : null}
@@ -62,7 +63,7 @@ type ServiceInfoRowProps = {
 function ServiceInfoRow({ label, children }: ServiceInfoRowProps) {
   return (
     <View className="mb-4 flex-row items-center justify-between gap-4">
-      <Text className="w-1/3 text-sm text-[#90A1B9]">{label}</Text>
+      <Text className="w-1/3 text-sm text-sec-text">{label}</Text>
       <View className="flex-1 items-start">{children}</View>
     </View>
   );
@@ -76,17 +77,17 @@ type ScheduleCardProps = {
 
 function ScheduleCard({ label, value, icon }: ScheduleCardProps) {
   return (
-    <View className="mb-3 flex-row items-center justify-between rounded-2xl bg-[#F8FAFC] p-4">
-      <Text className="text-sm font-semibold text-[#1F1F1F]">{label}</Text>
+    <View className="mb-3 flex-row items-center justify-between rounded-2xl bg-slate-50 p-4">
+      <Text className="text-sm font-semibold text-heading">{label}</Text>
       <View className="flex-row items-center gap-1.5">
         <MaterialDesignIcons
           name={
             icon === "calendar" ? "calendar-blank-outline" : "clock-outline"
           }
-          color="#64748B"
+          color={colors.slate500}
           size={16}
         />
-        <Text className="text-sm text-[#64748B]">{value}</Text>
+        <Text className="text-sm text-slate-500">{value}</Text>
       </View>
     </View>
   );
@@ -112,10 +113,10 @@ function AttendeeStatusBadge({ status }: AttendeeStatusBadgeProps) {
         <View className="flex-row items-center gap-1">
           <MaterialDesignIcons
             name="check-circle-outline"
-            color="#22C55E"
+            color={colors.approved500}
             size={18}
           />
-          <Text className="text-sm font-medium text-[#22C55E]">Attending</Text>
+          <Text className="text-sm font-medium text-approved-500">Attending</Text>
         </View>
       );
     case "declined":
@@ -123,10 +124,10 @@ function AttendeeStatusBadge({ status }: AttendeeStatusBadgeProps) {
         <View className="flex-row items-center gap-1">
           <MaterialDesignIcons
             name="close-circle-outline"
-            color="#EF4444"
+            color={colors.rejected}
             size={18}
           />
-          <Text className="text-sm font-medium text-[#EF4444]">Declined</Text>
+          <Text className="text-sm font-medium text-rejected">Declined</Text>
         </View>
       );
     case "awaiting":
@@ -134,10 +135,10 @@ function AttendeeStatusBadge({ status }: AttendeeStatusBadgeProps) {
         <View className="flex-row items-center gap-1">
           <MaterialDesignIcons
             name="alert-circle-outline"
-            color="#F59E0B"
+            color={colors.pending600}
             size={18}
           />
-          <Text className="text-sm font-medium text-[#F59E0B]">Awaiting</Text>
+          <Text className="text-sm font-medium text-pending-600">Awaiting</Text>
         </View>
       );
     default: {
@@ -161,24 +162,24 @@ function AttendeeRow({ attendee }: AttendeeRowProps) {
           style={{ width: 44, height: 44, borderRadius: 100 }}
         />
       ) : (
-        <View className="size-11 items-center justify-center rounded-full bg-[#F0EDFF]">
-          <Text className="text-sm font-semibold text-[#7B61FF]">
+        <View className="size-11 items-center justify-center rounded-full bg-primary-50">
+          <Text className="text-sm font-semibold text-primary">
             {getInitials(attendee.name)}
           </Text>
         </View>
       )}
 
       <View className="ml-3 flex-1">
-        <Text className="text-base font-semibold text-[#1F1F1F]">
+        <Text className="text-base font-semibold text-heading">
           {attendee.name}
         </Text>
         <View className="mt-0.5 flex-row items-center gap-0.5">
           <MaterialDesignIcons
             name="map-marker-outline"
-            color="#90A1B9"
+            color={colors.secText}
             size={14}
           />
-          <Text className="text-sm text-[#90A1B9]">{attendee.unit}</Text>
+          <Text className="text-sm text-sec-text">{attendee.unit}</Text>
         </View>
       </View>
 
@@ -246,16 +247,16 @@ export default function MeetingDetailsScreen({
           accessibilityLabel="Go back"
           className="absolute left-0 active:opacity-[0.92]"
         >
-          <View className="size-10 items-center justify-center rounded-full bg-[#F0EDFF]">
+          <View className="size-10 items-center justify-center rounded-full bg-primary-50">
             <MaterialDesignIcons
               name="chevron-left"
-              color="#7B61FF"
+              color={colors.primary}
               size={24}
             />
           </View>
         </Pressable>
 
-        <Text className="text-lg font-bold text-[#1F1F1F]">
+        <Text className="text-lg font-bold text-heading">
           {isService ? "Meetings" : "Meeting Details"}
         </Text>
 
@@ -267,7 +268,7 @@ export default function MeetingDetailsScreen({
             hitSlop={8}
             className="absolute right-0 active:opacity-[0.92]"
           >
-            <MaterialDesignIcons name="dots-vertical" color="#1F1F1F" size={24} />
+            <MaterialDesignIcons name="dots-vertical" color={colors.heading} size={24} />
           </Pressable>
         ) : null}
       </View>
@@ -279,11 +280,11 @@ export default function MeetingDetailsScreen({
       >
         {isService ? (
           <>
-            <Text className="text-2xl font-bold text-[#1F1F1F]">
+            <Text className="text-2xl font-bold text-heading">
               {meeting.title}
             </Text>
 
-            <Text className="mt-3 text-sm leading-5 text-[#64748B]">
+            <Text className="mt-3 text-sm leading-5 text-slate-500">
               {description}
             </Text>
             {!isExpanded && shouldTruncate ? (
@@ -292,7 +293,7 @@ export default function MeetingDetailsScreen({
                 accessibilityRole="button"
                 className="mt-1 active:opacity-[0.92]"
               >
-                <Text className="text-sm font-semibold text-[#7B61FF]">
+                <Text className="text-sm font-semibold text-primary">
                   View all
                 </Text>
               </Pressable>
@@ -306,14 +307,14 @@ export default function MeetingDetailsScreen({
                     contentFit="cover"
                     style={{ width: 24, height: 24, borderRadius: 100 }}
                   />
-                  <Text className="text-sm font-semibold text-[#1F1F1F]">
+                  <Text className="text-sm font-semibold text-heading">
                     {meeting.leadBy.name}
                   </Text>
                 </View>
               </ServiceInfoRow>
 
               <ServiceInfoRow label="Type">
-                <Text className="text-sm font-semibold text-[#1F1F1F]">
+                <Text className="text-sm font-semibold text-heading">
                   {meeting.meetingType}
                 </Text>
               </ServiceInfoRow>
@@ -322,10 +323,10 @@ export default function MeetingDetailsScreen({
                 <View className="flex-row items-center gap-1">
                   <MaterialDesignIcons
                     name="map-marker-outline"
-                    color="#1F1F1F"
+                    color={colors.heading}
                     size={14}
                   />
-                  <Text className="text-sm font-semibold text-[#1F1F1F]">
+                  <Text className="text-sm font-semibold text-heading">
                     {meeting.location}
                   </Text>
                 </View>
@@ -334,12 +335,12 @@ export default function MeetingDetailsScreen({
               <ServiceInfoRow label="Status">
                 <View
                   className={`rounded-full px-3 py-1 ${
-                    isUpcoming ? "bg-[#F0EDFF]" : "bg-[#F1F5F9]"
+                    isUpcoming ? "bg-primary-50" : "bg-slate-100"
                   }`}
                 >
                   <Text
                     className={`text-xs font-semibold ${
-                      isUpcoming ? "text-[#7B61FF]" : "text-[#64748B]"
+                      isUpcoming ? "text-primary" : "text-slate-500"
                     }`}
                   >
                     {meeting.status}
@@ -354,17 +355,17 @@ export default function MeetingDetailsScreen({
         ) : (
           <>
             <View className="mb-3 flex-row items-start justify-between gap-3">
-              <Text className="flex-1 text-xl font-bold text-[#1F1F1F]">
+              <Text className="flex-1 text-xl font-bold text-heading">
                 {meeting.title}
               </Text>
-              <View className="rounded-full bg-[#F0EDFF] px-3 py-1">
-                <Text className="text-xs font-semibold text-[#7B61FF]">
+              <View className="rounded-full bg-primary-50 px-3 py-1">
+                <Text className="text-xs font-semibold text-primary">
                   {meeting.category}
                 </Text>
               </View>
             </View>
 
-            <Text className="text-sm leading-5 text-[#64748B]">
+            <Text className="text-sm leading-5 text-slate-500">
               {meeting.body}
             </Text>
 
@@ -379,7 +380,7 @@ export default function MeetingDetailsScreen({
                 >
                   <MaterialDesignIcons
                     name={liked ? "thumb-up" : "thumb-up-outline"}
-                    color={liked ? "#7B61FF" : "#90A1B9"}
+                    color={liked ? colors.primary : colors.secText}
                     size={18}
                   />
                 </Pressable>
@@ -391,7 +392,7 @@ export default function MeetingDetailsScreen({
                   hitSlop={8}
                   className="active:opacity-[0.92]"
                 >
-                  <Text className="text-sm text-[#90A1B9]">
+                  <Text className="text-sm text-sec-text">
                     {displayedLikes.toLocaleString()} Likes
                   </Text>
                 </Pressable>
@@ -406,10 +407,10 @@ export default function MeetingDetailsScreen({
               >
                 <MaterialDesignIcons
                   name="comment-outline"
-                  color="#90A1B9"
+                  color={colors.secText}
                   size={18}
                 />
-                <Text className="text-sm text-[#90A1B9]">
+                <Text className="text-sm text-sec-text">
                   {meeting.commentsCount.toLocaleString()} Comments
                 </Text>
               </Pressable>
@@ -417,20 +418,20 @@ export default function MeetingDetailsScreen({
               <View className="flex-row items-center gap-1.5">
                 <MaterialDesignIcons
                   name="eye-outline"
-                  color="#90A1B9"
+                  color={colors.secText}
                   size={18}
                 />
-                <Text className="text-sm text-[#90A1B9]">
+                <Text className="text-sm text-sec-text">
                   {meeting.viewsCount.toLocaleString()} Views
                 </Text>
               </View>
             </View>
 
-            <Text className="mb-3 mt-6 text-base font-bold text-[#1F1F1F]">
+            <Text className="mb-3 mt-6 text-base font-bold text-heading">
               Meeting information
             </Text>
 
-            <View className="rounded-2xl border border-[#E4E4E7] bg-white">
+            <View className="rounded-2xl border border-card-border bg-white">
               <InfoRow label="Agenda" value={meeting.agenda} />
               <InfoRow label="Date" value={meeting.date} />
               <InfoRow
@@ -453,21 +454,21 @@ export default function MeetingDetailsScreen({
           </>
         )}
 
-        <Text className="mb-3 mt-6 text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-3 mt-6 text-base font-bold text-heading">
           {isService ? "Participants" : "Attendees"}
         </Text>
 
-        <View className="mb-4 flex-row border-b border-[#E4E4E7]">
+        <View className="mb-4 flex-row border-b border-card-border">
           <Pressable
             onPress={() => setActiveTab("team")}
             accessibilityRole="button"
             className={`mr-6 pb-3 active:opacity-[0.92] ${
-              activeTab === "team" ? "border-b-2 border-[#7B61FF]" : ""
+              activeTab === "team" ? "border-b-2 border-primary" : ""
             }`}
           >
             <Text
               className={`text-sm font-medium ${
-                activeTab === "team" ? "text-[#7B61FF]" : "text-[#90A1B9]"
+                activeTab === "team" ? "text-primary" : "text-sec-text"
               }`}
             >
               Mojtama Team ({teamAttendees.length})
@@ -478,12 +479,12 @@ export default function MeetingDetailsScreen({
             onPress={() => setActiveTab("residents")}
             accessibilityRole="button"
             className={`pb-3 active:opacity-[0.92] ${
-              activeTab === "residents" ? "border-b-2 border-[#7B61FF]" : ""
+              activeTab === "residents" ? "border-b-2 border-primary" : ""
             }`}
           >
             <Text
               className={`text-sm font-medium ${
-                activeTab === "residents" ? "text-[#7B61FF]" : "text-[#90A1B9]"
+                activeTab === "residents" ? "text-primary" : "text-sec-text"
               }`}
             >
               Residents ({residentAttendees.length})
@@ -499,27 +500,27 @@ export default function MeetingDetailsScreen({
 
         {!isService ? (
           <>
-            <Text className="mb-3 mt-2 text-base font-bold text-[#1F1F1F]">
+            <Text className="mb-3 mt-2 text-base font-bold text-heading">
               Agenda
             </Text>
 
-            <View className="rounded-2xl border border-[#E4E4E7] bg-white px-4 py-4">
+            <View className="rounded-2xl border border-card-border bg-white px-4 py-4">
               {meeting.agendaItems.map((item, index) => (
                 <View key={item.id} className="flex-row">
                   <View className="mr-3 items-center">
-                    <View className="size-3 rounded-full bg-[#7B61FF]" />
+                    <View className="size-3 rounded-full bg-primary" />
                     {index < meeting.agendaItems.length - 1 ? (
-                      <View className="my-1 w-px flex-1 bg-[#E4E4E7]" />
+                      <View className="my-1 w-px flex-1 bg-slate-200" />
                     ) : null}
                   </View>
 
                   <View
                     className={`flex-1 ${index < meeting.agendaItems.length - 1 ? "pb-5" : ""}`}
                   >
-                    <Text className="text-base font-semibold text-[#1F1F1F]">
+                    <Text className="text-base font-semibold text-heading">
                       {item.title}
                     </Text>
-                    <Text className="mt-0.5 text-sm text-[#90A1B9]">
+                    <Text className="mt-0.5 text-sm text-sec-text">
                       {item.timeRange}
                     </Text>
                   </View>
@@ -531,11 +532,11 @@ export default function MeetingDetailsScreen({
       </ScrollView>
 
       {(!isService || isUpcoming) && (
-        <View className="flex-row gap-3 border-t border-[#E4E4E7] px-4 py-4">
+        <View className="flex-row gap-3 border-t border-card-border px-4 py-4">
           <Pressable
             onPress={() => console.log("accept meeting:", meeting.id)}
             accessibilityRole="button"
-            className="flex-1 items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+            className="flex-1 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
           >
             <Text className="text-base font-bold text-white">Accept</Text>
           </Pressable>
@@ -543,9 +544,9 @@ export default function MeetingDetailsScreen({
           <Pressable
             onPress={() => console.log("decline meeting:", meeting.id)}
             accessibilityRole="button"
-            className="flex-1 items-center justify-center rounded-2xl border border-[#E4E4E7] bg-white py-4 active:opacity-[0.92]"
+            className="flex-1 items-center justify-center rounded-2xl border border-card-border bg-white py-4 active:opacity-[0.92]"
           >
-            <Text className="text-base font-bold text-[#1F1F1F]">Decline</Text>
+            <Text className="text-base font-bold text-heading">Decline</Text>
           </Pressable>
         </View>
       )}

@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { DUMMY_COMMENTS } from "@/features/home/constants/dummy";
 import type { PostComment } from "@/features/home/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
@@ -37,7 +38,7 @@ type CommentItemProps = {
 
 function CommentItem({ comment, isReply = false }: CommentItemProps) {
   return (
-    <View className={isReply ? "ml-6 border-l border-[#E4E4E7] pl-4" : ""}>
+    <View className={isReply ? "ml-6 border-l border-card-border pl-4" : ""}>
       <View className="mb-4">
         <View className="flex-row items-center gap-2">
           {comment.avatar ? (
@@ -47,23 +48,23 @@ function CommentItem({ comment, isReply = false }: CommentItemProps) {
               style={{ width: 32, height: 32, borderRadius: 100 }}
             />
           ) : (
-            <View className="size-8 items-center justify-center rounded-full bg-[#F0EDFF]">
-              <Text className="text-xs font-semibold text-[#7B61FF]">
+            <View className="size-8 items-center justify-center rounded-full bg-primary-50">
+              <Text className="text-xs font-semibold text-primary">
                 {comment.authorName[0]}
               </Text>
             </View>
           )}
 
-          <Text className="text-base font-semibold text-[#1F1F1F]">
+          <Text className="text-base font-semibold text-heading">
             {comment.authorName}
           </Text>
-          <Text className="text-sm text-[#90A1B9]">{comment.time}</Text>
+          <Text className="text-sm text-sec-text">{comment.time}</Text>
         </View>
 
         <View className="ml-10">
-          <Text className="text-sm leading-5 text-[#64748B]">
+          <Text className="text-sm leading-5 text-slate-500">
             {comment.text}
-            <Text className="text-sm font-medium text-[#7B61FF]">
+            <Text className="text-sm font-medium text-primary">
               {" "}
               View more...
             </Text>
@@ -73,10 +74,10 @@ function CommentItem({ comment, isReply = false }: CommentItemProps) {
             <View className="flex-row items-center gap-1">
               <MaterialDesignIcons
                 name="thumb-up-outline"
-                color="#90A1B9"
+                color={colors.secText}
                 size={16}
               />
-              <Text className="text-sm text-[#90A1B9]">
+              <Text className="text-sm text-sec-text">
                 {comment.likesCount.toLocaleString()} Likes
               </Text>
             </View>
@@ -88,10 +89,10 @@ function CommentItem({ comment, isReply = false }: CommentItemProps) {
               >
                 <MaterialDesignIcons
                   name="arrow-right-top"
-                  color="#7B61FF"
+                  color={colors.primary}
                   size={16}
                 />
-                <Text className="text-sm font-medium text-[#7B61FF]">
+                <Text className="text-sm font-medium text-primary">
                   Reply
                 </Text>
               </Pressable>
@@ -161,15 +162,15 @@ const CommentsBottomSheet = forwardRef<
       backdropComponent={renderBackdrop}
       keyboardBehavior="extend"
       keyboardBlurBehavior="restore"
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <View className="flex-1">
-        <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 text-center text-base font-bold text-heading">
           Comments
         </Text>
 
@@ -183,15 +184,15 @@ const CommentsBottomSheet = forwardRef<
         </BottomSheetScrollView>
 
         <View
-          className="flex-row items-center gap-3 border-t border-[#F1F5F9] px-4 pt-3"
+          className="flex-row items-center gap-3 border-t border-slate-100 px-4 pt-3"
           style={{ paddingBottom: insets.bottom + 12 }}
         >
           <BottomSheetTextInput
             value={commentText}
             onChangeText={setCommentText}
             placeholder="Write your comments"
-            placeholderTextColor="#90A1B9"
-            className="flex-1 rounded-xl bg-[#F8FAFC] px-4 py-3 text-base text-[#1F1F1F]"
+            placeholderTextColor={colors.secText}
+            className="flex-1 rounded-xl bg-slate-50 px-4 py-3 text-base text-heading"
             style={{ minHeight: 48 }}
           />
 
@@ -199,9 +200,9 @@ const CommentsBottomSheet = forwardRef<
             onPress={handleSend}
             accessibilityRole="button"
             accessibilityLabel="Send comment"
-            className="size-12 items-center justify-center rounded-full bg-[#F0EDFF] active:opacity-[0.92]"
+            className="size-12 items-center justify-center rounded-full bg-primary-50 active:opacity-[0.92]"
           >
-            <MaterialDesignIcons name="send-outline" color="#7B61FF" size={22} />
+            <MaterialDesignIcons name="send-outline" color={colors.primary} size={22} />
           </Pressable>
         </View>
       </View>

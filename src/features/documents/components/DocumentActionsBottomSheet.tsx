@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import DocumentPreviewCard from "@/features/documents/components/DocumentPreviewCard";
 import type { CommunityDocument } from "@/features/documents/types";
 import {
@@ -46,7 +47,7 @@ function ActionRow({
   destructive = false,
   onPress,
 }: ActionRowProps) {
-  const color = destructive ? "#F87171" : "#64748B";
+  const color = destructive ? colors.rejected : colors.slate500;
 
   return (
     <Pressable
@@ -57,7 +58,7 @@ function ActionRow({
       <MaterialDesignIcons name={icon} color={color} size={22} />
       <Text
         className={`text-base font-medium ${
-          destructive ? "text-[#F87171]" : "text-[#1F1F1F]"
+          destructive ? "text-rejected-500" : "text-heading"
         }`}
       >
         {label}
@@ -108,11 +109,11 @@ const DocumentActionsBottomSheet = forwardRef<
       enableDynamicSizing
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
@@ -128,7 +129,7 @@ const DocumentActionsBottomSheet = forwardRef<
               document ? handleAction(() => onView(document.id)) : undefined
             }
           />
-          <View className="h-px bg-[#E4E4E7]" />
+          <View className="h-px bg-slate-200" />
           <ActionRow
             label="Download"
             icon="download-outline"
@@ -136,7 +137,7 @@ const DocumentActionsBottomSheet = forwardRef<
               document ? handleAction(() => onDownload(document.id)) : undefined
             }
           />
-          <View className="h-px bg-[#E4E4E7]" />
+          <View className="h-px bg-slate-200" />
           <ActionRow
             label="Edit Document"
             icon="pencil-outline"
@@ -144,7 +145,7 @@ const DocumentActionsBottomSheet = forwardRef<
               document ? handleAction(() => onEdit(document)) : undefined
             }
           />
-          <View className="h-px bg-[#E4E4E7]" />
+          <View className="h-px bg-slate-200" />
           <ActionRow
             label="Delete"
             icon="trash-can-outline"
@@ -158,9 +159,9 @@ const DocumentActionsBottomSheet = forwardRef<
         <Pressable
           onPress={() => bottomSheetRef.current?.dismiss()}
           accessibilityRole="button"
-          className="mt-2 items-center rounded-2xl border border-[#E4E4E7] py-4 active:opacity-[0.92]"
+          className="mt-2 items-center rounded-2xl border border-card-border py-4 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-[#1F1F1F]">Cancel</Text>
+          <Text className="text-base font-bold text-heading">Cancel</Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>

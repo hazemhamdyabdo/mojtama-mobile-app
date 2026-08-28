@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
 import type { ReactNode } from "react";
@@ -14,7 +15,7 @@ export function PostCardShell({ onPress, children, ...props }: PostCardShellProp
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      className="rounded-2xl border border-[#E4E4E7] bg-white p-4 active:opacity-[0.96]"
+      className="rounded-2xl border border-card-border bg-white p-4 active:opacity-[0.96]"
       {...props}
     >
       {children}
@@ -44,8 +45,8 @@ export function PostCardHeader({
       />
 
       <View className="ml-3 flex-1">
-        <Text className="text-base font-bold text-[#1F1F1F]">{authorName}</Text>
-        <Text className="text-sm text-[#90A1B9]">{timestamp}</Text>
+        <Text className="text-base font-bold text-heading">{authorName}</Text>
+        <Text className="text-sm text-sec-text">{timestamp}</Text>
       </View>
 
       {onMenuPress ? (
@@ -56,7 +57,7 @@ export function PostCardHeader({
           hitSlop={8}
           className="active:opacity-[0.92]"
         >
-          <MaterialDesignIcons name="dots-vertical" color="#90A1B9" size={22} />
+          <MaterialDesignIcons name="dots-vertical" color={colors.secText} size={22} />
         </Pressable>
       ) : null}
     </View>
@@ -92,7 +93,7 @@ export function PostEngagementFooter({
         >
           <MaterialDesignIcons
             name={liked ? "thumb-up" : "thumb-up-outline"}
-            color={liked ? "#7B61FF" : "#90A1B9"}
+            color={liked ? colors.primary : colors.secText}
             size={18}
           />
         </Pressable>
@@ -104,7 +105,7 @@ export function PostEngagementFooter({
           hitSlop={8}
           className="active:opacity-[0.92]"
         >
-          <Text className="text-sm text-[#90A1B9]">
+          <Text className="text-sm text-sec-text">
             {likesCount.toLocaleString()} Likes
           </Text>
         </Pressable>
@@ -117,8 +118,8 @@ export function PostEngagementFooter({
         hitSlop={8}
         className="flex-row items-center gap-1.5 active:opacity-[0.92]"
       >
-        <MaterialDesignIcons name="comment-outline" color="#90A1B9" size={18} />
-        <Text className="text-sm text-[#90A1B9]">
+        <MaterialDesignIcons name="comment-outline" color={colors.secText} size={18} />
+        <Text className="text-sm text-sec-text">
           {commentsCount.toLocaleString()} Comments
         </Text>
       </Pressable>
@@ -156,11 +157,11 @@ export function ExpandablePostBody({
         />
       ) : null}
 
-      <Text className="mb-2 text-lg font-bold text-[#1F1F1F]">{title}</Text>
+      <Text className="mb-2 text-lg font-bold text-heading">{title}</Text>
 
       <Text
         numberOfLines={expanded ? undefined : 3}
-        className="text-sm leading-5 text-[#64748B]"
+        className="text-sm leading-5 text-slate-500"
       >
         {body}
       </Text>
@@ -171,7 +172,7 @@ export function ExpandablePostBody({
           accessibilityRole="button"
           className="mt-1 self-start active:opacity-[0.92]"
         >
-          <Text className="text-sm font-medium text-[#7B61FF]">Read more</Text>
+          <Text className="text-sm font-medium text-primary">Read more</Text>
         </Pressable>
       ) : null}
     </>

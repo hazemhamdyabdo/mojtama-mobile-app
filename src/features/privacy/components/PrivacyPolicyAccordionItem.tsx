@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import type { PrivacyPolicy } from "@/features/privacy/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Pressable, Text, View } from "react-native";
@@ -21,39 +22,39 @@ export default function PrivacyPolicyAccordionItem({
         accessibilityState={{ expanded: isExpanded }}
         className={`flex-row items-center rounded-2xl border px-4 py-4 active:opacity-[0.92] ${
           isExpanded
-            ? " border-[#7B61FF] bg-[#F8F6FF]"
-            : "border-[#E4E4E7] bg-white"
+            ? " border-primary bg-primary-50"
+            : "border-card-border bg-white"
         }`}
       >
         <MaterialDesignIcons
           name="file-document-outline"
-          color={isExpanded ? "#7B61FF" : "#64748B"}
+          color={isExpanded ? colors.primary : colors.slate500}
           size={22}
         />
         <Text
           className={`ml-3 flex-1 text-base font-semibold ${
-            isExpanded ? "text-[#7B61FF]" : "text-[#1F1F1F]"
+            isExpanded ? "text-primary" : "text-heading"
           }`}
         >
           {policy.title}
         </Text>
         <MaterialDesignIcons
           name={isExpanded ? "chevron-up" : "chevron-down"}
-          color={isExpanded ? "#7B61FF" : "#64748B"}
+          color={isExpanded ? colors.primary : colors.slate500}
           size={22}
         />
       </Pressable>
 
       {isExpanded ? (
-        <View className="mt-2 rounded-2xl border border-[#E4E4E7]  bg-white px-4 py-4">
-          <Text className="text-sm leading-5 text-[#64748B]">
+        <View className="mt-2 rounded-2xl border border-card-border  bg-white px-4 py-4">
+          <Text className="text-sm leading-5 text-slate-500">
             {policy.intro}
           </Text>
           <View className="mt-3 gap-2">
             {policy.bullets.map((bullet) => (
               <View key={bullet} className="flex-row gap-2">
-                <Text className="text-sm text-[#64748B]">•</Text>
-                <Text className="flex-1 text-sm leading-5 text-[#64748B]">
+                <Text className="text-sm text-slate-500">•</Text>
+                <Text className="flex-1 text-sm leading-5 text-slate-500">
                   {bullet}
                 </Text>
               </View>

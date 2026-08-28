@@ -12,10 +12,10 @@ function RadioIndicator({ selected }: { selected: boolean }) {
   return (
     <View
       className={`size-5 items-center justify-center rounded-full border-2 ${
-        selected ? "border-[#7B61FF]" : "border-[#D1D5DB]"
+        selected ? "border-primary" : "border-slate-300"
       }`}
     >
-      {selected ? <View className="size-2.5 rounded-full bg-[#7B61FF]" /> : null}
+      {selected ? <View className="size-2.5 rounded-full bg-primary" /> : null}
     </View>
   );
 }
@@ -41,7 +41,7 @@ export default function LanguageOptionCard({
           />
           <View className="flex-col">
             <Text className="text-sm font-bold text-black">{title}</Text>
-            <Text className="text-sm font-normal text-[#2E2E2E]">{subtitle}</Text>
+            <Text className="text-sm font-normal text-label">{subtitle}</Text>
           </View>
         </View>
         <RadioIndicator selected={selected} />

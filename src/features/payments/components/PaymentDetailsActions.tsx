@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import type { PaymentBillStatus } from "@/features/payments/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Pressable, Text, View } from "react-native";
@@ -25,11 +26,11 @@ function IconActionButton({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={label ?? icon}
-      className={`items-center justify-center rounded-2xl border border-[#E4E4E7] bg-white active:opacity-[0.92] ${className}`}
+      className={`items-center justify-center rounded-2xl border border-card-border bg-white active:opacity-[0.92] ${className}`}
     >
-      <MaterialDesignIcons name={icon} color="#7B61FF" size={22} />
+      <MaterialDesignIcons name={icon} color={colors.primary} size={22} />
       {label ? (
-        <Text className="mt-1 text-xs font-medium text-[#64748B]">{label}</Text>
+        <Text className="mt-1 text-xs font-medium text-slate-500">{label}</Text>
       ) : null}
     </Pressable>
   );
@@ -49,7 +50,7 @@ export default function PaymentDetailsActions({
         <Pressable
           onPress={onPayPress}
           accessibilityRole="button"
-          className="flex-1 items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+          className="flex-1 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
         >
           <Text className="text-base font-bold text-white">Pay Now</Text>
         </Pressable>

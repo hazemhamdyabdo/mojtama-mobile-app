@@ -9,14 +9,14 @@ function getRoleStyles(role: ResidentRole) {
   switch (role) {
     case "owner":
       return {
-        container: "bg-[#F0EDFF]",
-        text: "text-[#7B61FF]",
+        container: "bg-primary-50",
+        text: "text-primary",
         label: "Owner",
       };
     case "tenant":
       return {
-        container: "bg-[#F1F5F9]",
-        text: "text-[#64748B]",
+        container: "bg-slate-100",
+        text: "text-slate-500",
         label: "Tenant",
       };
     default: {

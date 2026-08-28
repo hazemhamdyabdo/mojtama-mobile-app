@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import type { Visitor } from "@/features/visitors/types";
 import {
   BottomSheetBackdrop,
@@ -59,45 +60,45 @@ const VisitorQrBottomSheet = forwardRef<
       enableDynamicSizing
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
-        <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 text-center text-base font-bold text-heading">
           QR Code
         </Text>
 
         <View className="items-center">
-          <View className="size-14 items-center justify-center rounded-full bg-[#7B61FF]">
-            <MaterialDesignIcons name="qrcode" color="#FFFFFF" size={28} />
+          <View className="size-14 items-center justify-center rounded-full bg-primary">
+            <MaterialDesignIcons name="qrcode" color={colors.white} size={28} />
           </View>
 
           <View className="mt-5 items-center justify-center">
-            <MaterialDesignIcons name="qrcode" color="#1F1F1F" size={180} />
+            <MaterialDesignIcons name="qrcode" color={colors.heading} size={180} />
           </View>
 
-          <Text className="mt-4 text-sm text-[#90A1B9]">Access Code</Text>
-          <Text className="mt-1 text-3xl font-bold text-[#1F1F1F]">
+          <Text className="mt-4 text-sm text-sec-text">Access Code</Text>
+          <Text className="mt-1 text-3xl font-bold text-heading">
             {visitor?.accessCode ?? "—"}
           </Text>
         </View>
 
-        <View className="mt-5 border-t border-[#E4E4E7] pt-4">
+        <View className="mt-5 border-t border-card-border pt-4">
           <View className="flex-row items-center justify-between">
-            <Text className="text-sm text-[#90A1B9]">Visitor name</Text>
-            <Text className="text-sm font-semibold text-[#1F1F1F]">
+            <Text className="text-sm text-sec-text">Visitor name</Text>
+            <Text className="text-sm font-semibold text-heading">
               {visitor?.name ?? "—"}
             </Text>
           </View>
           <View className="mt-2 flex-row items-center justify-between">
-            <Text className="text-sm text-[#90A1B9]">Expiry date</Text>
-            <Text className="text-sm font-semibold text-[#1F1F1F]">
+            <Text className="text-sm text-sec-text">Expiry date</Text>
+            <Text className="text-sm font-semibold text-heading">
               {visitor?.expiryDate ?? "—"}
             </Text>
           </View>
@@ -110,14 +111,14 @@ const VisitorQrBottomSheet = forwardRef<
             }
           }}
           accessibilityRole="button"
-          className="mt-5 flex-row items-center justify-center gap-2 rounded-2xl border border-[#7B61FF] bg-white py-4 active:opacity-[0.92]"
+          className="mt-5 flex-row items-center justify-center gap-2 rounded-2xl border border-primary bg-white py-4 active:opacity-[0.92]"
         >
           <MaterialDesignIcons
             name="download-outline"
-            color="#7B61FF"
+            color={colors.primary}
             size={20}
           />
-          <Text className="text-base font-bold text-[#7B61FF]">Download</Text>
+          <Text className="text-base font-bold text-primary">Download</Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>

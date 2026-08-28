@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { DOCUMENT_CATEGORY_LABELS } from "@/features/documents/constants/dummy";
 import DocumentCategoryPickerBottomSheet, {
   type DocumentCategoryPickerBottomSheetRef,
@@ -109,17 +110,17 @@ const EditDocumentBottomSheet = forwardRef<
         enableDynamicSizing
         enablePanDownToClose
         backdropComponent={renderBackdrop}
-        handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+        handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
         backgroundStyle={{
           borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
-          backgroundColor: "#FFFFFF",
+          backgroundColor: colors.white,
         }}
       >
         <BottomSheetView
           style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
         >
-          <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+          <Text className="mb-4 text-center text-base font-bold text-heading">
             Edit Documents
           </Text>
 
@@ -132,8 +133,8 @@ const EditDocumentBottomSheet = forwardRef<
           ) : null}
 
           <View className="mt-4">
-            <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
-              Documents name<Text className="text-[#EF4444]">*</Text>
+            <Text className="mb-2 text-sm font-semibold text-heading">
+              Documents name<Text className="text-rejected">*</Text>
             </Text>
             <Controller
               control={control}
@@ -144,23 +145,23 @@ const EditDocumentBottomSheet = forwardRef<
                   onChangeText={onChange}
                   onBlur={onBlur}
                   placeholder="Document name"
-                  placeholderTextColor="#90A1B9"
-                  className={`rounded-xl border bg-white px-4 py-3.5 text-base text-[#1F1F1F] ${
-                    errors.title ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                  placeholderTextColor={colors.secText}
+                  className={`rounded-xl border bg-white px-4 py-3.5 text-base text-heading ${
+                    errors.title ? "border-rejected-200" : "border-card-border"
                   }`}
                 />
               )}
             />
             {errors.title ? (
-              <Text className="mt-2 text-sm text-[#EF4444]">
+              <Text className="mt-2 text-sm text-rejected">
                 {errors.title.message}
               </Text>
             ) : null}
           </View>
 
           <View className="mt-4">
-            <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
-              Category<Text className="text-[#EF4444]">*</Text>
+            <Text className="mb-2 text-sm font-semibold text-heading">
+              Category<Text className="text-rejected">*</Text>
             </Text>
             <Pressable
               onPress={() =>
@@ -174,12 +175,12 @@ const EditDocumentBottomSheet = forwardRef<
               }
               accessibilityRole="button"
               className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-                errors.category ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                errors.category ? "border-rejected-200" : "border-card-border"
               }`}
             >
               <Text
                 className={`text-base ${
-                  category ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+                  category ? "text-heading" : "text-sec-text"
                 }`}
               >
                 {category
@@ -188,12 +189,12 @@ const EditDocumentBottomSheet = forwardRef<
               </Text>
               <MaterialDesignIcons
                 name="chevron-down"
-                color="#90A1B9"
+                color={colors.secText}
                 size={20}
               />
             </Pressable>
             {errors.category ? (
-              <Text className="mt-2 text-sm text-[#EF4444]">
+              <Text className="mt-2 text-sm text-rejected">
                 {errors.category.message}
               </Text>
             ) : null}
@@ -203,15 +204,15 @@ const EditDocumentBottomSheet = forwardRef<
             <Pressable
               onPress={() => bottomSheetRef.current?.dismiss()}
               accessibilityRole="button"
-              className="flex-1 items-center rounded-2xl border border-[#CAD5E2] bg-white py-4 active:opacity-[0.92]"
+              className="flex-1 items-center rounded-2xl border border-input-text bg-white py-4 active:opacity-[0.92]"
             >
-              <Text className="text-base font-bold text-[#62748E]">Cancel</Text>
+              <Text className="text-base font-bold text-slate-500">Cancel</Text>
             </Pressable>
 
             <Pressable
               onPress={handleUpdate}
               accessibilityRole="button"
-              className="flex-1 items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+              className="flex-1 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
             >
               <Text className="text-base font-bold text-white">
                 Update Documents

@@ -11,7 +11,7 @@ export default function ResidentRoleCard({ onPress }: ResidentRoleCardProps) {
   return (
     <Pressable
       onPress={onPress}
-      className="relative min-h-31.5 w-full justify-center rounded-2xl bg-[#7B61FF] py-4 pl-28 pr-4 active:opacity-[0.92] "
+      className="relative min-h-31.5 w-full justify-center rounded-2xl bg-primary py-4 pl-28 pr-4 active:opacity-[0.92] "
     >
       <Image
         source={require("@/assets/images/auth/still-life-keys-new-home.png")}
@@ -28,7 +28,7 @@ export default function ResidentRoleCard({ onPress }: ResidentRoleCardProps) {
 
       <View className="flex-col items-center">
         <View className="flex-col items-center">
-          <Text className="z-0 mb-1 text-sm font-normal text-[#E2E8F0]">
+          <Text className="z-0 mb-1 text-sm font-normal text-slate-200">
             {t("auth.registerAs")}
           </Text>
           <Text className="z-0 text-2xl font-bold tracking-[-0.3px] text-white">

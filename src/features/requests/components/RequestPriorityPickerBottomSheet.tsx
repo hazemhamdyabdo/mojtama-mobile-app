@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { REQUEST_PRIORITY_OPTIONS } from "@/features/requests/constants/dummy";
 import type { RequestPriority } from "@/features/requests/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
@@ -65,17 +66,17 @@ const RequestPriorityPickerBottomSheet = forwardRef<
       enableDynamicSizing
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
-        <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 text-center text-base font-bold text-heading">
           Select Request Priority
         </Text>
 
@@ -90,8 +91,8 @@ const RequestPriorityPickerBottomSheet = forwardRef<
               accessibilityState={{ selected: isSelected }}
               className={`mb-2 flex-row items-center gap-3 rounded-2xl border px-4 py-3.5 active:opacity-[0.92] ${
                 isSelected
-                  ? "border-[#7B61FF] bg-[#F8F6FF]"
-                  : "border-[#E4E4E7] bg-white"
+                  ? "border-primary bg-primary-50"
+                  : "border-card-border bg-white"
               }`}
             >
               <View
@@ -104,7 +105,7 @@ const RequestPriorityPickerBottomSheet = forwardRef<
                 />
               </View>
 
-              <Text className="flex-1 text-base font-medium text-[#1F1F1F]">
+              <Text className="flex-1 text-base font-medium text-heading">
                 {option.label}
               </Text>
             </Pressable>

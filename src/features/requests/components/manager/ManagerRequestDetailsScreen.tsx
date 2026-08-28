@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import AssignWorkersBottomSheet, {
   type AssignWorkersBottomSheetRef,
 } from "@/features/requests/components/manager/AssignWorkersBottomSheet";
@@ -37,7 +38,7 @@ type InfoRowProps = {
 function InfoRow({ label, children }: InfoRowProps) {
   return (
     <View className="mb-4 flex-row items-center justify-between gap-4">
-      <Text className="w-1/3 text-sm text-[#90A1B9]">{label}</Text>
+      <Text className="w-1/3 text-sm text-sec-text">{label}</Text>
       <View className="flex-1  items-start">{children}</View>
     </View>
   );
@@ -57,7 +58,7 @@ function PersonValue({
           style={{ width: 24, height: 24, borderRadius: 100 }}
         />
       ) : null}
-      <Text className="text-sm font-semibold text-[#1F1F1F]">
+      <Text className="text-sm font-semibold text-heading">
         {person.name}
       </Text>
     </View>
@@ -127,11 +128,11 @@ export default function ManagerRequestDetailsScreen({
           contentContainerClassName="pb-10"
           showsVerticalScrollIndicator={false}
         >
-          <Text className="text-2xl font-bold text-[#1F1F1F]">
+          <Text className="text-2xl font-bold text-heading">
             {request.title}
           </Text>
 
-          <Text className="mt-3 text-sm leading-5 text-[#64748B]">
+          <Text className="mt-3 text-sm leading-5 text-slate-500">
             {description}
           </Text>
           {!isExpanded && shouldTruncate ? (
@@ -140,7 +141,7 @@ export default function ManagerRequestDetailsScreen({
               accessibilityRole="button"
               className="mt-1 active:opacity-[0.92]"
             >
-              <Text className="text-sm font-semibold text-[#7B61FF]">
+              <Text className="text-sm font-semibold text-primary">
                 View all
               </Text>
             </Pressable>
@@ -155,10 +156,10 @@ export default function ManagerRequestDetailsScreen({
               <View className="flex-row items-center gap-1">
                 <MaterialDesignIcons
                   name="map-marker-outline"
-                  color="#1F1F1F"
+                  color={colors.heading}
                   size={14}
                 />
-                <Text className="text-sm font-semibold text-[#1F1F1F]">
+                <Text className="text-sm font-semibold text-heading">
                   {request.location}
                 </Text>
               </View>
@@ -166,7 +167,7 @@ export default function ManagerRequestDetailsScreen({
 
             {request.scheduledDate ? (
               <InfoRow label="Scheduled Date">
-                <Text className="text-sm font-semibold text-[#1F1F1F]">
+                <Text className="text-sm font-semibold text-heading">
                   {request.scheduledDate}
                 </Text>
               </InfoRow>
@@ -195,24 +196,24 @@ export default function ManagerRequestDetailsScreen({
 
           {request.scheduleTime ? (
             <View className="mt-2 flex-row items-center justify-between rounded-2xl bg-slate-50 p-4">
-              <Text className="text-sm font-semibold text-[#1F1F1F]">
+              <Text className="text-sm font-semibold text-heading">
                 Schedule
               </Text>
               <View className="flex-row items-center gap-1.5">
                 <MaterialDesignIcons
                   name="clock-outline"
-                  color="#64748B"
+                  color={colors.slate500}
                   size={16}
                 />
-                <Text className="text-sm text-[#64748B]">
+                <Text className="text-sm text-slate-500">
                   {request.scheduleTime}
                 </Text>
               </View>
             </View>
           ) : null}
 
-          <View className="mt-3 flex-row items-center justify-between rounded-2xl bg-[#F8FAFC] p-4">
-            <Text className="text-sm font-semibold text-[#1F1F1F]">Status</Text>
+          <View className="mt-3 flex-row items-center justify-between rounded-2xl bg-slate-50 p-4">
+            <Text className="text-sm font-semibold text-heading">Status</Text>
             <RequestStatusBadge status={request.status} />
           </View>
 
@@ -226,7 +227,7 @@ export default function ManagerRequestDetailsScreen({
                 assignSheetRef.current?.open(request.assignedWorkerIds ?? [])
               }
               accessibilityRole="button"
-              className="items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+              className="items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
             >
               <Text className="text-base font-bold text-white">
                 Assign Request
@@ -236,9 +237,9 @@ export default function ManagerRequestDetailsScreen({
             <Pressable
               onPress={() => deleteSheetRef.current?.open()}
               accessibilityRole="button"
-              className="items-center rounded-2xl border border-[#F87171] bg-white py-4 active:opacity-[0.92]"
+              className="items-center rounded-2xl border border-rejected-500 bg-white py-4 active:opacity-[0.92]"
             >
-              <Text className="text-base font-bold text-[#F87171]">
+              <Text className="text-base font-bold text-rejected-500">
                 Delete Request
               </Text>
             </Pressable>

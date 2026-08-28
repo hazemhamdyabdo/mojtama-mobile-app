@@ -11,7 +11,7 @@ export default function ManagerRoleCard({ onPress }: ManagerRoleCardProps) {
   return (
     <Pressable
       onPress={onPress}
-      className="relative min-h-31.5 w-full justify-center rounded-2xl bg-[#EBE8FF] py-4 pl-6 pr-4 active:opacity-[0.92]"
+      className="relative min-h-31.5 w-full justify-center rounded-2xl bg-primary-100 py-4 pl-6 pr-4 active:opacity-[0.92]"
     >
       <Image
         source={require("@/assets/images/auth/hand-presenting-model-house-home-loan-campaign.png")}
@@ -32,10 +32,10 @@ export default function ManagerRoleCard({ onPress }: ManagerRoleCardProps) {
           className="absolute -top-8.25 left-18"
         />
         <View className="w-full flex-col items-start justify-start text-left">
-          <Text className="z-0 mb-1 text-sm font-normal text-[#2E2E2E]">
+          <Text className="z-0 mb-1 text-sm font-normal text-label">
             {t("auth.registerAs")}
           </Text>
-          <Text className="z-0 text-2xl font-bold tracking-[-0.3px] text-[#2E2E2E]">
+          <Text className="z-0 text-2xl font-bold tracking-[-0.3px] text-label">
             {t("auth.roles.manager")}
           </Text>
         </View>

@@ -9,15 +9,15 @@ type RequestTypeBadgeProps = {
 function getTypeStyles(requestType: RequestType) {
   switch (requestType) {
     case "maintenance":
-      return { container: "bg-[#F0FDFA]", text: "text-[#00786F]" };
+      return { container: "bg-approved-50", text: "text-approved-700" };
     case "noise":
-      return { container: "bg-[#FFF6DE]", text: "text-[#FBBF24]" };
+      return { container: "bg-pending-50", text: "text-pending" };
     case "billing":
-      return { container: "bg-[#F0EDFF]", text: "text-[#7B61FF]" };
+      return { container: "bg-primary-50", text: "text-primary" };
     case "emergency":
-      return { container: "bg-[#FEE2E2]", text: "text-[#EF4444]" };
+      return { container: "bg-rejected-50", text: "text-rejected" };
     case "security":
-      return { container: "bg-[#E2E8F0]", text: "text-[#475569]" };
+      return { container: "bg-slate-200", text: "text-slate-600" };
     default: {
       const exhaustive: never = requestType;
       return exhaustive;

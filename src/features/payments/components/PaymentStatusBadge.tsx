@@ -9,20 +9,20 @@ function getStatusStyles(status: PaymentBillStatus) {
   switch (status) {
     case "pending":
       return {
-        container: "bg-[#FFF6DE]",
-        text: "text-[#D97706]",
+        container: "bg-pending-50",
+        text: "text-pending-700",
         label: "Pending",
       };
     case "overdue":
       return {
-        container: "bg-[#FFE6E6]",
-        text: "text-[#EF4444]",
+        container: "bg-rejected-50",
+        text: "text-rejected",
         label: "Overdue",
       };
     case "paid":
       return {
-        container: "bg-[#E1F9F0]",
-        text: "text-[#059669]",
+        container: "bg-approved-50",
+        text: "text-approved-600",
         label: "Paid",
       };
     default: {

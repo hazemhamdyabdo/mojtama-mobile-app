@@ -72,10 +72,10 @@ export default function PaymentsScreen() {
         if (historyBills.length === 0) {
           return (
             <View className="items-center py-12">
-              <Text className="text-base font-medium text-[#1F1F1F]">
+              <Text className="text-base font-medium text-heading">
                 No Payment History
               </Text>
-              <Text className="mt-1 text-center text-sm text-[#90A1B9]">
+              <Text className="mt-1 text-center text-sm text-sec-text">
                 Completed payments will appear here.
               </Text>
             </View>

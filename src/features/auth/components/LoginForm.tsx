@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import {
   createLoginSchema,
   type LoginFormValues,
@@ -38,19 +39,19 @@ function AuthTextField({
 
   return (
     <View className="w-full">
-      <Text className="mb-2 text-sm font-medium text-[#2E2E2E]">{label}</Text>
+      <Text className="mb-2 text-sm font-medium text-label">{label}</Text>
       <TextInput
         value={value}
         onChangeText={onChange}
         onBlur={onBlur}
         placeholder={placeholder}
-        placeholderTextColor="#90A1B9"
+        placeholderTextColor={colors.secText}
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
         autoCapitalize="none"
         autoCorrect={false}
-        className={`w-full rounded-xl border bg-white px-4 text-base text-[#1F1F1F] placeholder:ps-4 ${
-          error ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+        className={`w-full rounded-xl border bg-white px-4 text-base text-heading placeholder:ps-4 ${
+          error ? "border-rejected-200" : "border-card-border"
         }`}
         style={{
           textAlign,
@@ -59,7 +60,7 @@ function AuthTextField({
         }}
       />
       {error ? (
-        <Text className="mt-2 text-sm text-[#EF4444]" style={{ textAlign }}>
+        <Text className="mt-2 text-sm text-rejected" style={{ textAlign }}>
           {error}
         </Text>
       ) : null}
@@ -104,10 +105,10 @@ function LoginFormFields({ authRole }: LoginFormFieldsProps) {
   return (
     <View className="w-full">
       <View className="mb-14 w-full">
-        <Text className="text-2xl font-semibold text-[#1F1F1F]">
+        <Text className="text-2xl font-semibold text-heading">
           {t("auth.loginForm.welcomeBack")}
         </Text>
-        <Text className="mt-1 text-sm text-[#90A1B9]">
+        <Text className="mt-1 text-sm text-sec-text">
           {t("auth.loginForm.subtitle")}
         </Text>
       </View>
@@ -151,7 +152,7 @@ function LoginFormFields({ authRole }: LoginFormFieldsProps) {
           onPress={() => router.push("/forget-password" as Href)}
           className="mt-3 self-end active:opacity-[0.92]"
         >
-          <Text className="text-sm font-medium text-[#7B61FF]">
+          <Text className="text-sm font-medium text-primary">
             {t("auth.loginForm.forgotPassword")}
           </Text>
         </Pressable>
@@ -160,7 +161,7 @@ function LoginFormFields({ authRole }: LoginFormFieldsProps) {
       <Pressable
         onPress={() => void handleSubmit(onSubmit)()}
         disabled={isSubmitting}
-        className="mb-6 w-full items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
+        className="mb-6 w-full items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
       >
         <Text className="text-base font-bold text-white">
           {t("auth.loginForm.loginButton")}
@@ -168,11 +169,11 @@ function LoginFormFields({ authRole }: LoginFormFieldsProps) {
       </Pressable>
 
       <View className="mb-6 flex-row items-center">
-        <View className="h-px flex-1 bg-[#E4E4E7]" />
-        <Text className="mx-3 text-sm text-[#90A1B9]">
+        <View className="h-px flex-1 bg-slate-200" />
+        <Text className="mx-3 text-sm text-sec-text">
           {t("auth.loginForm.or")}
         </Text>
-        <View className="h-px flex-1 bg-[#E4E4E7]" />
+        <View className="h-px flex-1 bg-slate-200" />
       </View>
 
       <Pressable
@@ -182,9 +183,9 @@ function LoginFormFields({ authRole }: LoginFormFieldsProps) {
             params: authRole ? { role: authRole } : undefined,
           } as Href)
         }
-        className="w-full items-center justify-center rounded-2xl border border-[#7B61FF] py-4 active:opacity-[0.92]"
+        className="w-full items-center justify-center rounded-2xl border border-primary py-4 active:opacity-[0.92]"
       >
-        <Text className="text-base font-bold text-[#7B61FF]">
+        <Text className="text-base font-bold text-primary">
           {t("auth.loginForm.loginWithPhone")}
         </Text>
       </Pressable>

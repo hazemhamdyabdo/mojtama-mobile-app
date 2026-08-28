@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { Image } from "expo-image";
 import { I18nManager, Pressable, Text, TextInput, View } from "react-native";
 
@@ -34,8 +35,8 @@ export default function SearchActionBar({
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
-          placeholderTextColor="#90A1B9"
-          className="rounded-xl border border-[#E4E4E7] bg-white pl-11 pr-4 text-base text-[#1F1F1F]"
+          placeholderTextColor={colors.secText}
+          className="rounded-xl border border-card-border bg-white pl-11 pr-4 text-base text-heading"
           style={{
             textAlign,
             paddingVertical: 10,
@@ -47,7 +48,7 @@ export default function SearchActionBar({
         onPress={onAddPostPress}
         accessibilityRole="button"
         accessibilityLabel="Add post"
-        className="items-center justify-center rounded-xl bg-[#7B61FF] px-8 py-3 active:opacity-[0.92]"
+        className="items-center justify-center rounded-xl bg-primary px-8 py-3 active:opacity-[0.92]"
       >
         <Text className="text-sm font-bold text-white">+ Add Post</Text>
       </Pressable>

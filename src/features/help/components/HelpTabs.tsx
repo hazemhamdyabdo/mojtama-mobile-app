@@ -9,7 +9,7 @@ type HelpTabsProps = {
 
 export default function HelpTabs({ activeTab, onTabChange }: HelpTabsProps) {
   return (
-    <View className="mb-6 flex-row rounded-xl bg-[#F1F5F9] p-1">
+    <View className="mb-6 flex-row rounded-xl bg-slate-100 p-1">
       {HELP_TABS.map((tab) => {
         const isActive = activeTab === tab.id;
 
@@ -20,12 +20,12 @@ export default function HelpTabs({ activeTab, onTabChange }: HelpTabsProps) {
             accessibilityRole="button"
             accessibilityState={{ selected: isActive }}
             className={`flex-1 items-center rounded-lg px-2 py-2.5 active:opacity-[0.92] ${
-              isActive ? "bg-[#F0EDFF]" : "bg-transparent"
+              isActive ? "bg-primary-50" : "bg-transparent"
             }`}
           >
             <Text
               className={`text-sm font-medium ${
-                isActive ? "text-[#7B61FF]" : "text-[#64748B]"
+                isActive ? "text-primary" : "text-slate-500"
               }`}
             >
               {tab.label}

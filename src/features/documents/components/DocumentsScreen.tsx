@@ -164,7 +164,7 @@ export default function DocumentsScreen() {
             onChangeText={setSearchQuery}
           />
 
-          <Text className="mb-3 text-base font-bold text-[#1F1F1F]">
+          <Text className="mb-3 text-base font-bold text-heading">
             Categories
           </Text>
           <DocumentCategoryChips
@@ -172,16 +172,16 @@ export default function DocumentsScreen() {
             onSelectCategory={setSelectedCategory}
           />
 
-          <Text className="mb-3 text-base font-bold text-[#1F1F1F]">
+          <Text className="mb-3 text-base font-bold text-heading">
             Recent Documents
           </Text>
 
           {filteredDocuments.length === 0 ? (
             <View className="items-center py-10">
-              <Text className="text-base font-medium text-[#1F1F1F]">
+              <Text className="text-base font-medium text-heading">
                 No Documents Found
               </Text>
-              <Text className="mt-1 text-center text-sm text-[#90A1B9]">
+              <Text className="mt-1 text-center text-sm text-sec-text">
                 Try adjusting your search or category filter.
               </Text>
             </View>

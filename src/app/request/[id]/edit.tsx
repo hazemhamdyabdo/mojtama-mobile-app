@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import EditResidentRequestScreen from "@/features/requests/components/resident/EditResidentRequestScreen";
 import { useRequestsState } from "@/features/requests/hooks/useRequestsState";
 import { useUserRole } from "@/features/service/hooks/useUserRole";
@@ -20,7 +21,7 @@ export default function EditRequestRoute() {
   if (isLoading) {
     return (
       <SafeAreaView className="flex-1 items-center justify-center bg-white">
-        <ActivityIndicator color="#7B61FF" />
+        <ActivityIndicator color={colors.primary} />
       </SafeAreaView>
     );
   }

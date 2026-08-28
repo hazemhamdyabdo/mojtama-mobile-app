@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import PaymentProviderLogo from "@/features/payments/components/PaymentProviderLogo";
 import type { PaymentWallet } from "@/features/payments/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
@@ -16,14 +17,14 @@ export default function DigitalWalletForm({
 }: DigitalWalletFormProps) {
   return (
     <View>
-      <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
+      <Text className="mb-2 text-sm font-semibold text-heading">
         Digital Wallet
       </Text>
       <Pressable
         onPress={onOpenWalletPicker}
         accessibilityRole="button"
         className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-          error ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+          error ? "border-rejected-200" : "border-card-border"
         }`}
       >
         <View className="flex-1 flex-row items-center gap-3">
@@ -32,7 +33,7 @@ export default function DigitalWalletForm({
           ) : null}
           <Text
             className={`flex-1 text-base ${
-              selectedWallet ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+              selectedWallet ? "text-heading" : "text-sec-text"
             }`}
           >
             {selectedWallet
@@ -40,10 +41,10 @@ export default function DigitalWalletForm({
               : "Select Wallet"}
           </Text>
         </View>
-        <MaterialDesignIcons name="chevron-down" color="#90A1B9" size={22} />
+        <MaterialDesignIcons name="chevron-down" color={colors.secText} size={22} />
       </Pressable>
       {error ? (
-        <Text className="mt-2 text-sm text-[#EF4444]">{error}</Text>
+        <Text className="mt-2 text-sm text-rejected">{error}</Text>
       ) : null}
     </View>
   );

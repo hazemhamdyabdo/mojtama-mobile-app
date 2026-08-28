@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -98,17 +99,17 @@ const DateTimePickerSheet = forwardRef<
       enableDynamicSizing
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
-        <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 text-center text-base font-bold text-heading">
           {title}
         </Text>
 
@@ -119,7 +120,7 @@ const DateTimePickerSheet = forwardRef<
             display={mode === "date" ? "inline" : "spinner"}
             minimumDate={minimumDate}
             themeVariant="light"
-            accentColor="#7B61FF"
+            accentColor={colors.primary}
             style={mode === "date" ? { width: "100%" } : undefined}
             onValueChange={(_event, selectedDate) => {
               if (selectedDate) {
@@ -135,7 +136,7 @@ const DateTimePickerSheet = forwardRef<
             bottomSheetRef.current?.dismiss();
           }}
           accessibilityRole="button"
-          className="mt-4 items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+          className="mt-4 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
         >
           <Text className="text-base font-bold text-white">{confirmLabel}</Text>
         </Pressable>

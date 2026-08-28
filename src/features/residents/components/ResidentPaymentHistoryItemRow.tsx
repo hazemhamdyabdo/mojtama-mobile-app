@@ -1,6 +1,7 @@
 import type { ResidentPaymentHistoryItem } from "@/features/residents/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Text, View } from "react-native";
+import { colors } from "@/theme/colors";
 
 type ResidentPaymentHistoryItemRowProps = {
   item: ResidentPaymentHistoryItem;
@@ -15,14 +16,14 @@ function PaymentStatusBadge({
   switch (status) {
     case "paid":
       return (
-        <View className="rounded-full bg-[#DCFCE7] px-2.5 py-0.5">
-          <Text className="text-xs font-medium text-[#16A34A]">Paid</Text>
+        <View className="rounded-full bg-approved-50 px-2.5 py-0.5">
+          <Text className="text-xs font-medium text-approved-700">Paid</Text>
         </View>
       );
     case "overdue":
       return (
-        <View className="rounded-full bg-[#FEE2E2] px-2.5 py-0.5">
-          <Text className="text-xs font-medium text-[#EF4444]">Overdue</Text>
+        <View className="rounded-full bg-rejected-50 px-2.5 py-0.5">
+          <Text className="text-xs font-medium text-rejected">Overdue</Text>
         </View>
       );
     default: {
@@ -41,28 +42,28 @@ export default function ResidentPaymentHistoryItemRow({
   return (
     <View
       className={`flex-row items-center gap-3 px-4 py-4 ${
-        isLast ? "" : "border-b border-[#E4E4E7]"
+        isLast ? "" : "border-b border-card-border"
       }`}
     >
       <View
         className={`size-10 items-center justify-center rounded-full ${
-          isPaid ? "bg-[#DCFCE7]" : "bg-[#FEE2E2]"
+          isPaid ? "bg-approved-50" : "bg-rejected-50"
         }`}
       >
         <MaterialDesignIcons
           name={isPaid ? "check" : "alert-circle-outline"}
-          color={isPaid ? "#16A34A" : "#EF4444"}
+          color={isPaid ? colors.approved700 : colors.rejected}
           size={18}
         />
       </View>
 
       <View className="flex-1">
-        <Text className="text-sm font-semibold text-[#1F1F1F]">{item.title}</Text>
-        <Text className="mt-0.5 text-xs text-[#64748B]">{item.date}</Text>
+        <Text className="text-sm font-semibold text-heading">{item.title}</Text>
+        <Text className="mt-0.5 text-xs text-slate-500">{item.date}</Text>
       </View>
 
       <View className="items-end">
-        <Text className="text-sm font-bold text-[#1F1F1F]">{item.amount}</Text>
+        <Text className="text-sm font-bold text-heading">{item.amount}</Text>
         <View className="mt-1">
           <PaymentStatusBadge status={item.status} />
         </View>

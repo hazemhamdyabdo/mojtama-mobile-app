@@ -10,9 +10,9 @@ export default function ProfileContactCard({
   value,
 }: ProfileContactCardProps) {
   return (
-    <View className="flex-1 rounded-xl bg-[#F8FAFC] px-3 py-3">
-      <Text className="text-xs text-[#90A1B9]">{label}</Text>
-      <Text className="mt-1 text-sm font-medium text-[#1F1F1F]">{value}</Text>
+    <View className="flex-1 rounded-xl bg-slate-50 px-3 py-3">
+      <Text className="text-xs text-sec-text">{label}</Text>
+      <Text className="mt-1 text-sm font-medium text-heading">{value}</Text>
     </View>
   );
 }

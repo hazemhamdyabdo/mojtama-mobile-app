@@ -17,9 +17,9 @@ export default function ManageServicesSection({
 }: ManageServicesSectionProps) {
   return (
     <View className="mt-8">
-      <Text className="text-lg font-bold text-[#1F1F1F]">{title}</Text>
+      <Text className="text-lg font-bold text-heading">{title}</Text>
       {subtitle ? (
-        <Text className="mt-1 text-sm text-[#90A1B9]">{subtitle}</Text>
+        <Text className="mt-1 text-sm text-sec-text">{subtitle}</Text>
       ) : null}
 
       <View className="mt-4">

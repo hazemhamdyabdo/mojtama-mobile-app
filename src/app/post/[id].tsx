@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import CommentsBottomSheet, {
   type CommentsBottomSheetRef,
 } from "@/features/home/components/CommentsBottomSheet";
@@ -28,13 +29,13 @@ type InfoRowProps = {
 function InfoRow({ label, value, isChip = false }: InfoRowProps) {
   return (
     <View className="flex-row items-center justify-between px-4 py-2">
-      <Text className="text-base text-[#64748B]">{label}</Text>
+      <Text className="text-base text-slate-500">{label}</Text>
       {isChip ? (
-        <View className="rounded-full bg-[#F0EDFF] px-4 py-1.5">
-          <Text className="text-sm font-medium text-[#7B61FF]">{value}</Text>
+        <View className="rounded-full bg-primary-50 px-4 py-1.5">
+          <Text className="text-sm font-medium text-primary">{value}</Text>
         </View>
       ) : (
-        <Text className="text-base font-medium text-[#1F1F1F]">{value}</Text>
+        <Text className="text-base font-medium text-heading">{value}</Text>
       )}
     </View>
   );
@@ -82,16 +83,16 @@ export default function PostDetailsScreen() {
           accessibilityLabel="Go back"
           className="absolute left-0 active:opacity-[0.92]"
         >
-          <View className="size-10 items-center justify-center rounded-full bg-[#F0EDFF]">
+          <View className="size-10 items-center justify-center rounded-full bg-primary-50">
             <MaterialDesignIcons
               name="chevron-left"
-              color="#7B61FF"
+              color={colors.primary}
               size={24}
             />
           </View>
         </Pressable>
 
-        <Text className="text-lg font-bold text-[#1F1F1F]">Post Details</Text>
+        <Text className="text-lg font-bold text-heading">Post Details</Text>
 
         <Pressable
           onPress={() => postActionsSheetRef.current?.open(post.id)}
@@ -102,7 +103,7 @@ export default function PostDetailsScreen() {
         >
           <MaterialDesignIcons
             name="dots-vertical"
-            color="#1F1F1F"
+            color={colors.heading}
             size={24}
           />
         </Pressable>
@@ -126,13 +127,13 @@ export default function PostDetailsScreen() {
           />
         ) : null}
 
-        <Text className="mb-2 text-xl font-bold text-[#1F1F1F]">
+        <Text className="mb-2 text-xl font-bold text-heading">
           {post.title}
         </Text>
 
         <Text
           numberOfLines={expanded ? undefined : 3}
-          className="text-sm leading-5 text-[#64748B]"
+          className="text-sm leading-5 text-slate-500"
         >
           {post.body}
         </Text>
@@ -143,7 +144,7 @@ export default function PostDetailsScreen() {
             accessibilityRole="button"
             className="mt-1 self-start active:opacity-[0.92]"
           >
-            <Text className="text-sm font-medium text-[#7B61FF]">
+            <Text className="text-sm font-medium text-primary">
               Read more
             </Text>
           </Pressable>
@@ -154,12 +155,12 @@ export default function PostDetailsScreen() {
             {post.options.map((option) => (
               <View
                 key={option.id}
-                className="flex-row items-center justify-between rounded-xl border border-[#E4E4E7] px-4 py-3"
+                className="flex-row items-center justify-between rounded-xl border border-card-border px-4 py-3"
               >
-                <Text className="text-base font-semibold text-[#1F1F1F]">
+                <Text className="text-base font-semibold text-heading">
                   {option.label}
                 </Text>
-                <Text className="text-sm font-medium text-[#7B61FF]">
+                <Text className="text-sm font-medium text-primary">
                   {option.votes} Vote
                 </Text>
               </View>
@@ -178,7 +179,7 @@ export default function PostDetailsScreen() {
               >
                 <MaterialDesignIcons
                   name={liked ? "thumb-up" : "thumb-up-outline"}
-                  color={liked ? "#7B61FF" : "#90A1B9"}
+                  color={liked ? colors.primary : colors.secText}
                   size={18}
                 />
               </Pressable>
@@ -190,7 +191,7 @@ export default function PostDetailsScreen() {
                 hitSlop={8}
                 className="active:opacity-[0.92]"
               >
-                <Text className="text-sm text-[#90A1B9]">
+                <Text className="text-sm text-sec-text">
                   {displayedLikes.toLocaleString()} Likes
                 </Text>
               </Pressable>
@@ -205,10 +206,10 @@ export default function PostDetailsScreen() {
             >
               <MaterialDesignIcons
                 name="comment-outline"
-                color="#90A1B9"
+                color={colors.secText}
                 size={18}
               />
-              <Text className="text-sm text-[#90A1B9]">
+              <Text className="text-sm text-sec-text">
                 {post.commentsCount.toLocaleString()} Comments
               </Text>
             </Pressable>
@@ -216,20 +217,20 @@ export default function PostDetailsScreen() {
             <View className="flex-row items-center gap-1.5">
               <MaterialDesignIcons
                 name="eye-outline"
-                color="#90A1B9"
+                color={colors.secText}
                 size={18}
               />
-              <Text className="text-sm text-[#90A1B9]">
+              <Text className="text-sm text-sec-text">
                 {post.viewsCount.toLocaleString()} Views
               </Text>
             </View>
           </View>
 
-        <Text className="mb-3 mt-6 text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-3 mt-6 text-base font-bold text-heading">
           Post informations
         </Text>
 
-        <View className="rounded-2xl border border-[#E4E4E7] bg-white">
+        <View className="rounded-2xl border border-card-border bg-white">
           <InfoRow label="Category" value={post.category} isChip />
           <InfoRow label="Posted by" value={getPostedBy(post)} />
           <InfoRow label="Posted at" value={post.postedAt} />
@@ -239,9 +240,9 @@ export default function PostDetailsScreen() {
         <Pressable
           onPress={() => commentsSheetRef.current?.open(post.id)}
           accessibilityRole="button"
-          className="mt-6 items-center justify-center rounded-xl border border-[#7B61FF] py-4 active:opacity-[0.92]"
+          className="mt-6 items-center justify-center rounded-xl border border-primary py-4 active:opacity-[0.92]"
         >
-          <Text className="text-base font-semibold text-[#7B61FF]">
+          <Text className="text-base font-semibold text-primary">
             View Comments
           </Text>
         </Pressable>

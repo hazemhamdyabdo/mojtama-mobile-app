@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import {
   PostCardHeader,
   PostCardShell,
@@ -45,11 +46,11 @@ export default function PollPostCard({
         onMenuPress={() => onMenuPress?.(post.id)}
       />
 
-      <Text className="mb-2 text-lg font-bold text-[#1F1F1F]">
+      <Text className="mb-2 text-lg font-bold text-heading">
         {post.title}
       </Text>
 
-      <Text numberOfLines={2} className="mb-4 text-sm leading-5 text-[#64748B]">
+      <Text numberOfLines={2} className="mb-4 text-sm leading-5 text-slate-500">
         {post.body}
       </Text>
 
@@ -65,29 +66,29 @@ export default function PollPostCard({
               accessibilityState={{ selected: isSelected }}
               className={`flex-row items-center justify-between rounded-xl border px-4 py-3 active:opacity-[0.92] ${
                 isSelected
-                  ? "border-[#7B61FF] bg-[#FAFAFF]"
-                  : "border-[#E4E4E7] bg-white"
+                  ? "border-primary bg-primary-50"
+                  : "border-card-border bg-white"
               }`}
             >
               <View className="mr-3 flex-1 flex-row items-center gap-3">
                 <View
                   className={`size-5 items-center justify-center rounded-full border-2 ${
-                    isSelected ? "border-[#7B61FF]" : "border-[#CBD5E1]"
+                    isSelected ? "border-primary" : "border-slate-300"
                   }`}
                 >
                   {isSelected ? (
-                    <View className="size-2.5 rounded-full bg-[#7B61FF]" />
+                    <View className="size-2.5 rounded-full bg-primary" />
                   ) : null}
                 </View>
                 <Text
                   numberOfLines={1}
-                  className="flex-1 text-base font-semibold text-[#1F1F1F]"
+                  className="flex-1 text-base font-semibold text-heading"
                 >
                   {option.label}
                 </Text>
               </View>
 
-              <Text className="text-sm font-medium text-[#7B61FF]">
+              <Text className="text-sm font-medium text-primary">
                 {option.votes} Vote
               </Text>
             </Pressable>
@@ -101,7 +102,7 @@ export default function PollPostCard({
           accessibilityRole="button"
           className="mt-2 self-start active:opacity-[0.92]"
         >
-          <Text className="text-sm font-medium text-[#7B61FF]">
+          <Text className="text-sm font-medium text-primary">
             {showAllOptions
               ? "Show less"
               : `+ ${hiddenOptionsCount} more option${hiddenOptionsCount === 1 ? "" : "s"}`}
@@ -119,10 +120,10 @@ export default function PollPostCard({
         >
           <MaterialDesignIcons
             name={liked ? "thumb-up" : "thumb-up-outline"}
-            color="#7B61FF"
+            color={colors.primary}
             size={18}
           />
-          <Text className="text-sm font-medium text-[#7B61FF]">Like</Text>
+          <Text className="text-sm font-medium text-primary">Like</Text>
         </Pressable>
 
         <Pressable
@@ -134,10 +135,10 @@ export default function PollPostCard({
         >
           <MaterialDesignIcons
             name="comment-outline"
-            color="#90A1B9"
+            color={colors.secText}
             size={18}
           />
-          <Text className="text-sm text-[#90A1B9]">
+          <Text className="text-sm text-sec-text">
             {post.commentsCount.toLocaleString()} Comments
           </Text>
         </Pressable>

@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { POST_TYPE_OPTIONS } from "@/features/home/constants/postTypes";
 import type { PostType } from "@/features/home/types";
 import {
@@ -67,7 +68,7 @@ const CreatePostBottomSheet = forwardRef<
       enablePanDownToClose
       handleComponent={null}
       backgroundStyle={{
-        backgroundColor: "#fff",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
@@ -85,16 +86,16 @@ const CreatePostBottomSheet = forwardRef<
             accessibilityLabel="Close"
             className="absolute left-0 active:opacity-[0.92]"
           >
-            <View className="size-10 items-center justify-center rounded-full bg-[#F0EDFF]">
+            <View className="size-10 items-center justify-center rounded-full bg-primary-50">
               <MaterialDesignIcons
                 name="chevron-left"
-                color="#7B61FF"
+                color={colors.primary}
                 size={24}
               />
             </View>
           </Pressable>
 
-          <Text className="text-lg font-bold text-[#1F1F1F]">
+          <Text className="text-lg font-bold text-heading">
             Create New Post
           </Text>
         </View>
@@ -104,9 +105,9 @@ const CreatePostBottomSheet = forwardRef<
             key={option.id}
             onPress={() => handleSelectPostType(option.id)}
             accessibilityRole="button"
-            className="mb-3 flex-row items-center rounded-2xl border border-[#E4E4E7] bg-white p-4 active:opacity-[0.92]"
+            className="mb-3 flex-row items-center rounded-2xl border border-card-border bg-white p-4 active:opacity-[0.92]"
           >
-            <View className="mr-4  items-center justify-center rounded-full bg-[#F0EDFF]">
+            <View className="mr-4  items-center justify-center rounded-full bg-primary-50">
               <Image
                 source={option.icon}
                 contentFit="contain"
@@ -115,10 +116,10 @@ const CreatePostBottomSheet = forwardRef<
             </View>
 
             <View className="flex-1">
-              <Text className="text-base font-bold text-[#1F1F1F]">
+              <Text className="text-base font-bold text-heading">
                 {option.title}
               </Text>
-              <Text className="mt-1 text-sm leading-5 text-[#90A1B9]">
+              <Text className="mt-1 text-sm leading-5 text-sec-text">
                 {option.description}
               </Text>
             </View>

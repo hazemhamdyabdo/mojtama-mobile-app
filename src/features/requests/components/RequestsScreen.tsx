@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import ManagerRequestsScreen from "@/features/requests/components/manager/ManagerRequestsScreen";
 import ResidentRequestsScreen from "@/features/requests/components/resident/ResidentRequestsScreen";
 import { useUserRole } from "@/features/service/hooks/useUserRole";
@@ -10,7 +11,7 @@ export default function RequestsScreen() {
   if (isLoading) {
     return (
       <SafeAreaView className="flex-1 items-center justify-center bg-white">
-        <ActivityIndicator color="#7B61FF" />
+        <ActivityIndicator color={colors.primary} />
       </SafeAreaView>
     );
   }

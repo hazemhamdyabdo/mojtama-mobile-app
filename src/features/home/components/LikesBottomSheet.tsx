@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { DUMMY_LIKES } from "@/features/home/constants/dummy";
 import type { PostLike } from "@/features/home/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
@@ -46,8 +47,8 @@ function LikeRow({ like }: { like: PostLike }) {
           style={{ width: 48, height: 48, borderRadius: 100 }}
         />
       ) : (
-        <View className="size-12 items-center justify-center rounded-full bg-[#F0EDFF]">
-          <Text className="text-base font-semibold text-[#7B61FF]">
+        <View className="size-12 items-center justify-center rounded-full bg-primary-50">
+          <Text className="text-base font-semibold text-primary">
             {getInitials(like.name)}
           </Text>
         </View>
@@ -55,21 +56,21 @@ function LikeRow({ like }: { like: PostLike }) {
 
       <View className="ml-3 flex-1">
         <View className="flex-row items-center gap-2">
-          <Text className="text-base font-semibold text-[#1F1F1F]">
+          <Text className="text-base font-semibold text-heading">
             {like.name}
           </Text>
           <View className="flex-row items-center gap-0.5">
             <MaterialDesignIcons
               name="map-marker-outline"
-              color="#7B61FF"
+              color={colors.primary}
               size={14}
             />
-            <Text className="text-xs font-medium text-[#7B61FF]">
+            <Text className="text-xs font-medium text-primary">
               {like.unit}
             </Text>
           </View>
         </View>
-        <Text className="mt-0.5 text-sm text-[#90A1B9]">{like.time}</Text>
+        <Text className="mt-0.5 text-sm text-sec-text">{like.time}</Text>
       </View>
     </View>
   );
@@ -104,11 +105,11 @@ const LikesBottomSheet = forwardRef<LikesBottomSheetRef, LikesBottomSheetProps>(
         snapPoints={snapPoints}
         enablePanDownToClose
         backdropComponent={renderBackdrop}
-        handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+        handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
         backgroundStyle={{
           borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
-          backgroundColor: "#FFFFFF",
+          backgroundColor: colors.white,
         }}
       >
         <BottomSheetFlatList
@@ -120,7 +121,7 @@ const LikesBottomSheet = forwardRef<LikesBottomSheetRef, LikesBottomSheetProps>(
             paddingBottom: insets.bottom + 16,
           }}
           ListHeaderComponent={
-            <Text className="mb-5 text-center text-base font-bold text-[#1F1F1F]">
+            <Text className="mb-5 text-center text-base font-bold text-heading">
               likes
             </Text>
           }

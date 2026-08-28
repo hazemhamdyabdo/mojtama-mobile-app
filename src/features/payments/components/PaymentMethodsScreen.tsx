@@ -148,12 +148,12 @@ export default function PaymentMethodsScreen({
         )}
       </ScrollView>
 
-      <View className="border-t border-[#E4E4E7] px-4 py-4">
+      <View className="border-t border-card-border px-4 py-4">
         <Pressable
           onPress={handleConfirm}
           disabled={isSubmitting}
           accessibilityRole="button"
-          className="items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
+          className="items-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
         >
           <Text className="text-base font-bold text-white">Confirm</Text>
         </Pressable>

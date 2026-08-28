@@ -4,10 +4,10 @@ import { Text, View } from "react-native";
 export default function SettingsFooter() {
   return (
     <View className="items-center py-6">
-      <Text className="text-sm text-[#90A1B9]">
+      <Text className="text-sm text-sec-text">
         Mojtama V.{APP_VERSION} ({APP_BUILD})
       </Text>
-      <Text className="mt-1 text-sm text-[#90A1B9]">© 2025 Mojtama LLC</Text>
+      <Text className="mt-1 text-sm text-sec-text">© 2025 Mojtama LLC</Text>
     </View>
   );
 }

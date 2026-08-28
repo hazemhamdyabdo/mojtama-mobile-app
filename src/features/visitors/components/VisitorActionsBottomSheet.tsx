@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -63,11 +64,11 @@ const VisitorActionsBottomSheet = forwardRef<
       enableDynamicSizing
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
@@ -78,19 +79,19 @@ const VisitorActionsBottomSheet = forwardRef<
           accessibilityRole="button"
           className="py-4 active:opacity-[0.92]"
         >
-          <Text className="text-base font-medium text-[#1F1F1F]">
+          <Text className="text-base font-medium text-heading">
             Edit Visitor
           </Text>
         </Pressable>
 
-        <View className="h-px bg-[#E4E4E7]" />
+        <View className="h-px bg-slate-200" />
 
         <Pressable
           onPress={handleDelete}
           accessibilityRole="button"
           className="py-4 active:opacity-[0.92]"
         >
-          <Text className="text-base font-medium text-[#F87171]">
+          <Text className="text-base font-medium text-rejected-500">
             Delete Visitor
           </Text>
         </Pressable>
@@ -100,7 +101,7 @@ const VisitorActionsBottomSheet = forwardRef<
           accessibilityRole="button"
           className="items-center py-3 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-[#1F1F1F]">Cancel</Text>
+          <Text className="text-base font-bold text-heading">Cancel</Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>

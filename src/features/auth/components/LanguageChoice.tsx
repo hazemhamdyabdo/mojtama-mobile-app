@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import LanguageOptionCard from "@/features/auth/components/LanguageOptionCard";
 import {
   changeLanguage,
@@ -77,7 +78,7 @@ export default function LanguageChoice() {
     <SafeAreaView
       className="flex-1"
       style={{
-        backgroundColor: "#fff",
+        backgroundColor: colors.white,
         height: "100%",
       }}
     >
@@ -100,7 +101,7 @@ export default function LanguageChoice() {
               <Text className="text-2xl font-semibold">
                 {t("auth.languageChoice.title")}
               </Text>
-              <Text className="text-sm text-[#90A1B9]">
+              <Text className="text-sm text-sec-text">
                 {t("auth.languageChoice.subtitle")}
               </Text>
             </View>
@@ -121,7 +122,7 @@ export default function LanguageChoice() {
               onPress={() => void handleContinue()}
               disabled={isApplying}
               accessibilityRole="button"
-              className="mt-2 w-full items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
+              className="mt-2 w-full items-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
             >
               <Text className="text-base font-bold text-white">
                 {t("auth.languageChoice.continue")}

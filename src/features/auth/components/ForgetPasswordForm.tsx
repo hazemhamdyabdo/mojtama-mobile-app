@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import {
   createForgetPasswordSchema,
   type ForgetPasswordFormValues,
@@ -44,10 +45,10 @@ function ForgetPasswordFormFields() {
   return (
     <View className="w-full">
       <View className="mb-14 w-full">
-        <Text className="text-2xl font-semibold text-[#1F1F1F]">
+        <Text className="text-2xl font-semibold text-heading">
           {t("auth.forgetPassword.title")}
         </Text>
-        <Text className="mt-1 text-sm text-[#90A1B9]" style={{ textAlign }}>
+        <Text className="mt-1 text-sm text-sec-text" style={{ textAlign }}>
           {t("auth.forgetPassword.subtitle")}
         </Text>
       </View>
@@ -58,7 +59,7 @@ function ForgetPasswordFormFields() {
           name="email"
           render={({ field: { onChange, onBlur, value } }) => (
             <View className="w-full">
-              <Text className="mb-2 text-sm font-medium text-[#2E2E2E]">
+              <Text className="mb-2 text-sm font-medium text-label">
                 {t("auth.forgetPassword.email")}
               </Text>
               <TextInput
@@ -66,12 +67,12 @@ function ForgetPasswordFormFields() {
                 onChangeText={onChange}
                 onBlur={onBlur}
                 placeholder={t("auth.forgetPassword.emailPlaceholder")}
-                placeholderTextColor="#90A1B9"
+                placeholderTextColor={colors.secText}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
-                className={`w-full rounded-xl border bg-white px-4 text-base text-[#1F1F1F] placeholder:ps-2 ${
-                  errors.email ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                className={`w-full rounded-xl border bg-white px-4 text-base text-heading placeholder:ps-2 ${
+                  errors.email ? "border-rejected-200" : "border-card-border"
                 }`}
                 style={{
                   textAlign,
@@ -81,7 +82,7 @@ function ForgetPasswordFormFields() {
               />
               {errors.email ? (
                 <Text
-                  className="mt-2 text-sm text-[#EF4444]"
+                  className="mt-2 text-sm text-rejected"
                   style={{ textAlign }}
                 >
                   {errors.email.message}
@@ -95,7 +96,7 @@ function ForgetPasswordFormFields() {
       <Pressable
         onPress={() => void handleSubmit(onSubmit)()}
         disabled={isSubmitting}
-        className="w-full items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
+        className="w-full items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
       >
         <Text className="text-base font-bold text-white">
           {t("auth.forgetPassword.sendResetLink")}

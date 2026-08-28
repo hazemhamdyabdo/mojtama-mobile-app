@@ -17,7 +17,7 @@ export default function ChatIcon({ onPress }: ChatIconProps) {
       accessibilityRole="button"
       accessibilityLabel="Open chat"
       style={{ bottom: insets.bottom - 10 }}
-      className="absolute right-4 z-10 size-14  items-center justify-center rounded-full bg-[#7B61FF] shadow-md active:opacity-[0.92]"
+      className="absolute right-4 z-10 size-14  items-center justify-center rounded-full bg-primary shadow-md active:opacity-[0.92]"
     >
       <Image
         source={chatIconSource}

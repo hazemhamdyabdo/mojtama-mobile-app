@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import type { ReactNode } from "react";
 import {
   Image,
@@ -60,7 +61,7 @@ export default function AuthScreenLayout({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colors.white,
   },
   background: {
     flex: 1,

@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import RequestActivityTimeline from "@/features/requests/components/RequestActivityTimeline";
 import RequestDetailsHeader from "@/features/requests/components/RequestDetailsHeader";
 import RequestIssueTypeBadge from "@/features/requests/components/RequestIssueTypeBadge";
@@ -36,7 +37,7 @@ type InfoRowProps = {
 function InfoRow({ label, children }: InfoRowProps) {
   return (
     <View className="mb-4 flex-row items-center justify-between gap-4">
-      <Text className="w-1/3 text-sm text-[#90A1B9]">{label}</Text>
+      <Text className="w-1/3 text-sm text-sec-text">{label}</Text>
       <View className="flex-1 items-start">{children}</View>
     </View>
   );
@@ -56,7 +57,7 @@ function PersonValue({
           style={{ width: 24, height: 24, borderRadius: 100 }}
         />
       ) : null}
-      <Text className="text-sm font-semibold text-[#1F1F1F]">
+      <Text className="text-sm font-semibold text-heading">
         {person.name}
       </Text>
     </View>
@@ -104,11 +105,11 @@ export default function ResidentRequestDetailsScreen({
           contentContainerClassName="pb-10"
           showsVerticalScrollIndicator={false}
         >
-          <Text className="text-2xl font-bold text-[#1F1F1F]">
+          <Text className="text-2xl font-bold text-heading">
             {request.title}
           </Text>
 
-          <Text className="mt-3 text-sm leading-5 text-[#64748B]">
+          <Text className="mt-3 text-sm leading-5 text-slate-500">
             {description}
           </Text>
           {!isExpanded && shouldTruncate ? (
@@ -117,7 +118,7 @@ export default function ResidentRequestDetailsScreen({
               accessibilityRole="button"
               className="mt-1 active:opacity-[0.92]"
             >
-              <Text className="text-sm font-semibold text-[#7B61FF]">
+              <Text className="text-sm font-semibold text-primary">
                 View all
               </Text>
             </Pressable>
@@ -125,7 +126,7 @@ export default function ResidentRequestDetailsScreen({
 
           {isEmergency ? (
             <View className="mt-6">
-              <Text className="mb-4 text-sm font-semibold text-[#90A1B9]">
+              <Text className="mb-4 text-sm font-semibold text-sec-text">
                 Emergency details
               </Text>
               <InfoRow label="Submitted by">
@@ -135,10 +136,10 @@ export default function ResidentRequestDetailsScreen({
                 <View className="flex-row items-center gap-1">
                   <MaterialDesignIcons
                     name="map-marker-outline"
-                    color="#1F1F1F"
+                    color={colors.heading}
                     size={14}
                   />
-                  <Text className="text-sm font-semibold text-[#1F1F1F]">
+                  <Text className="text-sm font-semibold text-heading">
                     {request.location}
                   </Text>
                 </View>
@@ -159,7 +160,7 @@ export default function ResidentRequestDetailsScreen({
             <View className="mt-6">
               {request.scheduledDate ? (
                 <InfoRow label="Scheduled Date">
-                  <Text className="text-sm font-semibold text-[#1F1F1F]">
+                  <Text className="text-sm font-semibold text-heading">
                     {request.scheduledDate}
                   </Text>
                 </InfoRow>
@@ -194,25 +195,25 @@ export default function ResidentRequestDetailsScreen({
           ) : null}
 
           {request.scheduleTime ? (
-            <View className="mt-3 flex-row items-center justify-between rounded-2xl bg-[#F8FAFC] p-4">
-              <Text className="text-sm font-semibold text-[#1F1F1F]">
+            <View className="mt-3 flex-row items-center justify-between rounded-2xl bg-slate-50 p-4">
+              <Text className="text-sm font-semibold text-heading">
                 Schedule
               </Text>
               <View className="flex-row items-center gap-1.5">
                 <MaterialDesignIcons
                   name="clock-outline"
-                  color="#64748B"
+                  color={colors.slate500}
                   size={16}
                 />
-                <Text className="text-sm text-[#64748B]">
+                <Text className="text-sm text-slate-500">
                   {request.scheduleTime}
                 </Text>
               </View>
             </View>
           ) : null}
 
-          <View className="mt-3 flex-row items-center justify-between rounded-2xl bg-[#F8FAFC] p-4">
-            <Text className="text-sm font-semibold text-[#1F1F1F]">Status</Text>
+          <View className="mt-3 flex-row items-center justify-between rounded-2xl bg-slate-50 p-4">
+            <Text className="text-sm font-semibold text-heading">Status</Text>
             <RequestStatusBadge status={request.status} />
           </View>
 
@@ -224,9 +225,9 @@ export default function ResidentRequestDetailsScreen({
             <Pressable
               onPress={handleEditRequest}
               accessibilityRole="button"
-              className="flex-1 items-center rounded-2xl border border-[#CAD5E2] bg-white py-4 active:opacity-[0.92]"
+              className="flex-1 items-center rounded-2xl border border-input-text bg-white py-4 active:opacity-[0.92]"
             >
-              <Text className="text-base font-bold text-[#62748E]">
+              <Text className="text-base font-bold text-slate-500">
                 Edit Request
               </Text>
             </Pressable>
@@ -234,9 +235,9 @@ export default function ResidentRequestDetailsScreen({
             <Pressable
               onPress={() => cancelSheetRef.current?.open()}
               accessibilityRole="button"
-              className="flex-1 items-center rounded-2xl border border-[#F87171] bg-white py-4 active:opacity-[0.92]"
+              className="flex-1 items-center rounded-2xl border border-rejected-500 bg-white py-4 active:opacity-[0.92]"
             >
-              <Text className="text-base font-bold text-[#F87171]">
+              <Text className="text-base font-bold text-rejected-500">
                 Cancel Request
               </Text>
             </Pressable>

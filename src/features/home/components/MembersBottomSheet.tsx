@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import type { Member } from "@/features/home/types";
 import {
   BottomSheetBackdrop,
@@ -61,7 +62,7 @@ function MemberRow({
       accessibilityRole="button"
       className={`mb-2 flex-row items-center rounded-2xl border p-3 active:opacity-[0.92] ${
         selected && highlightSelected
-          ? "border-[#7B61FF] bg-white"
+          ? "border-primary bg-white"
           : "border-transparent"
       }`}
     >
@@ -72,26 +73,26 @@ function MemberRow({
           style={{ width: 48, height: 48, borderRadius: 100 }}
         />
       ) : (
-        <View className="size-12 items-center justify-center rounded-full bg-[#F0EDFF]">
-          <Text className="text-base font-semibold text-[#7B61FF]">
+        <View className="size-12 items-center justify-center rounded-full bg-primary-50">
+          <Text className="text-base font-semibold text-primary">
             {getInitials(member.name)}
           </Text>
         </View>
       )}
 
       <View className="ml-3 flex-1">
-        <Text className="text-base font-semibold text-[#1F1F1F]">
+        <Text className="text-base font-semibold text-heading">
           {member.name}
         </Text>
-        <Text className="mt-0.5 text-sm text-[#90A1B9]">{member.role}</Text>
+        <Text className="mt-0.5 text-sm text-sec-text">{member.role}</Text>
       </View>
 
       {selected ? (
-        <View className="size-7 items-center justify-center rounded-full bg-[#7B61FF]">
-          <MaterialDesignIcons name="check-bold" color="#FFFFFF" size={16} />
+        <View className="size-7 items-center justify-center rounded-full bg-primary">
+          <MaterialDesignIcons name="check-bold" color={colors.white} size={16} />
         </View>
       ) : (
-        <View className="size-7 rounded-full border-2 border-[#E4E4E7]" />
+        <View className="size-7 rounded-full border-2 border-card-border" />
       )}
     </Pressable>
   );
@@ -160,25 +161,25 @@ const MembersBottomSheet = forwardRef<
       keyboardBehavior="extend"
       keyboardBlurBehavior="restore"
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <View className="px-4 pb-3">
-        <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 text-center text-base font-bold text-heading">
           {title}
         </Text>
 
-        <View className="flex-row items-center rounded-full border border-[#E4E4E7] bg-white px-4">
-          <MaterialDesignIcons name="magnify" color="#90A1B9" size={20} />
+        <View className="flex-row items-center rounded-full border border-card-border bg-white px-4">
+          <MaterialDesignIcons name="magnify" color={colors.secText} size={20} />
           <BottomSheetTextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
             placeholder={searchPlaceholder}
-            placeholderTextColor="#90A1B9"
+            placeholderTextColor={colors.secText}
             autoCapitalize="none"
             style={{
               flex: 1,
@@ -187,7 +188,7 @@ const MembersBottomSheet = forwardRef<
               paddingVertical: 10,
               paddingHorizontal: 8,
               fontSize: 15,
-              color: "#1F1F1F",
+              color: colors.heading,
             }}
           />
         </View>
@@ -210,7 +211,7 @@ const MembersBottomSheet = forwardRef<
           />
         )}
         ListEmptyComponent={
-          <Text className="mt-8 text-center text-sm text-[#90A1B9]">
+          <Text className="mt-8 text-center text-sm text-sec-text">
             No members found
           </Text>
         }

@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { DOCUMENT_CATEGORY_LABELS } from "@/features/documents/constants/dummy";
 import DocumentCategoryPickerBottomSheet, {
   type DocumentCategoryPickerBottomSheetRef,
@@ -142,17 +143,17 @@ const UploadDocumentBottomSheet = forwardRef<
         enableDynamicSizing
         enablePanDownToClose
         backdropComponent={renderBackdrop}
-        handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+        handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
         backgroundStyle={{
           borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
-          backgroundColor: "#FFFFFF",
+          backgroundColor: colors.white,
         }}
       >
         <BottomSheetView
           style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
         >
-          <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+          <Text className="mb-4 text-center text-base font-bold text-heading">
             Upload Documents
           </Text>
 
@@ -161,44 +162,44 @@ const UploadDocumentBottomSheet = forwardRef<
             disabled={isPickingFile}
             accessibilityRole="button"
             accessibilityState={{ disabled: isPickingFile }}
-            className="items-center rounded-2xl border border-dashed border-[#CBD5E1] bg-[#F8FAFC] px-4 py-8 active:opacity-[0.92]"
+            className="items-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-8 active:opacity-[0.92]"
           >
-            <View className="size-14 items-center justify-center rounded-full bg-[#F0EDFF]">
+            <View className="size-14 items-center justify-center rounded-full bg-primary-50">
               {isPickingFile ? (
-                <ActivityIndicator color="#7B61FF" />
+                <ActivityIndicator color={colors.primary} />
               ) : (
                 <MaterialDesignIcons
                   name="cloud-upload-outline"
-                  color="#7B61FF"
+                  color={colors.primary}
                   size={28}
                 />
               )}
             </View>
-            <Text className="mt-3 text-center text-sm text-[#64748B]">
-              <Text className="font-semibold text-[#7B61FF]">
+            <Text className="mt-3 text-center text-sm text-slate-500">
+              <Text className="font-semibold text-primary">
                 Click to upload
               </Text>{" "}
               or drag and drop
             </Text>
-            <Text className="mt-1 text-xs text-[#90A1B9]">
+            <Text className="mt-1 text-xs text-sec-text">
               Max file size: 20 MB
             </Text>
             {selectedFile ? (
-              <Text className="mt-2 text-xs font-medium text-[#1F1F1F]">
+              <Text className="mt-2 text-xs font-medium text-heading">
                 {selectedFile.name} ({selectedFile.size})
               </Text>
             ) : null}
           </Pressable>
           {pickError ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">{pickError}</Text>
+            <Text className="mt-2 text-sm text-rejected">{pickError}</Text>
           ) : null}
           {fileError ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">{fileError}</Text>
+            <Text className="mt-2 text-sm text-rejected">{fileError}</Text>
           ) : null}
 
           <View className="mt-4">
-            <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
-              Documents name<Text className="text-[#EF4444]">*</Text>
+            <Text className="mb-2 text-sm font-semibold text-heading">
+              Documents name<Text className="text-rejected">*</Text>
             </Text>
             <Controller
               control={control}
@@ -209,23 +210,23 @@ const UploadDocumentBottomSheet = forwardRef<
                   onChangeText={onChange}
                   onBlur={onBlur}
                   placeholder="Document name"
-                  placeholderTextColor="#90A1B9"
-                  className={`rounded-xl border bg-white px-4 py-3.5 text-base text-[#1F1F1F] ${
-                    errors.title ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                  placeholderTextColor={colors.secText}
+                  className={`rounded-xl border bg-white px-4 py-3.5 text-base text-heading ${
+                    errors.title ? "border-rejected-200" : "border-card-border"
                   }`}
                 />
               )}
             />
             {errors.title ? (
-              <Text className="mt-2 text-sm text-[#EF4444]">
+              <Text className="mt-2 text-sm text-rejected">
                 {errors.title.message}
               </Text>
             ) : null}
           </View>
 
           <View className="mt-4">
-            <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
-              Category<Text className="text-[#EF4444]">*</Text>
+            <Text className="mb-2 text-sm font-semibold text-heading">
+              Category<Text className="text-rejected">*</Text>
             </Text>
             <Pressable
               onPress={() =>
@@ -239,12 +240,12 @@ const UploadDocumentBottomSheet = forwardRef<
               }
               accessibilityRole="button"
               className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-                errors.category ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                errors.category ? "border-rejected-200" : "border-card-border"
               }`}
             >
               <Text
                 className={`text-base ${
-                  category ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+                  category ? "text-heading" : "text-sec-text"
                 }`}
               >
                 {category
@@ -253,12 +254,12 @@ const UploadDocumentBottomSheet = forwardRef<
               </Text>
               <MaterialDesignIcons
                 name="chevron-down"
-                color="#90A1B9"
+                color={colors.secText}
                 size={20}
               />
             </Pressable>
             {errors.category ? (
-              <Text className="mt-2 text-sm text-[#EF4444]">
+              <Text className="mt-2 text-sm text-rejected">
                 {errors.category.message}
               </Text>
             ) : null}
@@ -268,15 +269,15 @@ const UploadDocumentBottomSheet = forwardRef<
             <Pressable
               onPress={() => bottomSheetRef.current?.dismiss()}
               accessibilityRole="button"
-              className="flex-1 items-center rounded-2xl border border-[#CAD5E2] bg-white py-4 active:opacity-[0.92]"
+              className="flex-1 items-center rounded-2xl border border-input-text bg-white py-4 active:opacity-[0.92]"
             >
-              <Text className="text-base font-bold text-[#62748E]">Cancel</Text>
+              <Text className="text-base font-bold text-slate-500">Cancel</Text>
             </Pressable>
 
             <Pressable
               onPress={handleUpload}
               accessibilityRole="button"
-              className="flex-1 items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+              className="flex-1 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
             >
               <Text className="text-base font-bold text-white">
                 Upload Documents

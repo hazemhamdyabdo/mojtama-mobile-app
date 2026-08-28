@@ -11,8 +11,8 @@ export default function SettingsUpdateIntro({
 }: SettingsUpdateIntroProps) {
   return (
     <View className="mb-8">
-      <Text className="text-2xl font-bold text-[#1F1F1F]">{title}</Text>
-      <Text className="mt-1 text-sm text-[#90A1B9]">{subtitle}</Text>
+      <Text className="text-2xl font-bold text-heading">{title}</Text>
+      <Text className="mt-1 text-sm text-sec-text">{subtitle}</Text>
     </View>
   );
 }

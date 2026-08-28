@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import LanguageOptionCard from "@/features/auth/components/LanguageOptionCard";
 import {
   changeLanguage,
@@ -75,25 +76,25 @@ export default function LanguageSettingsView({
             accessibilityLabel={t("settings.language.back")}
             className="absolute left-0 active:opacity-[0.92]"
           >
-            <View className="size-10 items-center justify-center rounded-full bg-[#F0EDFF]">
+            <View className="size-10 items-center justify-center rounded-full bg-primary-50">
               <MaterialDesignIcons
                 name="chevron-left"
-                color="#7B61FF"
+                color={colors.primary}
                 size={24}
               />
             </View>
           </Pressable>
 
-          <Text className="text-lg font-bold text-[#1F1F1F]">
+          <Text className="text-lg font-bold text-heading">
             {t("settings.language.title")}
           </Text>
         </View>
 
         <View className="gap-1">
-          <Text className="text-2xl font-semibold text-[#1F1F1F]">
+          <Text className="text-2xl font-semibold text-heading">
             {t("settings.language.selectTitle")}
           </Text>
-          <Text className="text-sm text-[#90A1B9]">
+          <Text className="text-sm text-sec-text">
             {t("settings.language.selectSubtitle")}
           </Text>
         </View>
@@ -112,10 +113,10 @@ export default function LanguageSettingsView({
         </View>
 
         <View className="mt-4 rounded-xl border border-gray-200 bg-white p-6">
-          <Text className="text-sm font-bold text-[#1F1F1F]">
+          <Text className="text-sm font-bold text-heading">
             {t("settings.language.infoTitle")}
           </Text>
-          <Text className="mt-2 text-sm text-[#90A1B9]">
+          <Text className="mt-2 text-sm text-sec-text">
             {t("settings.language.infoDescription")}
           </Text>
         </View>

@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { Switch, Text, View } from "react-native";
 
 type NotificationPreferenceCardProps = {
@@ -14,19 +15,19 @@ export default function NotificationPreferenceCard({
   onValueChange,
 }: NotificationPreferenceCardProps) {
   return (
-    <View className="mb-4 rounded-2xl border border-[#E4E4E7] bg-white px-4 py-4">
+    <View className="mb-4 rounded-2xl border border-card-border bg-white px-4 py-4">
       <View className="flex-row items-center justify-between">
-        <Text className="flex-1 pr-4 text-base font-semibold text-[#1F1F1F]">
+        <Text className="flex-1 pr-4 text-base font-semibold text-heading">
           {title}
         </Text>
         <Switch
           value={value}
           onValueChange={onValueChange}
-          trackColor={{ false: "#E4E4E7", true: "#C4B5FD" }}
-          thumbColor={value ? "#7B61FF" : "#FFFFFF"}
+          trackColor={{ false: colors.slate200, true: colors.primary300 }}
+          thumbColor={value ? colors.primary : colors.white}
         />
       </View>
-      <Text className="mt-2 text-sm leading-5 text-[#90A1B9]">
+      <Text className="mt-2 text-sm leading-5 text-sec-text">
         {description}
       </Text>
     </View>

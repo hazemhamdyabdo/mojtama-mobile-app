@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import RequestPriorityBadge from "@/features/requests/components/RequestPriorityBadge";
 import RequestTypeBadge from "@/features/requests/components/RequestTypeBadge";
 import type { ServiceRequest } from "@/features/requests/types";
@@ -18,24 +19,24 @@ export default function ManagerRequestCard({
     <Pressable
       onPress={() => onPress(request.id)}
       accessibilityRole="button"
-      className="mb-4 rounded-2xl border border-[#E4E4E7] bg-white p-4 active:opacity-[0.92]"
+      className="mb-4 rounded-2xl border border-card-border bg-white p-4 active:opacity-[0.92]"
     >
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center gap-2">
-          <View className="size-2 rounded-full bg-[#7B61FF]" />
-          <Text className="text-sm text-[#64748B]">{request.date}</Text>
+          <View className="size-2 rounded-full bg-primary" />
+          <Text className="text-sm text-slate-500">{request.date}</Text>
         </View>
         <RequestTypeBadge requestType={request.requestType} />
       </View>
 
-      <Text className="mt-3 text-base font-bold text-[#1F1F1F]">
+      <Text className="mt-3 text-base font-bold text-heading">
         {request.title}
       </Text>
-      <Text className="mt-2 text-sm leading-5 text-[#64748B]" numberOfLines={2}>
+      <Text className="mt-2 text-sm leading-5 text-slate-500" numberOfLines={2}>
         {request.description}
       </Text>
 
-      <View className="mt-4 flex-row items-center rounded-2xl bg-[#F8FAFC] px-3 py-3">
+      <View className="mt-4 flex-row items-center rounded-2xl bg-slate-50 px-3 py-3">
         {request.submittedBy.avatar ? (
           <Image
             source={request.submittedBy.avatar}
@@ -43,24 +44,24 @@ export default function ManagerRequestCard({
             style={{ width: 32, height: 32, borderRadius: 100 }}
           />
         ) : (
-          <View className="size-8 items-center justify-center rounded-full bg-[#F0EDFF]">
-            <Text className="text-xs font-semibold text-[#7B61FF]">
+          <View className="size-8 items-center justify-center rounded-full bg-primary-50">
+            <Text className="text-xs font-semibold text-primary">
               {request.submittedBy.name.charAt(0)}
             </Text>
           </View>
         )}
 
         <View className="ml-2 flex-1">
-          <Text className="text-sm font-semibold text-[#1F1F1F]">
+          <Text className="text-sm font-semibold text-heading">
             {request.submittedBy.name}
           </Text>
           <View className="flex-row items-center gap-0.5">
             <MaterialDesignIcons
               name="map-marker-outline"
-              color="#7B61FF"
+              color={colors.primary}
               size={12}
             />
-            <Text className="text-xs text-[#7B61FF]">{request.location}</Text>
+            <Text className="text-xs text-primary">{request.location}</Text>
           </View>
         </View>
 

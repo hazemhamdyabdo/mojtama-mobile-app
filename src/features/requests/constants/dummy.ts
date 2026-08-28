@@ -7,6 +7,7 @@ import type {
   ServiceRequest,
   Worker,
 } from "@/features/requests/types";
+import { colors } from "@/theme/colors";
 
 const dummyAvatar = require("@/features/home/constants/dummy-avatar.jpg");
 
@@ -25,7 +26,7 @@ export const REQUEST_TYPE_OPTIONS: RequestTypeOption[] = [
     id: "emergency",
     label: "Emergency",
     icon: "alert-decagram-outline",
-    iconColor: "#EF4444",
+    iconColor: colors.rejected,
   },
   {
     id: "maintenance",
@@ -54,29 +55,29 @@ export const REQUEST_PRIORITY_OPTIONS: RequestPriorityOption[] = [
     id: "urgent",
     label: "Urgent Request",
     icon: "alert-outline",
-    iconColor: "#EF4444",
-    iconBackground: "bg-[#FEE2E2]",
+    iconColor: colors.rejected,
+    iconBackground: "bg-rejected-50",
   },
   {
     id: "high",
     label: "High Priority Request",
     icon: "alert-circle-outline",
-    iconColor: "#F97316",
-    iconBackground: "bg-[#FFEDD5]",
+    iconColor: colors.pending600,
+    iconBackground: "bg-pending-100",
   },
   {
     id: "medium",
     label: "Medium Priority Request",
     icon: "chart-line",
-    iconColor: "#EAB308",
-    iconBackground: "bg-[#FEF9C3]",
+    iconColor: colors.pending,
+    iconBackground: "bg-pending-50",
   },
   {
     id: "low",
     label: "low Priority Request",
     icon: "chart-line-variant",
-    iconColor: "#2563EB",
-    iconBackground: "bg-[#DBEAFE]",
+    iconColor: colors.primary700,
+    iconBackground: "bg-primary-50",
   },
 ];
 

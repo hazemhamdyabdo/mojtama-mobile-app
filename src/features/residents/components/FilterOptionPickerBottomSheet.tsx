@@ -14,6 +14,7 @@ import {
 } from "react";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { colors } from "@/theme/colors";
 
 type FilterOption = {
   id: string;
@@ -72,17 +73,17 @@ const FilterOptionPickerBottomSheet = forwardRef<
       enableDynamicSizing
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
-        <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 text-center text-base font-bold text-heading">
           {title}
         </Text>
 
@@ -94,16 +95,16 @@ const FilterOptionPickerBottomSheet = forwardRef<
             accessibilityState={{ selected: selected === option.id }}
             className={`mb-2 flex-row items-center justify-between rounded-2xl border px-4 py-3.5 active:opacity-[0.92] ${
               selected === option.id
-                ? "border-[#7B61FF] bg-[#F8F6FF]"
-                : "border-[#E4E4E7] bg-white"
+                ? "border-primary bg-primary-50"
+                : "border-card-border bg-white"
             }`}
           >
-            <Text className="text-base font-medium text-[#1F1F1F]">
+            <Text className="text-base font-medium text-heading">
               {option.label}
             </Text>
             {selected === option.id ? (
-              <View className="size-6 items-center justify-center rounded-full bg-[#7B61FF]">
-                <MaterialDesignIcons name="check-bold" color="#FFFFFF" size={14} />
+              <View className="size-6 items-center justify-center rounded-full bg-primary">
+                <MaterialDesignIcons name="check-bold" color={colors.white} size={14} />
               </View>
             ) : null}
           </Pressable>

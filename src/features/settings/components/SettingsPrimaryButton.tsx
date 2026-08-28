@@ -16,7 +16,7 @@ export default function SettingsPrimaryButton({
       onPress={onPress}
       disabled={disabled}
       accessibilityRole="button"
-      className="w-full items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
+      className="w-full items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
     >
       <Text className="text-base font-bold text-white">{label}</Text>
     </Pressable>

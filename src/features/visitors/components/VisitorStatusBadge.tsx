@@ -9,20 +9,20 @@ function getStatusStyles(status: VisitorStatus) {
   switch (status) {
     case "approved":
       return {
-        container: "bg-[#E1F9F0]",
-        text: "text-[#059669]",
+        container: "bg-approved-50",
+        text: "text-approved-600",
         label: "Approved",
       };
     case "pending":
       return {
-        container: "bg-[#FFF6DE]",
-        text: "text-[#D97706]",
+        container: "bg-pending-50",
+        text: "text-pending-700",
         label: "Pending",
       };
     case "complete":
       return {
-        container: "bg-[#F0EDFF]",
-        text: "text-[#7B61FF]",
+        container: "bg-primary-50",
+        text: "text-primary",
         label: "Complete",
       };
     default: {

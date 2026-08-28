@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -38,7 +39,7 @@ type ActionRowProps = {
 function ActionRow({
   label,
   onPress,
-  labelClassName = "text-base text-[#1F1F1F] font-semibold",
+  labelClassName = "text-base text-heading font-semibold",
   rightElement,
 }: ActionRowProps) {
   return (
@@ -46,7 +47,7 @@ function ActionRow({
       onPress={onPress}
       disabled={!onPress}
       accessibilityRole="button"
-      className="flex-row items-center  justify-between border-b border-[#F1F5F9] px-1 py-4 active:opacity-[0.92]"
+      className="flex-row items-center  justify-between border-b border-slate-100 px-1 py-4 active:opacity-[0.92]"
     >
       <Text className={labelClassName}>{label}</Text>
       {rightElement}
@@ -116,11 +117,11 @@ const PostActionsBottomSheet = forwardRef<
       snapPoints={snapPoints}
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
@@ -133,24 +134,24 @@ const PostActionsBottomSheet = forwardRef<
         />
         <ActionRow label="Edit Post" onPress={() => runAction(onEditPost)} />
 
-        <View className="flex-row items-center justify-between border-b border-[#F1F5F9] px-1 py-4">
-          <Text className="text-base text-[#1F1F1F] font-semibold">
+        <View className="flex-row items-center justify-between border-b border-slate-100 px-1 py-4">
+          <Text className="text-base text-heading font-semibold">
             Mark As Urgent
           </Text>
           <Switch
             value={isUrgent}
             onValueChange={handleMarkAsUrgentChange}
-            trackColor={{ false: "#E9E4FF", true: "#C4B5FD" }}
-            thumbColor={isUrgent ? "#7B61FF" : "#FFFFFF"}
+            trackColor={{ false: colors.primary100, true: colors.primary300 }}
+            thumbColor={isUrgent ? colors.primary : colors.white}
           />
         </View>
 
         <Pressable
           onPress={() => runAction(onDeletePost)}
           accessibilityRole="button"
-          className="border-b border-[#F1F5F9] px-1 py-4 active:opacity-[0.92]"
+          className="border-b border-slate-100 px-1 py-4 active:opacity-[0.92]"
         >
-          <Text className="text-base text-[#F87171] font-semibold">
+          <Text className="text-base text-rejected-500 font-semibold">
             Delete Post
           </Text>
         </Pressable>
@@ -160,7 +161,7 @@ const PostActionsBottomSheet = forwardRef<
           accessibilityRole="button"
           className="items-center py-5 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-[#1F1F1F]">Cancel</Text>
+          <Text className="text-base font-bold text-heading">Cancel</Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>

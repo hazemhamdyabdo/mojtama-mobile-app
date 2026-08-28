@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import RequestIssueTypeGrid from "@/features/requests/components/RequestIssueTypeGrid";
 import RequestIssueTypePickerBottomSheet, {
   type RequestIssueTypePickerBottomSheetRef,
@@ -100,14 +101,14 @@ export default function CreateRequestForm({
         showsVerticalScrollIndicator={false}
       >
         {!isEdit ? (
-          <Text className="mb-6 text-base font-bold text-[#1F1F1F]">
+          <Text className="mb-6 text-base font-bold text-heading">
             What Type Of Request Do You Need To Make?
           </Text>
         ) : null}
 
         <View className="mb-4">
-          <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
-            Title<Text className="text-[#EF4444]">*</Text>
+          <Text className="mb-2 text-sm font-semibold text-heading">
+            Title<Text className="text-rejected">*</Text>
           </Text>
           <Controller
             control={control}
@@ -118,20 +119,20 @@ export default function CreateRequestForm({
                 onChangeText={onChange}
                 onBlur={onBlur}
                 placeholder="Enter Request title"
-                placeholderTextColor="#90A1B9"
-                className={`rounded-xl border bg-white px-4 py-3.5 text-base text-[#1F1F1F] ${
-                  errors.title ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                placeholderTextColor={colors.secText}
+                className={`rounded-xl border bg-white px-4 py-3.5 text-base text-heading ${
+                  errors.title ? "border-rejected-200" : "border-card-border"
                 }`}
               />
             )}
           />
           {errors.title ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">{errors.title.message}</Text>
+            <Text className="mt-2 text-sm text-rejected">{errors.title.message}</Text>
           ) : null}
         </View>
 
         <View className="mb-4">
-          <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
+          <Text className="mb-2 text-sm font-semibold text-heading">
             Description
           </Text>
           <Controller
@@ -143,41 +144,41 @@ export default function CreateRequestForm({
                 onChangeText={onChange}
                 onBlur={onBlur}
                 placeholder="Enter Request description"
-                placeholderTextColor="#90A1B9"
+                placeholderTextColor={colors.secText}
                 multiline
                 textAlignVertical="top"
-                className="min-h-[120px] rounded-xl border border-[#E4E4E7] bg-white px-4 py-3.5 text-base text-[#1F1F1F]"
+                className="min-h-[120px] rounded-xl border border-card-border bg-white px-4 py-3.5 text-base text-heading"
               />
             )}
           />
         </View>
 
         <View className="mb-4">
-          <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
-            Location<Text className="text-[#EF4444]">*</Text>
+          <Text className="mb-2 text-sm font-semibold text-heading">
+            Location<Text className="text-rejected">*</Text>
           </Text>
           <Pressable
             onPress={() => locationPickerRef.current?.open(location)}
             accessibilityRole="button"
             className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-              errors.location ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+              errors.location ? "border-rejected-200" : "border-card-border"
             }`}
           >
-            <Text className="text-base text-[#1F1F1F]">
+            <Text className="text-base text-heading">
               {location || "Select location"}
             </Text>
-            <MaterialDesignIcons name="chevron-down" color="#90A1B9" size={20} />
+            <MaterialDesignIcons name="chevron-down" color={colors.secText} size={20} />
           </Pressable>
           {errors.location ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">
+            <Text className="mt-2 text-sm text-rejected">
               {errors.location.message}
             </Text>
           ) : null}
         </View>
 
         <View className="mb-4">
-          <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
-            Request Type<Text className="text-[#EF4444]">*</Text>
+          <Text className="mb-2 text-sm font-semibold text-heading">
+            Request Type<Text className="text-rejected">*</Text>
           </Text>
           <Pressable
             onPress={() =>
@@ -187,22 +188,22 @@ export default function CreateRequestForm({
             }
             accessibilityRole="button"
             className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-              errors.requestType ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+              errors.requestType ? "border-rejected-200" : "border-card-border"
             }`}
           >
             <Text
               className={`text-base ${
-                requestType ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+                requestType ? "text-heading" : "text-sec-text"
               }`}
             >
               {requestType
                 ? REQUEST_TYPE_LABELS[requestType as RequestType]
                 : "Select Request type"}
             </Text>
-            <MaterialDesignIcons name="chevron-down" color="#90A1B9" size={20} />
+            <MaterialDesignIcons name="chevron-down" color={colors.secText} size={20} />
           </Pressable>
           {errors.requestType ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">
+            <Text className="mt-2 text-sm text-rejected">
               {errors.requestType.message}
             </Text>
           ) : null}
@@ -210,8 +211,8 @@ export default function CreateRequestForm({
 
         {showIssueTypeField ? (
           <View className="mb-4">
-            <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
-              Issue Type<Text className="text-[#EF4444]">*</Text>
+            <Text className="mb-2 text-sm font-semibold text-heading">
+              Issue Type<Text className="text-rejected">*</Text>
             </Text>
             <Pressable
               onPress={() =>
@@ -222,22 +223,22 @@ export default function CreateRequestForm({
               }
               accessibilityRole="button"
               className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-                errors.issueType ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                errors.issueType ? "border-rejected-200" : "border-card-border"
               }`}
             >
               <Text
                 className={`text-base ${
-                  issueType ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+                  issueType ? "text-heading" : "text-sec-text"
                 }`}
               >
                 {issueType
                   ? REQUEST_ISSUE_TYPE_LABELS[issueType as RequestIssueType]
                   : "Select Issue type"}
               </Text>
-              <MaterialDesignIcons name="chevron-down" color="#90A1B9" size={20} />
+              <MaterialDesignIcons name="chevron-down" color={colors.secText} size={20} />
             </Pressable>
             {errors.issueType ? (
-              <Text className="mt-2 text-sm text-[#EF4444]">
+              <Text className="mt-2 text-sm text-rejected">
                 {errors.issueType.message}
               </Text>
             ) : null}
@@ -267,8 +268,8 @@ export default function CreateRequestForm({
         ) : null}
 
         <View className={isEdit ? "mb-0" : "mb-4"}>
-          <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
-            Request Priority<Text className="text-[#EF4444]">*</Text>
+          <Text className="mb-2 text-sm font-semibold text-heading">
+            Request Priority<Text className="text-rejected">*</Text>
           </Text>
           <Pressable
             onPress={() =>
@@ -278,22 +279,22 @@ export default function CreateRequestForm({
             }
             accessibilityRole="button"
             className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-              errors.priority ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+              errors.priority ? "border-rejected-200" : "border-card-border"
             }`}
           >
             <Text
               className={`text-base ${
-                priority ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+                priority ? "text-heading" : "text-sec-text"
               }`}
             >
               {priority
                 ? priorityLabels[priority as RequestPriority]
                 : "Select Request Priority"}
             </Text>
-            <MaterialDesignIcons name="chevron-down" color="#90A1B9" size={20} />
+            <MaterialDesignIcons name="chevron-down" color={colors.secText} size={20} />
           </Pressable>
           {errors.priority ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">
+            <Text className="mt-2 text-sm text-rejected">
               {errors.priority.message}
             </Text>
           ) : null}
@@ -303,7 +304,7 @@ export default function CreateRequestForm({
           <Pressable
             onPress={handleSubmit(onSubmit)}
             accessibilityRole="button"
-            className="mt-2 items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+            className="mt-2 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
           >
             <Text className="text-base font-bold text-white">
               {resolvedSubmitLabel}
@@ -316,7 +317,7 @@ export default function CreateRequestForm({
         <Pressable
           onPress={handleSubmit(onSubmit)}
           accessibilityRole="button"
-          className="mt-4 items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+          className="mt-4 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
         >
           <Text className="text-base font-bold text-white">
             {resolvedSubmitLabel}

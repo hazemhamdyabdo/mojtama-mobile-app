@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { I18nManager, TextInput, View } from "react-native";
 
@@ -18,15 +19,15 @@ export default function PaymentsSearchBar({
         pointerEvents="none"
         className="absolute top-3.5 left-4 z-10"
       >
-        <MaterialDesignIcons name="magnify" color="#90A1B9" size={20} />
+        <MaterialDesignIcons name="magnify" color={colors.secText} size={20} />
       </View>
 
       <TextInput
         value={value}
         onChangeText={onChangeText}
         placeholder="Search"
-        placeholderTextColor="#90A1B9"
-        className="rounded-full border border-[#E4E4E7] bg-white py-3.5 pl-11 pr-4 text-base text-[#1F1F1F]"
+        placeholderTextColor={colors.secText}
+        className="rounded-full border border-card-border bg-white py-3.5 pl-11 pr-4 text-base text-heading"
         style={{ textAlign }}
       />
     </View>

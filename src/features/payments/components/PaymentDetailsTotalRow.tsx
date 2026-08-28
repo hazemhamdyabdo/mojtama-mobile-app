@@ -9,8 +9,8 @@ export default function PaymentDetailsTotalRow({
 }: PaymentDetailsTotalRowProps) {
   return (
     <View className="mb-6 flex-row items-center justify-between">
-      <Text className="text-base font-bold text-[#1F1F1F]">Total</Text>
-      <Text className="text-base font-bold text-[#7B61FF]">{total}</Text>
+      <Text className="text-base font-bold text-heading">Total</Text>
+      <Text className="text-base font-bold text-primary">{total}</Text>
     </View>
   );
 }

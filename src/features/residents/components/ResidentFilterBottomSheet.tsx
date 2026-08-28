@@ -24,6 +24,7 @@ import {
 } from "react";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { colors } from "@/theme/colors";
 
 export type ResidentFilterBottomSheetRef = {
   open: (current?: ResidentFilterCriteria) => void;
@@ -44,16 +45,16 @@ type FilterFieldProps = {
 function FilterField({ label, value, placeholder, onPress }: FilterFieldProps) {
   return (
     <View className="mb-4">
-      <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">{label}</Text>
+      <Text className="mb-2 text-sm font-semibold text-heading">{label}</Text>
       <Pressable
         onPress={onPress}
         accessibilityRole="button"
-        className="flex-row items-center justify-between rounded-xl border border-[#E4E4E7] bg-white px-4 py-3.5 active:opacity-[0.92]"
+        className="flex-row items-center justify-between rounded-xl border border-card-border bg-white px-4 py-3.5 active:opacity-[0.92]"
       >
-        <Text className={`text-base ${value ? "text-[#1F1F1F]" : "text-[#90A1B9]"}`}>
+        <Text className={`text-base ${value ? "text-heading" : "text-sec-text"}`}>
           {value || placeholder}
         </Text>
-        <MaterialDesignIcons name="chevron-down" color="#90A1B9" size={20} />
+        <MaterialDesignIcons name="chevron-down" color={colors.secText} size={20} />
       </Pressable>
     </View>
   );
@@ -149,17 +150,17 @@ const ResidentFilterBottomSheet = forwardRef<
         enableDynamicSizing
         enablePanDownToClose
         backdropComponent={renderBackdrop}
-        handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+        handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
         backgroundStyle={{
           borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
-          backgroundColor: "#FFFFFF",
+          backgroundColor: colors.white,
         }}
       >
         <BottomSheetView
           style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
         >
-          <Text className="mb-5 text-center text-base font-bold text-[#1F1F1F]">
+          <Text className="mb-5 text-center text-base font-bold text-heading">
             Filter Residents
           </Text>
 
@@ -186,15 +187,15 @@ const ResidentFilterBottomSheet = forwardRef<
             <Pressable
               onPress={handleReset}
               accessibilityRole="button"
-              className="flex-1 items-center rounded-2xl border border-[#CAD5E2] bg-white py-4 active:opacity-[0.92]"
+              className="flex-1 items-center rounded-2xl border border-input-text bg-white py-4 active:opacity-[0.92]"
             >
-              <Text className="text-base font-bold text-[#62748E]">Reset</Text>
+              <Text className="text-base font-bold text-slate-500">Reset</Text>
             </Pressable>
 
             <Pressable
               onPress={handleApply}
               accessibilityRole="button"
-              className="flex-1 items-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92]"
+              className="flex-1 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
             >
               <Text className="text-base font-bold text-white">Apply Filters</Text>
             </Pressable>

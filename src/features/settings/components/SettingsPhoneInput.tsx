@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import CountryPickerBottomSheet, {
   type CountryPickerBottomSheetRef,
 } from "@/features/auth/components/CountryPickerBottomSheet";
@@ -42,29 +43,29 @@ export default function SettingsPhoneInput({
       />
 
       <View className="mb-6">
-        <Text className="mb-2 text-sm font-semibold text-[#1F1F1F]">
+        <Text className="mb-2 text-sm font-semibold text-heading">
           {label}
         </Text>
 
         <View
           className={`flex-row items-center overflow-hidden rounded-xl border bg-white ${
-            error ? "border-[#FCA5A5]" : "border-[#7B61FF]"
+            error ? "border-rejected-200" : "border-primary"
           }`}
         >
           <Pressable
             onPress={() => countryPickerRef.current?.open()}
             accessibilityRole="button"
-            className="flex-row items-center gap-2 border-r border-[#E4E4E7] px-3 py-3.5 active:opacity-[0.92]"
+            className="flex-row items-center gap-2 border-r border-card-border px-3 py-3.5 active:opacity-[0.92]"
           >
             <CountryFlag
               isoCode={selectedCountry.isoCode.toLowerCase()}
               size={20}
               style={{ borderRadius: 10 }}
             />
-            <Text className="text-sm font-medium text-[#1F1F1F]">
+            <Text className="text-sm font-medium text-heading">
               (+{selectedCountry.callingCode})
             </Text>
-            <Text className="text-xs text-[#90A1B9]">▾</Text>
+            <Text className="text-xs text-sec-text">▾</Text>
           </Pressable>
 
           <TextInput
@@ -75,15 +76,15 @@ export default function SettingsPhoneInput({
             }}
             onBlur={onBlur}
             placeholder={placeholder}
-            placeholderTextColor="#90A1B9"
+            placeholderTextColor={colors.secText}
             keyboardType="phone-pad"
-            className="flex-1 px-3 text-base text-[#1F1F1F]"
+            className="flex-1 px-3 text-base text-heading"
             style={{ minHeight: 52, paddingVertical: 14 }}
           />
         </View>
 
         {error ? (
-          <Text className="mt-2 text-sm text-[#EF4444]">{error}</Text>
+          <Text className="mt-2 text-sm text-rejected">{error}</Text>
         ) : null}
       </View>
     </>

@@ -15,11 +15,11 @@ export default function ProfileInfoCard({
   onEditAvatarPress,
 }: ProfileInfoCardProps) {
   return (
-    <View className="mb-6 items-center rounded-2xl border border-[#E4E4E7] bg-white px-4 py-5">
+    <View className="mb-6 items-center rounded-2xl border border-card-border bg-white px-4 py-5">
       <ProfileAvatar avatar={profile.avatar} onEditPress={onEditAvatarPress} />
 
       <View className="mt-4 flex-row flex-wrap items-center justify-center gap-2">
-        <Text className="text-lg font-bold text-[#1F1F1F]">{profile.name}</Text>
+        <Text className="text-lg font-bold text-heading">{profile.name}</Text>
         <ProfileStatusBadge status={profile.status} />
       </View>
 

@@ -16,8 +16,8 @@ export default function PaymentsBillListSection({
   return (
     <View>
       <View className="mb-4 flex-row items-center justify-between">
-        <Text className="text-base font-bold text-[#1F1F1F]">Your Bills</Text>
-        <Text className="text-sm text-[#90A1B9]">
+        <Text className="text-base font-bold text-heading">Your Bills</Text>
+        <Text className="text-sm text-sec-text">
           {bills.length} {bills.length === 1 ? "Bill" : "Bills"}
         </Text>
       </View>

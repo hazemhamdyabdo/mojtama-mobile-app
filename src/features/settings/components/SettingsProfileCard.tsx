@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import type { SettingsProfile } from "@/features/settings/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
@@ -16,7 +17,7 @@ export default function SettingsProfileCard({
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      className="mb-6 rounded-2xl border border-[#E4E4E7] bg-white px-4 py-4 active:opacity-[0.92]"
+      className="mb-6 rounded-2xl border border-card-border bg-white px-4 py-4 active:opacity-[0.92]"
     >
       <View className="flex-row items-start">
         <Image
@@ -27,25 +28,25 @@ export default function SettingsProfileCard({
 
         <View className="ml-3 flex-1">
           <View className="flex-row flex-wrap items-center gap-2">
-            <Text className="text-lg font-bold text-[#1F1F1F]">
+            <Text className="text-lg font-bold text-heading">
               {profile.name}
             </Text>
-            <View className="rounded-full bg-[#ECFDF3] px-2.5 py-0.5">
-              <Text className="text-xs font-medium text-[#22C55E]">
+            <View className="rounded-full bg-approved-50 px-2.5 py-0.5">
+              <Text className="text-xs font-medium text-approved-500">
                 {profile.status}
               </Text>
             </View>
           </View>
 
-          <Text className="mt-3 text-sm font-medium text-[#64748B]">Units</Text>
+          <Text className="mt-3 text-sm font-medium text-slate-500">Units</Text>
 
           <View className="mt-2 flex-row flex-wrap gap-2">
             {profile.units.map((unit) => (
               <View
                 key={unit.id}
-                className="rounded-lg bg-[#F1F5F9] px-3 py-1.5"
+                className="rounded-lg bg-slate-100 px-3 py-1.5"
               >
-                <Text className="text-xs font-medium text-[#64748B]">
+                <Text className="text-xs font-medium text-slate-500">
                   {unit.label}
                 </Text>
               </View>
@@ -53,7 +54,7 @@ export default function SettingsProfileCard({
           </View>
         </View>
 
-        <MaterialDesignIcons name="chevron-right" color="#90A1B9" size={22} />
+        <MaterialDesignIcons name="chevron-right" color={colors.secText} size={22} />
       </View>
     </Pressable>
   );

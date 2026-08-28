@@ -9,9 +9,9 @@ type ResidentProfileCardProps = {
 
 function ContactCard({ label, value }: { label: string; value: string }) {
   return (
-    <View className="flex-1 rounded-2xl bg-[#F8FAFC] px-3 py-3">
-      <Text className="text-xs text-[#64748B]">{label}</Text>
-      <Text className="mt-1 text-sm font-semibold text-[#1F1F1F]">{value}</Text>
+    <View className="flex-1 rounded-2xl bg-slate-50 px-3 py-3">
+      <Text className="text-xs text-slate-500">{label}</Text>
+      <Text className="mt-1 text-sm font-semibold text-heading">{value}</Text>
     </View>
   );
 }
@@ -22,7 +22,7 @@ export default function ResidentProfileCard({ resident }: ResidentProfileCardPro
   ];
 
   return (
-    <View className="mb-6 rounded-2xl border border-[#E4E4E7] bg-[#F8FAFC] px-4 py-5">
+    <View className="mb-6 rounded-2xl border border-card-border bg-slate-50 px-4 py-5">
       <View className="items-center">
         {resident.avatar ? (
           <Image
@@ -31,28 +31,28 @@ export default function ResidentProfileCard({ resident }: ResidentProfileCardPro
             style={{ width: 72, height: 72, borderRadius: 100 }}
           />
         ) : (
-          <View className="size-[72px] items-center justify-center rounded-full bg-[#F0EDFF]">
-            <Text className="text-xl font-bold text-[#7B61FF]">
+          <View className="size-[72px] items-center justify-center rounded-full bg-primary-50">
+            <Text className="text-xl font-bold text-primary">
               {resident.initials}
             </Text>
           </View>
         )}
 
         <View className="mt-4 flex-row flex-wrap items-center justify-center gap-2">
-          <Text className="text-lg font-bold text-[#1F1F1F]">{resident.name}</Text>
+          <Text className="text-lg font-bold text-heading">{resident.name}</Text>
           <ResidentStatusBadge role={resident.role} />
         </View>
       </View>
 
       <View className="mt-5">
-        <Text className="mb-2 text-sm font-medium text-[#64748B]">Units</Text>
+        <Text className="mb-2 text-sm font-medium text-slate-500">Units</Text>
         <View className="flex-row flex-wrap gap-2">
           {units.map((unit) => (
             <View
               key={unit.id}
-              className="rounded-lg border border-[#E4E4E7] bg-white px-3 py-1.5"
+              className="rounded-lg border border-card-border bg-white px-3 py-1.5"
             >
-              <Text className="text-xs font-medium text-[#64748B]">
+              <Text className="text-xs font-medium text-slate-500">
                 {unit.label}
               </Text>
             </View>

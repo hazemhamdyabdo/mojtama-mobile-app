@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { ActivityIndicator, Image, Text, View } from "react-native";
 
 const logo = require("@/assets/images/auth/mojtama-logo.png");
@@ -13,15 +14,15 @@ export default function AppLoadingScreen() {
           style={{ width: 96, height: 96 }}
         />
 
-        <Text className="mt-4 text-[28px] font-semibold tracking-tight text-[#3D3D3D]">
+        <Text className="mt-4 text-[28px] font-semibold tracking-tight text-label">
           Mojtama
         </Text>
 
-        <Text className="mt-1 text-lg font-medium text-[#64748B]">مجتمع</Text>
+        <Text className="mt-1 text-lg font-medium text-slate-500">مجتمع</Text>
 
         <ActivityIndicator
           size="small"
-          color="#7B61FF"
+          color={colors.primary}
           style={{ marginTop: 32 }}
         />
       </View>

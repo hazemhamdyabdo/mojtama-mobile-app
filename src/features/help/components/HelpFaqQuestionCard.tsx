@@ -9,11 +9,11 @@ export default function HelpFaqQuestionCard({
   question,
 }: HelpFaqQuestionCardProps) {
   return (
-    <View className="rounded-2xl border border-[#E4E4E7] bg-white p-4">
-      <Text className="text-base font-bold text-[#1F1F1F]">
+    <View className="rounded-2xl border border-card-border bg-white p-4">
+      <Text className="text-base font-bold text-heading">
         {question.question}
       </Text>
-      <Text className="mt-2 text-sm leading-5 text-[#64748B]">
+      <Text className="mt-2 text-sm leading-5 text-slate-500">
         {question.answer}
       </Text>
     </View>

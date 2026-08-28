@@ -1,0 +1,61 @@
+/**
+ * JS color tokens mirroring `global.css` @theme variables.
+ * Use Tailwind classes in className; use this module for icon colors,
+ * placeholderTextColor, ActivityIndicator, and other style props.
+ */
+export const colors = {
+  mainText: "#f2f0ff",
+  secText: "#90a1b9",
+  inputText: "#cad5e2",
+  heading: "#1f1f1f",
+  label: "#2e2e2e",
+  white: "#ffffff",
+
+  primary: "#7b61ff",
+  primary50: "#f2f0ff",
+  primary100: "#e9e4ff",
+  primary200: "#d3caff",
+  primary300: "#bdb0ff",
+  primary400: "#a795ff",
+  primary500: "#917bff",
+  primary600: "#7b61ff",
+  primary700: "#6650d4",
+  primary800: "#5240aa",
+  primary900: "#3d307f",
+  primary950: "#292055",
+  primary1000: "#14102a",
+
+  slate50: "#f8fafc",
+  slate100: "#f1f5f9",
+  slate200: "#e2e8f0",
+  slate300: "#cad5e2",
+  slate400: "#90a1b9",
+  slate500: "#62748e",
+  slate600: "#45556c",
+  slate700: "#314158",
+  slate800: "#1d293d",
+  slate900: "#0f172b",
+  slate950: "#020618",
+  cardBorder: "#e2e8f0",
+
+  pending: "#fbbf24",
+  pending50: "#fff6de",
+  pending100: "#ffe8b1",
+  pending500: "#fbbf24",
+  pending600: "#d19f1e",
+  pending700: "#a77f18",
+
+  approved: "#34d399",
+  approved50: "#e1f9f0",
+  approved100: "#c7f4e3",
+  approved500: "#34d399",
+  approved600: "#2baf7f",
+  approved700: "#228c66",
+
+  rejected: "#f87171",
+  rejected50: "#ffe6e6",
+  rejected100: "#fed5d5",
+  rejected200: "#fbb8b8",
+  rejected500: "#f87171",
+  rejected600: "#ce5e5e",
+} as const;

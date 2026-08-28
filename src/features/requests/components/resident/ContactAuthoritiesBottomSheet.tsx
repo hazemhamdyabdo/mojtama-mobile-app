@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { AUTHORITY_CONTACTS } from "@/features/requests/constants/authorities";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import {
@@ -57,17 +58,17 @@ const ContactAuthoritiesBottomSheet = forwardRef<ContactAuthoritiesBottomSheetRe
         enableDynamicSizing
         enablePanDownToClose
         backdropComponent={renderBackdrop}
-        handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+        handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
         backgroundStyle={{
           borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
-          backgroundColor: "#FFFFFF",
+          backgroundColor: colors.white,
         }}
       >
         <BottomSheetView
           style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
         >
-          <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+          <Text className="mb-4 text-center text-base font-bold text-heading">
             Contact Authorities
           </Text>
 
@@ -76,7 +77,7 @@ const ContactAuthoritiesBottomSheet = forwardRef<ContactAuthoritiesBottomSheetRe
               key={contact.id}
               onPress={() => void handleCall(contact.phone)}
               accessibilityRole="button"
-              className="mb-2 flex-row items-center gap-3 rounded-2xl border border-[#E4E4E7] bg-white px-4 py-3.5 active:opacity-[0.92]"
+              className="mb-2 flex-row items-center gap-3 rounded-2xl border border-card-border bg-white px-4 py-3.5 active:opacity-[0.92]"
             >
               <View
                 className={`size-10 items-center justify-center rounded-full ${contact.iconBackground}`}
@@ -89,8 +90,8 @@ const ContactAuthoritiesBottomSheet = forwardRef<ContactAuthoritiesBottomSheetRe
               </View>
 
               <View className="flex-1">
-                <Text className="text-sm text-[#90A1B9]">{contact.label}</Text>
-                <Text className="text-lg font-bold text-[#1F1F1F]">
+                <Text className="text-sm text-sec-text">{contact.label}</Text>
+                <Text className="text-lg font-bold text-heading">
                   {contact.phone}
                 </Text>
               </View>

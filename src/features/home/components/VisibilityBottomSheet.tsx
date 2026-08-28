@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import {
   VISIBILITY_OPTIONS,
   type VisibilityOption,
@@ -41,13 +42,13 @@ function VisibilityRow({ label, selected, onPress }: VisibilityRowProps) {
       accessibilityRole="button"
       accessibilityState={{ selected }}
       className={`mb-2 flex-row items-center justify-between rounded-2xl border px-4 py-3.5 active:opacity-[0.92] ${
-        selected ? "border-[#7B61FF] bg-[#F8F6FF]" : "border-[#E4E4E7] bg-white"
+        selected ? "border-primary bg-primary-50" : "border-card-border bg-white"
       }`}
     >
-      <Text className="text-base font-medium text-[#1F1F1F]">{label}</Text>
+      <Text className="text-base font-medium text-heading">{label}</Text>
       {selected ? (
-        <View className="size-6 items-center justify-center rounded-full bg-[#7B61FF]">
-          <MaterialDesignIcons name="check-bold" color="#FFFFFF" size={14} />
+        <View className="size-6 items-center justify-center rounded-full bg-primary">
+          <MaterialDesignIcons name="check-bold" color={colors.white} size={14} />
         </View>
       ) : null}
     </Pressable>
@@ -89,17 +90,17 @@ const VisibilityBottomSheet = forwardRef<
       enableDynamicSizing
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
-        <Text className="mb-4 text-center text-base font-bold text-[#1F1F1F]">
+        <Text className="mb-4 text-center text-base font-bold text-heading">
           Visibility
         </Text>
 

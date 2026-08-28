@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import MembersBottomSheet, {
   type MembersBottomSheetRef,
 } from "@/features/home/components/MembersBottomSheet";
@@ -34,9 +35,9 @@ type FormLabelProps = {
 
 function FormLabel({ label, required = false }: FormLabelProps) {
   return (
-    <Text className="mb-2 text-sm font-medium text-[#2E2E2E]">
+    <Text className="mb-2 text-sm font-medium text-label">
       {label}
-      {required ? <Text className="text-[#EF4444]">*</Text> : null}
+      {required ? <Text className="text-rejected">*</Text> : null}
     </Text>
   );
 }
@@ -50,7 +51,7 @@ function FieldError({ message }: FieldErrorProps) {
     return null;
   }
 
-  return <Text className="mt-2 text-sm text-[#EF4444]">{message}</Text>;
+  return <Text className="mt-2 text-sm text-rejected">{message}</Text>;
 }
 
 function formatDate(date: Date) {
@@ -81,12 +82,12 @@ function TimeField({ value, placeholder, hasError, onPress }: TimeFieldProps) {
       onPress={onPress}
       accessibilityRole="button"
       className={`flex-1 flex-row items-center gap-2 rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-        hasError ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+        hasError ? "border-rejected-200" : "border-card-border"
       }`}
     >
-      <MaterialDesignIcons name="clock-outline" color="#64748B" size={20} />
+      <MaterialDesignIcons name="clock-outline" color={colors.slate500} size={20} />
       <Text
-        className={`text-base ${value ? "text-[#1F1F1F]" : "text-[#90A1B9]"}`}
+        className={`text-base ${value ? "text-heading" : "text-sec-text"}`}
       >
         {value ? formatTime(value) : placeholder}
       </Text>
@@ -161,7 +162,7 @@ export default function CreateMeetingForm({
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <Text className="mb-6 text-2xl font-bold text-[#1F1F1F]">
+        <Text className="mb-6 text-2xl font-bold text-heading">
           Create Meeting
         </Text>
 
@@ -177,9 +178,9 @@ export default function CreateMeetingForm({
                 onChangeText={onChange}
                 onBlur={onBlur}
                 placeholder="Type meeting title"
-                placeholderTextColor="#90A1B9"
-                className={`rounded-xl border bg-white px-4 text-base text-[#1F1F1F] ${
-                  errors.title ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                placeholderTextColor={colors.secText}
+                className={`rounded-xl border bg-white px-4 text-base text-heading ${
+                  errors.title ? "border-rejected-200" : "border-card-border"
                 }`}
                 style={{
                   textAlign,
@@ -205,11 +206,11 @@ export default function CreateMeetingForm({
                 onChangeText={onChange}
                 onBlur={onBlur}
                 placeholder="Agenda summary"
-                placeholderTextColor="#90A1B9"
+                placeholderTextColor={colors.secText}
                 multiline
                 textAlignVertical="top"
-                className={`rounded-xl border bg-white px-4 text-base text-[#1F1F1F] ${
-                  errors.agenda ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                className={`rounded-xl border bg-white px-4 text-base text-heading ${
+                  errors.agenda ? "border-rejected-200" : "border-card-border"
                 }`}
                 style={{
                   textAlign,
@@ -230,19 +231,19 @@ export default function CreateMeetingForm({
             onPress={() => dateSheetRef.current?.open()}
             accessibilityRole="button"
             className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-              errors.date ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+              errors.date ? "border-rejected-200" : "border-card-border"
             }`}
           >
             <Text
               className={`text-base ${
-                date ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+                date ? "text-heading" : "text-sec-text"
               }`}
             >
               {date ? formatDate(date) : "Select Date"}
             </Text>
             <MaterialDesignIcons
               name="calendar-blank-outline"
-              color="#64748B"
+              color={colors.slate500}
               size={20}
             />
           </Pressable>
@@ -257,7 +258,7 @@ export default function CreateMeetingForm({
               onPress={() => startTimeSheetRef.current?.open()}
             />
 
-            <Text className="text-base text-[#90A1B9]">—</Text>
+            <Text className="text-base text-sec-text">—</Text>
 
             <TimeField
               value={endTime}
@@ -277,18 +278,18 @@ export default function CreateMeetingForm({
             onPress={() => locationSheetRef.current?.open()}
             accessibilityRole="button"
             className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-              errors.location ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+              errors.location ? "border-rejected-200" : "border-card-border"
             }`}
           >
             <Text
               numberOfLines={1}
               className={`flex-1 text-base ${
-                location ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+                location ? "text-heading" : "text-sec-text"
               }`}
             >
               {location ? location.value : "Enter Meeting Location"}
             </Text>
-            <MaterialDesignIcons name="chevron-down" color="#64748B" size={22} />
+            <MaterialDesignIcons name="chevron-down" color={colors.slate500} size={22} />
           </Pressable>
 
           <FieldError message={errors.location?.message} />
@@ -301,17 +302,17 @@ export default function CreateMeetingForm({
             onPress={() => ledBySheetRef.current?.open()}
             accessibilityRole="button"
             className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-              errors.ledBy ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+              errors.ledBy ? "border-rejected-200" : "border-card-border"
             }`}
           >
             <Text
               className={`flex-1 text-base ${
-                ledBy ? "text-[#1F1F1F]" : "text-[#90A1B9]"
+                ledBy ? "text-heading" : "text-sec-text"
               }`}
             >
               {ledBy ? ledBy.name : "Enter Meeting Leader"}
             </Text>
-            <MaterialDesignIcons name="chevron-down" color="#64748B" size={22} />
+            <MaterialDesignIcons name="chevron-down" color={colors.slate500} size={22} />
           </Pressable>
 
           <FieldError message={errors.ledBy?.message} />
@@ -321,12 +322,12 @@ export default function CreateMeetingForm({
           control={control}
           name="isPublic"
           render={({ field: { value, onChange } }) => (
-            <View className="mb-5 flex-row items-center justify-between rounded-xl border border-[#E4E4E7] bg-[#F8FAFC] px-4 py-3">
+            <View className="mb-5 flex-row items-center justify-between rounded-xl border border-card-border bg-slate-50 px-4 py-3">
               <View className="flex-1 pr-3">
-                <Text className="text-base font-bold text-[#1F1F1F]">
+                <Text className="text-base font-bold text-heading">
                   Make this meeting public
                 </Text>
-                <Text className="mt-0.5 text-sm text-[#90A1B9]">
+                <Text className="mt-0.5 text-sm text-sec-text">
                   Anyone in this app can view and join this meeting
                 </Text>
               </View>
@@ -334,8 +335,8 @@ export default function CreateMeetingForm({
               <Switch
                 value={value}
                 onValueChange={onChange}
-                trackColor={{ false: "#E4E4E7", true: "#C4B5FD" }}
-                thumbColor={value ? "#7B61FF" : "#FFFFFF"}
+                trackColor={{ false: colors.slate200, true: colors.primary300 }}
+                thumbColor={value ? colors.primary : colors.white}
               />
             </View>
           )}
@@ -347,14 +348,14 @@ export default function CreateMeetingForm({
           <Pressable
             onPress={() => inviteSheetRef.current?.open()}
             accessibilityRole="button"
-            className="flex-row items-center justify-between rounded-xl border border-[#E4E4E7] bg-[#F8FAFC] px-3 py-2.5 active:opacity-[0.92]"
+            className="flex-row items-center justify-between rounded-xl border border-card-border bg-slate-50 px-3 py-2.5 active:opacity-[0.92]"
           >
             {invitees.length > 0 ? (
               <View className="flex-1 flex-row flex-wrap gap-2">
                 {invitees.map((invitee) => (
                   <View
                     key={invitee.id}
-                    className="flex-row items-center gap-1.5 rounded-lg bg-[#64748B] px-2.5 py-1.5"
+                    className="flex-row items-center gap-1.5 rounded-lg bg-slate-500 px-2.5 py-1.5"
                   >
                     <Text className="text-sm text-white">{invitee.email}</Text>
                     <Pressable
@@ -371,7 +372,7 @@ export default function CreateMeetingForm({
                     >
                       <MaterialDesignIcons
                         name="close"
-                        color="#FFFFFF"
+                        color={colors.white}
                         size={14}
                       />
                     </Pressable>
@@ -379,12 +380,12 @@ export default function CreateMeetingForm({
                 ))}
               </View>
             ) : (
-              <Text className="flex-1 px-1 text-base text-[#90A1B9]">
+              <Text className="flex-1 px-1 text-base text-sec-text">
                 Invite participants
               </Text>
             )}
 
-            <MaterialDesignIcons name="chevron-down" color="#64748B" size={22} />
+            <MaterialDesignIcons name="chevron-down" color={colors.slate500} size={22} />
           </Pressable>
         </View>
       </ScrollView>
@@ -393,7 +394,7 @@ export default function CreateMeetingForm({
         onPress={handleSubmit(onSubmit)}
         disabled={isSubmitting}
         accessibilityRole="button"
-        className="mt-4 items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
+        className="mt-4 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
       >
         <Text className="text-base font-bold text-white">Create Meeting</Text>
       </Pressable>

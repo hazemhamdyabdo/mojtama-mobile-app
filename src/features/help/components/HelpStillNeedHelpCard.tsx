@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { HELP_SUPPORT_CONTACTS } from "@/features/help/constants/dummy";
 import type { HelpSupportContact } from "@/features/help/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
@@ -45,20 +46,20 @@ export default function HelpStillNeedHelpCard({
   };
 
   return (
-    <View className="mt-2 justify-start rounded-2xl bg-[#F8F6FF] p-5">
+    <View className="mt-2 justify-start rounded-2xl bg-primary-50 p-5">
       <View className="mb-4 flex-row items-center gap-3">
-        <View className="size-12 items-center justify-center rounded-full bg-[#F0EDFF]">
+        <View className="size-12 items-center justify-center rounded-full bg-primary-50">
           <MaterialDesignIcons
             name="comment-question-outline"
-            color="#7B61FF"
+            color={colors.primary}
             size={26}
           />
         </View>
         <View className="flex-1">
-          <Text className="mt-3 text-lg font-bold text-[#1F1F1F]">
+          <Text className="mt-3 text-lg font-bold text-heading">
             Still Need Help?
           </Text>
-          <Text className="mt-1 text-start text-sm text-[#64748B]">
+          <Text className="mt-1 text-start text-sm text-slate-500">
             Can't Find What You're Looking For? Contact Our Support Team:
           </Text>
         </View>
@@ -71,18 +72,18 @@ export default function HelpStillNeedHelpCard({
             onPress={() => handlePress(contact)}
             accessibilityRole="button"
             accessibilityLabel={`${contact.label}: ${contact.value}`}
-            className="flex-row items-center rounded-2xl bg-[#EDE9FF] px-4 py-3.5 active:opacity-[0.92]"
+            className="flex-row items-center rounded-2xl bg-primary-100 px-4 py-3.5 active:opacity-[0.92]"
           >
             <MaterialDesignIcons
               name={contact.icon}
-              color="#7B61FF"
+              color={colors.primary}
               size={20}
             />
             <View className="ml-3 flex-1">
-              <Text className="text-xs font-medium text-[#7B61FF]">
+              <Text className="text-xs font-medium text-primary">
                 {contact.label}
               </Text>
-              <Text className="text-sm font-semibold text-[#1F1F1F]">
+              <Text className="text-sm font-semibold text-heading">
                 {contact.value}
               </Text>
             </View>

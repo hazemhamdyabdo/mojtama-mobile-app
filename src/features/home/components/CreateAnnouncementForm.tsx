@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import type { AnnouncementType } from "@/features/home/constants/announcementTypes";
 import { ANNOUNCEMENT_TYPE_OPTIONS } from "@/features/home/constants/announcementTypes";
 import {
@@ -34,9 +35,9 @@ type FormLabelProps = {
 
 function FormLabel({ label, required = false }: FormLabelProps) {
   return (
-    <Text className="mb-2 text-sm font-medium text-[#2E2E2E]">
+    <Text className="mb-2 text-sm font-medium text-label">
       {label}
-      {required ? <Text className="text-[#EF4444]">*</Text> : null}
+      {required ? <Text className="text-rejected">*</Text> : null}
     </Text>
   );
 }
@@ -58,14 +59,14 @@ function CategoryTypeChip({
       accessibilityRole="button"
       accessibilityState={{ selected }}
       className={`rounded-full px-4 py-2.5 active:opacity-[0.92] ${
-        selected ? "bg-[#F0EDFF]" : "border border-[#E2E8F0] bg-[#F8FAFC]"
+        selected ? "bg-primary-50" : "border border-slate-200 bg-slate-50"
       }`}
     >
       <Text
         className={`text-sm ${
           selected
-            ? "font-semibold text-[#7B61FF]"
-            : "font-medium text-[#64748B]"
+            ? "font-semibold text-primary"
+            : "font-medium text-slate-500"
         }`}
       >
         {label}
@@ -153,7 +154,7 @@ export default function CreateAnnouncementForm({
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <Text className="mb-6 text-2xl font-bold text-[#1F1F1F]">{heading}</Text>
+        <Text className="mb-6 text-2xl font-bold text-heading">{heading}</Text>
 
         <View className="mb-5">
           <FormLabel label="Announcement type" required />
@@ -176,7 +177,7 @@ export default function CreateAnnouncementForm({
           />
 
           {errors.categoryType ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">
+            <Text className="mt-2 text-sm text-rejected">
               {errors.categoryType.message}
             </Text>
           ) : null}
@@ -194,9 +195,9 @@ export default function CreateAnnouncementForm({
                 onChangeText={onChange}
                 onBlur={onBlur}
                 placeholder="Type Announcement title"
-                placeholderTextColor="#90A1B9"
-                className={`rounded-xl border bg-white px-4 text-base text-[#1F1F1F] ${
-                  errors.title ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                placeholderTextColor={colors.secText}
+                className={`rounded-xl border bg-white px-4 text-base text-heading ${
+                  errors.title ? "border-rejected-200" : "border-card-border"
                 }`}
                 style={{
                   textAlign,
@@ -208,7 +209,7 @@ export default function CreateAnnouncementForm({
           />
 
           {errors.title ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">
+            <Text className="mt-2 text-sm text-rejected">
               {errors.title.message}
             </Text>
           ) : null}
@@ -226,11 +227,11 @@ export default function CreateAnnouncementForm({
                 onChangeText={onChange}
                 onBlur={onBlur}
                 placeholder="Type announcement content"
-                placeholderTextColor="#90A1B9"
+                placeholderTextColor={colors.secText}
                 multiline
                 textAlignVertical="top"
-                className={`rounded-xl border bg-white px-4 py-3 text-base text-[#1F1F1F] ${
-                  errors.content ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+                className={`rounded-xl border bg-white px-4 py-3 text-base text-heading ${
+                  errors.content ? "border-rejected-200" : "border-card-border"
                 }`}
                 style={{
                   textAlign,
@@ -241,7 +242,7 @@ export default function CreateAnnouncementForm({
           />
 
           {errors.content ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">
+            <Text className="mt-2 text-sm text-rejected">
               {errors.content.message}
             </Text>
           ) : null}
@@ -254,8 +255,8 @@ export default function CreateAnnouncementForm({
             onPress={pickImage}
             accessibilityRole="button"
             accessibilityLabel="Upload image"
-            className={`items-center justify-center rounded-xl border border-dashed bg-[#F8FAFC] px-4 py-8 active:opacity-[0.92] ${
-              errors.image ? "border-[#FCA5A5]" : "border-[#CBD5E1]"
+            className={`items-center justify-center rounded-xl border border-dashed bg-slate-50 px-4 py-8 active:opacity-[0.92] ${
+              errors.image ? "border-rejected-200" : "border-slate-300"
             }`}
           >
             {selectedImage ? (
@@ -271,24 +272,24 @@ export default function CreateAnnouncementForm({
             ) : (
               <MaterialDesignIcons
                 name="cloud-upload-outline"
-                color="#7B61FF"
+                color={colors.primary}
                 size={28}
               />
             )}
 
-            <Text className="mt-2 text-center text-sm text-[#64748B]">
-              <Text className="font-medium text-[#7B61FF]">
+            <Text className="mt-2 text-center text-sm text-slate-500">
+              <Text className="font-medium text-primary">
                 Click to upload
               </Text>
               {" or drag and drop"}
             </Text>
-            <Text className="mt-1 text-center text-xs text-[#90A1B9]">
+            <Text className="mt-1 text-center text-xs text-sec-text">
               JPG, JPEG, PNG less than 1MB
             </Text>
           </Pressable>
 
           {errors.image ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">
+            <Text className="mt-2 text-sm text-rejected">
               {errors.image.message}
             </Text>
           ) : null}
@@ -301,17 +302,17 @@ export default function CreateAnnouncementForm({
             onPress={() => visibilitySheetRef.current?.open()}
             accessibilityRole="button"
             className={`flex-row items-center justify-between rounded-xl border bg-white px-4 py-3.5 active:opacity-[0.92] ${
-              errors.visibility ? "border-[#FCA5A5]" : "border-[#E4E4E7]"
+              errors.visibility ? "border-rejected-200" : "border-card-border"
             }`}
           >
-            <Text className="text-base text-[#64748B]">
+            <Text className="text-base text-slate-500">
               {getVisibilityLabel(visibility)}
             </Text>
-            <MaterialDesignIcons name="chevron-down" color="#64748B" size={22} />
+            <MaterialDesignIcons name="chevron-down" color={colors.slate500} size={22} />
           </Pressable>
 
           {errors.visibility ? (
-            <Text className="mt-2 text-sm text-[#EF4444]">
+            <Text className="mt-2 text-sm text-rejected">
               {errors.visibility.message}
             </Text>
           ) : null}
@@ -321,18 +322,18 @@ export default function CreateAnnouncementForm({
           control={control}
           name="isEmergency"
           render={({ field: { value, onChange } }) => (
-            <View className="mb-5 flex-col items-start rounded-xl border border-[#E4E4E7] bg-[#F8FAFC] px-4 py-3">
+            <View className="mb-5 flex-col items-start rounded-xl border border-card-border bg-slate-50 px-4 py-3">
               <View className="flex-row items-center">
                 <View className="size-10 items-center justify-center rounded-full">
                   <MaterialDesignIcons
                     name="alert-outline"
-                    color="#7B61FF"
+                    color={colors.primary}
                     size={22}
                   />
                 </View>
 
                 <View className="flex-1">
-                  <Text className="text-base font-bold text-[#1F1F1F]">
+                  <Text className="text-base font-bold text-heading">
                     Emergency Feed
                   </Text>
                 </View>
@@ -340,11 +341,11 @@ export default function CreateAnnouncementForm({
                 <Switch
                   value={value}
                   onValueChange={onChange}
-                  trackColor={{ false: "#E4E4E7", true: "#C4B5FD" }}
-                  thumbColor={value ? "#7B61FF" : "#FFFFFF"}
+                  trackColor={{ false: colors.slate200, true: colors.primary300 }}
+                  thumbColor={value ? colors.primary : colors.white}
                 />
               </View>
-              <Text className="text-sm text-[#90A1B9]">
+              <Text className="text-sm text-sec-text">
                 Mark as Urgent for immediate attention
               </Text>
             </View>
@@ -356,14 +357,14 @@ export default function CreateAnnouncementForm({
           name="allowComments"
           render={({ field: { value, onChange } }) => (
             <View className="flex-row items-center justify-between py-1">
-              <Text className="text-base font-medium text-[#1F1F1F]">
+              <Text className="text-base font-medium text-heading">
                 Allow Comments
               </Text>
               <Switch
                 value={value}
                 onValueChange={onChange}
-                trackColor={{ false: "#E4E4E7", true: "#C4B5FD" }}
-                thumbColor={value ? "#7B61FF" : "#FFFFFF"}
+                trackColor={{ false: colors.slate200, true: colors.primary300 }}
+                thumbColor={value ? colors.primary : colors.white}
               />
             </View>
           )}
@@ -374,7 +375,7 @@ export default function CreateAnnouncementForm({
         onPress={handleSubmit(onSubmit)}
         disabled={isSubmitting}
         accessibilityRole="button"
-        className="mt-4 items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
+        className="mt-4 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
       >
         <Text className="text-base font-bold text-white">{submitLabel}</Text>
       </Pressable>

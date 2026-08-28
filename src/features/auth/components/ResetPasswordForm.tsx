@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import {
   createResetPasswordSchema,
   type ResetPasswordFormValues,
@@ -43,14 +44,14 @@ function PasswordField({
 
   return (
     <View className="w-full">
-      <Text className="mb-2 text-sm font-medium text-[#2E2E2E]">{label}</Text>
+      <Text className="mb-2 text-sm font-medium text-label">{label}</Text>
       <View style={styles.inputWrapper}>
         <TextInput
           value={value}
           onChangeText={onChange}
           onBlur={onBlur}
           placeholder={placeholder}
-          placeholderTextColor="#90A1B9"
+          placeholderTextColor={colors.secText}
           secureTextEntry={!visible}
           autoCapitalize="none"
           autoCorrect={false}
@@ -74,12 +75,12 @@ function PasswordField({
           <MaterialDesignIcons
             name={visible ? "eye" : "eye-off"}
             size={20}
-            color="#90A1B9"
+            color={colors.secText}
           />
         </Pressable>
       </View>
       {error ? (
-        <Text className="mt-2 text-sm text-[#EF4444]" style={{ textAlign }}>
+        <Text className="mt-2 text-sm text-rejected" style={{ textAlign }}>
           {error}
         </Text>
       ) : null}
@@ -118,7 +119,7 @@ function ResetPasswordFormFields() {
   return (
     <View className="w-full">
       <View className="mb-14 w-full">
-        <Text className="text-2xl font-semibold text-[#1F1F1F]">
+        <Text className="text-2xl font-semibold text-heading">
           {t("auth.resetPassword.title")}
         </Text>
       </View>
@@ -166,7 +167,7 @@ function ResetPasswordFormFields() {
       <Pressable
         onPress={() => void handleSubmit(onSubmit)()}
         disabled={isSubmitting}
-        className="w-full items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
+        className="w-full items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
       >
         <Text className="text-base font-bold text-white">
           {t("auth.resetPassword.resetButton")}
@@ -192,17 +193,17 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderRadius: 12,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colors.white,
     fontSize: 16,
-    color: "#1F1F1F",
+    color: colors.heading,
   },
   inputDefault: {
     borderWidth: 1,
-    borderColor: "#E4E4E7",
+    borderColor: colors.cardBorder,
   },
   inputError: {
     borderWidth: 1,
-    borderColor: "#FCA5A5",
+    borderColor: colors.rejected200,
   },
   inputPaddingEnd: {
     paddingRight: 48,

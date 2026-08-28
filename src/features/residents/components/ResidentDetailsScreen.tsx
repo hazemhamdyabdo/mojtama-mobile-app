@@ -6,6 +6,7 @@ import MaterialDesignIcons from "@react-native-vector-icons/material-design-icon
 import { styled } from "nativewind";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
+import { colors } from "@/theme/colors";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
@@ -32,16 +33,16 @@ export default function ResidentDetailsScreen({
 
           {resident.totalOutstanding ? (
             <View className="mb-6">
-              <Text className="mb-3 text-base font-bold text-[#1F1F1F]">
+              <Text className="mb-3 text-base font-bold text-heading">
                 Payments
               </Text>
-              <View className="flex-row items-center gap-3 rounded-2xl border border-[#E4E4E7] bg-white p-4">
-                <View className="size-11 items-center justify-center rounded-xl bg-[#F0EDFF]">
-                  <MaterialDesignIcons name="wallet-outline" color="#7B61FF" size={22} />
+              <View className="flex-row items-center gap-3 rounded-2xl border border-card-border bg-white p-4">
+                <View className="size-11 items-center justify-center rounded-xl bg-primary-50">
+                  <MaterialDesignIcons name="wallet-outline" color={colors.primary} size={22} />
                 </View>
                 <View>
-                  <Text className="text-sm text-[#64748B]">Total Outstanding</Text>
-                  <Text className="mt-1 text-xl font-bold text-[#1F1F1F]">
+                  <Text className="text-sm text-slate-500">Total Outstanding</Text>
+                  <Text className="mt-1 text-xl font-bold text-heading">
                     {resident.totalOutstanding}
                   </Text>
                 </View>
@@ -51,10 +52,10 @@ export default function ResidentDetailsScreen({
 
           {paymentHistory.length > 0 ? (
             <View>
-              <Text className="mb-3 text-base font-bold text-[#1F1F1F]">
+              <Text className="mb-3 text-base font-bold text-heading">
                 Payment History
               </Text>
-              <View className="overflow-hidden rounded-2xl border border-[#E4E4E7] bg-white">
+              <View className="overflow-hidden rounded-2xl border border-card-border bg-white">
                 {paymentHistory.map((item, index) => (
                   <ResidentPaymentHistoryItemRow
                     key={item.id}

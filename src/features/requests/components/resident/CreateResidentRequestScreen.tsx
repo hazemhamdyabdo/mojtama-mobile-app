@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import CreateRequestForm from "@/features/requests/components/CreateRequestForm";
 import type { CreateRequestFormValues } from "@/features/requests/schemas/createRequestSchema";
 import { addRequestToState } from "@/features/requests/store/requestState";
@@ -34,16 +35,16 @@ export default function CreateResidentRequestScreen() {
             accessibilityLabel="Go back"
             className="absolute left-0 active:opacity-[0.92]"
           >
-            <View className="size-10 items-center justify-center rounded-full bg-[#F0EDFF]">
+            <View className="size-10 items-center justify-center rounded-full bg-primary-50">
               <MaterialDesignIcons
                 name="chevron-left"
-                color="#7B61FF"
+                color={colors.primary}
                 size={24}
               />
             </View>
           </Pressable>
 
-          <Text className="text-lg font-bold text-[#1F1F1F]">
+          <Text className="text-lg font-bold text-heading">
             Create Request
           </Text>
         </View>

@@ -9,26 +9,26 @@ function getStatusStyles(status: RequestStatus) {
   switch (status) {
     case "pending":
       return {
-        container: "bg-[#FEF9C3]",
-        text: "text-[#CA8A04]",
+        container: "bg-pending-50",
+        text: "text-pending-700",
         label: "Pending",
       };
     case "assigned":
       return {
-        container: "bg-[#F0EDFF]",
-        text: "text-[#7B61FF]",
+        container: "bg-primary-50",
+        text: "text-primary",
         label: "Assigned",
       };
     case "in-progress":
       return {
-        container: "bg-[#FEF9C3]",
-        text: "text-[#D97706]",
+        container: "bg-pending-50",
+        text: "text-pending-700",
         label: "In Progress",
       };
     case "submitted":
       return {
-        container: "bg-[#F0EDFF]",
-        text: "text-[#7B61FF]",
+        container: "bg-primary-50",
+        text: "text-primary",
         label: "Submitted",
       };
     default: {

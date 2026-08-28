@@ -1,11 +1,12 @@
+import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Tabs } from "expo-router";
 import { styled } from "nativewind";
 import { View, type ColorValue } from "react-native";
 import { SafeAreaView as RNSSafeAreaView } from "react-native-safe-area-context";
 
-const ACTIVE_COLOR = "#7B61FF";
-const INACTIVE_COLOR = "#9CA3AF";
+const ACTIVE_COLOR = colors.primary;
+const INACTIVE_COLOR = colors.secText;
 
 const SafeAreaView = styled(RNSSafeAreaView);
 
@@ -22,7 +23,7 @@ function TabBarIcon({ name, color, size, focused }: TabBarIconProps) {
   return (
     <View
       style={{
-        backgroundColor: focused ? "#F0EDFF" : "transparent",
+        backgroundColor: focused ? colors.primary50 : "transparent",
         width: 50,
         height: 40,
         alignItems: "center",
@@ -44,9 +45,9 @@ export default function TabsLayout() {
           tabBarActiveTintColor: ACTIVE_COLOR,
           tabBarInactiveTintColor: INACTIVE_COLOR,
           tabBarStyle: {
-            backgroundColor: "#FFFFFF",
+            backgroundColor: colors.white,
             borderTopWidth: 1,
-            borderTopColor: "#E4E4E7",
+            borderTopColor: colors.cardBorder,
             height: 122,
             paddingTop: 20,
             paddingBottom: 8,

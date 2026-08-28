@@ -32,10 +32,10 @@ function EmergencyTabContent({
 }) {
   return (
     <>
-      <Text className="text-base font-bold text-[#1F1F1F]">
+      <Text className="text-base font-bold text-heading">
         Emergency Contacts
       </Text>
-      <Text className="mb-4 mt-1 text-sm text-[#90A1B9]">
+      <Text className="mb-4 mt-1 text-sm text-sec-text">
         Quick Access To Emergency Services
       </Text>
 

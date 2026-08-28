@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import {
   createOtpSchema,
   OTP_LENGTH,
@@ -106,10 +107,10 @@ function VerifyOtpFormFields({ phone, authRole }: VerifyOtpFormProps) {
   return (
     <View className="w-full">
       <View className="mb-10 w-full">
-        <Text className="text-2xl font-semibold text-[#1F1F1F]">
+        <Text className="text-2xl font-semibold text-heading">
           {t("auth.verifyOtp.title")}
         </Text>
-        <Text className="mt-1 text-sm text-[#90A1B9]" style={{ textAlign }}>
+        <Text className="mt-1 text-sm text-sec-text" style={{ textAlign }}>
           {t("auth.verifyOtp.subtitle", { phone })}
         </Text>
 
@@ -117,7 +118,7 @@ function VerifyOtpFormFields({ phone, authRole }: VerifyOtpFormProps) {
           onPress={() => router.replace("/login-with-phone" as Href)}
           className="mt-3 self-start active:opacity-[0.92]"
         >
-          <Text className="text-sm font-medium text-[#7B61FF]">
+          <Text className="text-sm font-medium text-primary">
             {t("auth.verifyOtp.changeNumber")}
           </Text>
         </Pressable>
@@ -150,16 +151,16 @@ function VerifyOtpFormFields({ phone, authRole }: VerifyOtpFormProps) {
       />
 
       {errors.otp ? (
-        <Text className="mb-4 text-sm text-[#EF4444]" style={{ textAlign }}>
+        <Text className="mb-4 text-sm text-rejected" style={{ textAlign }}>
           {errors.otp.message}
         </Text>
       ) : (
         <View className="mb-4" />
       )}
 
-      <Text className="mb-8 text-sm text-[#90A1B9]" style={{ textAlign }}>
+      <Text className="mb-8 text-sm text-sec-text" style={{ textAlign }}>
         {t("auth.verifyOtp.didNotReceive")}{" "}
-        <Text className="text-[#C4C4C4]">
+        <Text className="text-input-text">
           {secondsLeft > 0
             ? t("auth.verifyOtp.retryIn", { time: formattedTimer })
             : t("auth.verifyOtp.resend")}
@@ -169,7 +170,7 @@ function VerifyOtpFormFields({ phone, authRole }: VerifyOtpFormProps) {
       <Pressable
         onPress={() => void handleSubmit(onSubmit)()}
         disabled={isSubmitting}
-        className="mb-6 w-full items-center justify-center rounded-2xl bg-[#7B61FF] py-4 active:opacity-[0.92] disabled:opacity-70"
+        className="mb-6 w-full items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
       >
         <Text className="text-base font-bold text-white">
           {t("auth.verifyOtp.loginButton")}
@@ -177,18 +178,18 @@ function VerifyOtpFormFields({ phone, authRole }: VerifyOtpFormProps) {
       </Pressable>
 
       <View className="mb-6 flex-row items-center">
-        <View className="h-px flex-1 bg-[#E4E4E7]" />
-        <Text className="mx-3 text-sm text-[#90A1B9]">
+        <View className="h-px flex-1 bg-slate-200" />
+        <Text className="mx-3 text-sm text-sec-text">
           {t("auth.verifyOtp.or")}
         </Text>
-        <View className="h-px flex-1 bg-[#E4E4E7]" />
+        <View className="h-px flex-1 bg-slate-200" />
       </View>
 
       <Pressable
         onPress={() => router.replace("/login" as Href)}
-        className="w-full items-center justify-center rounded-2xl border border-[#7B61FF] py-4 active:opacity-[0.92]"
+        className="w-full items-center justify-center rounded-2xl border border-primary py-4 active:opacity-[0.92]"
       >
-        <Text className="text-base font-bold text-[#7B61FF]">
+        <Text className="text-base font-bold text-primary">
           {t("auth.verifyOtp.loginWithEmail")}
         </Text>
       </Pressable>
@@ -213,16 +214,16 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 12,
     borderWidth: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colors.white,
     textAlign: "center",
     fontSize: 20,
     fontWeight: "600",
-    color: "#1F1F1F",
+    color: colors.heading,
   },
   otpInputDefault: {
-    borderColor: "#E4E4E7",
+    borderColor: colors.cardBorder,
   },
   otpInputError: {
-    borderColor: "#FCA5A5",
+    borderColor: colors.rejected200,
   },
 });

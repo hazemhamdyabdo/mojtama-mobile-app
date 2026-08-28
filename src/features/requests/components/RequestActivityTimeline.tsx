@@ -30,8 +30,8 @@ function ActivityAvatar({ activity }: ActivityAvatarProps) {
   }
 
   return (
-    <View className="size-9 items-center justify-center rounded-full bg-[#F0EDFF]">
-      <Text className="text-xs font-semibold text-[#7B61FF]">
+    <View className="size-9 items-center justify-center rounded-full bg-primary-50">
+      <Text className="text-xs font-semibold text-primary">
         {activity.actor.charAt(0)}
       </Text>
     </View>
@@ -52,7 +52,7 @@ export default function RequestActivityTimeline({
 
   return (
     <View className="mt-6">
-      <Text className="mb-4 border-t border-gray-200 pt-4 text-sm font-semibold text-[#90A1B9]">
+      <Text className="mb-4 border-t border-gray-200 pt-4 text-sm font-semibold text-sec-text">
         Latest Activities
       </Text>
 
@@ -65,22 +65,22 @@ export default function RequestActivityTimeline({
               <View className="w-9 items-center">
                 <ActivityAvatar activity={activity} />
                 {!isLast ? (
-                  <View className="my-1 w-px flex-1 bg-[#E4E4E7]" />
+                  <View className="my-1 w-px flex-1 bg-slate-200" />
                 ) : null}
               </View>
 
               <View className={`flex-1 ${isLast ? "" : "pb-4"}`}>
-                <Text className="text-sm font-semibold text-[#1F1F1F]">
+                <Text className="text-sm font-semibold text-heading">
                   {activity.title}
                 </Text>
-                <Text className="mt-0.5 text-xs text-[#90A1B9]">
+                <Text className="mt-0.5 text-xs text-sec-text">
                   By {activity.actor} • {activity.timestamp}
                 </Text>
 
                 {activity.fromStatus && activity.toStatus ? (
                   <View className="mt-2 flex-row items-center gap-2">
                     <RequestStatusBadge status={activity.fromStatus} />
-                    <Text className="text-[#90A1B9]">→</Text>
+                    <Text className="text-sec-text">→</Text>
                     <RequestStatusBadge status={activity.toStatus} />
                   </View>
                 ) : null}

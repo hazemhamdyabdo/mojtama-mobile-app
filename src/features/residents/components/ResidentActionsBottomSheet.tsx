@@ -12,6 +12,7 @@ import {
 } from "react";
 import { Pressable, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { colors } from "@/theme/colors";
 
 export type ResidentActionsBottomSheetRef = {
   open: () => void;
@@ -57,11 +58,11 @@ const ResidentActionsBottomSheet = forwardRef<
       enableDynamicSizing
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
@@ -70,9 +71,9 @@ const ResidentActionsBottomSheet = forwardRef<
         <Pressable
           onPress={handleRemove}
           accessibilityRole="button"
-          className="items-center rounded-2xl bg-[#FFE6E6] py-4 active:opacity-[0.92]"
+          className="items-center rounded-2xl bg-rejected-50 py-4 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-[#F87171]">
+          <Text className="text-base font-bold text-rejected-500">
             Remove Resident
           </Text>
         </Pressable>
@@ -82,7 +83,7 @@ const ResidentActionsBottomSheet = forwardRef<
           accessibilityRole="button"
           className="mt-3 items-center py-3 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-[#1F1F1F]">Cancel</Text>
+          <Text className="text-base font-bold text-heading">Cancel</Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>

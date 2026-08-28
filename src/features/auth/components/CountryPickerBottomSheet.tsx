@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import {
   AUTH_COUNTRIES,
   type AuthCountry,
@@ -91,25 +92,25 @@ const CountryPickerBottomSheet = forwardRef<
       snapPoints={snapPoints}
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#D1D5DB", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.slate300, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
       }}
     >
       <BottomSheetView className="flex-1 px-4 pb-6">
-        <Text className="mb-4 text-center text-lg font-semibold text-[#1F1F1F]">
+        <Text className="mb-4 text-center text-lg font-semibold text-heading">
           {t("auth.phoneLogin.countrySheetTitle")}
         </Text>
 
-        <View className="mb-4 flex-row items-center rounded-xl border border-[#E4E4E7] bg-white px-3">
-          <Text className="mr-2 text-[#90A1B9]">⌕</Text>
+        <View className="mb-4 flex-row items-center rounded-xl border border-card-border bg-white px-3">
+          <Text className="mr-2 text-sec-text">⌕</Text>
           <BottomSheetTextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
             placeholder={t("auth.phoneLogin.searchPlaceholder")}
-            placeholderTextColor="#90A1B9"
-            className="flex-1 py-3 text-base text-[#1F1F1F]"
+            placeholderTextColor={colors.secText}
+            className="flex-1 py-3 text-base text-heading"
           />
         </View>
 
@@ -124,7 +125,7 @@ const CountryPickerBottomSheet = forwardRef<
               <Pressable
                 onPress={() => handleSelectCountry(item)}
                 className={`mb-2 flex-row items-center rounded-xl px-3 py-3 active:opacity-[0.92] ${
-                  isSelected ? "bg-[#EBE8FF]" : "bg-transparent"
+                  isSelected ? "bg-primary-100" : "bg-transparent"
                 }`}
               >
                 <CountryFlag
@@ -132,10 +133,10 @@ const CountryPickerBottomSheet = forwardRef<
                   size={24}
                   style={{ borderRadius: 12 }}
                 />
-                <Text className="ml-3 flex-1 text-base text-[#1F1F1F]">
+                <Text className="ml-3 flex-1 text-base text-heading">
                   {t(item.nameKey)}
                 </Text>
-                <Text className="text-base text-[#90A1B9]">
+                <Text className="text-base text-sec-text">
                   +{item.callingCode}
                 </Text>
               </Pressable>

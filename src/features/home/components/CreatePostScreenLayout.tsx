@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
 import { styled } from "nativewind";
@@ -26,16 +27,16 @@ export default function CreatePostScreenLayout({
             accessibilityLabel="Go back"
             className="absolute left-0 active:opacity-[0.92]"
           >
-            <View className="size-10 items-center justify-center rounded-full bg-[#F0EDFF]">
+            <View className="size-10 items-center justify-center rounded-full bg-primary-50">
               <MaterialDesignIcons
                 name="chevron-left"
-                color="#7B61FF"
+                color={colors.primary}
                 size={24}
               />
             </View>
           </Pressable>
 
-          <Text className="text-lg font-bold text-[#1F1F1F]">Create Post</Text>
+          <Text className="text-lg font-bold text-heading">Create Post</Text>
         </View>
 
         {children}

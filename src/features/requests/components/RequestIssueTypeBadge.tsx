@@ -38,17 +38,17 @@ function getIssueStyles(issueType: RequestIssueType) {
   switch (issueType) {
     case "electricity":
     case "electrical":
-      return { container: "bg-[#FEF9C3]", text: "text-[#CA8A04]" };
+      return { container: "bg-pending-50", text: "text-pending-700" };
     case "fire":
-      return { container: "bg-[#FEE2E2]", text: "text-[#EF4444]" };
+      return { container: "bg-rejected-50", text: "text-rejected" };
     case "water-damage":
-      return { container: "bg-[#DBEAFE]", text: "text-[#2563EB]" };
+      return { container: "bg-primary-50", text: "text-primary-700" };
     case "medical":
-      return { container: "bg-[#DCFCE7]", text: "text-[#16A34A]" };
+      return { container: "bg-approved-50", text: "text-approved-700" };
     case "security-threat":
-      return { container: "bg-[#E2E8F0]", text: "text-[#475569]" };
+      return { container: "bg-slate-200", text: "text-slate-600" };
     default:
-      return { container: "bg-[#F1F5F9]", text: "text-[#64748B]" };
+      return { container: "bg-slate-100", text: "text-slate-500" };
   }
 }
 

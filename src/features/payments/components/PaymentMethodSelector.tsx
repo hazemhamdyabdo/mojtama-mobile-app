@@ -13,7 +13,7 @@ export default function PaymentMethodSelector({
 }: PaymentMethodSelectorProps) {
   return (
     <View className="mb-6">
-      <Text className="mb-4 text-base font-bold text-[#1F1F1F]">
+      <Text className="mb-4 text-base font-bold text-heading">
         Choose Payment Method
       </Text>
       <View className="flex-row gap-3">

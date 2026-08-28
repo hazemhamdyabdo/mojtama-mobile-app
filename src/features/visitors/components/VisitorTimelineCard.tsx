@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import type { VisitorTimelineEvent } from "@/features/visitors/types";
 import { Text, View } from "react-native";
 
@@ -5,14 +6,14 @@ type VisitorTimelineCardProps = {
   events: VisitorTimelineEvent[];
 };
 
-const DOT_COLORS = ["#7B61FF", "#A78BFA", "#DDD6FE"];
+const DOT_COLORS = [colors.primary, colors.primary400, colors.primary200];
 
 export default function VisitorTimelineCard({
   events,
 }: VisitorTimelineCardProps) {
   return (
-    <View className="mt-4 rounded-2xl bg-[#F8FAFC] p-4">
-      <Text className="mb-3 text-sm font-semibold text-[#1F1F1F]">
+    <View className="mt-4 rounded-2xl bg-slate-50 p-4">
+      <Text className="mb-3 text-sm font-semibold text-heading">
         Timeline
       </Text>
 
@@ -29,10 +30,10 @@ export default function VisitorTimelineCard({
               }}
             />
             <View className="flex-1">
-              <Text className="text-sm font-semibold text-[#1F1F1F]">
+              <Text className="text-sm font-semibold text-heading">
                 {event.title}
               </Text>
-              <Text className="mt-0.5 text-xs text-[#90A1B9]">
+              <Text className="mt-0.5 text-xs text-sec-text">
                 {event.timestamp}
               </Text>
             </View>

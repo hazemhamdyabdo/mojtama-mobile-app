@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
 import { Pressable, Text, View } from "react-native";
@@ -19,12 +20,12 @@ export default function SettingsUpdateHeader({
         accessibilityLabel="Go back"
         className="absolute left-0 active:opacity-[0.92]"
       >
-        <View className="size-10 items-center justify-center rounded-full border border-[#E4E4E7] bg-white">
-          <MaterialDesignIcons name="chevron-left" color="#7B61FF" size={24} />
+        <View className="size-10 items-center justify-center rounded-full border border-card-border bg-white">
+          <MaterialDesignIcons name="chevron-left" color={colors.primary} size={24} />
         </View>
       </Pressable>
 
-      <Text className="text-lg font-bold text-[#1F1F1F]">{title}</Text>
+      <Text className="text-lg font-bold text-heading">{title}</Text>
     </View>
   );
 }

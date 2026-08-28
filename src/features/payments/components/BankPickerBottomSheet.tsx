@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import { PAYMENT_BANKS } from "@/features/payments/constants/paymentMethods";
 import PaymentProviderLogo from "@/features/payments/components/PaymentProviderLogo";
 import type { PaymentBank } from "@/features/payments/types";
@@ -84,25 +85,25 @@ const BankPickerBottomSheet = forwardRef<
       snapPoints={snapPoints}
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#1F1F1F", width: 48 }}
+      handleIndicatorStyle={{ backgroundColor: colors.heading, width: 48 }}
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
       }}
     >
       <BottomSheetView className="flex-1 px-4 pb-6">
-        <Text className="mb-4 text-center text-lg font-bold text-[#1F1F1F]">
+        <Text className="mb-4 text-center text-lg font-bold text-heading">
           Select Your Bank
         </Text>
 
-        <View className="mb-4 flex-row items-center rounded-full border border-[#E4E4E7] bg-white px-4">
-          <MaterialDesignIcons name="magnify" color="#7B61FF" size={20} />
+        <View className="mb-4 flex-row items-center rounded-full border border-card-border bg-white px-4">
+          <MaterialDesignIcons name="magnify" color={colors.primary} size={20} />
           <BottomSheetTextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
             placeholder="Search For Your Bank"
-            placeholderTextColor="#90A1B9"
-            className="flex-1 py-3.5 pl-2 text-base text-[#1F1F1F]"
+            placeholderTextColor={colors.secText}
+            className="flex-1 py-3.5 pl-2 text-base text-heading"
           />
         </View>
 
@@ -116,16 +117,16 @@ const BankPickerBottomSheet = forwardRef<
               accessibilityRole="button"
               className={`mb-3 flex-row items-center rounded-2xl border px-4 py-3 active:opacity-[0.92] ${
                 selectedBankId === item.id
-                  ? "border-[#7B61FF] bg-[#F8F6FF]"
-                  : "border-[#E4E4E7] bg-white"
+                  ? "border-primary bg-primary-50"
+                  : "border-card-border bg-white"
               }`}
             >
               <PaymentProviderLogo logo={item.logo} />
               <View className="ml-3 flex-1">
-                <Text className="text-sm font-semibold text-[#1F1F1F]">
+                <Text className="text-sm font-semibold text-heading">
                   {item.name}
                 </Text>
-                <Text className="text-xs text-[#90A1B9]">{item.nameAr}</Text>
+                <Text className="text-xs text-sec-text">{item.nameAr}</Text>
               </View>
             </Pressable>
           )}

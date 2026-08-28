@@ -71,7 +71,7 @@ export default function PaymentDetailsScreen({
         <PaymentDetailsCompanySection company={bill.company} />
       </ScrollView>
 
-      <View className="border-t border-[#E4E4E7] px-4 py-4">
+      <View className="border-t border-card-border px-4 py-4">
         <PaymentDetailsActions
           status={bill.status}
           onPayPress={handlePayPress}

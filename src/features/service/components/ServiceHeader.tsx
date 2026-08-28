@@ -1,3 +1,4 @@
+import { colors } from "@/theme/colors";
 import ServiceRoleBadge from "@/features/service/components/ServiceRoleBadge";
 import type { ServiceRole } from "@/features/service/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
@@ -34,12 +35,12 @@ export default function ServiceHeader({
 
         <View>
           <View className="flex-row items-center gap-2">
-            <Text className="text-base font-bold text-[#1F1F1F]">
+            <Text className="text-base font-bold text-heading">
               Welcome {name}
             </Text>
             <ServiceRoleBadge role={role} />
           </View>
-          <Text className="mt-0.5 text-sm text-[#90A1B9]">{subtitle}</Text>
+          <Text className="mt-0.5 text-sm text-sec-text">{subtitle}</Text>
         </View>
       </View>
 
@@ -47,12 +48,12 @@ export default function ServiceHeader({
         onPress={onNotificationsPress}
         accessibilityRole="button"
         accessibilityLabel="Notifications"
-        className="relative size-11 items-center justify-center rounded-full border border-[#E4E4E7] active:opacity-[0.92]"
+        className="relative size-11 items-center justify-center rounded-full border border-card-border active:opacity-[0.92]"
       >
-        <MaterialDesignIcons name="bell-outline" color="#7B61FF" size={22} />
+        <MaterialDesignIcons name="bell-outline" color={colors.primary} size={22} />
 
         {showBadge ? (
-          <View className="absolute -right-0.5 -top-0.5 min-w-4.5 items-center justify-center rounded-full bg-[#7B61FF] px-1 py-0.5">
+          <View className="absolute -right-0.5 -top-0.5 min-w-4.5 items-center justify-center rounded-full bg-primary px-1 py-0.5">
             <Text className="text-[10px] font-bold leading-none text-white">
               {notificationCount > 99 ? "99+" : notificationCount}
             </Text>

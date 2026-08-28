@@ -22,14 +22,14 @@ function FilterChip({
       accessibilityRole="button"
       accessibilityState={{ selected }}
       className={` rounded-full px-5 py-2.5 active:opacity-[0.92] ${
-        selected ? "bg-[#F0EDFF]" : "border border-[#E2E8F0] bg-white"
+        selected ? "bg-primary-50" : "border border-slate-200 bg-white"
       }`}
     >
       <Text
         className={`text-sm ${
           selected
-            ? "font-semibold text-[#7B61FF]"
-            : "font-normal text-[#90A1B9]"
+            ? "font-semibold text-primary"
+            : "font-normal text-sec-text"
         }`}
       >
         {label}

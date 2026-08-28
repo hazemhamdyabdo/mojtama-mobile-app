@@ -9,26 +9,26 @@ function getPriorityStyles(priority: RequestPriority) {
   switch (priority) {
     case "urgent":
       return {
-        container: "bg-[#FEE2E2]",
-        text: "text-[#EF4444]",
+        container: "bg-rejected-50",
+        text: "text-rejected",
         label: "Urgent",
       };
     case "high":
       return {
-        container: "bg-[#FFEDD5]",
-        text: "text-[#F97316]",
+        container: "bg-pending-100",
+        text: "text-pending-600",
         label: "High",
       };
     case "medium":
       return {
-        container: "bg-[#FEF9C3]",
-        text: "text-[#D97706]",
+        container: "bg-pending-50",
+        text: "text-pending-700",
         label: "Medium",
       };
     case "low":
       return {
-        container: "bg-[#E5F0FC]",
-        text: "text-[#2B7FFF]",
+        container: "bg-primary-50",
+        text: "text-primary-600",
         label: "low",
       };
     default: {
