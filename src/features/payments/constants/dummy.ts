@@ -6,16 +6,16 @@ import type {
   PaymentTab,
 } from "@/features/payments/types";
 
-export const PAYMENT_TABS: { id: PaymentTab; label: string }[] = [
-  { id: "overview", label: "Overview" },
-  { id: "history", label: "History" },
+export const PAYMENT_TABS: { id: PaymentTab }[] = [
+  { id: "overview" },
+  { id: "history" },
 ];
 
-export const PAYMENT_FILTERS: { id: PaymentBillFilter; label: string }[] = [
-  { id: "all", label: "All" },
-  { id: "pending", label: "Pending" },
-  { id: "overdue", label: "Overdue" },
-  { id: "paid", label: "Paid" },
+export const PAYMENT_FILTERS: { id: PaymentBillFilter }[] = [
+  { id: "all" },
+  { id: "pending" },
+  { id: "overdue" },
+  { id: "paid" },
 ];
 
 export const PAYMENT_SUMMARY: PaymentSummary = {

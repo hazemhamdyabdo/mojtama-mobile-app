@@ -1,8 +1,11 @@
 import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function SettingsPendingVerificationCard() {
+  const { t } = useTranslation();
+
   return (
     <View className="mt-8 flex-row rounded-2xl border border-card-border bg-white p-4">
       <View className="size-10 items-center justify-center rounded-full bg-primary-50">
@@ -14,10 +17,7 @@ export default function SettingsPendingVerificationCard() {
       </View>
       <View className="ml-3 flex-1">
         <Text className="text-base font-bold text-heading">
-          Update Pending Verification
-        </Text>
-        <Text className="mt-1 text-sm leading-5 text-sec-text">
-          Your Request Will Be Reviewed By The Admin And Updated Within 24 Hours
+          {t("settings.pendingVerification.title")}
         </Text>
       </View>
     </View>

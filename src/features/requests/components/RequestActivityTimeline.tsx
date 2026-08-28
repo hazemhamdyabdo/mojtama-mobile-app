@@ -2,6 +2,7 @@ import RequestStatusBadge from "@/features/requests/components/RequestStatusBadg
 import type { RequestActivity } from "@/features/requests/types";
 import { Image } from "expo-image";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 type RequestActivityTimelineProps = {
@@ -41,6 +42,7 @@ function ActivityAvatar({ activity }: ActivityAvatarProps) {
 export default function RequestActivityTimeline({
   activities,
 }: RequestActivityTimelineProps) {
+  const { t } = useTranslation();
   const sortedActivities = useMemo(
     () => sortActivitiesNewestFirst(activities),
     [activities],
@@ -53,7 +55,7 @@ export default function RequestActivityTimeline({
   return (
     <View className="mt-6">
       <Text className="mb-4 border-t border-gray-200 pt-4 text-sm font-semibold text-sec-text">
-        Latest Activities
+        {t("requests.activity.title")}
       </Text>
 
       <View>
@@ -74,7 +76,10 @@ export default function RequestActivityTimeline({
                   {activity.title}
                 </Text>
                 <Text className="mt-0.5 text-xs text-sec-text">
-                  By {activity.actor} • {activity.timestamp}
+                  {t("requests.activity.by", {
+                    actor: activity.actor,
+                    time: activity.timestamp,
+                  })}
                 </Text>
 
                 {activity.fromStatus && activity.toStatus ? (

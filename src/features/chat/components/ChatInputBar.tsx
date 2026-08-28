@@ -1,5 +1,6 @@
 import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import {
   I18nManager,
   Pressable,
@@ -20,6 +21,7 @@ export default function ChatInputBar({
   onSend,
   onAttach,
 }: ChatInputBarProps) {
+  const { t } = useTranslation();
   const textAlign = I18nManager.isRTL ? "right" : "left";
   const canSend = value.trim().length > 0;
 
@@ -30,7 +32,7 @@ export default function ChatInputBar({
           <Pressable
             onPress={onAttach}
             accessibilityRole="button"
-            accessibilityLabel="Attach file"
+            accessibilityLabel={t("common.upload")}
             hitSlop={8}
             className="active:opacity-[0.92]"
           >
@@ -39,7 +41,7 @@ export default function ChatInputBar({
           <TextInput
             value={value}
             onChangeText={onChangeText}
-            placeholder="Type a message..."
+            placeholder={t("chat.input.placeholder")}
             placeholderTextColor={colors.secText}
             returnKeyType="send"
             onSubmitEditing={onSend}
@@ -59,7 +61,7 @@ export default function ChatInputBar({
           onPress={onSend}
           disabled={!canSend}
           accessibilityRole="button"
-          accessibilityLabel="Send message"
+          accessibilityLabel={t("chat.input.placeholder")}
           className="size-11 items-center justify-center rounded-full bg-primary active:opacity-[0.92] disabled:opacity-50"
         >
           <MaterialDesignIcons name="send" color={colors.white} size={20} />

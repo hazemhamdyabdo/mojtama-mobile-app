@@ -9,8 +9,11 @@ import type { RequestFilter } from "@/features/requests/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter, type Href } from "expo-router";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
+
 export default function ManagerRequestsScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const requests = useRequestsState();
   const [selectedFilter, setSelectedFilter] = useState<RequestFilter>("all");
@@ -42,7 +45,7 @@ export default function ManagerRequestsScreen() {
           {visibleRequests.length === 0 ? (
             <View className="items-center py-12">
               <Text className="text-base font-medium text-heading">
-                No Requests Found
+                {t("requests.empty.title")}
               </Text>
               <Text className="mt-1 text-center text-sm text-sec-text">
                 Try adjusting your filter to see more requests.
@@ -64,7 +67,7 @@ export default function ManagerRequestsScreen() {
         <Pressable
           onPress={() => router.push("/requests/create" as Href)}
           accessibilityRole="button"
-          accessibilityLabel="Create request"
+          accessibilityLabel={t("requests.create.title")}
           className="absolute bottom-6 right-4 size-14 items-center justify-center rounded-full bg-primary active:opacity-[0.92]"
         >
           <MaterialDesignIcons name="plus" color={colors.white} size={28} />

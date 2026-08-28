@@ -7,12 +7,14 @@ import {
   createPostSchema,
   type CreatePostFormValues,
 } from "@/features/home/schemas/createPostSchema";
+import { translateLabel } from "@/localization/translateLabel";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import {
   I18nManager,
   Pressable,
@@ -25,21 +27,6 @@ import {
 
 export type CreatePostFormVariant = "announcement" | "news";
 
-const FORM_COPY = {
-  announcement: {
-    heading: "Create Announcement",
-    typeLabel: "Announcement type",
-    titlePlaceholder: "Type Announcement title",
-    contentPlaceholder: "Type announcement content",
-  },
-  news: {
-    heading: "Create News",
-    typeLabel: "News type",
-    titlePlaceholder: "Type News title",
-    contentPlaceholder: "Type news content",
-  },
-} as const;
-
 type CreatePostFormProps = {
   variant: CreatePostFormVariant;
   onSubmit: (values: CreatePostFormValues) => void | Promise<void>;
@@ -49,12 +36,10 @@ export default function CreatePostForm({
   variant,
   onSubmit,
 }: CreatePostFormProps) {
-  const copy = FORM_COPY[variant];
+  const { t } = useTranslation();
   const textAlign = I18nManager.isRTL ? "right" : "left";
-  const schema = useMemo(
-    () => createPostSchema(copy.typeLabel),
-    [copy.typeLabel],
-  );
+  const typeLabel = t(`home.create.${variant}.typeLabel`);
+  const schema = useMemo(() => createPostSchema(typeLabel), [typeLabel]);
 
   const {
     control,
@@ -115,11 +100,11 @@ export default function CreatePostForm({
         showsVerticalScrollIndicator={false}
       >
         <Text className="mb-6 text-2xl font-bold text-heading">
-          {copy.heading}
+          {t(`home.create.${variant}.title`)}
         </Text>
 
         <View className="mb-5">
-          <FormLabel label={copy.typeLabel} required />
+          <FormLabel label={typeLabel} required />
 
           <Controller
             control={control}
@@ -129,7 +114,7 @@ export default function CreatePostForm({
                 {ANNOUNCEMENT_TYPE_OPTIONS.map((option) => (
                   <CategoryTypeChip
                     key={option.id}
-                    label={option.label}
+                    label={translateLabel(t, "home.announcementTypes", option.id)}
                     selected={value === option.id}
                     onPress={() => onChange(option.id as AnnouncementType)}
                   />
@@ -146,7 +131,7 @@ export default function CreatePostForm({
         </View>
 
         <View className="mb-5">
-          <FormLabel label="Title" required />
+          <FormLabel label={t("home.create.fields.title")} required />
 
           <Controller
             control={control}
@@ -156,7 +141,7 @@ export default function CreatePostForm({
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                placeholder={copy.titlePlaceholder}
+                placeholder={t(`home.create.${variant}.titlePlaceholder`)}
                 placeholderTextColor={colors.secText}
                 className={`rounded-xl border bg-white px-4 text-base text-heading ${
                   errors.title ? "border-rejected-200" : "border-card-border"
@@ -178,7 +163,7 @@ export default function CreatePostForm({
         </View>
 
         <View className="mb-5">
-          <FormLabel label="Content" required />
+          <FormLabel label={t("home.create.fields.content")} required />
 
           <Controller
             control={control}
@@ -188,7 +173,7 @@ export default function CreatePostForm({
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                placeholder={copy.contentPlaceholder}
+                placeholder={t(`home.create.${variant}.contentPlaceholder`)}
                 placeholderTextColor={colors.secText}
                 multiline
                 textAlignVertical="top"
@@ -211,12 +196,12 @@ export default function CreatePostForm({
         </View>
 
         <View className="mb-5">
-          <FormLabel label="Image" required />
+          <FormLabel label={t("home.create.fields.image")} required />
 
           <Pressable
             onPress={pickImage}
             accessibilityRole="button"
-            accessibilityLabel="Upload image"
+            accessibilityLabel={t("home.create.uploadImage")}
             className={`items-center justify-center rounded-xl border border-dashed bg-slate-50 px-4 py-8 active:opacity-[0.92] ${
               errors.image ? "border-rejected-200" : "border-slate-300"
             }`}
@@ -298,7 +283,9 @@ export default function CreatePostForm({
         accessibilityRole="button"
         className="mt-4 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
       >
-        <Text className="text-base font-bold text-white">Create Post</Text>
+        <Text className="text-base font-bold text-white">
+          {t("home.create.submit.post")}
+        </Text>
       </Pressable>
     </View>
   );

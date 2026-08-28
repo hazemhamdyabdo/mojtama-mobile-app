@@ -1,4 +1,5 @@
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { colors } from "@/theme/colors";
 
@@ -9,6 +10,8 @@ type GenerateInviteLinkCardProps = {
 export default function GenerateInviteLinkCard({
   onGenerateLink,
 }: GenerateInviteLinkCardProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="mb-5 flex-row items-center gap-3 rounded-2xl bg-primary-50 p-4">
       <View className="size-11 items-center justify-center rounded-full bg-primary">
@@ -30,7 +33,7 @@ export default function GenerateInviteLinkCard({
         accessibilityRole="button"
         className="rounded-xl bg-primary px-3 py-2.5 active:opacity-[0.92]"
       >
-        <Text className="text-xs font-bold text-white">Generate Link</Text>
+        <Text className="text-xs font-bold text-white">{t("residents.invite.generate")}</Text>
       </Pressable>
     </View>
   );

@@ -2,6 +2,7 @@ import { colors } from "@/theme/colors";
 import PaymentStatusBadge from "@/features/payments/components/PaymentStatusBadge";
 import type { PaymentBill } from "@/features/payments/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type PaymentBillCardProps = {
@@ -15,6 +16,7 @@ export default function PaymentBillCard({
   onPress,
   onPayPress,
 }: PaymentBillCardProps) {
+  const { t } = useTranslation();
   const showPayButton = bill.status === "pending" || bill.status === "overdue";
 
   return (
@@ -37,7 +39,7 @@ export default function PaymentBillCard({
 
         <View className="mt-4 gap-3">
           <View className="flex-row items-center justify-between">
-            <Text className="text-sm text-sec-text">Date</Text>
+            <Text className="text-sm text-sec-text">{t("common.date")}</Text>
             <View className="flex-row items-center gap-1.5">
               <MaterialDesignIcons
                 name="calendar-blank-outline"
@@ -49,7 +51,9 @@ export default function PaymentBillCard({
           </View>
 
           <View className="flex-row items-center justify-between">
-            <Text className="text-sm text-sec-text">Amount</Text>
+            <Text className="text-sm text-sec-text">
+              {t("payments.invoice.amount")}
+            </Text>
             <Text className="text-sm font-bold text-primary">
               {bill.amount}
             </Text>
@@ -63,7 +67,9 @@ export default function PaymentBillCard({
           accessibilityRole="button"
           className="mt-4 items-center rounded-2xl bg-primary py-3.5 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-white">Pay Now</Text>
+          <Text className="text-base font-bold text-white">
+            {t("payments.actions.payNow")}
+          </Text>
         </Pressable>
       ) : null}
     </View>

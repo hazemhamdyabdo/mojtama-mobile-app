@@ -30,6 +30,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, type Href } from "expo-router";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
 type PaymentMethodsScreenProps = {
   bill: PaymentBillDetails;
@@ -39,6 +40,7 @@ export default function PaymentMethodsScreen({
   bill,
 }: PaymentMethodsScreenProps) {
   const router = useRouter();
+  const { t } = useTranslation();
   const bankPickerRef = useRef<BankPickerBottomSheetRef>(null);
   const walletPickerRef = useRef<WalletPickerBottomSheetRef>(null);
   const successSheetRef = useRef<PaymentSuccessBottomSheetRef>(null);
@@ -89,7 +91,7 @@ export default function PaymentMethodsScreen({
     });
 
     if (!result.success) {
-      setWalletError(result.error.issues[0]?.message ?? "Select a wallet");
+      setWalletError(result.error.issues[0]?.message ?? t("payments.wallet.select"));
       return;
     }
 
@@ -151,7 +153,7 @@ export default function PaymentMethodsScreen({
           accessibilityRole="button"
           className="items-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
         >
-          <Text className="text-base font-bold text-white">Confirm</Text>
+          <Text className="text-base font-bold text-white">{t("common.confirm")}</Text>
         </Pressable>
       </View>
 

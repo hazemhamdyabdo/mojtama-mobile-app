@@ -24,8 +24,11 @@ import type { ResidentFilterCriteria } from "@/features/residents/types";
 import { EMPTY_RESIDENT_FILTER } from "@/features/residents/types";
 import { useRouter, type Href } from "expo-router";
 import { useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
+
 export default function ResidentsScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const filterSheetRef = useRef<ResidentFilterBottomSheetRef>(null);
   const inviteSheetRef = useRef<InviteLinkGeneratedBottomSheetRef>(null);
@@ -114,7 +117,7 @@ export default function ResidentsScreen() {
           ) : (
             <View className="items-center py-12">
               <Text className="text-base font-semibold text-heading">
-                No residents found
+                {t("residents.empty.title")}
               </Text>
               <Text className="mt-2 text-center text-sm text-slate-500">
                 Try adjusting your search or filter.

@@ -1,5 +1,7 @@
 import { DOCUMENT_CATEGORY_FILTERS } from "@/features/documents/constants/dummy";
 import type { DocumentCategoryFilter } from "@/features/documents/types";
+import { translateOptions } from "@/localization/translateLabel";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text } from "react-native";
 
 type DocumentCategoryChipsProps = {
@@ -42,13 +44,20 @@ export default function DocumentCategoryChips({
   selectedCategory,
   onSelectCategory,
 }: DocumentCategoryChipsProps) {
+  const { t } = useTranslation();
+  const categories = translateOptions(
+    t,
+    "documents.categories",
+    DOCUMENT_CATEGORY_FILTERS,
+  );
+
   return (
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerClassName="mb-5 gap-2"
     >
-      {DOCUMENT_CATEGORY_FILTERS.map((category) => (
+      {categories.map((category) => (
         <CategoryChip
           key={category.id}
           label={category.label}

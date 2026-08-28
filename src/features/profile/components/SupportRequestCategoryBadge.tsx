@@ -1,39 +1,36 @@
 import type { SupportRequestCategory } from "@/features/profile/types";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 type SupportRequestCategoryBadgeProps = {
   category: SupportRequestCategory;
 };
 
-function getCategoryStyles(category: SupportRequestCategory) {
-  switch (category) {
-    case "maintenance":
-      return {
-        container: "bg-approved-700",
-        text: "text-white",
-        label: "Maintenance",
-      };
-    case "noise":
-      return {
-        container: "bg-pending-50",
-        text: "text-pending-700",
-        label: "Noise",
-      };
-    default: {
-      const _exhaustive: never = category;
-      return _exhaustive;
-    }
-  }
-}
-
 export default function SupportRequestCategoryBadge({
   category,
 }: SupportRequestCategoryBadgeProps) {
-  const styles = getCategoryStyles(category);
+  const { t } = useTranslation();
 
-  return (
-    <View className={`rounded-full px-3 py-1 ${styles.container}`}>
-      <Text className={`text-xs font-medium ${styles.text}`}>{styles.label}</Text>
-    </View>
-  );
+  switch (category) {
+    case "maintenance":
+      return (
+        <View className="rounded-full bg-approved-700 px-2.5 py-0.5">
+          <Text className="text-xs font-medium text-white">
+            {t("requests.filters.maintenance")}
+          </Text>
+        </View>
+      );
+    case "noise":
+      return (
+        <View className="rounded-full bg-pending-50 px-2.5 py-0.5">
+          <Text className="text-xs font-medium text-pending-700">
+            {t("requests.filters.noise")}
+          </Text>
+        </View>
+      );
+    default: {
+      const exhaustive: never = category;
+      return exhaustive;
+    }
+  }
 }

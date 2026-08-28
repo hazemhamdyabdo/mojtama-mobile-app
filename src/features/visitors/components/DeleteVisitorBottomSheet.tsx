@@ -12,6 +12,7 @@ import {
   useRef,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -28,6 +29,7 @@ const DeleteVisitorBottomSheet = forwardRef<
   DeleteVisitorBottomSheetRef,
   DeleteVisitorBottomSheetProps
 >(function DeleteVisitorBottomSheet({ onConfirmDelete }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
 
@@ -79,10 +81,10 @@ const DeleteVisitorBottomSheet = forwardRef<
           </View>
 
           <Text className="mt-5 text-xl font-bold text-heading">
-            Delete Visitor!
+            {t("visitors.deleteSheet.title")}
           </Text>
           <Text className="mt-1 text-center text-sm text-sec-text">
-            Are You Sure You Want To Delete This Visitor?
+            {t("visitors.deleteSheet.message")}
           </Text>
         </View>
 
@@ -92,7 +94,9 @@ const DeleteVisitorBottomSheet = forwardRef<
             accessibilityRole="button"
             className="flex-1 items-center rounded-2xl border border-input-text bg-white py-4 active:opacity-[0.92]"
           >
-            <Text className="text-base font-bold text-slate-500">Cancel</Text>
+            <Text className="text-base font-bold text-slate-500">
+              {t("common.cancel")}
+            </Text>
           </Pressable>
 
           <Pressable
@@ -100,7 +104,9 @@ const DeleteVisitorBottomSheet = forwardRef<
             accessibilityRole="button"
             className="flex-1 items-center rounded-2xl bg-rejected-500 py-4 active:opacity-[0.92]"
           >
-            <Text className="text-base font-bold text-white">Yes, Delete</Text>
+            <Text className="text-base font-bold text-white">
+              {t("common.yesDelete")}
+            </Text>
           </Pressable>
         </View>
       </BottomSheetView>

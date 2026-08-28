@@ -1,4 +1,5 @@
 import type { RequestStatus } from "@/features/requests/types";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 type RequestStatusBadgeProps = {
@@ -11,25 +12,21 @@ function getStatusStyles(status: RequestStatus) {
       return {
         container: "bg-pending-50",
         text: "text-pending-700",
-        label: "Pending",
       };
     case "assigned":
       return {
         container: "bg-primary-50",
         text: "text-primary",
-        label: "Assigned",
       };
     case "in-progress":
       return {
         container: "bg-pending-50",
         text: "text-pending-700",
-        label: "In Progress",
       };
     case "submitted":
       return {
         container: "bg-primary-50",
         text: "text-primary",
-        label: "Submitted",
       };
     default: {
       const exhaustive: never = status;
@@ -38,12 +35,18 @@ function getStatusStyles(status: RequestStatus) {
   }
 }
 
+function getStatusTranslationKey(status: RequestStatus): string {
+  return status === "in-progress" ? "inProgress" : status;
+}
+
 export default function RequestStatusBadge({ status }: RequestStatusBadgeProps) {
+  const { t } = useTranslation();
   const styles = getStatusStyles(status);
+  const label = t(`requests.status.${getStatusTranslationKey(status)}`);
 
   return (
     <View className={`rounded-full px-3 py-1 ${styles.container}`}>
-      <Text className={`text-xs font-medium ${styles.text}`}>{styles.label}</Text>
+      <Text className={`text-xs font-medium ${styles.text}`}>{label}</Text>
     </View>
   );
 }

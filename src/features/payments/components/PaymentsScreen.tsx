@@ -9,7 +9,9 @@ import { PAYMENT_BILLS, PAYMENT_HISTORY } from "@/features/payments/constants/du
 import type { PaymentBillFilter, PaymentTab } from "@/features/payments/types";
 import { useRouter, type Href } from "expo-router";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
+
 function filterBills(
   bills: typeof PAYMENT_BILLS,
   searchQuery: string,
@@ -32,6 +34,7 @@ function filterBills(
 
 export default function PaymentsScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<PaymentTab>("overview");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<PaymentBillFilter>("all");
@@ -69,10 +72,10 @@ export default function PaymentsScreen() {
           return (
             <View className="items-center py-12">
               <Text className="text-base font-medium text-heading">
-                No Payment History
+                {t("payments.empty.historyTitle")}
               </Text>
               <Text className="mt-1 text-center text-sm text-sec-text">
-                Completed payments will appear here.
+                {t("payments.empty.historyMessage")}
               </Text>
             </View>
           );

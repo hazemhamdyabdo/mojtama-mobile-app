@@ -14,6 +14,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Switch, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -36,6 +37,7 @@ const PostActionsBottomSheet = forwardRef<
   { onMoveToDraft, onEditPost, onMarkAsUrgent, onDeletePost },
   ref,
 ) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const [activePostId, setActivePostId] = useState<string | null>(null);
@@ -103,17 +105,17 @@ const PostActionsBottomSheet = forwardRef<
         style={{ paddingBottom: insets.bottom + 16 }}
       >
         <BottomSheetMenuActionRow
-          label="Move To Draft"
+          label={t("home.postActions.moveToDraft")}
           onPress={() => runAction(onMoveToDraft)}
         />
         <BottomSheetMenuActionRow
-          label="Edit Post"
+          label={t("home.postActions.editPost")}
           onPress={() => runAction(onEditPost)}
         />
 
         <View className="flex-row items-center justify-between border-b border-slate-100 px-1 py-4">
           <Text className="text-base text-heading font-semibold">
-            Mark As Urgent
+            {t("home.postActions.markAsUrgent")}
           </Text>
           <Switch
             value={isUrgent}
@@ -129,7 +131,7 @@ const PostActionsBottomSheet = forwardRef<
           className="border-b border-slate-100 px-1 py-4 active:opacity-[0.92]"
         >
           <Text className="text-base text-rejected-500 font-semibold">
-            Delete Post
+            {t("home.postActions.deletePost")}
           </Text>
         </Pressable>
 
@@ -138,7 +140,9 @@ const PostActionsBottomSheet = forwardRef<
           accessibilityRole="button"
           className="items-center py-5 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-heading">Cancel</Text>
+          <Text className="text-base font-bold text-heading">
+            {t("common.cancel")}
+          </Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>

@@ -1,6 +1,7 @@
 import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type DocumentsHeaderProps = {
@@ -9,13 +10,14 @@ type DocumentsHeaderProps = {
 
 export default function DocumentsHeader({ onUploadPress }: DocumentsHeaderProps) {
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <View className="relative mb-4 flex-row items-center justify-center">
       <Pressable
         onPress={() => router.back()}
         accessibilityRole="button"
-        accessibilityLabel="Go back"
+        accessibilityLabel={t("common.back")}
         className="absolute left-0 active:opacity-[0.92]"
       >
         <View className="size-10 items-center justify-center rounded-full bg-primary-50">
@@ -23,15 +25,17 @@ export default function DocumentsHeader({ onUploadPress }: DocumentsHeaderProps)
         </View>
       </Pressable>
 
-      <Text className="text-lg font-bold text-heading">Documents</Text>
+      <Text className="text-lg font-bold text-heading">{t("documents.title")}</Text>
 
       <Pressable
         onPress={onUploadPress}
         accessibilityRole="button"
-        accessibilityLabel="Upload document"
+        accessibilityLabel={t("documents.upload.a11y")}
         className="absolute right-0 active:opacity-[0.92]"
       >
-        <Text className="text-base font-semibold text-primary">Upload</Text>
+        <Text className="text-base font-semibold text-primary">
+          {t("documents.upload.label")}
+        </Text>
       </Pressable>
     </View>
   );

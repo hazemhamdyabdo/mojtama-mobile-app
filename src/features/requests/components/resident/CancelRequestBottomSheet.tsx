@@ -12,6 +12,7 @@ import {
   useRef,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -28,6 +29,7 @@ const CancelRequestBottomSheet = forwardRef<
   CancelRequestBottomSheetRef,
   CancelRequestBottomSheetProps
 >(function CancelRequestBottomSheet({ onConfirmCancel }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
 
@@ -79,10 +81,10 @@ const CancelRequestBottomSheet = forwardRef<
           </View>
 
           <Text className="mt-5 text-xl font-bold text-heading">
-            Cancel Request!
+            {t("requests.cancelSheet.title")}
           </Text>
           <Text className="mt-1 text-center text-sm text-sec-text">
-            Are You Sure You Want To Cancel This Request?
+            {t("requests.cancelSheet.message")}
           </Text>
         </View>
 
@@ -92,7 +94,9 @@ const CancelRequestBottomSheet = forwardRef<
             accessibilityRole="button"
             className="flex-1 items-center rounded-2xl border border-input-text bg-white py-4 active:opacity-[0.92]"
           >
-            <Text className="text-base font-bold text-slate-500">Keep Request</Text>
+            <Text className="text-base font-bold text-slate-500">
+              {t("requests.cancelSheet.keep")}
+            </Text>
           </Pressable>
 
           <Pressable
@@ -100,7 +104,9 @@ const CancelRequestBottomSheet = forwardRef<
             accessibilityRole="button"
             className="flex-1 items-center rounded-2xl bg-rejected-500 py-4 active:opacity-[0.92]"
           >
-            <Text className="text-base font-bold text-white">Yes, Cancel</Text>
+            <Text className="text-base font-bold text-white">
+              {t("common.yes")}, {t("common.cancel")}
+            </Text>
           </Pressable>
         </View>
       </BottomSheetView>

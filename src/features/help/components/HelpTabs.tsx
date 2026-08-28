@@ -1,5 +1,6 @@
 import { HELP_TABS } from "@/features/help/constants/dummy";
 import type { HelpTab } from "@/features/help/types";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type HelpTabsProps = {
@@ -8,6 +9,8 @@ type HelpTabsProps = {
 };
 
 export default function HelpTabs({ activeTab, onTabChange }: HelpTabsProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="mb-6 flex-row rounded-xl bg-slate-100 p-1">
       {HELP_TABS.map((tab) => {
@@ -28,7 +31,7 @@ export default function HelpTabs({ activeTab, onTabChange }: HelpTabsProps) {
                 isActive ? "text-primary" : "text-slate-500"
               }`}
             >
-              {tab.label}
+              {t(`help.tabs.${tab.id}`)}
             </Text>
           </Pressable>
         );

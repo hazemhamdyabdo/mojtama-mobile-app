@@ -1,6 +1,7 @@
 import { colors } from "@/theme/colors";
 import { POST_TYPE_OPTIONS } from "@/features/home/constants/postTypes";
 import type { PostType } from "@/features/home/types";
+import { translateLabel } from "@/localization/translateLabel";
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -15,6 +16,7 @@ import {
   useRef,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -31,6 +33,7 @@ const CreatePostBottomSheet = forwardRef<
   CreatePostBottomSheetRef,
   CreatePostBottomSheetProps
 >(function CreatePostBottomSheet({ onSelectPostType }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
 
@@ -83,7 +86,7 @@ const CreatePostBottomSheet = forwardRef<
           <Pressable
             onPress={handleClose}
             accessibilityRole="button"
-            accessibilityLabel="Close"
+            accessibilityLabel={t("common.back")}
             className="absolute left-0 active:opacity-[0.92]"
           >
             <View className="size-10 items-center justify-center rounded-full bg-primary-50">
@@ -96,7 +99,7 @@ const CreatePostBottomSheet = forwardRef<
           </Pressable>
 
           <Text className="text-lg font-bold text-heading">
-            Create New Post
+            {t("home.createPost.title")}
           </Text>
         </View>
 
@@ -117,7 +120,7 @@ const CreatePostBottomSheet = forwardRef<
 
             <View className="flex-1">
               <Text className="text-base font-bold text-heading">
-                {option.title}
+                {translateLabel(t, "home.postTypes", option.id)}
               </Text>
               <Text className="mt-1 text-sm leading-5 text-sec-text">
                 {option.description}

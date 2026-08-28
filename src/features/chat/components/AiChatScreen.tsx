@@ -10,6 +10,7 @@ import {
 import {
   AI_SUGGESTIONS,
   SERVICE_ADDED_DETAILS,
+  SUGGESTION_I18N_KEYS,
 } from "@/features/chat/constants/suggestions";
 import type { ChatMessage, SuggestionAction } from "@/features/chat/types";
 import { colors } from "@/theme/colors";
@@ -17,6 +18,7 @@ import MaterialDesignIcons from "@react-native-vector-icons/material-design-icon
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import { useCallback, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -25,8 +27,10 @@ import {
   Text,
   View,
 } from "react-native";
+
 export default function AiChatScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const listRef = useRef<FlatList<ChatMessage>>(null);
   const messageIdRef = useRef(0);
   const [messages, setMessages] = useState<ChatMessage[]>(
@@ -34,6 +38,12 @@ export default function AiChatScreen() {
   );
   const [input, setInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(true);
+
+  const getSuggestionLabel = useCallback(
+    (suggestion: SuggestionAction) =>
+      t(`chat.suggestions.${SUGGESTION_I18N_KEYS[suggestion.id]}`),
+    [t],
+  );
 
   const nextMessageId = useCallback((prefix: string) => {
     messageIdRef.current += 1;
@@ -84,9 +94,9 @@ export default function AiChatScreen() {
 
   const handleSuggestionPress = useCallback(
     (suggestion: SuggestionAction) => {
-      appendAssistantReply(suggestion, suggestion.label);
+      appendAssistantReply(suggestion, getSuggestionLabel(suggestion));
     },
-    [appendAssistantReply],
+    [appendAssistantReply, getSuggestionLabel],
   );
 
   const handleSend = useCallback(() => {
@@ -96,7 +106,8 @@ export default function AiChatScreen() {
     }
 
     const matchedSuggestion = AI_SUGGESTIONS.find(
-      (suggestion) => suggestion.label.toLowerCase() === trimmed.toLowerCase(),
+      (suggestion) =>
+        getSuggestionLabel(suggestion).toLowerCase() === trimmed.toLowerCase(),
     );
 
     if (matchedSuggestion) {
@@ -117,14 +128,14 @@ export default function AiChatScreen() {
       {
         id: nextMessageId("ai"),
         type: "ai-text",
-        text: "Thanks for your message. I'm here to help with services, announcements, polls, and meetings.",
+        text: t("chat.messages.fallback"),
         time,
       },
     ]);
     setShowSuggestions(false);
     setInput("");
     scrollToEnd();
-  }, [appendAssistantReply, input, nextMessageId, scrollToEnd]);
+  }, [appendAssistantReply, getSuggestionLabel, input, nextMessageId, scrollToEnd, t]);
 
   const handleAttach = useCallback(async () => {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -158,13 +169,13 @@ export default function AiChatScreen() {
       {
         id: nextMessageId("ai"),
         type: "ai-text",
-        text: "Thanks, I received your attachment. How would you like me to use it?",
+        text: t("chat.messages.attachment"),
         time,
       },
     ]);
     setShowSuggestions(false);
     scrollToEnd();
-  }, [nextMessageId, scrollToEnd]);
+  }, [nextMessageId, scrollToEnd, t]);
 
   return (
     <ScreenSafeAreaView className="flex-1 bg-slate-50" edges={["top", "bottom"]}>
@@ -172,7 +183,7 @@ export default function AiChatScreen() {
         <Pressable
           onPress={() => router.back()}
           accessibilityRole="button"
-          accessibilityLabel="Go back"
+          accessibilityLabel={t("common.back")}
           className="active:opacity-[0.92]"
         >
           <View className="size-10 items-center justify-center rounded-full bg-primary-50">
@@ -187,10 +198,12 @@ export default function AiChatScreen() {
         <AiAvatar size={40} />
 
         <View className="flex-1">
-          <Text className="text-base font-bold text-heading">AI Assistant</Text>
+          <Text className="text-base font-bold text-heading">{t("chat.title")}</Text>
           <View className="mt-0.5 flex-row items-center gap-1.5">
             <View className="size-2 rounded-full bg-approved-500" />
-            <Text className="text-xs font-medium text-approved-500">Online</Text>
+            <Text className="text-xs font-medium text-approved-500">
+              {t("chat.online")}
+            </Text>
           </View>
         </View>
       </View>

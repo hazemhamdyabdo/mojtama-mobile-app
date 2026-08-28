@@ -12,8 +12,11 @@ import { useUserRole } from "@/features/service/hooks/useUserRole";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
+
 export default function MeetingsScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { role } = useUserRole();
   const [activeTab, setActiveTab] = useState<MeetingsTab>("upcoming");
@@ -44,12 +47,12 @@ export default function MeetingsScreen() {
           {visibleMeetings.length === 0 ? (
             <View className="items-center py-12">
               <Text className="text-base font-medium text-heading">
-                No Meetings
+                {t("meetings.empty.title")}
               </Text>
               <Text className="mt-1 text-center text-sm text-sec-text">
                 {activeTab === "upcoming"
-                  ? "Upcoming meetings will appear here."
-                  : "Previous meetings will appear here."}
+                  ? t("meetings.empty.upcoming")
+                  : t("meetings.empty.previous")}
               </Text>
             </View>
           ) : (

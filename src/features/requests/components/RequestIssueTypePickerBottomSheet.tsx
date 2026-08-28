@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colors";
+import { translateLabel } from "@/localization/translateLabel";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import {
   BottomSheetBackdrop,
@@ -13,6 +14,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -34,6 +36,7 @@ const RequestIssueTypePickerBottomSheet = forwardRef<
   RequestIssueTypePickerBottomSheetRef,
   RequestIssueTypePickerBottomSheetProps
 >(function RequestIssueTypePickerBottomSheet({ onSelect }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const [options, setOptions] = useState<IssueTypeOption[]>([]);
@@ -82,7 +85,7 @@ const RequestIssueTypePickerBottomSheet = forwardRef<
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
         <Text className="mb-4 text-center text-base font-bold text-heading">
-          Select Issue Type
+          {t("requests.form.selectIssueType")}
         </Text>
 
         {options.map((option) => (
@@ -98,7 +101,7 @@ const RequestIssueTypePickerBottomSheet = forwardRef<
             }`}
           >
             <Text className="text-base font-medium text-heading">
-              {option.label}
+              {translateLabel(t, "requests.issueTypes", option.id)}
             </Text>
             {selected === option.id ? (
               <View className="size-6 items-center justify-center rounded-full bg-primary">

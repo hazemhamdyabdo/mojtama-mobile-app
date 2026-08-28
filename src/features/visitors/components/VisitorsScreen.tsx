@@ -14,9 +14,12 @@ import type { VisitorsTab } from "@/features/visitors/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter, type Href } from "expo-router";
 import { useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
+
 export default function VisitorsScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const qrSheetRef = useRef<VisitorQrBottomSheetRef>(null);
   const [activeTab, setActiveTab] = useState<VisitorsTab>("upcoming");
 
@@ -52,12 +55,12 @@ export default function VisitorsScreen() {
           {visibleVisitors.length === 0 ? (
             <View className="items-center py-12">
               <Text className="text-base font-medium text-heading">
-                No Visitors
+                {t("visitors.empty.title")}
               </Text>
               <Text className="mt-1 text-center text-sm text-sec-text">
                 {activeTab === "upcoming"
-                  ? "Upcoming visits will appear here."
-                  : "Previous visits will appear here."}
+                  ? t("visitors.empty.upcoming")
+                  : t("visitors.empty.previous")}
               </Text>
             </View>
           ) : (
@@ -80,7 +83,7 @@ export default function VisitorsScreen() {
         <Pressable
           onPress={() => router.push("/create-visitor" as Href)}
           accessibilityRole="button"
-          accessibilityLabel="Add new visitor"
+          accessibilityLabel={t("visitors.a11y.addNewVisitor")}
           className="absolute bottom-6 right-4 size-14 items-center justify-center rounded-full bg-primary active:opacity-[0.92]"
         >
           <MaterialDesignIcons name="plus" color={colors.white} size={28} />

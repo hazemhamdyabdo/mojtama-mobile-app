@@ -1,4 +1,6 @@
 import type { RequestPriority } from "@/features/requests/types";
+import { translateLabel } from "@/localization/translateLabel";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 type RequestPriorityBadgeProps = {
@@ -11,25 +13,21 @@ function getPriorityStyles(priority: RequestPriority) {
       return {
         container: "bg-rejected-50",
         text: "text-rejected",
-        label: "Urgent",
       };
     case "high":
       return {
         container: "bg-pending-100",
         text: "text-pending-600",
-        label: "High",
       };
     case "medium":
       return {
         container: "bg-pending-50",
         text: "text-pending-700",
-        label: "Medium",
       };
     case "low":
       return {
         container: "bg-primary-50",
         text: "text-primary-600",
-        label: "low",
       };
     default: {
       const exhaustive: never = priority;
@@ -41,12 +39,13 @@ function getPriorityStyles(priority: RequestPriority) {
 export default function RequestPriorityBadge({
   priority,
 }: RequestPriorityBadgeProps) {
+  const { t } = useTranslation();
   const styles = getPriorityStyles(priority);
 
   return (
     <View className={`rounded-full px-3 py-1 ${styles.container}`}>
       <Text className={`text-xs font-medium ${styles.text}`}>
-        {styles.label}
+        {translateLabel(t, "requests.priorityShort", priority)}
       </Text>
     </View>
   );

@@ -3,10 +3,10 @@ import type { ComponentProps } from "react";
 
 export type HelpTab = "emergency" | "faqs";
 
+export type EmergencyContactId = "police" | "ambulance" | "fire";
+
 export type EmergencyContact = {
-  id: string;
-  title: string;
-  subtitle: string;
+  id: EmergencyContactId;
   phoneNumber: string;
   icon: "shield-star-outline" | "ambulance" | "fire";
 };
@@ -21,16 +21,23 @@ export type HelpFaqCategoryIcon = ComponentProps<
   typeof MaterialDesignIcons
 >["name"];
 
+export type HelpFaqCategoryId =
+  | "maintenance-repairs"
+  | "payments-billing"
+  | "emergencies"
+  | "community-rules"
+  | "app-communication";
+
 export type HelpFaqCategory = {
-  id: string;
-  title: string;
+  id: HelpFaqCategoryId;
   icon: HelpFaqCategoryIcon;
   questions: HelpFaqQuestion[];
 };
 
+export type HelpSupportContactId = "phone" | "email" | "support";
+
 export type HelpSupportContact = {
-  id: string;
-  label: string;
+  id: HelpSupportContactId;
   value: string;
   icon: HelpFaqCategoryIcon;
   action: "phone" | "email" | "support";

@@ -9,10 +9,12 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 export default function UpdateNameForm() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const {
     control,
@@ -34,7 +36,7 @@ export default function UpdateNameForm() {
   return (
     <View>
       <SettingsUpdateIntro
-        title="Update Your Name"
+        title={t("settings.update.name.title")}
         subtitle="This Name Will Be Shown In Meetings, Payments, And Records."
       />
 
@@ -57,7 +59,7 @@ export default function UpdateNameForm() {
       />
 
       <SettingsPrimaryButton
-        label="Save"
+        label={t("common.save")}
         disabled={isSubmitting}
         onPress={() => void handleSubmit(onSubmit)()}
       />

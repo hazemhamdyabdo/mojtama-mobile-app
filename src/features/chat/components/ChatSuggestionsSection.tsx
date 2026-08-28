@@ -1,7 +1,11 @@
 import { colors } from "@/theme/colors";
-import { AI_SUGGESTIONS } from "@/features/chat/constants/suggestions";
+import {
+  AI_SUGGESTIONS,
+  SUGGESTION_I18N_KEYS,
+} from "@/features/chat/constants/suggestions";
 import type { SuggestionAction } from "@/features/chat/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type ChatSuggestionsSectionProps = {
@@ -11,6 +15,8 @@ type ChatSuggestionsSectionProps = {
 export default function ChatSuggestionsSection({
   onSelect,
 }: ChatSuggestionsSectionProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="mt-2">
       <View className="mb-4 flex-row items-center gap-3">
@@ -18,7 +24,7 @@ export default function ChatSuggestionsSection({
         <View className="flex-row items-center gap-1.5">
           <MaterialDesignIcons name="creation" color={colors.primary} size={16} />
           <Text className="text-xs text-sec-text">
-            Here are some things i can help you with
+            {t("chat.suggestions.intro")}
           </Text>
         </View>
         <View className="h-px flex-1 bg-slate-200" />
@@ -40,7 +46,7 @@ export default function ChatSuggestionsSection({
               />
             </View>
             <Text className="flex-1 text-sm font-medium text-heading">
-              {suggestion.label}
+              {t(`chat.suggestions.${SUGGESTION_I18N_KEYS[suggestion.id]}`)}
             </Text>
           </Pressable>
         ))}

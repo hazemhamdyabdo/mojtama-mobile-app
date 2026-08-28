@@ -1,6 +1,7 @@
 import ResidentStatusBadge from "@/features/residents/components/ResidentStatusBadge";
 import type { Resident } from "@/features/residents/types";
 import { Image } from "expo-image";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 type ResidentProfileCardProps = {
@@ -17,6 +18,7 @@ function ContactCard({ label, value }: { label: string; value: string }) {
 }
 
 export default function ResidentProfileCard({ resident }: ResidentProfileCardProps) {
+  const { t } = useTranslation();
   const units = resident.units ?? [
     { id: "default", label: `${resident.unit} · ${resident.building}` },
   ];
@@ -45,7 +47,7 @@ export default function ResidentProfileCard({ resident }: ResidentProfileCardPro
       </View>
 
       <View className="mt-5">
-        <Text className="mb-2 text-sm font-medium text-slate-500">Units</Text>
+        <Text className="mb-2 text-sm font-medium text-slate-500">{t("common.units")}</Text>
         <View className="flex-row flex-wrap gap-2">
           {units.map((unit) => (
             <View

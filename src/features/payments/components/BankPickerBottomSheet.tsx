@@ -19,6 +19,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 export type BankPickerBottomSheetRef = {
@@ -35,6 +36,7 @@ const BankPickerBottomSheet = forwardRef<
   BankPickerBottomSheetRef,
   BankPickerBottomSheetProps
 >(function BankPickerBottomSheet({ selectedBankId, onSelectBank }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -93,7 +95,7 @@ const BankPickerBottomSheet = forwardRef<
     >
       <BottomSheetView className="flex-1 px-4 pb-6">
         <Text className="mb-4 text-center text-lg font-bold text-heading">
-          Select Your Bank
+          {t("payments.bankTransfer.selectYourBank")}
         </Text>
 
         <View className="mb-4 flex-row items-center rounded-full border border-card-border bg-white px-4">
@@ -101,7 +103,7 @@ const BankPickerBottomSheet = forwardRef<
           <BottomSheetTextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
-            placeholder="Search For Your Bank"
+            placeholder={t("payments.bankTransfer.searchBank")}
             placeholderTextColor={colors.secText}
             className="flex-1 py-3.5 pl-2 text-base text-heading"
           />

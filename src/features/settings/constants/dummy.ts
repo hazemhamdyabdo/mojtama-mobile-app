@@ -15,20 +15,20 @@ export const SETTINGS_PROFILE: SettingsProfile = {
 };
 
 export const PROFILE_SETTINGS_ITEMS: SettingsRowItem[] = [
-  { id: "profile", label: "Profile", icon: "account-outline" },
-  { id: "update-name", label: "Update Name", icon: "pencil-outline" },
-  { id: "update-email", label: "Update Email", icon: "email-outline" },
-  { id: "update-phone", label: "Update Phone", icon: "phone-sync-outline" },
+  { id: "profile", icon: "account-outline" },
+  { id: "update-name", icon: "pencil-outline" },
+  { id: "update-email", icon: "email-outline" },
+  { id: "update-phone", icon: "phone-sync-outline" },
 ];
 
 export const APP_SETTINGS_ITEMS: SettingsRowItem[] = [
-  { id: "notifications", label: "Notifications", icon: "bell-outline" },
-  { id: "language", label: "Language", icon: "translate" },
+  { id: "notifications", icon: "bell-outline" },
+  { id: "language", icon: "translate" },
 ];
 
 export const ABOUT_SETTINGS_ITEMS: SettingsRowItem[] = [
-  { id: "privacy", label: "Privacy", icon: "shield-lock-outline" },
-  { id: "help", label: "Help", icon: "help-circle-outline" },
+  { id: "privacy", icon: "shield-lock-outline" },
+  { id: "help", icon: "help-circle-outline" },
 ];
 
 export const APP_VERSION = "8.2.5";

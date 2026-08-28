@@ -3,6 +3,7 @@ import ServiceRoleBadge from "@/features/service/components/ServiceRoleBadge";
 import type { ServiceRole } from "@/features/service/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type ServiceHeaderProps = {
@@ -22,6 +23,7 @@ export default function ServiceHeader({
   notificationCount = 0,
   onNotificationsPress,
 }: ServiceHeaderProps) {
+  const { t } = useTranslation();
   const showBadge = notificationCount > 0;
 
   return (
@@ -47,7 +49,7 @@ export default function ServiceHeader({
       <Pressable
         onPress={onNotificationsPress}
         accessibilityRole="button"
-        accessibilityLabel="Notifications"
+        accessibilityLabel={t("common.notifications")}
         className="relative size-11 items-center justify-center rounded-full border border-card-border active:opacity-[0.92]"
       >
         <MaterialDesignIcons name="bell-outline" color={colors.primary} size={22} />

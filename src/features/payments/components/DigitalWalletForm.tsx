@@ -2,6 +2,7 @@ import { colors } from "@/theme/colors";
 import PaymentProviderLogo from "@/features/payments/components/PaymentProviderLogo";
 import type { PaymentWallet } from "@/features/payments/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type DigitalWalletFormProps = {
@@ -15,10 +16,12 @@ export default function DigitalWalletForm({
   error,
   onOpenWalletPicker,
 }: DigitalWalletFormProps) {
+  const { t } = useTranslation();
+
   return (
     <View>
       <Text className="mb-2 text-sm font-semibold text-heading">
-        Digital Wallet
+        {t("payments.methods.digitalWallet")}
       </Text>
       <Pressable
         onPress={onOpenWalletPicker}
@@ -38,7 +41,7 @@ export default function DigitalWalletForm({
           >
             {selectedWallet
               ? `${selectedWallet.name} - ${selectedWallet.nameAr}`
-              : "Select Wallet"}
+              : t("payments.wallet.select")}
           </Text>
         </View>
         <MaterialDesignIcons name="chevron-down" color={colors.secText} size={22} />

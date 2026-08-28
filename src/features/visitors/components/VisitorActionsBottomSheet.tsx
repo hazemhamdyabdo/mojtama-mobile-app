@@ -1,9 +1,3 @@
-import { colors } from "@/theme/colors";
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
 import {
   forwardRef,
   useCallback,
@@ -11,8 +5,15 @@ import {
   useRef,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { colors } from "@/theme/colors";
+import {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
 
 export type VisitorActionsBottomSheetRef = {
   open: () => void;
@@ -28,6 +29,7 @@ const VisitorActionsBottomSheet = forwardRef<
   VisitorActionsBottomSheetRef,
   VisitorActionsBottomSheetProps
 >(function VisitorActionsBottomSheet({ onEdit, onDelete }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
 
@@ -68,7 +70,6 @@ const VisitorActionsBottomSheet = forwardRef<
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
@@ -80,7 +81,7 @@ const VisitorActionsBottomSheet = forwardRef<
           className="py-4 active:opacity-[0.92]"
         >
           <Text className="text-base font-medium text-heading">
-            Edit Visitor
+            {t("visitors.actions.edit")}
           </Text>
         </Pressable>
 
@@ -92,7 +93,7 @@ const VisitorActionsBottomSheet = forwardRef<
           className="py-4 active:opacity-[0.92]"
         >
           <Text className="text-base font-medium text-rejected-500">
-            Delete Visitor
+            {t("visitors.actions.delete")}
           </Text>
         </Pressable>
 
@@ -101,7 +102,7 @@ const VisitorActionsBottomSheet = forwardRef<
           accessibilityRole="button"
           className="items-center py-3 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-heading">Cancel</Text>
+          <Text className="text-base font-bold text-heading">{t("common.cancel")}</Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>

@@ -4,6 +4,7 @@ import type { BankTransferFormValues } from "@/features/payments/schemas/payment
 import type { PaymentBank } from "@/features/payments/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Controller, type Control, type FieldErrors } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, TextInput, View } from "react-native";
 
 type BankTransferFormProps = {
@@ -19,11 +20,13 @@ export default function BankTransferForm({
   selectedBank,
   onOpenBankPicker,
 }: BankTransferFormProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="gap-4">
       <View>
         <Text className="mb-2 text-sm font-semibold text-heading">
-          Bank Name
+          {t("payments.bankTransfer.bankName")}
         </Text>
         <Pressable
           onPress={onOpenBankPicker}
@@ -41,7 +44,7 @@ export default function BankTransferForm({
                 selectedBank ? "text-heading" : "text-sec-text"
               }`}
             >
-              {selectedBank?.name ?? "Select Bank"}
+              {selectedBank?.name ?? t("payments.bankTransfer.selectBank")}
             </Text>
           </View>
           <MaterialDesignIcons name="chevron-down" color={colors.secText} size={22} />
@@ -55,7 +58,7 @@ export default function BankTransferForm({
 
       <View>
         <Text className="mb-2 text-sm font-semibold text-heading">
-          Account No.
+          {t("payments.bankTransfer.accountNo")}
         </Text>
         <Controller
           control={control}
@@ -83,7 +86,7 @@ export default function BankTransferForm({
 
       <View>
         <Text className="mb-2 text-sm font-semibold text-heading">
-          Beneficiary name
+          {t("payments.bankTransfer.beneficiaryName")}
         </Text>
         <Controller
           control={control}

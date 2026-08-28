@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
+import { Tabs } from "expo-router";
+import { View, type ColorValue } from "react-native";
+
 import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
-import { Tabs } from "expo-router";
-import { View, type ColorValue } from "react-native";
 
 const ACTIVE_COLOR = colors.primary;
 const INACTIVE_COLOR = colors.secText;
@@ -34,6 +36,8 @@ function TabBarIcon({ name, color, size, focused }: TabBarIconProps) {
 }
 
 export default function TabsLayout() {
+  const { t } = useTranslation();
+
   return (
     <ScreenSafeAreaView className="flex-1 bg-white" edges={["top"]}>
       <Tabs
@@ -62,7 +66,7 @@ export default function TabsLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: "Home",
+            title: t("tabs.home"),
             tabBarIcon: ({ color, size, focused }) => (
               <TabBarIcon
                 name="home-outline"
@@ -76,7 +80,7 @@ export default function TabsLayout() {
         <Tabs.Screen
           name="service"
           options={{
-            title: "Service",
+            title: t("tabs.service"),
             tabBarIcon: ({ color, size, focused }) => (
               <TabBarIcon
                 name="account-group-outline"
@@ -90,7 +94,7 @@ export default function TabsLayout() {
         <Tabs.Screen
           name="more"
           options={{
-            title: "More",
+            title: t("tabs.more"),
             tabBarIcon: ({ color, size, focused }) => (
               <TabBarIcon
                 name="view-grid-outline"

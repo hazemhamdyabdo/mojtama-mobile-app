@@ -1,5 +1,7 @@
 import { PAYMENT_FILTERS } from "@/features/payments/constants/dummy";
 import type { PaymentBillFilter } from "@/features/payments/types";
+import { translateOptions } from "@/localization/translateLabel";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text } from "react-native";
 
 type PaymentFilterChipsProps = {
@@ -42,13 +44,16 @@ export default function PaymentFilterChips({
   selectedFilter,
   onSelectFilter,
 }: PaymentFilterChipsProps) {
+  const { t } = useTranslation();
+  const filters = translateOptions(t, "payments.filters", PAYMENT_FILTERS);
+
   return (
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerClassName="mb-6 gap-2"
     >
-      {PAYMENT_FILTERS.map((filter) => (
+      {filters.map((filter) => (
         <PaymentFilterChipItem
           key={filter.id}
           label={filter.label}

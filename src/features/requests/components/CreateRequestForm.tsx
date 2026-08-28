@@ -16,10 +16,6 @@ import {
   EMERGENCY_ISSUE_TYPES,
   getIssueTypeOptionsForRequestType,
   MAINTENANCE_ISSUE_TYPES,
-  REQUEST_ISSUE_TYPE_LABELS,
-  REQUEST_PRIORITY_LABELS,
-  REQUEST_PRIORITY_SHORT_LABELS,
-  REQUEST_TYPE_LABELS,
 } from "@/features/requests/constants/dummy";
 import {
   createRequestSchema,
@@ -27,10 +23,12 @@ import {
   type CreateRequestFormValues,
 } from "@/features/requests/schemas/createRequestSchema";
 import type { RequestIssueType, RequestPriority, RequestType } from "@/features/requests/types";
+import { translateLabel } from "@/localization/translateLabel";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import {
   Pressable,
   ScrollView,
@@ -61,6 +59,7 @@ export default function CreateRequestForm({
   submitLabel,
   variant = "create",
 }: CreateRequestFormProps) {
+  const { t } = useTranslation();
   const isEdit = variant === "edit";
   const typePickerRef = useRef<RequestTypePickerBottomSheetRef>(null);
   const locationPickerRef = useRef<RequestLocationPickerBottomSheetRef>(null);
@@ -87,10 +86,9 @@ export default function CreateRequestForm({
     isEdit &&
     (requestType === "maintenance" || requestType === "emergency");
   const resolvedSubmitLabel =
-    submitLabel ?? (isEdit ? "Save Changes" : "Create Request");
-  const priorityLabels = isEdit
-    ? REQUEST_PRIORITY_SHORT_LABELS
-    : REQUEST_PRIORITY_LABELS;
+    submitLabel ??
+    (isEdit ? t("requests.form.submit.edit") : t("requests.form.submit.create"));
+  const priorityPrefix = isEdit ? "requests.priorityShort" : "requests.priorities";
 
   return (
     <View className="flex-1">
@@ -102,13 +100,14 @@ export default function CreateRequestForm({
       >
         {!isEdit ? (
           <Text className="mb-6 text-base font-bold text-heading">
-            What Type Of Request Do You Need To Make?
+            {t("requests.create.intro")}
           </Text>
         ) : null}
 
         <View className="mb-4">
           <Text className="mb-2 text-sm font-semibold text-heading">
-            Title<Text className="text-rejected">*</Text>
+            {t("requests.form.fields.title")}
+            <Text className="text-rejected">*</Text>
           </Text>
           <Controller
             control={control}
@@ -118,7 +117,7 @@ export default function CreateRequestForm({
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                placeholder="Enter Request title"
+                placeholder={t("requests.form.titlePlaceholder")}
                 placeholderTextColor={colors.secText}
                 className={`rounded-xl border bg-white px-4 py-3.5 text-base text-heading ${
                   errors.title ? "border-rejected-200" : "border-card-border"
@@ -133,7 +132,7 @@ export default function CreateRequestForm({
 
         <View className="mb-4">
           <Text className="mb-2 text-sm font-semibold text-heading">
-            Description
+            {t("requests.form.fields.description")}
           </Text>
           <Controller
             control={control}
@@ -143,7 +142,7 @@ export default function CreateRequestForm({
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                placeholder="Enter Request description"
+                placeholder={t("requests.form.descriptionPlaceholder")}
                 placeholderTextColor={colors.secText}
                 multiline
                 textAlignVertical="top"
@@ -155,7 +154,8 @@ export default function CreateRequestForm({
 
         <View className="mb-4">
           <Text className="mb-2 text-sm font-semibold text-heading">
-            Location<Text className="text-rejected">*</Text>
+            {t("requests.form.fields.location")}
+            <Text className="text-rejected">*</Text>
           </Text>
           <Pressable
             onPress={() => locationPickerRef.current?.open(location)}
@@ -165,7 +165,7 @@ export default function CreateRequestForm({
             }`}
           >
             <Text className="text-base text-heading">
-              {location || "Select location"}
+              {location || t("requests.form.selectLocation")}
             </Text>
             <MaterialDesignIcons name="chevron-down" color={colors.secText} size={20} />
           </Pressable>
@@ -178,7 +178,8 @@ export default function CreateRequestForm({
 
         <View className="mb-4">
           <Text className="mb-2 text-sm font-semibold text-heading">
-            Request Type<Text className="text-rejected">*</Text>
+            {t("requests.form.fields.requestType")}
+            <Text className="text-rejected">*</Text>
           </Text>
           <Pressable
             onPress={() =>
@@ -197,8 +198,8 @@ export default function CreateRequestForm({
               }`}
             >
               {requestType
-                ? REQUEST_TYPE_LABELS[requestType as RequestType]
-                : "Select Request type"}
+                ? translateLabel(t, "requests.types", requestType)
+                : t("requests.form.selectRequestType")}
             </Text>
             <MaterialDesignIcons name="chevron-down" color={colors.secText} size={20} />
           </Pressable>
@@ -212,7 +213,8 @@ export default function CreateRequestForm({
         {showIssueTypeField ? (
           <View className="mb-4">
             <Text className="mb-2 text-sm font-semibold text-heading">
-              Issue Type<Text className="text-rejected">*</Text>
+              {t("requests.form.fields.issueType")}
+              <Text className="text-rejected">*</Text>
             </Text>
             <Pressable
               onPress={() =>
@@ -232,8 +234,8 @@ export default function CreateRequestForm({
                 }`}
               >
                 {issueType
-                  ? REQUEST_ISSUE_TYPE_LABELS[issueType as RequestIssueType]
-                  : "Select Issue type"}
+                  ? translateLabel(t, "requests.issueTypes", issueType as RequestIssueType)
+                  : t("requests.form.selectIssueType")}
               </Text>
               <MaterialDesignIcons name="chevron-down" color={colors.secText} size={20} />
             </Pressable>
@@ -247,7 +249,7 @@ export default function CreateRequestForm({
 
         {!isEdit && requestType === "maintenance" ? (
           <RequestIssueTypeGrid
-            title="Please choose Maintenance type"
+            title={t("requests.form.chooseMaintenanceType")}
             options={MAINTENANCE_ISSUE_TYPES}
             selectedId={issueType}
             onSelect={(nextIssueType) =>
@@ -258,7 +260,7 @@ export default function CreateRequestForm({
 
         {!isEdit && requestType === "emergency" ? (
           <RequestIssueTypeGrid
-            title="Please choose Emergency type"
+            title={t("requests.form.chooseEmergencyType")}
             options={EMERGENCY_ISSUE_TYPES}
             selectedId={issueType}
             onSelect={(nextIssueType) =>
@@ -269,7 +271,8 @@ export default function CreateRequestForm({
 
         <View className={isEdit ? "mb-0" : "mb-4"}>
           <Text className="mb-2 text-sm font-semibold text-heading">
-            Request Priority<Text className="text-rejected">*</Text>
+            {t("requests.form.fields.requestPriority")}
+            <Text className="text-rejected">*</Text>
           </Text>
           <Pressable
             onPress={() =>
@@ -288,8 +291,8 @@ export default function CreateRequestForm({
               }`}
             >
               {priority
-                ? priorityLabels[priority as RequestPriority]
-                : "Select Request Priority"}
+                ? translateLabel(t, priorityPrefix, priority)
+                : t("requests.form.fields.requestPriority")}
             </Text>
             <MaterialDesignIcons name="chevron-down" color={colors.secText} size={20} />
           </Pressable>

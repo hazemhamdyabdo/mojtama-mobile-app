@@ -1,5 +1,7 @@
 import { REQUEST_FILTERS } from "@/features/requests/constants/dummy";
 import type { RequestFilter } from "@/features/requests/types";
+import { translateLabel } from "@/localization/translateLabel";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text } from "react-native";
 
 type RequestFilterChipsProps = {
@@ -42,6 +44,8 @@ export default function RequestFilterChips({
   selectedFilter,
   onSelectFilter,
 }: RequestFilterChipsProps) {
+  const { t } = useTranslation();
+
   return (
     <ScrollView
       horizontal
@@ -51,7 +55,7 @@ export default function RequestFilterChips({
       {REQUEST_FILTERS.map((filter) => (
         <FilterChip
           key={filter.id}
-          label={filter.label}
+          label={translateLabel(t, "requests.filters", filter.id)}
           selected={selectedFilter === filter.id}
           onPress={() => onSelectFilter(filter.id)}
         />

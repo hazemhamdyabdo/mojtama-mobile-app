@@ -9,10 +9,12 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 export default function UpdateEmailNewForm() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const {
     control,
@@ -32,7 +34,7 @@ export default function UpdateEmailNewForm() {
   return (
     <View>
       <SettingsUpdateIntro
-        title="Update Your Email"
+        title={t("settings.update.email.title")}
         subtitle="Enter Your New Email To Stay Connected"
       />
 

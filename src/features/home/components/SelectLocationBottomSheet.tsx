@@ -15,6 +15,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { I18nManager, Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -75,6 +76,7 @@ const SelectLocationBottomSheet = forwardRef<
   SelectLocationBottomSheetRef,
   SelectLocationBottomSheetProps
 >(function SelectLocationBottomSheet({ value, onConfirm }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const textAlign = I18nManager.isRTL ? "right" : "left";
@@ -132,22 +134,22 @@ const SelectLocationBottomSheet = forwardRef<
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
         <Text className="mb-4 text-center text-base font-bold text-heading">
-          Select Location
+          {t("home.location.title")}
         </Text>
 
         <View className="gap-3">
           <LocationOption
             icon="video-outline"
-            title="Virtual Meeting"
-            subtitle="Connect via video call"
+            title={t("home.location.virtual.title")}
+            subtitle={t("home.location.virtual.subtitle")}
             selected={isVirtual}
             onPress={() => handleSelectType("virtual")}
           />
 
           <LocationOption
             icon="map-marker-outline"
-            title="In-person Meeting"
-            subtitle="Meet at a physical location"
+            title={t("home.location.inPerson.title")}
+            subtitle={t("home.location.inPerson.subtitle")}
             selected={!isVirtual}
             onPress={() => handleSelectType("in-person")}
           />
@@ -155,7 +157,9 @@ const SelectLocationBottomSheet = forwardRef<
 
         <View className="mt-5">
           <Text className="mb-2 text-sm font-medium text-label">
-            {isVirtual ? "Meeting link" : "Meeting location"}
+            {isVirtual
+              ? t("home.location.linkLabel")
+              : t("home.location.locationLabel")}
           </Text>
 
           <View className="flex-row items-center rounded-xl border border-card-border bg-white px-4">
@@ -163,7 +167,9 @@ const SelectLocationBottomSheet = forwardRef<
               value={draftValue}
               onChangeText={setDraftValue}
               placeholder={
-                isVirtual ? "Enter meeting link" : "Enter meeting location"
+                isVirtual
+                  ? t("home.location.linkPlaceholder")
+                  : t("home.location.locationPlaceholder")
               }
               placeholderTextColor={colors.secText}
               autoCapitalize="none"
@@ -195,7 +201,9 @@ const SelectLocationBottomSheet = forwardRef<
           accessibilityRole="button"
           className="mt-5 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-50"
         >
-          <Text className="text-base font-bold text-white">Add Location</Text>
+          <Text className="text-base font-bold text-white">
+            {t("home.location.confirm")}
+          </Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>

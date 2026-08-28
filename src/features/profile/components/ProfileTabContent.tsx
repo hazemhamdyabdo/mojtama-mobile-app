@@ -1,7 +1,8 @@
-import { SUPPORT_REQUESTS } from "@/features/profile/constants/dummy";
 import ProfileEmptyTabState from "@/features/profile/components/ProfileEmptyTabState";
 import SupportRequestCard from "@/features/profile/components/SupportRequestCard";
+import { SUPPORT_REQUESTS } from "@/features/profile/constants/dummy";
 import type { ProfileTab } from "@/features/profile/types";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 type ProfileTabContentProps = {
@@ -9,6 +10,8 @@ type ProfileTabContentProps = {
 };
 
 export default function ProfileTabContent({ activeTab }: ProfileTabContentProps) {
+  const { t } = useTranslation();
+
   switch (activeTab) {
     case "support-requests":
       return (
@@ -20,15 +23,15 @@ export default function ProfileTabContent({ activeTab }: ProfileTabContentProps)
       );
     case "payments":
       return (
-        <ProfileEmptyTabState message="No payments to show yet." />
+        <ProfileEmptyTabState message={t("profile.empty.payments")} />
       );
     case "visitations":
       return (
-        <ProfileEmptyTabState message="No visitations to show yet." />
+        <ProfileEmptyTabState message={t("profile.empty.visitations")} />
       );
     default: {
-      const _exhaustive: never = activeTab;
-      return _exhaustive;
+      const exhaustive: never = activeTab;
+      return exhaustive;
     }
   }
 }

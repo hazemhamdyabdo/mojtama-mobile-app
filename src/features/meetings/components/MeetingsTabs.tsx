@@ -1,4 +1,6 @@
 import { MEETINGS_TABS, type MeetingsTab } from "@/features/meetings/constants/dummy";
+import { translateLabel } from "@/localization/translateLabel";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type MeetingsTabsProps = {
@@ -10,6 +12,8 @@ export default function MeetingsTabs({
   activeTab,
   onTabChange,
 }: MeetingsTabsProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="mb-6 flex-row rounded-xl bg-slate-100 p-1">
       {MEETINGS_TABS.map((tab) => {
@@ -30,7 +34,7 @@ export default function MeetingsTabs({
                 isActive ? "text-primary" : "text-slate-500"
               }`}
             >
-              {tab.label}
+              {translateLabel(t, "meetings.tabs", tab.id)}
             </Text>
           </Pressable>
         );

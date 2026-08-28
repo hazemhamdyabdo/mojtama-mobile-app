@@ -10,8 +10,11 @@ import type {
   NotificationPreferencesState,
 } from "@/features/notifications/types";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
+
 export default function NotificationPreferencesScreen() {
+  const { t } = useTranslation();
   const [preferences, setPreferences] = useState<NotificationPreferencesState>(
     DEFAULT_NOTIFICATION_PREFERENCES,
   );
@@ -35,7 +38,7 @@ export default function NotificationPreferencesScreen() {
         {NOTIFICATION_PREFERENCES.map((preference) => (
           <NotificationPreferenceCard
             key={preference.id}
-            title={preference.title}
+            title={t(`notifications.preferences.${preference.id}`)}
             description={preference.description}
             value={preferences[preference.id]}
             onValueChange={(value) => handleToggle(preference.id, value)}

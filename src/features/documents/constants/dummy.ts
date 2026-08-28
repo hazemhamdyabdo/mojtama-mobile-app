@@ -4,15 +4,12 @@ import type {
   DocumentCategoryFilter,
 } from "@/features/documents/types";
 
-export const DOCUMENT_CATEGORY_FILTERS: {
-  id: DocumentCategoryFilter;
-  label: string;
-}[] = [
-  { id: "all", label: "All" },
-  { id: "notices", label: "Notices" },
-  { id: "reports", label: "Reports" },
-  { id: "forms", label: "Forms" },
-  { id: "policies", label: "Policies" },
+export const DOCUMENT_CATEGORY_FILTERS: { id: DocumentCategoryFilter }[] = [
+  { id: "all" },
+  { id: "notices" },
+  { id: "reports" },
+  { id: "forms" },
+  { id: "policies" },
 ];
 
 export const DOCUMENT_CATEGORIES: DocumentCategory[] = [
@@ -21,13 +18,6 @@ export const DOCUMENT_CATEGORIES: DocumentCategory[] = [
   "forms",
   "policies",
 ];
-
-export const DOCUMENT_CATEGORY_LABELS: Record<DocumentCategory, string> = {
-  notices: "Notices",
-  reports: "Reports",
-  forms: "Forms",
-  policies: "Policies",
-};
 
 export const DUMMY_DOCUMENTS: CommunityDocument[] = [
   {

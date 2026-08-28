@@ -8,13 +8,16 @@ import type { VisitorFormValues } from "@/features/visitors/schemas/visitorSchem
 import type { Visitor } from "@/features/visitors/types";
 import { useRouter, type Href } from "expo-router";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
+
 type EditVisitorScreenProps = {
   visitor: Visitor;
 };
 
 export default function EditVisitorScreen({ visitor }: EditVisitorScreenProps) {
   const router = useRouter();
+  const { t } = useTranslation();
   const deleteSheetRef = useRef<DeleteVisitorBottomSheetRef>(null);
 
   const handleSubmit = (values: VisitorFormValues) => {
@@ -30,7 +33,7 @@ export default function EditVisitorScreen({ visitor }: EditVisitorScreenProps) {
   return (
     <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
-        <VisitorFormHeader title="Edit Visitor" />
+        <VisitorFormHeader title={t("visitors.edit.title")} />
         <VisitorForm
           defaultValues={{
             name: visitor.name,
@@ -44,7 +47,7 @@ export default function EditVisitorScreen({ visitor }: EditVisitorScreenProps) {
             phone: visitor.phone,
             email: visitor.email ?? "",
           }}
-          submitLabel="Update Visit"
+          submitLabel={t("visitors.form.submit.update")}
           onSubmit={handleSubmit}
           onDelete={() => deleteSheetRef.current?.open()}
         />

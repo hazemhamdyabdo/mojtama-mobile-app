@@ -14,10 +14,23 @@ import {
 } from "@/features/settings/constants/dummy";
 import { useRouter, type Href } from "expo-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Modal, ScrollView, View } from "react-native";
+
+const SETTINGS_ITEM_I18N_KEYS: Record<string, string> = {
+  profile: "profile",
+  "update-name": "updateName",
+  "update-email": "updateEmail",
+  "update-phone": "updatePhone",
+  notifications: "notifications",
+  language: "language",
+  privacy: "privacy",
+  help: "help",
+};
 
 export default function SettingsScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   const [isLanguageSettingsOpen, setIsLanguageSettingsOpen] = useState(false);
 
@@ -80,11 +93,11 @@ export default function SettingsScreen() {
           onPress={() => handleSettingsPress("profile")}
         />
 
-        <SettingsSection title="Profile Settings">
+        <SettingsSection title={t("settings.sections.profile")}>
           {PROFILE_SETTINGS_ITEMS.map((item, index) => (
             <SettingsRow
               key={item.id}
-              label={item.label}
+              label={t(`settings.items.${SETTINGS_ITEM_I18N_KEYS[item.id]}`)}
               icon={item.icon}
               onPress={() => handleSettingsPress(item.id)}
               showDivider={index < PROFILE_SETTINGS_ITEMS.length - 1}
@@ -92,11 +105,11 @@ export default function SettingsScreen() {
           ))}
         </SettingsSection>
 
-        <SettingsSection title="App Settings">
+        <SettingsSection title={t("settings.sections.app")}>
           {APP_SETTINGS_ITEMS.map((item, index) => (
             <SettingsRow
               key={item.id}
-              label={item.label}
+              label={t(`settings.items.${SETTINGS_ITEM_I18N_KEYS[item.id]}`)}
               icon={item.icon}
               onPress={() => handleSettingsPress(item.id)}
               showDivider={index < APP_SETTINGS_ITEMS.length - 1}
@@ -104,11 +117,11 @@ export default function SettingsScreen() {
           ))}
         </SettingsSection>
 
-        <SettingsSection title="About">
+        <SettingsSection title={t("settings.sections.about")}>
           {ABOUT_SETTINGS_ITEMS.map((item, index) => (
             <SettingsRow
               key={item.id}
-              label={item.label}
+              label={t(`settings.items.${SETTINGS_ITEM_I18N_KEYS[item.id]}`)}
               icon={item.icon}
               onPress={() => handleSettingsPress(item.id)}
               showDivider={index < ABOUT_SETTINGS_ITEMS.length - 1}
@@ -116,7 +129,7 @@ export default function SettingsScreen() {
           ))}
 
           <SettingsToggleRow
-            label="Dark Theme"
+            label={t("settings.darkTheme")}
             value={isDarkTheme}
             onValueChange={setIsDarkTheme}
           />

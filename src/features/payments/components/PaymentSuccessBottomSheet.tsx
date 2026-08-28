@@ -13,6 +13,7 @@ import {
   useRef,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 export type PaymentSuccessBottomSheetRef = {
@@ -28,6 +29,7 @@ const PaymentSuccessBottomSheet = forwardRef<
   PaymentSuccessBottomSheetRef,
   PaymentSuccessBottomSheetProps
 >(function PaymentSuccessBottomSheet({ onViewDetails }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ["52%"], []);
 
@@ -73,10 +75,10 @@ const PaymentSuccessBottomSheet = forwardRef<
         </View>
 
         <Text className="text-xl font-bold text-heading">
-          Payment Successful!
+          {t("payments.success.title")}
         </Text>
         <Text className="mt-2 text-center text-sm leading-5 text-sec-text">
-          Thank You! Your Transaction Has Been Successfully Processed.
+          {t("payments.success.message")}
         </Text>
 
         <Pressable
@@ -84,7 +86,9 @@ const PaymentSuccessBottomSheet = forwardRef<
           accessibilityRole="button"
           className="mt-8 w-full items-center rounded-2xl border border-primary bg-white py-4 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-primary">View Details</Text>
+          <Text className="text-base font-bold text-primary">
+            {t("payments.success.viewDetails")}
+          </Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>

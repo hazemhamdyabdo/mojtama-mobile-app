@@ -1,4 +1,5 @@
 import type { PaymentBillStatus } from "@/features/payments/types";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 type PaymentStatusBadgeProps = {
@@ -11,19 +12,16 @@ function getStatusStyles(status: PaymentBillStatus) {
       return {
         container: "bg-pending-50",
         text: "text-pending-700",
-        label: "Pending",
       };
     case "overdue":
       return {
         container: "bg-rejected-50",
         text: "text-rejected",
-        label: "Overdue",
       };
     case "paid":
       return {
         container: "bg-approved-50",
         text: "text-approved-600",
-        label: "Paid",
       };
     default: {
       const exhaustive: never = status;
@@ -33,12 +31,13 @@ function getStatusStyles(status: PaymentBillStatus) {
 }
 
 export default function PaymentStatusBadge({ status }: PaymentStatusBadgeProps) {
+  const { t } = useTranslation();
   const styles = getStatusStyles(status);
 
   return (
-    <View className={`rounded-full px-3 py-1 ${styles.container}`}>
-      <Text className={`text-xs font-semibold ${styles.text}`}>
-        {styles.label}
+    <View className={`rounded-full px-2.5 py-1 ${styles.container}`}>
+      <Text className={`text-xs font-medium ${styles.text}`}>
+        {t(`payments.status.${status}`)}
       </Text>
     </View>
   );

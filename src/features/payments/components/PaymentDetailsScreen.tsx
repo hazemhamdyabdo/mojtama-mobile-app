@@ -9,7 +9,9 @@ import PaymentDetailsTitleSection from "@/features/payments/components/PaymentDe
 import PaymentDetailsTotalRow from "@/features/payments/components/PaymentDetailsTotalRow";
 import type { PaymentBillDetails } from "@/features/payments/types";
 import { useRouter, type Href } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
+
 type PaymentDetailsScreenProps = {
   bill: PaymentBillDetails;
 };
@@ -18,6 +20,7 @@ export default function PaymentDetailsScreen({
   bill,
 }: PaymentDetailsScreenProps) {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handlePayPress = () => {
     router.push(`/payment/${bill.id}/methods` as Href);
@@ -46,18 +49,21 @@ export default function PaymentDetailsScreen({
 
         <PaymentDetailsInfoCard
           columns={[
-            { label: "Billed by", value: bill.invoice.billedBy },
-            { label: "Issued on", value: bill.invoice.issuedOn },
-            { label: "Payment Due", value: bill.invoice.paymentDue },
+            { label: t("payments.invoice.billedBy"), value: bill.invoice.billedBy },
+            { label: t("payments.invoice.issuedOn"), value: bill.invoice.issuedOn },
+            { label: t("payments.invoice.paymentDue"), value: bill.invoice.paymentDue },
           ]}
         />
 
         {bill.receipt ? (
           <PaymentDetailsInfoCard
             columns={[
-              { label: "Ref number", value: bill.receipt.refNumber },
-              { label: "Payment Method", value: bill.receipt.paymentMethod },
-              { label: "Paid on", value: bill.receipt.paidOn },
+              { label: t("payments.invoice.refNumber"), value: bill.receipt.refNumber },
+              {
+                label: t("payments.invoice.paymentMethod"),
+                value: bill.receipt.paymentMethod,
+              },
+              { label: t("payments.invoice.paidOn"), value: bill.receipt.paidOn },
             ]}
           />
         ) : null}

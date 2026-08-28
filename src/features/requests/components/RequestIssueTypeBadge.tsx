@@ -1,38 +1,11 @@
 import type { RequestIssueType } from "@/features/requests/types";
+import { translateLabel } from "@/localization/translateLabel";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 type RequestIssueTypeBadgeProps = {
   issueType: RequestIssueType;
 };
-
-function getIssueLabel(issueType: RequestIssueType): string {
-  switch (issueType) {
-    case "electricity":
-      return "Electricity";
-    case "plumbing":
-      return "Plumbing";
-    case "hvac":
-      return "HVAC";
-    case "delivery":
-      return "Delivery";
-    case "fire":
-      return "Fire";
-    case "water-damage":
-      return "Water damage";
-    case "medical":
-      return "Medical";
-    case "security-threat":
-      return "Security Threat";
-    case "electrical":
-      return "Electrical";
-    case "other":
-      return "Other";
-    default: {
-      const exhaustive: never = issueType;
-      return exhaustive;
-    }
-  }
-}
 
 function getIssueStyles(issueType: RequestIssueType) {
   switch (issueType) {
@@ -55,12 +28,13 @@ function getIssueStyles(issueType: RequestIssueType) {
 export default function RequestIssueTypeBadge({
   issueType,
 }: RequestIssueTypeBadgeProps) {
+  const { t } = useTranslation();
   const styles = getIssueStyles(issueType);
 
   return (
     <View className={`rounded-full px-3 py-1 ${styles.container}`}>
       <Text className={`text-xs font-medium ${styles.text}`}>
-        {getIssueLabel(issueType)}
+        {translateLabel(t, "requests.issueTypes", issueType)}
       </Text>
     </View>
   );

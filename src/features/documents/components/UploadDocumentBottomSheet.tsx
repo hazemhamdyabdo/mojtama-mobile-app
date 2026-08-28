@@ -1,5 +1,4 @@
 import { colors } from "@/theme/colors";
-import { DOCUMENT_CATEGORY_LABELS } from "@/features/documents/constants/dummy";
 import DocumentCategoryPickerBottomSheet, {
   type DocumentCategoryPickerBottomSheetRef,
 } from "@/features/documents/components/DocumentCategoryPickerBottomSheet";
@@ -8,6 +7,7 @@ import {
   type DocumentFormValues,
 } from "@/features/documents/schemas/documentSchema";
 import type { DocumentCategory, SelectedDocumentFile } from "@/features/documents/types";
+import { translateLabel } from "@/localization/translateLabel";
 import {
   DocumentFileError,
   getDefaultDocumentTitle,
@@ -29,6 +29,7 @@ import {
   type ComponentProps,
 } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Pressable, Text, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -45,6 +46,7 @@ const UploadDocumentBottomSheet = forwardRef<
   UploadDocumentBottomSheetRef,
   UploadDocumentBottomSheetProps
 >(function UploadDocumentBottomSheet({ onUpload }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const categoryPickerRef = useRef<DocumentCategoryPickerBottomSheetRef>(null);
   const insets = useSafeAreaInsets();
@@ -117,7 +119,7 @@ const UploadDocumentBottomSheet = forwardRef<
       const message =
         error instanceof DocumentFileError
           ? error.message
-          : "Unable to pick a document. Please try again.";
+          : t("documents.uploadSheet.pickError");
 
       setPickError(message);
       console.warn("Document pick failed", error);
@@ -128,7 +130,7 @@ const UploadDocumentBottomSheet = forwardRef<
 
   const handleUpload = handleSubmit((values) => {
     if (!selectedFile) {
-      setFileError("Please select a document to upload.");
+      setFileError(t("documents.uploadSheet.selectFileError"));
       return;
     }
 
@@ -154,7 +156,7 @@ const UploadDocumentBottomSheet = forwardRef<
           style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
         >
           <Text className="mb-4 text-center text-base font-bold text-heading">
-            Upload Documents
+            {t("documents.uploadSheet.title")}
           </Text>
 
           <Pressable
@@ -177,12 +179,12 @@ const UploadDocumentBottomSheet = forwardRef<
             </View>
             <Text className="mt-3 text-center text-sm text-slate-500">
               <Text className="font-semibold text-primary">
-                Click to upload
+                {t("documents.uploadSheet.clickToUpload")}
               </Text>{" "}
-              or drag and drop
+              {t("documents.uploadSheet.orDragAndDrop")}
             </Text>
             <Text className="mt-1 text-xs text-sec-text">
-              Max file size: 20 MB
+              {t("documents.uploadSheet.maxSize")}
             </Text>
             {selectedFile ? (
               <Text className="mt-2 text-xs font-medium text-heading">
@@ -199,7 +201,8 @@ const UploadDocumentBottomSheet = forwardRef<
 
           <View className="mt-4">
             <Text className="mb-2 text-sm font-semibold text-heading">
-              Documents name<Text className="text-rejected">*</Text>
+              {t("documents.uploadSheet.nameLabel")}
+              <Text className="text-rejected">*</Text>
             </Text>
             <Controller
               control={control}
@@ -209,7 +212,7 @@ const UploadDocumentBottomSheet = forwardRef<
                   value={value}
                   onChangeText={onChange}
                   onBlur={onBlur}
-                  placeholder="Document name"
+                  placeholder={t("documents.uploadSheet.namePlaceholder")}
                   placeholderTextColor={colors.secText}
                   className={`rounded-xl border bg-white px-4 py-3.5 text-base text-heading ${
                     errors.title ? "border-rejected-200" : "border-card-border"
@@ -226,7 +229,8 @@ const UploadDocumentBottomSheet = forwardRef<
 
           <View className="mt-4">
             <Text className="mb-2 text-sm font-semibold text-heading">
-              Category<Text className="text-rejected">*</Text>
+              {t("documents.categoryLabel")}
+              <Text className="text-rejected">*</Text>
             </Text>
             <Pressable
               onPress={() =>
@@ -249,8 +253,8 @@ const UploadDocumentBottomSheet = forwardRef<
                 }`}
               >
                 {category
-                  ? DOCUMENT_CATEGORY_LABELS[category as DocumentCategory]
-                  : "select category"}
+                  ? translateLabel(t, "documents.categories", category as DocumentCategory)
+                  : t("documents.uploadSheet.categoryPlaceholder")}
               </Text>
               <MaterialDesignIcons
                 name="chevron-down"
@@ -271,7 +275,7 @@ const UploadDocumentBottomSheet = forwardRef<
               accessibilityRole="button"
               className="flex-1 items-center rounded-2xl border border-input-text bg-white py-4 active:opacity-[0.92]"
             >
-              <Text className="text-base font-bold text-slate-500">Cancel</Text>
+              <Text className="text-base font-bold text-slate-500">{t("common.cancel")}</Text>
             </Pressable>
 
             <Pressable
@@ -280,7 +284,7 @@ const UploadDocumentBottomSheet = forwardRef<
               className="flex-1 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
             >
               <Text className="text-base font-bold text-white">
-                Upload Documents
+                {t("documents.uploadSheet.submit")}
               </Text>
             </Pressable>
           </View>

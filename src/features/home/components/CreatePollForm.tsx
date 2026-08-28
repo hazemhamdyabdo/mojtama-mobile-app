@@ -11,6 +11,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import {
   I18nManager,
   Platform,
@@ -42,6 +43,7 @@ type CreatePollFormProps = {
 };
 
 export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
+  const { t } = useTranslation();
   const textAlign = I18nManager.isRTL ? "right" : "left";
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
@@ -77,11 +79,11 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
         showsVerticalScrollIndicator={false}
       >
         <Text className="mb-6 text-2xl font-bold text-heading">
-          Create Poll
+          {t("home.postTypes.poll")}
         </Text>
 
         <View className="mb-5">
-          <FormLabel label="Title" required />
+          <FormLabel label={t("home.create.fields.title")} required />
 
           <Controller
             control={control}
@@ -91,7 +93,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                placeholder="Type Announcement title"
+                placeholder={t("home.create.announcement.titlePlaceholder")}
                 placeholderTextColor={colors.secText}
                 className={`rounded-xl border bg-white px-4 text-base text-heading ${
                   errors.title ? "border-rejected-200" : "border-card-border"
@@ -113,7 +115,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
         </View>
 
         <View className="mb-5">
-          <FormLabel label="Deadline" />
+          <FormLabel label={t("home.create.fields.deadline")} />
 
           <View className="flex-row gap-3">
             <Controller
@@ -135,7 +137,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
                         value ? "text-heading" : "text-sec-text"
                       }`}
                     >
-                      {value ? formatDate(value) : "Select Date"}
+                      {value ? formatDate(value) : t("home.create.selectDate")}
                     </Text>
                     <MaterialDesignIcons
                       name="calendar-blank-outline"
@@ -149,7 +151,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
                       value={value ?? new Date()}
                       mode="date"
                       display={Platform.OS === "ios" ? "spinner" : "default"}
-                      onValueChange={(_event, selectedDate) => {
+                      onChange={(_event, selectedDate) => {
                         onChange(selectedDate);
 
                         if (Platform.OS === "android") {
@@ -182,7 +184,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
                         value ? "text-heading" : "text-sec-text"
                       }`}
                     >
-                      {value ? formatTime(value) : "Select Time"}
+                      {value ? formatTime(value) : t("home.create.selectTime")}
                     </Text>
                     <MaterialDesignIcons
                       name="clock-outline"
@@ -196,7 +198,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
                       value={value ?? new Date()}
                       mode="time"
                       display={Platform.OS === "ios" ? "spinner" : "default"}
-                      onValueChange={(_event, selectedTime) => {
+                      onChange={(_event, selectedTime) => {
                         onChange(selectedTime);
 
                         if (Platform.OS === "android") {
@@ -253,7 +255,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
         />
 
         <View className="mb-5">
-          <FormLabel label="Poll options" />
+          <FormLabel label={t("home.create.fields.pollOptions")} />
 
           <View className="gap-3">
             {fields.map((field, index) => (
@@ -321,7 +323,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
         </View>
 
         <View className="mb-2">
-          <FormLabel label="Settings" className="mb-0" />
+          <FormLabel label={t("home.create.fields.settings")} className="mb-0" />
 
           <View className="rounded-xl  bg-white  ">
             <Controller
@@ -329,7 +331,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
               name="allowMembersToAddOptions"
               render={({ field: { value, onChange } }) => (
                 <SettingToggle
-                  label="Allow members to add options"
+                  label={t("home.create.poll.allowAddOptions")}
                   value={value}
                   onChange={onChange}
                   showDivider
@@ -342,7 +344,7 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
               name="allowMultipleChoice"
               render={({ field: { value, onChange } }) => (
                 <SettingToggle
-                  label="Allow people to choose multiple option"
+                  label={t("home.create.poll.allowMultiple")}
                   value={value}
                   onChange={onChange}
                 />
@@ -358,7 +360,9 @@ export default function CreatePollForm({ onSubmit }: CreatePollFormProps) {
         accessibilityRole="button"
         className="mt-4 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
       >
-        <Text className="text-base font-bold text-white">Create Poll</Text>
+        <Text className="text-base font-bold text-white">
+          {t("home.create.submit.poll")}
+        </Text>
       </Pressable>
     </View>
   );

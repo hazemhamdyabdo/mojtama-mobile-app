@@ -1,6 +1,7 @@
 import MeetingCardContent from "@/features/home/components/post-types/meeting/MeetingCardContent";
 import { PostCardShell } from "@/features/home/components/post-types/shared";
 import type { MeetingPost } from "@/features/home/types";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type MeetingPostCardProps = {
@@ -20,6 +21,7 @@ export default function MeetingPostCard({
   onDecline,
   onDetailsPress,
 }: MeetingPostCardProps) {
+  const { t } = useTranslation();
   const isUpcoming = post.status.toLowerCase() === "upcoming";
 
   if (variant === "service") {
@@ -34,7 +36,9 @@ export default function MeetingPostCard({
               accessibilityRole="button"
               className="flex-1 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
             >
-              <Text className="text-base font-bold text-white">Accept</Text>
+              <Text className="text-base font-bold text-white">
+                {t("home.meeting.actions.accept")}
+              </Text>
             </Pressable>
 
             <Pressable
@@ -42,7 +46,9 @@ export default function MeetingPostCard({
               accessibilityRole="button"
               className="flex-1 items-center rounded-2xl border border-card-border bg-white py-4 active:opacity-[0.92]"
             >
-              <Text className="text-base font-bold text-heading">Decline</Text>
+              <Text className="text-base font-bold text-heading">
+                {t("home.meeting.actions.decline")}
+              </Text>
             </Pressable>
           </View>
         ) : (
@@ -51,7 +57,9 @@ export default function MeetingPostCard({
             accessibilityRole="button"
             className="mt-4 items-center rounded-2xl border border-card-border bg-white py-4 active:opacity-[0.92]"
           >
-            <Text className="text-base font-bold text-slate-500">Details</Text>
+            <Text className="text-base font-bold text-slate-500">
+              {t("home.meeting.actions.details")}
+            </Text>
           </Pressable>
         )}
       </View>

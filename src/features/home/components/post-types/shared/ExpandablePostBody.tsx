@@ -1,5 +1,6 @@
 import { Image } from "expo-image";
 import type { ImageSourcePropType } from "react-native";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text } from "react-native";
 
 type ExpandablePostBodyProps = {
@@ -17,6 +18,8 @@ export default function ExpandablePostBody({
   onExpand,
   showImage,
 }: ExpandablePostBodyProps) {
+  const { t } = useTranslation();
+
   return (
     <>
       {showImage ? (
@@ -47,7 +50,9 @@ export default function ExpandablePostBody({
           accessibilityRole="button"
           className="mt-1 self-start active:opacity-[0.92]"
         >
-          <Text className="text-sm font-medium text-primary">Read more</Text>
+          <Text className="text-sm font-medium text-primary">
+            {t("common.readMore")}
+          </Text>
         </Pressable>
       ) : null}
     </>

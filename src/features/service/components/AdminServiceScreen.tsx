@@ -6,10 +6,12 @@ import {
   SERVICE_USER,
 } from "@/features/service/constants/dummy";
 import { useRouter, type Href } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
 
 export default function AdminServiceScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleServicePress = (itemId: string) => {
     if (itemId === "emergency") {
@@ -59,7 +61,7 @@ export default function AdminServiceScreen() {
       <ServiceHeader
         name={SERVICE_USER.name}
         role="admin"
-        subtitle="Community Management"
+        subtitle={t("service.admin.subtitle")}
         avatar={SERVICE_USER.avatar}
         notificationCount={SERVICE_USER.notificationCount}
         onNotificationsPress={() => router.push("/notifications" as Href)}
@@ -69,6 +71,7 @@ export default function AdminServiceScreen() {
 
       <ManageServicesSection
         items={ADMIN_SERVICE_ITEMS}
+        variant="admin"
         onItemPress={handleServicePress}
       />
     </ScrollView>

@@ -1,6 +1,7 @@
 import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type TopHeaderProps = {
@@ -16,6 +17,7 @@ export default function TopHeader({
   notificationCount = 3,
   onNotificationsPress,
 }: TopHeaderProps) {
+  const { t } = useTranslation();
   const showBadge = notificationCount > 0;
 
   return (
@@ -42,7 +44,7 @@ export default function TopHeader({
       <Pressable
         onPress={onNotificationsPress}
         accessibilityRole="button"
-        accessibilityLabel="Notifications"
+        accessibilityLabel={t("common.notifications")}
         className="relative size-11 items-center justify-center rounded-full border border-card-border active:opacity-[0.92]"
       >
         <MaterialDesignIcons name="bell-outline" color={colors.primary} size={22} />

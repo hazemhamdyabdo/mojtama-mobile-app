@@ -1,6 +1,7 @@
 import { colors } from "@/theme/colors";
 import type { PaymentCompanyInfo } from "@/features/payments/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 type PaymentDetailsCompanySectionProps = {
@@ -10,6 +11,8 @@ type PaymentDetailsCompanySectionProps = {
 export default function PaymentDetailsCompanySection({
   company,
 }: PaymentDetailsCompanySectionProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="border-t border-card-border pt-5">
       <View className="flex-row gap-4">
@@ -30,7 +33,9 @@ export default function PaymentDetailsCompanySection({
         </View>
 
         <View className="max-w-[38%]">
-          <Text className="text-xs text-sec-text">Additional Notes</Text>
+          <Text className="text-xs text-sec-text">
+            {t("payments.invoice.additionalNotes")}
+          </Text>
           <Text className="mt-0.5 text-xs text-sec-text">{company.notes}</Text>
         </View>
       </View>

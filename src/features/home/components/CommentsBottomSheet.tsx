@@ -18,6 +18,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -38,6 +39,7 @@ const CommentsBottomSheet = forwardRef<
   { comments = DUMMY_COMMENTS, onSendComment },
   ref,
 ) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const [activePostId, setActivePostId] = useState<string | null>(null);
@@ -94,7 +96,7 @@ const CommentsBottomSheet = forwardRef<
     >
       <View className="flex-1">
         <Text className="mb-4 text-center text-base font-bold text-heading">
-          Comments
+          {t("home.comments.title")}
         </Text>
 
         <BottomSheetScrollView
@@ -113,7 +115,7 @@ const CommentsBottomSheet = forwardRef<
           <BottomSheetTextInput
             value={commentText}
             onChangeText={setCommentText}
-            placeholder="Write your comments"
+            placeholder={t("home.comments.placeholder")}
             placeholderTextColor={colors.secText}
             className="flex-1 rounded-xl bg-slate-50 px-4 py-3 text-base text-heading"
             style={{ minHeight: 48 }}
@@ -122,7 +124,7 @@ const CommentsBottomSheet = forwardRef<
           <Pressable
             onPress={handleSend}
             accessibilityRole="button"
-            accessibilityLabel="Send comment"
+            accessibilityLabel={t("home.comments.placeholder")}
             className="size-12 items-center justify-center rounded-full bg-primary-50 active:opacity-[0.92]"
           >
             <MaterialDesignIcons name="send-outline" color={colors.primary} size={22} />

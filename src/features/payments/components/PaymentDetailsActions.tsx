@@ -1,6 +1,7 @@
 import { colors } from "@/theme/colors";
 import type { PaymentBillStatus } from "@/features/payments/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type PaymentDetailsActionsProps = {
@@ -42,6 +43,7 @@ export default function PaymentDetailsActions({
   onDownloadPress,
   onSharePress,
 }: PaymentDetailsActionsProps) {
+  const { t } = useTranslation();
   const showPayButton = status === "pending" || status === "overdue";
 
   if (showPayButton) {
@@ -52,7 +54,9 @@ export default function PaymentDetailsActions({
           accessibilityRole="button"
           className="flex-1 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-white">Pay Now</Text>
+          <Text className="text-base font-bold text-white">
+            {t("payments.actions.payNow")}
+          </Text>
         </Pressable>
 
         <IconActionButton
@@ -60,7 +64,6 @@ export default function PaymentDetailsActions({
           onPress={onDownloadPress}
           className="size-14"
         />
-
         <IconActionButton
           icon="share-variant-outline"
           onPress={onSharePress}
@@ -74,13 +77,13 @@ export default function PaymentDetailsActions({
     <View className="flex-row gap-3">
       <IconActionButton
         icon="download-outline"
-        label="Download"
+        label={t("payments.actions.download")}
         onPress={onDownloadPress}
         className="flex-1 py-4"
       />
       <IconActionButton
         icon="share-variant-outline"
-        label="Share Invoice"
+        label={t("payments.actions.shareInvoice")}
         onPress={onSharePress}
         className="flex-1 py-4"
       />

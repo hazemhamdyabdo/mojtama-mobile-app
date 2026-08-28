@@ -1,6 +1,7 @@
-import { colors } from "@/theme/colors";
 import type { VisitorTimelineEvent } from "@/features/visitors/types";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
+import { colors } from "@/theme/colors";
 
 type VisitorTimelineCardProps = {
   events: VisitorTimelineEvent[];
@@ -11,10 +12,12 @@ const DOT_COLORS = [colors.primary, colors.primary400, colors.primary200];
 export default function VisitorTimelineCard({
   events,
 }: VisitorTimelineCardProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="mt-4 rounded-2xl bg-slate-50 p-4">
       <Text className="mb-3 text-sm font-semibold text-heading">
-        Timeline
+        {t("visitors.timeline.title")}
       </Text>
 
       <View className="gap-3">

@@ -16,6 +16,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors } from "@/theme/colors";
@@ -34,6 +35,7 @@ const InviteLinkGeneratedBottomSheet = forwardRef<
   InviteLinkGeneratedBottomSheetRef,
   object
 >(function InviteLinkGeneratedBottomSheet(_props, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const [inviteLink, setInviteLink] = useState(DEFAULT_INVITE_LINK);
@@ -86,7 +88,7 @@ const InviteLinkGeneratedBottomSheet = forwardRef<
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
         <Text className="text-center text-base font-bold text-heading">
-          Invite Link Generated
+          {t("residents.invite.sheetTitle")}
         </Text>
         <Text className="mt-2 text-center text-sm leading-5 text-slate-500">
           Share this link with resident to allow them to register in the
@@ -110,7 +112,9 @@ const InviteLinkGeneratedBottomSheet = forwardRef<
             className="flex-row items-center gap-1 rounded-xl bg-primary px-3 py-3 active:opacity-[0.92]"
           >
             <MaterialDesignIcons name="content-copy" color={colors.white} size={16} />
-            <Text className="text-xs font-bold text-white">Copy Link</Text>
+            <Text className="text-xs font-bold text-white">
+              {t("residents.invite.copyLink")}
+            </Text>
           </Pressable>
         </View>
 
@@ -123,7 +127,7 @@ const InviteLinkGeneratedBottomSheet = forwardRef<
                 size={18}
               />
               <Text className="text-sm font-medium text-primary">
-                Link copied successfully
+                {t("residents.invite.copied")}
               </Text>
             </View>
             <Pressable
@@ -164,7 +168,7 @@ const InviteLinkGeneratedBottomSheet = forwardRef<
           </View>
           <View className="flex-1">
             <Text className="text-base font-bold text-heading">
-              Regenerate Link
+              {t("residents.invite.regenerate")}
             </Text>
             <Text className="mt-1 text-sm text-slate-500">
               Generate a new invite link

@@ -1,5 +1,4 @@
 import { colors } from "@/theme/colors";
-import { DOCUMENT_CATEGORY_LABELS } from "@/features/documents/constants/dummy";
 import DocumentCategoryPickerBottomSheet, {
   type DocumentCategoryPickerBottomSheetRef,
 } from "@/features/documents/components/DocumentCategoryPickerBottomSheet";
@@ -9,6 +8,7 @@ import {
   type DocumentFormValues,
 } from "@/features/documents/schemas/documentSchema";
 import type { CommunityDocument, DocumentCategory } from "@/features/documents/types";
+import { translateLabel } from "@/localization/translateLabel";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import {
@@ -26,6 +26,7 @@ import {
   type ComponentProps,
 } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -42,6 +43,7 @@ const EditDocumentBottomSheet = forwardRef<
   EditDocumentBottomSheetRef,
   EditDocumentBottomSheetProps
 >(function EditDocumentBottomSheet({ onUpdate }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const categoryPickerRef = useRef<DocumentCategoryPickerBottomSheetRef>(null);
   const insets = useSafeAreaInsets();
@@ -121,7 +123,7 @@ const EditDocumentBottomSheet = forwardRef<
           style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
         >
           <Text className="mb-4 text-center text-base font-bold text-heading">
-            Edit Documents
+            {t("documents.editSheet.title")}
           </Text>
 
           {document ? (
@@ -134,7 +136,8 @@ const EditDocumentBottomSheet = forwardRef<
 
           <View className="mt-4">
             <Text className="mb-2 text-sm font-semibold text-heading">
-              Documents name<Text className="text-rejected">*</Text>
+              {t("documents.uploadSheet.nameLabel")}
+              <Text className="text-rejected">*</Text>
             </Text>
             <Controller
               control={control}
@@ -144,7 +147,7 @@ const EditDocumentBottomSheet = forwardRef<
                   value={value}
                   onChangeText={onChange}
                   onBlur={onBlur}
-                  placeholder="Document name"
+                  placeholder={t("documents.uploadSheet.namePlaceholder")}
                   placeholderTextColor={colors.secText}
                   className={`rounded-xl border bg-white px-4 py-3.5 text-base text-heading ${
                     errors.title ? "border-rejected-200" : "border-card-border"
@@ -161,7 +164,8 @@ const EditDocumentBottomSheet = forwardRef<
 
           <View className="mt-4">
             <Text className="mb-2 text-sm font-semibold text-heading">
-              Category<Text className="text-rejected">*</Text>
+              {t("documents.categoryLabel")}
+              <Text className="text-rejected">*</Text>
             </Text>
             <Pressable
               onPress={() =>
@@ -184,8 +188,8 @@ const EditDocumentBottomSheet = forwardRef<
                 }`}
               >
                 {category
-                  ? DOCUMENT_CATEGORY_LABELS[category as DocumentCategory]
-                  : "select category"}
+                  ? translateLabel(t, "documents.categories", category as DocumentCategory)
+                  : t("documents.uploadSheet.categoryPlaceholder")}
               </Text>
               <MaterialDesignIcons
                 name="chevron-down"
@@ -206,7 +210,7 @@ const EditDocumentBottomSheet = forwardRef<
               accessibilityRole="button"
               className="flex-1 items-center rounded-2xl border border-input-text bg-white py-4 active:opacity-[0.92]"
             >
-              <Text className="text-base font-bold text-slate-500">Cancel</Text>
+              <Text className="text-base font-bold text-slate-500">{t("common.cancel")}</Text>
             </Pressable>
 
             <Pressable
@@ -215,7 +219,7 @@ const EditDocumentBottomSheet = forwardRef<
               className="flex-1 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
             >
               <Text className="text-base font-bold text-white">
-                Update Documents
+                {t("documents.editSheet.submit")}
               </Text>
             </Pressable>
           </View>

@@ -17,6 +17,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -33,6 +34,7 @@ const AssignWorkersBottomSheet = forwardRef<
   AssignWorkersBottomSheetRef,
   AssignWorkersBottomSheetProps
 >(function AssignWorkersBottomSheet({ onAssign }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState("");
@@ -107,7 +109,7 @@ const AssignWorkersBottomSheet = forwardRef<
         }}
       >
         <Text className="mb-4 text-center text-base font-bold text-heading">
-          Assign workers
+          {t("requests.assignWorkers.title")}
         </Text>
 
         <View className="relative mb-4">
@@ -117,7 +119,7 @@ const AssignWorkersBottomSheet = forwardRef<
           <TextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
-            placeholder="assign workers by name or email"
+            placeholder={t("requests.assignWorkers.searchPlaceholder")}
             placeholderTextColor={colors.secText}
             className="rounded-full border border-card-border bg-white py-3.5 pl-11 pr-4 text-base text-heading"
           />
@@ -139,7 +141,7 @@ const AssignWorkersBottomSheet = forwardRef<
           accessibilityRole="button"
           className="mt-4 items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-white">Done</Text>
+          <Text className="text-base font-bold text-white">{t("common.done")}</Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>
@@ -153,6 +155,8 @@ type WorkerRowProps = {
 };
 
 function WorkerRow({ worker, isAssigned, onToggle }: WorkerRowProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="flex-row items-center gap-3 rounded-2xl  bg-white p-3">
       {worker.avatar ? (
@@ -189,7 +193,7 @@ function WorkerRow({ worker, isAssigned, onToggle }: WorkerRowProps) {
             isAssigned ? "text-primary" : "text-white"
           }`}
         >
-          {isAssigned ? "Assigned" : "Assign"}
+          {isAssigned ? t("requests.status.assigned") : t("requests.actions.assign")}
         </Text>
       </Pressable>
     </View>

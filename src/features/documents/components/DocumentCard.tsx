@@ -3,6 +3,7 @@ import DocumentCategoryBadge from "@/features/documents/components/DocumentCateg
 import DocumentFileTypeIcon from "@/features/documents/components/DocumentFileTypeIcon";
 import type { CommunityDocument } from "@/features/documents/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type DocumentCardProps = {
@@ -16,6 +17,8 @@ export default function DocumentCard({
   onDownloadPress,
   onMenuPress,
 }: DocumentCardProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="mb-3 flex-row items-center gap-3 rounded-2xl border border-card-border bg-white p-4">
       <DocumentFileTypeIcon fileType={document.fileType} />
@@ -36,7 +39,7 @@ export default function DocumentCard({
         <Pressable
           onPress={() => onDownloadPress(document.id)}
           accessibilityRole="button"
-          accessibilityLabel="Download document"
+          accessibilityLabel={t("documents.a11y.downloadDocument")}
           className="size-9 items-center justify-center active:opacity-[0.92]"
         >
           <MaterialDesignIcons
@@ -49,7 +52,7 @@ export default function DocumentCard({
         <Pressable
           onPress={() => onMenuPress(document)}
           accessibilityRole="button"
-          accessibilityLabel="Document options"
+          accessibilityLabel={t("documents.a11y.documentOptions")}
           className="size-9 items-center justify-center active:opacity-[0.92]"
         >
           <MaterialDesignIcons

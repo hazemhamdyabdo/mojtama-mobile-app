@@ -22,6 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
 
 const MONTH_NAMES = [
@@ -78,6 +79,7 @@ export default function VisitorForm({
   onSubmit,
   onDelete,
 }: VisitorFormProps) {
+  const { t } = useTranslation();
   const optionPickerRef = useRef<VisitorOptionPickerBottomSheetRef>(null);
   const datePickerRef = useRef<DateTimePickerSheetRef>(null);
   const timePickerRef = useRef<DateTimePickerSheetRef>(null);
@@ -118,7 +120,7 @@ export default function VisitorForm({
         showsVerticalScrollIndicator={false}
       >
         <Text className="mb-4 text-base font-bold text-heading">
-          Visit Details
+          {t("visitors.form.sections.visitDetails")}
         </Text>
 
         <Controller
@@ -126,14 +128,14 @@ export default function VisitorForm({
           name="name"
           render={({ field: { value, onChange, onBlur } }) => (
             <VisitorFormTextField
-              label="Visitor name"
+              label={t("visitors.form.fields.visitorName")}
               required
               error={errors.name?.message}
               inputProps={{
                 value,
                 onChangeText: onChange,
                 onBlur,
-                placeholder: "Enter visitor name",
+                placeholder: t("visitors.form.placeholders.visitorName"),
               }}
             />
           )}
@@ -141,44 +143,60 @@ export default function VisitorForm({
 
         <View className="flex-row gap-3">
           <VisitorFormSelectField
-            label="Building"
+            label={t("visitors.form.fields.building")}
             required
-            placeholder="Select Building"
+            placeholder={t("visitors.form.placeholders.selectBuilding")}
             value={values.building}
             error={errors.building?.message}
             onPress={() =>
-              openOptionPicker("building", "Select Building", VISITOR_BUILDINGS)
+              openOptionPicker(
+                "building",
+                t("visitors.form.picker.selectBuilding"),
+                VISITOR_BUILDINGS,
+              )
             }
           />
           <VisitorFormSelectField
-            label="Unit"
+            label={t("visitors.form.fields.unit")}
             required
-            placeholder="Select Unit"
+            placeholder={t("visitors.form.placeholders.selectUnit")}
             value={values.unit}
             error={errors.unit?.message}
-            onPress={() => openOptionPicker("unit", "Select Unit", VISITOR_UNITS)}
+            onPress={() =>
+              openOptionPicker(
+                "unit",
+                t("visitors.form.picker.selectUnit"),
+                VISITOR_UNITS,
+              )
+            }
           />
         </View>
 
         <View className="flex-row gap-3">
           <VisitorFormSelectField
-            label="Gate"
+            label={t("visitors.form.fields.gate")}
             required
-            placeholder="Select Gate"
+            placeholder={t("visitors.form.placeholders.selectGate")}
             value={values.gate}
             error={errors.gate?.message}
-            onPress={() => openOptionPicker("gate", "Select Gate", VISITOR_GATES)}
+            onPress={() =>
+              openOptionPicker(
+                "gate",
+                t("visitors.form.picker.selectGate"),
+                VISITOR_GATES,
+              )
+            }
           />
           <VisitorFormSelectField
-            label="Parking Spot"
+            label={t("visitors.form.fields.parkingSpot")}
             required
-            placeholder="Select Parking"
+            placeholder={t("visitors.form.placeholders.selectParking")}
             value={values.parkingSpot}
             error={errors.parkingSpot?.message}
             onPress={() =>
               openOptionPicker(
                 "parkingSpot",
-                "Select Parking Spot",
+                t("visitors.form.picker.selectParkingSpot"),
                 VISITOR_PARKING_SPOTS,
               )
             }
@@ -186,24 +204,28 @@ export default function VisitorForm({
         </View>
 
         <VisitorFormSelectField
-          label="Purpose of visit"
+          label={t("visitors.form.fields.purpose")}
           required
-          placeholder="Family visit"
+          placeholder={t("visitors.form.placeholders.purposeExample")}
           value={values.purpose}
           error={errors.purpose?.message}
           onPress={() =>
-            openOptionPicker("purpose", "Purpose Of Visit", VISITOR_PURPOSES)
+            openOptionPicker(
+              "purpose",
+              t("visitors.form.picker.purposeOfVisit"),
+              VISITOR_PURPOSES,
+            )
           }
         />
 
         <Text className="mb-4 mt-2 text-base font-bold text-heading">
-          Date & Duration
+          {t("visitors.form.sections.dateDuration")}
         </Text>
 
         <VisitorFormSelectField
-          label="Preferred Date for Visit"
+          label={t("visitors.form.fields.preferredDate")}
           required
-          placeholder="mm/dd/yyyy"
+          placeholder={t("visitors.form.placeholders.dateFormat")}
           value={values.date}
           error={errors.date?.message}
           icon="calendar-blank-outline"
@@ -211,9 +233,9 @@ export default function VisitorForm({
         />
 
         <VisitorFormSelectField
-          label="Preferred Time for Visit"
+          label={t("visitors.form.fields.preferredTime")}
           required
-          placeholder="02:00 PM - 02:00 AM"
+          placeholder={t("visitors.form.placeholders.timeFormat")}
           value={values.time}
           error={errors.time?.message}
           icon="clock-outline"
@@ -221,7 +243,7 @@ export default function VisitorForm({
         />
 
         <Text className="mb-4 mt-2 text-base font-bold text-heading">
-          Contact Information
+          {t("visitors.form.sections.contactInfo")}
         </Text>
 
         <Controller
@@ -229,14 +251,14 @@ export default function VisitorForm({
           name="phone"
           render={({ field: { value, onChange, onBlur } }) => (
             <VisitorFormTextField
-              label="Phone number"
+              label={t("visitors.form.fields.phone")}
               required
               error={errors.phone?.message}
               inputProps={{
                 value,
                 onChangeText: onChange,
                 onBlur,
-                placeholder: "exp:(555) 123-4567",
+                placeholder: t("visitors.form.placeholders.phone"),
                 keyboardType: "phone-pad",
               }}
             />
@@ -248,14 +270,14 @@ export default function VisitorForm({
           name="email"
           render={({ field: { value, onChange, onBlur } }) => (
             <VisitorFormTextField
-              label="Email address"
+              label={t("visitors.form.fields.email")}
               optionalHint
               error={errors.email?.message}
               inputProps={{
                 value: value ?? "",
                 onChangeText: onChange,
                 onBlur,
-                placeholder: "Johndoe@gmail.com",
+                placeholder: t("visitors.form.placeholders.email"),
                 keyboardType: "email-address",
                 autoCapitalize: "none",
               }}
@@ -283,7 +305,7 @@ export default function VisitorForm({
               size={20}
             />
             <Text className="text-base font-bold text-rejected-500">
-              Delete Visit
+              {t("visitors.form.delete")}
             </Text>
           </Pressable>
         ) : null}
@@ -293,8 +315,8 @@ export default function VisitorForm({
 
       <DateTimePickerSheet
         ref={datePickerRef}
-        title="Preferred Date for Visit"
-        confirmLabel="Confirm"
+        title={t("visitors.form.fields.preferredDate")}
+        confirmLabel={t("common.confirm")}
         mode="date"
         value={null}
         minimumDate={new Date()}
@@ -305,8 +327,8 @@ export default function VisitorForm({
 
       <DateTimePickerSheet
         ref={timePickerRef}
-        title="Preferred Time for Visit"
-        confirmLabel="Confirm"
+        title={t("visitors.form.fields.preferredTime")}
+        confirmLabel={t("common.confirm")}
         mode="time"
         value={null}
         onConfirm={(date) =>

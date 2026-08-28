@@ -10,6 +10,7 @@ import {
   useRef,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors } from "@/theme/colors";
@@ -27,6 +28,7 @@ const ResidentActionsBottomSheet = forwardRef<
   ResidentActionsBottomSheetRef,
   ResidentActionsBottomSheetProps
 >(function ResidentActionsBottomSheet({ onRemove }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
 
@@ -74,7 +76,7 @@ const ResidentActionsBottomSheet = forwardRef<
           className="items-center rounded-2xl bg-rejected-50 py-4 active:opacity-[0.92]"
         >
           <Text className="text-base font-bold text-rejected-500">
-            Remove Resident
+            {t("residents.remove.title")}
           </Text>
         </Pressable>
 
@@ -83,7 +85,7 @@ const ResidentActionsBottomSheet = forwardRef<
           accessibilityRole="button"
           className="mt-3 items-center py-3 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-heading">Cancel</Text>
+          <Text className="text-base font-bold text-heading">{t("common.cancel")}</Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>

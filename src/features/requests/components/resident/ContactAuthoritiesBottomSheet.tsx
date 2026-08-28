@@ -1,5 +1,6 @@
 import { colors } from "@/theme/colors";
 import { AUTHORITY_CONTACTS } from "@/features/requests/constants/authorities";
+import { translateLabel } from "@/localization/translateLabel";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import {
   BottomSheetBackdrop,
@@ -14,6 +15,7 @@ import {
   useRef,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -24,6 +26,7 @@ export type ContactAuthoritiesBottomSheetRef = {
 
 const ContactAuthoritiesBottomSheet = forwardRef<ContactAuthoritiesBottomSheetRef>(
   function ContactAuthoritiesBottomSheet(_props, ref) {
+    const { t } = useTranslation();
     const bottomSheetRef = useRef<BottomSheetModal>(null);
     const insets = useSafeAreaInsets();
 
@@ -69,7 +72,7 @@ const ContactAuthoritiesBottomSheet = forwardRef<ContactAuthoritiesBottomSheetRe
           style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
         >
           <Text className="mb-4 text-center text-base font-bold text-heading">
-            Contact Authorities
+            {t("requests.authorities.sheetTitle")}
           </Text>
 
           {AUTHORITY_CONTACTS.map((contact) => (
@@ -90,7 +93,9 @@ const ContactAuthoritiesBottomSheet = forwardRef<ContactAuthoritiesBottomSheetRe
               </View>
 
               <View className="flex-1">
-                <Text className="text-sm text-sec-text">{contact.label}</Text>
+                <Text className="text-sm text-sec-text">
+                  {translateLabel(t, "requests.authorities", contact.id)}
+                </Text>
                 <Text className="text-lg font-bold text-heading">
                   {contact.phone}
                 </Text>

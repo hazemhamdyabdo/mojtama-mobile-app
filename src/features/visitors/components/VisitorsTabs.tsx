@@ -1,5 +1,7 @@
 import { VISITORS_TABS } from "@/features/visitors/constants/dummy";
 import type { VisitorsTab } from "@/features/visitors/types";
+import { translateOptions } from "@/localization/translateLabel";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type VisitorsTabsProps = {
@@ -11,9 +13,12 @@ export default function VisitorsTabs({
   activeTab,
   onTabChange,
 }: VisitorsTabsProps) {
+  const { t } = useTranslation();
+  const tabs = translateOptions(t, "visitors.tabs", VISITORS_TABS);
+
   return (
     <View className="mb-6 flex-row rounded-xl bg-slate-100 p-1">
-      {VISITORS_TABS.map((tab) => {
+      {tabs.map((tab) => {
         const isActive = activeTab === tab.id;
 
         return (

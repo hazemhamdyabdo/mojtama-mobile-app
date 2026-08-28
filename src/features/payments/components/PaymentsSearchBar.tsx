@@ -1,16 +1,18 @@
 import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { I18nManager, TextInput, View } from "react-native";
 
 type PaymentsSearchBarProps = {
   value: string;
-  onChangeText: (text: string) => void;
+  onChangeText: (value: string) => void;
 };
 
 export default function PaymentsSearchBar({
   value,
   onChangeText,
 }: PaymentsSearchBarProps) {
+  const { t } = useTranslation();
   const textAlign = I18nManager.isRTL ? "right" : "left";
 
   return (
@@ -25,7 +27,7 @@ export default function PaymentsSearchBar({
       <TextInput
         value={value}
         onChangeText={onChangeText}
-        placeholder="Search"
+        placeholder={t("payments.search.placeholder")}
         placeholderTextColor={colors.secText}
         className="rounded-full border border-card-border bg-white py-3.5 pl-11 pr-4 text-base text-heading"
         style={{ textAlign }}

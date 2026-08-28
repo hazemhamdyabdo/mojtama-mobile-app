@@ -7,7 +7,6 @@ import {
   BottomSheetModal,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import {
   forwardRef,
   useCallback,
@@ -16,6 +15,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -38,6 +38,7 @@ const DocumentActionsBottomSheet = forwardRef<
   { onView, onDownload, onEdit, onDelete },
   ref,
 ) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const [document, setDocument] = useState<CommunityDocument | null>(null);
@@ -87,7 +88,7 @@ const DocumentActionsBottomSheet = forwardRef<
 
         <View className="mt-2">
           <BottomSheetIconActionRow
-            label="View"
+            label={t("documents.actions.view")}
             icon="eye-outline"
             onPress={() =>
               document ? handleAction(() => onView(document.id)) : undefined
@@ -95,7 +96,7 @@ const DocumentActionsBottomSheet = forwardRef<
           />
           <View className="h-px bg-slate-200" />
           <BottomSheetIconActionRow
-            label="Download"
+            label={t("documents.actions.download")}
             icon="download-outline"
             onPress={() =>
               document ? handleAction(() => onDownload(document.id)) : undefined
@@ -103,7 +104,7 @@ const DocumentActionsBottomSheet = forwardRef<
           />
           <View className="h-px bg-slate-200" />
           <BottomSheetIconActionRow
-            label="Edit Document"
+            label={t("documents.actions.edit")}
             icon="pencil-outline"
             onPress={() =>
               document ? handleAction(() => onEdit(document)) : undefined
@@ -111,7 +112,7 @@ const DocumentActionsBottomSheet = forwardRef<
           />
           <View className="h-px bg-slate-200" />
           <BottomSheetIconActionRow
-            label="Delete"
+            label={t("documents.actions.delete")}
             icon="trash-can-outline"
             destructive
             onPress={() =>
@@ -125,7 +126,7 @@ const DocumentActionsBottomSheet = forwardRef<
           accessibilityRole="button"
           className="mt-2 items-center rounded-2xl border border-card-border py-4 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-heading">Cancel</Text>
+          <Text className="text-base font-bold text-heading">{t("common.cancel")}</Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>

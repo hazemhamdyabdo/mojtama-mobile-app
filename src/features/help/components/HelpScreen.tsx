@@ -12,7 +12,9 @@ import {
 import type { HelpTab } from "@/features/help/types";
 import * as Linking from "expo-linking";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
+
 async function openPhoneDialer(phoneNumber: string) {
   try {
     await Linking.openURL(`tel:${phoneNumber}`);
@@ -26,13 +28,15 @@ function EmergencyTabContent({
 }: {
   onCall: (phoneNumber: string) => void;
 }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <Text className="text-base font-bold text-heading">
-        Emergency Contacts
+        {t("help.emergency.contactsTitle")}
       </Text>
       <Text className="mb-4 mt-1 text-sm text-sec-text">
-        Quick Access To Emergency Services
+        {t("help.emergency.contactsSubtitle")}
       </Text>
 
       {EMERGENCY_CONTACTS.map((contact) => (

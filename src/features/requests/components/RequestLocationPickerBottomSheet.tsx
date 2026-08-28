@@ -14,6 +14,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -30,6 +31,7 @@ const RequestLocationPickerBottomSheet = forwardRef<
   RequestLocationPickerBottomSheetRef,
   RequestLocationPickerBottomSheetProps
 >(function RequestLocationPickerBottomSheet({ onSelect }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const [selected, setSelected] = useState<string | undefined>();
@@ -76,7 +78,7 @@ const RequestLocationPickerBottomSheet = forwardRef<
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
         <Text className="mb-4 text-center text-base font-bold text-heading">
-          Select Location
+          {t("requests.form.selectLocation")}
         </Text>
 
         {REQUEST_LOCATIONS.map((location) => (

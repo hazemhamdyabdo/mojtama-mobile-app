@@ -1,8 +1,8 @@
 import type { Visitor, VisitorsTab } from "@/features/visitors/types";
 
-export const VISITORS_TABS: { id: VisitorsTab; label: string }[] = [
-  { id: "upcoming", label: "Upcoming" },
-  { id: "previous", label: "Previous" },
+export const VISITORS_TABS: { id: VisitorsTab }[] = [
+  { id: "upcoming" },
+  { id: "previous" },
 ];
 
 export const VISITOR_BUILDINGS = ["A", "B", "C"];

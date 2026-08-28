@@ -3,6 +3,7 @@ import { HELP_SUPPORT_CONTACTS } from "@/features/help/constants/dummy";
 import type { HelpSupportContact } from "@/features/help/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import * as Linking from "expo-linking";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type HelpStillNeedHelpCardProps = {
@@ -38,6 +39,8 @@ async function handleContactPress(contact: HelpSupportContact) {
 export default function HelpStillNeedHelpCard({
   onSupportPress,
 }: HelpStillNeedHelpCardProps) {
+  const { t } = useTranslation();
+
   const handlePress = (contact: HelpSupportContact) => {
     if (contact.action === "support") {
       onSupportPress?.();
@@ -57,10 +60,7 @@ export default function HelpStillNeedHelpCard({
         </View>
         <View className="flex-1">
           <Text className="mt-3 text-lg font-bold text-heading">
-            Still Need Help?
-          </Text>
-          <Text className="mt-1 text-start text-sm text-slate-500">
-            Can't Find What You're Looking For? Contact Our Support Team:
+            {t("help.support.title")}
           </Text>
         </View>
       </View>
@@ -71,7 +71,7 @@ export default function HelpStillNeedHelpCard({
             key={contact.id}
             onPress={() => handlePress(contact)}
             accessibilityRole="button"
-            accessibilityLabel={`${contact.label}: ${contact.value}`}
+            accessibilityLabel={`${t(`help.support.${contact.id}`)}: ${contact.value}`}
             className="flex-row items-center rounded-2xl bg-primary-100 px-4 py-3.5 active:opacity-[0.92]"
           >
             <MaterialDesignIcons
@@ -81,7 +81,7 @@ export default function HelpStillNeedHelpCard({
             />
             <View className="ml-3 flex-1">
               <Text className="text-xs font-medium text-primary">
-                {contact.label}
+                {t(`help.support.${contact.id}`)}
               </Text>
               <Text className="text-sm font-semibold text-heading">
                 {contact.value}

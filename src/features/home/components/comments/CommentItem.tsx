@@ -2,6 +2,7 @@ import { colors } from "@/theme/colors";
 import type { PostComment } from "@/features/home/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type CommentItemProps = {
@@ -13,6 +14,8 @@ export default function CommentItem({
   comment,
   isReply = false,
 }: CommentItemProps) {
+  const { t } = useTranslation();
+
   return (
     <View className={isReply ? "ml-6 border-l border-card-border pl-4" : ""}>
       <View className="mb-4">
@@ -42,7 +45,7 @@ export default function CommentItem({
             {comment.text}
             <Text className="text-sm font-medium text-primary">
               {" "}
-              View more...
+              {t("home.engagement.viewMore")}
             </Text>
           </Text>
 
@@ -54,7 +57,7 @@ export default function CommentItem({
                 size={16}
               />
               <Text className="text-sm text-sec-text">
-                {comment.likesCount} Likes
+                {t("home.postDetails.likes", { count: comment.likesCount })}
               </Text>
             </View>
             {!isReply ? (
@@ -67,7 +70,9 @@ export default function CommentItem({
                   color={colors.primary}
                   size={16}
                 />
-                <Text className="text-sm font-medium text-primary">Reply</Text>
+                <Text className="text-sm font-medium text-primary">
+                  {t("home.engagement.reply")}
+                </Text>
               </Pressable>
             ) : null}
           </View>

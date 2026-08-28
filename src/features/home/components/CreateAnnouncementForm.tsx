@@ -14,12 +14,14 @@ import {
   createAnnouncementSchema,
   type CreateAnnouncementFormValues,
 } from "@/features/home/schemas/createAnnouncementSchema";
+import { translateLabel } from "@/localization/translateLabel";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { useMemo, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import {
   I18nManager,
   Pressable,
@@ -40,12 +42,15 @@ type CreateAnnouncementFormProps = {
 export default function CreateAnnouncementForm({
   onSubmit,
   defaultValues,
-  submitLabel = "Create Post",
-  heading = "Create Announcement",
+  submitLabel,
+  heading,
 }: CreateAnnouncementFormProps) {
+  const { t } = useTranslation();
   const textAlign = I18nManager.isRTL ? "right" : "left";
   const visibilitySheetRef = useRef<VisibilityBottomSheetRef>(null);
   const schema = useMemo(() => createAnnouncementSchema(), []);
+  const resolvedHeading = heading ?? t("home.create.announcement.title");
+  const resolvedSubmitLabel = submitLabel ?? t("home.create.submit.post");
 
   const {
     control,
@@ -109,10 +114,12 @@ export default function CreateAnnouncementForm({
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <Text className="mb-6 text-2xl font-bold text-heading">{heading}</Text>
+        <Text className="mb-6 text-2xl font-bold text-heading">
+          {resolvedHeading}
+        </Text>
 
         <View className="mb-5">
-          <FormLabel label="Announcement type" required />
+          <FormLabel label={t("home.create.announcement.typeLabel")} required />
 
           <Controller
             control={control}
@@ -122,7 +129,7 @@ export default function CreateAnnouncementForm({
                 {ANNOUNCEMENT_TYPE_OPTIONS.map((option) => (
                   <CategoryTypeChip
                     key={option.id}
-                    label={option.label}
+                    label={translateLabel(t, "home.announcementTypes", option.id)}
                     selected={value === option.id}
                     onPress={() => onChange(option.id as AnnouncementType)}
                   />
@@ -139,7 +146,7 @@ export default function CreateAnnouncementForm({
         </View>
 
         <View className="mb-5">
-          <FormLabel label="Title" required />
+          <FormLabel label={t("home.create.fields.title")} required />
 
           <Controller
             control={control}
@@ -149,7 +156,7 @@ export default function CreateAnnouncementForm({
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                placeholder="Type Announcement title"
+                placeholder={t("home.create.announcement.titlePlaceholder")}
                 placeholderTextColor={colors.secText}
                 className={`rounded-xl border bg-white px-4 text-base text-heading ${
                   errors.title ? "border-rejected-200" : "border-card-border"
@@ -171,7 +178,7 @@ export default function CreateAnnouncementForm({
         </View>
 
         <View className="mb-5">
-          <FormLabel label="Content" required />
+          <FormLabel label={t("home.create.fields.content")} required />
 
           <Controller
             control={control}
@@ -181,7 +188,7 @@ export default function CreateAnnouncementForm({
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                placeholder="Type announcement content"
+                placeholder={t("home.create.announcement.contentPlaceholder")}
                 placeholderTextColor={colors.secText}
                 multiline
                 textAlignVertical="top"
@@ -204,12 +211,12 @@ export default function CreateAnnouncementForm({
         </View>
 
         <View className="mb-5">
-          <FormLabel label="Image" required />
+          <FormLabel label={t("home.create.fields.image")} required />
 
           <Pressable
             onPress={pickImage}
             accessibilityRole="button"
-            accessibilityLabel="Upload image"
+            accessibilityLabel={t("home.create.uploadImage")}
             className={`items-center justify-center rounded-xl border border-dashed bg-slate-50 px-4 py-8 active:opacity-[0.92] ${
               errors.image ? "border-rejected-200" : "border-slate-300"
             }`}
@@ -251,7 +258,7 @@ export default function CreateAnnouncementForm({
         </View>
 
         <View className="mb-5">
-          <FormLabel label="Visibility" />
+          <FormLabel label={t("home.create.fields.visibility")} />
 
           <Pressable
             onPress={() => visibilitySheetRef.current?.open()}
@@ -261,7 +268,7 @@ export default function CreateAnnouncementForm({
             }`}
           >
             <Text className="text-base text-slate-500">
-              {getVisibilityLabel(visibility)}
+              {getVisibilityLabel(t, visibility)}
             </Text>
             <MaterialDesignIcons name="chevron-down" color={colors.slate500} size={22} />
           </Pressable>
@@ -332,7 +339,7 @@ export default function CreateAnnouncementForm({
         accessibilityRole="button"
         className="mt-4 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
       >
-        <Text className="text-base font-bold text-white">{submitLabel}</Text>
+        <Text className="text-base font-bold text-white">{resolvedSubmitLabel}</Text>
       </Pressable>
 
       <Controller

@@ -20,6 +20,7 @@ import MaterialDesignIcons from "@react-native-vector-icons/material-design-icon
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
 type ResidentRequestDetailsScreenProps = {
   request: ServiceRequest;
@@ -30,6 +31,7 @@ export default function ResidentRequestDetailsScreen({
   request,
   onDelete,
 }: ResidentRequestDetailsScreenProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const cancelSheetRef = useRef<CancelRequestBottomSheetRef>(null);
   const authoritiesSheetRef = useRef<ContactAuthoritiesBottomSheetRef>(null);
@@ -59,7 +61,11 @@ export default function ResidentRequestDetailsScreen({
     <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
       <View className="flex-1 px-4 pt-4">
         <RequestDetailsHeader
-          title={isEmergency ? "Emergency Details" : "Request Details"}
+          title={
+            isEmergency
+              ? t("requests.details.emergencyTitle")
+              : t("requests.details.title")
+          }
         />
 
         <ScrollView
@@ -81,7 +87,7 @@ export default function ResidentRequestDetailsScreen({
               className="mt-1 active:opacity-[0.92]"
             >
               <Text className="text-sm font-semibold text-primary">
-                View all
+                {t("common.viewAll")}
               </Text>
             </Pressable>
           ) : null}
@@ -89,12 +95,12 @@ export default function ResidentRequestDetailsScreen({
           {isEmergency ? (
             <View className="mt-6">
               <Text className="mb-4 text-sm font-semibold text-sec-text">
-                Emergency details
+                {t("requests.details.emergencySection")}
               </Text>
-              <RequestInfoRow label="Submitted by">
+              <RequestInfoRow label={t("requests.details.fields.submittedBy")}>
                 <PersonValue person={request.submittedBy} />
               </RequestInfoRow>
-              <RequestInfoRow label="Location">
+              <RequestInfoRow label={t("requests.details.fields.location")}>
                 <View className="flex-row items-center gap-1">
                   <MaterialDesignIcons
                     name="map-marker-outline"
@@ -106,22 +112,22 @@ export default function ResidentRequestDetailsScreen({
                   </Text>
                 </View>
               </RequestInfoRow>
-              <RequestInfoRow label="Request Type">
+              <RequestInfoRow label={t("requests.details.fields.requestType")}>
                 <RequestTypeBadge requestType={request.requestType} />
               </RequestInfoRow>
               {request.issueType ? (
-                <RequestInfoRow label="Issue Type">
+                <RequestInfoRow label={t("requests.details.fields.issueType")}>
                   <RequestIssueTypeBadge issueType={request.issueType} />
                 </RequestInfoRow>
               ) : null}
-              <RequestInfoRow label="Priority">
+              <RequestInfoRow label={t("requests.details.fields.priority")}>
                 <RequestPriorityBadge priority={request.priority} />
               </RequestInfoRow>
             </View>
           ) : (
             <View className="mt-6">
               {request.scheduledDate ? (
-                <RequestInfoRow label="Scheduled Date">
+                <RequestInfoRow label={t("requests.details.fields.scheduledDate")}>
                   <Text className="text-sm font-semibold text-heading">
                     {request.scheduledDate}
                   </Text>
@@ -129,22 +135,22 @@ export default function ResidentRequestDetailsScreen({
               ) : null}
 
               {request.assignedTo ? (
-                <RequestInfoRow label="Assigned to">
+                <RequestInfoRow label={t("requests.details.fields.assignedTo")}>
                   <PersonValue person={request.assignedTo} />
                 </RequestInfoRow>
               ) : null}
 
-              <RequestInfoRow label="Request Type">
+              <RequestInfoRow label={t("requests.details.fields.requestType")}>
                 <RequestTypeBadge requestType={request.requestType} />
               </RequestInfoRow>
 
               {request.issueType ? (
-                <RequestInfoRow label="Issue Type">
+                <RequestInfoRow label={t("requests.details.fields.issueType")}>
                   <RequestIssueTypeBadge issueType={request.issueType} />
                 </RequestInfoRow>
               ) : null}
 
-              <RequestInfoRow label="Priority">
+              <RequestInfoRow label={t("requests.details.fields.priority")}>
                 <RequestPriorityBadge priority={request.priority} />
               </RequestInfoRow>
             </View>
@@ -159,7 +165,7 @@ export default function ResidentRequestDetailsScreen({
           {request.scheduleTime ? (
             <View className="mt-3 flex-row items-center justify-between rounded-2xl bg-slate-50 p-4">
               <Text className="text-sm font-semibold text-heading">
-                Schedule
+                {t("requests.details.fields.schedule")}
               </Text>
               <View className="flex-row items-center gap-1.5">
                 <MaterialDesignIcons
@@ -175,7 +181,9 @@ export default function ResidentRequestDetailsScreen({
           ) : null}
 
           <View className="mt-3 flex-row items-center justify-between rounded-2xl bg-slate-50 p-4">
-            <Text className="text-sm font-semibold text-heading">Status</Text>
+            <Text className="text-sm font-semibold text-heading">
+              {t("requests.details.fields.status")}
+            </Text>
             <RequestStatusBadge status={request.status} />
           </View>
 
@@ -190,7 +198,7 @@ export default function ResidentRequestDetailsScreen({
               className="flex-1 items-center rounded-2xl border border-input-text bg-white py-4 active:opacity-[0.92]"
             >
               <Text className="text-base font-bold text-slate-500">
-                Edit Request
+                {t("requests.actions.edit")}
               </Text>
             </Pressable>
 
@@ -200,7 +208,7 @@ export default function ResidentRequestDetailsScreen({
               className="flex-1 items-center rounded-2xl border border-rejected-500 bg-white py-4 active:opacity-[0.92]"
             >
               <Text className="text-base font-bold text-rejected-500">
-                Cancel Request
+                {t("requests.actions.cancel")}
               </Text>
             </Pressable>
           </View>

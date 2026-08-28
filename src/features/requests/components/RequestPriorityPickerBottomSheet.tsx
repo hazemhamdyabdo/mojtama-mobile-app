@@ -1,6 +1,7 @@
 import { colors } from "@/theme/colors";
 import { REQUEST_PRIORITY_OPTIONS } from "@/features/requests/constants/dummy";
 import type { RequestPriority } from "@/features/requests/types";
+import { translateLabel } from "@/localization/translateLabel";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import {
   BottomSheetBackdrop,
@@ -15,6 +16,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -31,6 +33,7 @@ const RequestPriorityPickerBottomSheet = forwardRef<
   RequestPriorityPickerBottomSheetRef,
   RequestPriorityPickerBottomSheetProps
 >(function RequestPriorityPickerBottomSheet({ onSelect }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const [selected, setSelected] = useState<RequestPriority | undefined>();
@@ -77,7 +80,7 @@ const RequestPriorityPickerBottomSheet = forwardRef<
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
         <Text className="mb-4 text-center text-base font-bold text-heading">
-          Select Request Priority
+          {t("requests.form.fields.requestPriority")}
         </Text>
 
         {REQUEST_PRIORITY_OPTIONS.map((option) => {
@@ -106,7 +109,7 @@ const RequestPriorityPickerBottomSheet = forwardRef<
               </View>
 
               <Text className="flex-1 text-base font-medium text-heading">
-                {option.label}
+                {translateLabel(t, "requests.priorities", option.id)}
               </Text>
             </Pressable>
           );

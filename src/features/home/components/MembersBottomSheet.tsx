@@ -17,6 +17,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { I18nManager, Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -41,6 +42,7 @@ const MembersBottomSheet = forwardRef<
   { title, searchPlaceholder, members, selectedIds, multiSelect = false, onSelect },
   ref,
 ) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const textAlign = I18nManager.isRTL ? "right" : "left";
@@ -148,7 +150,7 @@ const MembersBottomSheet = forwardRef<
         )}
         ListEmptyComponent={
           <Text className="mt-8 text-center text-sm text-sec-text">
-            No members found
+            {t("home.members.empty")}
           </Text>
         }
       />

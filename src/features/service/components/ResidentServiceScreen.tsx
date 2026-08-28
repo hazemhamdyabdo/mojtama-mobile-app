@@ -5,10 +5,12 @@ import {
   SERVICE_USER,
 } from "@/features/service/constants/dummy";
 import { useRouter, type Href } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
 
 export default function ResidentServiceScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleServicePress = (itemId: string) => {
     if (itemId === "emergency") {
@@ -60,9 +62,10 @@ export default function ResidentServiceScreen() {
       />
 
       <ManageServicesSection
-        title="Community Services"
-        subtitle="Access community services and support"
+        title={t("service.resident.section.title")}
+        subtitle={t("service.resident.section.subtitle")}
         items={RESIDENT_SERVICE_ITEMS}
+        variant="resident"
         onItemPress={handleServicePress}
       />
     </ScrollView>

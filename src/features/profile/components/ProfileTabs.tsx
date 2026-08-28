@@ -1,16 +1,22 @@
-import type { ProfileTab } from "@/features/profile/types";
 import { PROFILE_TABS } from "@/features/profile/constants/dummy";
+import type { ProfileTab } from "@/features/profile/types";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
+
+const PROFILE_TAB_I18N_KEYS: Record<ProfileTab, string> = {
+  "support-requests": "supportRequests",
+  payments: "payments",
+  visitations: "visitations",
+};
 
 type ProfileTabsProps = {
   activeTab: ProfileTab;
   onTabChange: (tab: ProfileTab) => void;
 };
 
-export default function ProfileTabs({
-  activeTab,
-  onTabChange,
-}: ProfileTabsProps) {
+export default function ProfileTabs({ activeTab, onTabChange }: ProfileTabsProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="mb-4 flex-row rounded-xl bg-slate-100 p-1">
       {PROFILE_TABS.map((tab) => {
@@ -27,12 +33,11 @@ export default function ProfileTabs({
             }`}
           >
             <Text
-              numberOfLines={1}
-              className={`text-center text-xs font-medium ${
+              className={`text-center text-sm font-medium ${
                 isActive ? "text-primary" : "text-slate-500"
               }`}
             >
-              {tab.label}
+              {t(`profile.tabs.${PROFILE_TAB_I18N_KEYS[tab.id]}`)}
             </Text>
           </Pressable>
         );

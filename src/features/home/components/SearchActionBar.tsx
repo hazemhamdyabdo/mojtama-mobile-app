@@ -1,5 +1,6 @@
 import { colors } from "@/theme/colors";
 import { Image } from "expo-image";
+import { useTranslation } from "react-i18next";
 import { I18nManager, Pressable, Text, TextInput, View } from "react-native";
 
 type SearchActionBarProps = {
@@ -11,11 +12,13 @@ type SearchActionBarProps = {
 
 export default function SearchActionBar({
   value = "",
-  placeholder = "Search",
+  placeholder,
   onChangeText,
   onAddPostPress,
 }: SearchActionBarProps) {
+  const { t } = useTranslation();
   const textAlign = I18nManager.isRTL ? "right" : "left";
+  const resolvedPlaceholder = placeholder ?? t("common.search");
 
   return (
     <View className="flex-row items-center gap-3">
@@ -34,7 +37,7 @@ export default function SearchActionBar({
         <TextInput
           value={value}
           onChangeText={onChangeText}
-          placeholder={placeholder}
+          placeholder={resolvedPlaceholder}
           placeholderTextColor={colors.secText}
           className="rounded-xl border border-card-border bg-white pl-11 pr-4 text-base text-heading"
           style={{
@@ -47,10 +50,10 @@ export default function SearchActionBar({
       <Pressable
         onPress={onAddPostPress}
         accessibilityRole="button"
-        accessibilityLabel="Add post"
+        accessibilityLabel={t("home.addPost")}
         className="items-center justify-center rounded-xl bg-primary px-8 py-3 active:opacity-[0.92]"
       >
-        <Text className="text-sm font-bold text-white">+ Add Post</Text>
+        <Text className="text-sm font-bold text-white">+ {t("home.addPost")}</Text>
       </Pressable>
     </View>
   );

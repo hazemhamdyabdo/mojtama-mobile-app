@@ -1,6 +1,7 @@
 import { colors } from "@/theme/colors";
 import {
   VISIBILITY_OPTIONS,
+  getVisibilityLabel,
   type VisibilityOption,
 } from "@/features/home/constants/visibilityOptions";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
@@ -16,6 +17,7 @@ import {
   useRef,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -59,6 +61,7 @@ const VisibilityBottomSheet = forwardRef<
   VisibilityBottomSheetRef,
   VisibilityBottomSheetProps
 >(function VisibilityBottomSheet({ value, onSelect }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
 
@@ -101,13 +104,13 @@ const VisibilityBottomSheet = forwardRef<
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
         <Text className="mb-4 text-center text-base font-bold text-heading">
-          Visibility
+          {t("home.visibility.title")}
         </Text>
 
         {VISIBILITY_OPTIONS.map((option) => (
           <VisibilityRow
             key={option.id}
-            label={option.label}
+            label={getVisibilityLabel(t, option.id)}
             selected={value === option.id}
             onPress={() => handleSelect(option.id)}
           />

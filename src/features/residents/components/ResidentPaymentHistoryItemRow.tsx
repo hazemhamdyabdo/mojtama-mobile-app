@@ -1,5 +1,6 @@
 import type { ResidentPaymentHistoryItem } from "@/features/residents/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 import { colors } from "@/theme/colors";
 
@@ -13,17 +14,23 @@ function PaymentStatusBadge({
 }: {
   status: ResidentPaymentHistoryItem["status"];
 }) {
+  const { t } = useTranslation();
+
   switch (status) {
     case "paid":
       return (
         <View className="rounded-full bg-approved-50 px-2.5 py-0.5">
-          <Text className="text-xs font-medium text-approved-700">Paid</Text>
+          <Text className="text-xs font-medium text-approved-700">
+            {t("residents.paymentStatus.paid")}
+          </Text>
         </View>
       );
     case "overdue":
       return (
         <View className="rounded-full bg-rejected-50 px-2.5 py-0.5">
-          <Text className="text-xs font-medium text-rejected">Overdue</Text>
+          <Text className="text-xs font-medium text-rejected">
+            {t("residents.paymentStatus.overdue")}
+          </Text>
         </View>
       );
     default: {

@@ -14,10 +14,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, type Href } from "expo-router";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 export default function UpdatePhoneCurrentForm() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [selectedCountry, setSelectedCountry] =
     useState<AuthCountry>(DEFAULT_AUTH_COUNTRY);
 
@@ -59,7 +61,7 @@ export default function UpdatePhoneCurrentForm() {
   return (
     <View>
       <SettingsUpdateIntro
-        title="Update Your Number"
+        title={t("settings.update.phone.title")}
         subtitle="Update Your Phone Number To Receive Important Alerts"
       />
 
@@ -80,7 +82,7 @@ export default function UpdatePhoneCurrentForm() {
       />
 
       <SettingsPrimaryButton
-        label="Next"
+        label={t("common.next")}
         disabled={isSubmitting}
         onPress={() => void handleSubmit(onSubmit)()}
       />

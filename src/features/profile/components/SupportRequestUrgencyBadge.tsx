@@ -1,39 +1,36 @@
 import type { SupportRequestUrgency } from "@/features/profile/types";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 type SupportRequestUrgencyBadgeProps = {
   urgency: SupportRequestUrgency;
 };
 
-function getUrgencyStyles(urgency: SupportRequestUrgency) {
-  switch (urgency) {
-    case "urgent":
-      return {
-        container: "bg-rejected-50",
-        text: "text-rejected",
-        label: "Urgent",
-      };
-    case "medium":
-      return {
-        container: "bg-pending-50",
-        text: "text-pending-700",
-        label: "Medium",
-      };
-    default: {
-      const _exhaustive: never = urgency;
-      return _exhaustive;
-    }
-  }
-}
-
 export default function SupportRequestUrgencyBadge({
   urgency,
 }: SupportRequestUrgencyBadgeProps) {
-  const styles = getUrgencyStyles(urgency);
+  const { t } = useTranslation();
 
-  return (
-    <View className={`rounded-full px-3 py-1 ${styles.container}`}>
-      <Text className={`text-xs font-medium ${styles.text}`}>{styles.label}</Text>
-    </View>
-  );
+  switch (urgency) {
+    case "urgent":
+      return (
+        <View className="rounded-full bg-rejected-50 px-2.5 py-0.5">
+          <Text className="text-xs font-medium text-rejected">
+            {t("profile.urgency.urgent")}
+          </Text>
+        </View>
+      );
+    case "medium":
+      return (
+        <View className="rounded-full bg-pending-50 px-2.5 py-0.5">
+          <Text className="text-xs font-medium text-pending-700">
+            {t("profile.urgency.medium")}
+          </Text>
+        </View>
+      );
+    default: {
+      const exhaustive: never = urgency;
+      return exhaustive;
+    }
+  }
 }

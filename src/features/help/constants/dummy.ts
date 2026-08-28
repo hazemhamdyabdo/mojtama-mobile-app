@@ -5,30 +5,24 @@ import type {
   HelpTab,
 } from "@/features/help/types";
 
-export const HELP_TABS: { id: HelpTab; label: string }[] = [
-  { id: "emergency", label: "Emergency" },
-  { id: "faqs", label: "FAQs" },
+export const HELP_TABS: { id: HelpTab }[] = [
+  { id: "emergency" },
+  { id: "faqs" },
 ];
 
 export const EMERGENCY_CONTACTS: EmergencyContact[] = [
   {
     id: "police",
-    title: "Police",
-    subtitle: "Emergency Law Enforcement",
     phoneNumber: "122",
     icon: "shield-star-outline",
   },
   {
     id: "ambulance",
-    title: "Ambulance",
-    subtitle: "Medical Emergency Services",
     phoneNumber: "123",
     icon: "ambulance",
   },
   {
     id: "fire",
-    title: "Fire Department",
-    subtitle: "Fire And Rescue Services",
     phoneNumber: "180",
     icon: "fire",
   },
@@ -44,7 +38,6 @@ export const EMERGENCY_TIPS = [
 export const HELP_FAQ_CATEGORIES: HelpFaqCategory[] = [
   {
     id: "maintenance-repairs",
-    title: "Maintenance & Repairs",
     icon: "shield-outline",
     questions: [
       {
@@ -69,7 +62,6 @@ export const HELP_FAQ_CATEGORIES: HelpFaqCategory[] = [
   },
   {
     id: "payments-billing",
-    title: "Payments & Billing",
     icon: "credit-card-outline",
     questions: [
       {
@@ -94,7 +86,6 @@ export const HELP_FAQ_CATEGORIES: HelpFaqCategory[] = [
   },
   {
     id: "emergencies",
-    title: "Emergencies",
     icon: "shield-alert-outline",
     questions: [
       {
@@ -119,7 +110,6 @@ export const HELP_FAQ_CATEGORIES: HelpFaqCategory[] = [
   },
   {
     id: "community-rules",
-    title: "Community Rules",
     icon: "badge-account-outline",
     questions: [
       {
@@ -144,7 +134,6 @@ export const HELP_FAQ_CATEGORIES: HelpFaqCategory[] = [
   },
   {
     id: "app-communication",
-    title: "App & Communication",
     icon: "view-grid-outline",
     questions: [
       {
@@ -172,21 +161,18 @@ export const HELP_FAQ_CATEGORIES: HelpFaqCategory[] = [
 export const HELP_SUPPORT_CONTACTS: HelpSupportContact[] = [
   {
     id: "phone",
-    label: "Phone",
     value: "+966 50 123 4567",
     icon: "phone-outline",
     action: "phone",
   },
   {
     id: "email",
-    label: "Email",
     value: "Support@Mojtama.Com",
     icon: "email-outline",
     action: "email",
   },
   {
     id: "support",
-    label: "Support",
     value: "24/7 Emergency Support",
     icon: "shield-outline",
     action: "support",

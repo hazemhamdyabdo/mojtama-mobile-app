@@ -52,7 +52,7 @@ export const SUPPORT_REQUESTS: SupportRequest[] = [
 ];
 
 export const PROFILE_TABS = [
-  { id: "support-requests" as const, label: "Support requests" },
-  { id: "payments" as const, label: "Payments" },
-  { id: "visitations" as const, label: "Visitations" },
+  { id: "support-requests" as const },
+  { id: "payments" as const },
+  { id: "visitations" as const },
 ];

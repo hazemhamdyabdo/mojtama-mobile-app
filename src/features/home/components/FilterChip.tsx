@@ -1,3 +1,5 @@
+import { translateOptions } from "@/localization/translateLabel";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text } from "react-native";
 
 export type FilterOption = {
@@ -11,13 +13,13 @@ type FilterChipItemProps = {
   onPress: () => void;
 };
 
-const DEFAULT_FILTERS: FilterOption[] = [
-  { id: "all", label: "All" },
-  { id: "announcements", label: "Announcements" },
-  { id: "news", label: "News" },
-  { id: "poll", label: "Poll" },
-  { id: "meetings", label: "Meetings" },
-];
+const DEFAULT_FILTERS = [
+  { id: "all" },
+  { id: "announcements" },
+  { id: "news" },
+  { id: "poll" },
+  { id: "meetings" },
+] as const;
 
 function FilterChipItem({ label, selected, onPress }: FilterChipItemProps) {
   return (
@@ -43,7 +45,7 @@ function FilterChipItem({ label, selected, onPress }: FilterChipItemProps) {
 }
 
 type FilterChipProps = {
-  filters?: FilterOption[];
+  filters?: readonly { id: string }[];
   selectedId?: string;
   onSelect?: (id: string) => void;
 };
@@ -53,6 +55,9 @@ export default function FilterChip({
   selectedId = "all",
   onSelect,
 }: FilterChipProps) {
+  const { t } = useTranslation();
+  const translatedFilters = translateOptions(t, "home.filters", filters);
+
   return (
     <ScrollView
       horizontal
@@ -64,7 +69,7 @@ export default function FilterChip({
         marginTop: 10,
       }}
     >
-      {filters.map((filter) => (
+      {translatedFilters.map((filter) => (
         <FilterChipItem
           key={filter.id}
           label={filter.label}

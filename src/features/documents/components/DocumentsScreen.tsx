@@ -27,6 +27,7 @@ import {
 } from "@/features/documents/utils/documentActions";
 import HelpStillNeedHelpCard from "@/features/help/components/HelpStillNeedHelpCard";
 import { useCallback, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, ScrollView, Text, View } from "react-native";
 function formatTodayDate(): string {
   const today = new Date();
@@ -49,6 +50,7 @@ function formatTodayDate(): string {
 }
 
 export default function DocumentsScreen() {
+  const { t } = useTranslation();
   const uploadSheetRef = useRef<UploadDocumentBottomSheetRef>(null);
   const actionsSheetRef = useRef<DocumentActionsBottomSheetRef>(null);
   const editSheetRef = useRef<EditDocumentBottomSheetRef>(null);
@@ -115,9 +117,9 @@ export default function DocumentsScreen() {
         const message =
           error instanceof DocumentActionError
             ? error.message
-            : "Something went wrong. Please try again.";
+            : t("documents.errors.generic");
 
-        Alert.alert("Document action failed", message);
+        Alert.alert(t("documents.errors.actionFailed"), message);
         console.warn("Document action failed", error);
       }
     },
@@ -161,7 +163,7 @@ export default function DocumentsScreen() {
           />
 
           <Text className="mb-3 text-base font-bold text-heading">
-            Categories
+            {t("documents.categoriesSection")}
           </Text>
           <DocumentCategoryChips
             selectedCategory={selectedCategory}
@@ -169,16 +171,16 @@ export default function DocumentsScreen() {
           />
 
           <Text className="mb-3 text-base font-bold text-heading">
-            Recent Documents
+            {t("documents.recentDocuments")}
           </Text>
 
           {filteredDocuments.length === 0 ? (
             <View className="items-center py-10">
               <Text className="text-base font-medium text-heading">
-                No Documents Found
+                {t("documents.empty.title")}
               </Text>
               <Text className="mt-1 text-center text-sm text-sec-text">
-                Try adjusting your search or category filter.
+                {t("documents.empty.filterHint")}
               </Text>
             </View>
           ) : (

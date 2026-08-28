@@ -3,8 +3,8 @@ import ChatDateSeparator from "@/features/chat/components/ChatDateSeparator";
 import ServiceAddedCard from "@/features/chat/components/ServiceAddedCard";
 import UserAttachmentBubble from "@/features/chat/components/UserAttachmentBubble";
 import UserTextBubble from "@/features/chat/components/UserTextBubble";
-import { WELCOME_MESSAGE } from "@/features/chat/constants/suggestions";
 import type { ChatMessage } from "@/features/chat/types";
+import i18n from "@/localization/i18n";
 
 export function formatChatTime(date = new Date()) {
   return date.toLocaleTimeString(undefined, {
@@ -15,11 +15,11 @@ export function formatChatTime(date = new Date()) {
 
 export function createInitialChatMessages(): ChatMessage[] {
   return [
-    { id: "date-today", type: "date", label: "Today" },
+    { id: "date-today", type: "date", label: i18n.t("common.today") },
     {
       id: "welcome",
       type: "ai-text",
-      text: WELCOME_MESSAGE,
+      text: i18n.t("chat.messages.welcome"),
       time: "9:24 AM",
     },
   ];

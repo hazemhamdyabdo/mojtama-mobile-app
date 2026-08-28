@@ -3,6 +3,7 @@ import DocumentCategoryBadge from "@/features/documents/components/DocumentCateg
 import DocumentFileTypeIcon from "@/features/documents/components/DocumentFileTypeIcon";
 import type { CommunityDocument } from "@/features/documents/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type DocumentPreviewCardProps = {
@@ -16,6 +17,8 @@ export default function DocumentPreviewCard({
   onRemove,
   bordered = false,
 }: DocumentPreviewCardProps) {
+  const { t } = useTranslation();
+
   return (
     <View
       className={`flex-row items-center gap-3 rounded-2xl bg-white p-3 ${
@@ -40,7 +43,7 @@ export default function DocumentPreviewCard({
         <Pressable
           onPress={onRemove}
           accessibilityRole="button"
-          accessibilityLabel="Remove file"
+          accessibilityLabel={t("documents.a11y.removeFile")}
           className="size-8 items-center justify-center active:opacity-[0.92]"
         >
           <MaterialDesignIcons name="close" color={colors.secText} size={20} />

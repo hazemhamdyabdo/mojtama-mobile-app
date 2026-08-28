@@ -12,7 +12,6 @@ export type SettingsProfile = {
 
 export type SettingsRowItem = {
   id: string;
-  label: string;
   icon:
     | "account-outline"
     | "pencil-outline"

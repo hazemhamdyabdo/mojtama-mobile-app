@@ -2,17 +2,20 @@ import { colors } from "@/theme/colors";
 import type { SettingsProfile } from "@/features/settings/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type SettingsProfileCardProps = {
   profile: SettingsProfile;
-  onPress?: () => void;
+  onPress: () => void;
 };
 
 export default function SettingsProfileCard({
   profile,
   onPress,
 }: SettingsProfileCardProps) {
+  const { t } = useTranslation();
+
   return (
     <Pressable
       onPress={onPress}
@@ -23,7 +26,7 @@ export default function SettingsProfileCard({
         <Image
           source={profile.avatar}
           contentFit="cover"
-          style={{ width: 56, height: 56, borderRadius: 100 }}
+          style={{ width: 48, height: 48, borderRadius: 24 }}
         />
 
         <View className="ml-3 flex-1">
@@ -38,7 +41,9 @@ export default function SettingsProfileCard({
             </View>
           </View>
 
-          <Text className="mt-3 text-sm font-medium text-slate-500">Units</Text>
+          <Text className="mt-3 text-sm font-medium text-slate-500">
+            {t("common.units")}
+          </Text>
 
           <View className="mt-2 flex-row flex-wrap gap-2">
             {profile.units.map((unit) => (

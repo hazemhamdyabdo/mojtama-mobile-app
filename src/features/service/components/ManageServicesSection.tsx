@@ -1,23 +1,27 @@
 import ServiceListItem from "@/features/service/components/ServiceListItem";
-import type { ServiceItem } from "@/features/service/types";
+import type { ServiceItem, ServiceRole } from "@/features/service/types";
 import { Text, View } from "react-native";
 
 type ManageServicesSectionProps = {
   title?: string;
   subtitle?: string;
   items: ServiceItem[];
+  variant?: ServiceRole;
   onItemPress?: (itemId: string) => void;
 };
 
 export default function ManageServicesSection({
-  title = "Manage Services",
+  title,
   subtitle,
   items,
+  variant = "admin",
   onItemPress,
 }: ManageServicesSectionProps) {
   return (
     <View className="mt-8">
-      <Text className="text-lg font-bold text-heading">{title}</Text>
+      {title ? (
+        <Text className="text-lg font-bold text-heading">{title}</Text>
+      ) : null}
       {subtitle ? (
         <Text className="mt-1 text-sm text-sec-text">{subtitle}</Text>
       ) : null}
@@ -27,6 +31,7 @@ export default function ManageServicesSection({
           <ServiceListItem
             key={item.id}
             item={item}
+            variant={variant}
             onPress={onItemPress}
           />
         ))}

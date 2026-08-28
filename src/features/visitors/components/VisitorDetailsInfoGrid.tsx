@@ -1,4 +1,5 @@
 import type { Visitor } from "@/features/visitors/types";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 type VisitorDetailsInfoGridProps = {
@@ -22,22 +23,30 @@ function InfoCell({ label, value }: InfoCellProps) {
 export default function VisitorDetailsInfoGrid({
   visitor,
 }: VisitorDetailsInfoGridProps) {
+  const { t } = useTranslation();
+
   return (
     <View>
       <View className="flex-row gap-3">
-        <InfoCell label="Visiting" value={visitor.hostName} />
-        <InfoCell label="location" value={visitor.location} />
+        <InfoCell label={t("visitors.details.visiting")} value={visitor.hostName} />
+        <InfoCell label={t("visitors.details.location")} value={visitor.location} />
       </View>
       <View className="flex-row gap-3">
         <InfoCell
-          label="Date & time"
-          value={`${visitor.date}  at  ${visitor.time}`}
+          label={t("visitors.card.dateTime")}
+          value={t("visitors.card.dateTimeAt", {
+            date: visitor.date,
+            time: visitor.time,
+          })}
         />
-        <InfoCell label="Purpose" value={visitor.purpose} />
+        <InfoCell label={t("visitors.card.purpose")} value={visitor.purpose} />
       </View>
       <View className="flex-row gap-3">
-        <InfoCell label="Duration" value={visitor.duration} />
-        <InfoCell label="Parking spot" value={visitor.parkingSpot} />
+        <InfoCell label={t("visitors.details.duration")} value={visitor.duration} />
+        <InfoCell
+          label={t("visitors.details.parkingSpot")}
+          value={visitor.parkingSpot}
+        />
       </View>
     </View>
   );

@@ -3,6 +3,7 @@ import VisitorAccessCodeCard from "@/features/visitors/components/VisitorAccessC
 import VisitorStatusBadge from "@/features/visitors/components/VisitorStatusBadge";
 import type { Visitor } from "@/features/visitors/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type VisitorCardProps = {
@@ -18,6 +19,7 @@ export default function VisitorCard({
   onQrPress,
   onSharePress,
 }: VisitorCardProps) {
+  const { t } = useTranslation();
   const isApproved = visitor.status === "approved";
 
   return (
@@ -31,7 +33,8 @@ export default function VisitorCard({
 
       <View className="mt-1 flex-row items-center gap-2">
         <Text className="text-sm text-sec-text">
-          Visiting <Text className="text-heading">{visitor.hostName}</Text>
+          {t("visitors.card.visiting")}{" "}
+          <Text className="text-heading">{visitor.hostName}</Text>
         </Text>
         <View className="flex-row items-center gap-0.5">
           <MaterialDesignIcons
@@ -47,13 +50,16 @@ export default function VisitorCard({
 
       <View className="mt-3 flex-row rounded-2xl bg-slate-50 p-4">
         <View className="flex-1 pr-2">
-          <Text className="text-sm text-sec-text">Date & time</Text>
+          <Text className="text-sm text-sec-text">{t("visitors.card.dateTime")}</Text>
           <Text className="mt-1 text-sm text-heading">
-            {visitor.date}  at  {visitor.time}
+            {t("visitors.card.dateTimeAt", {
+              date: visitor.date,
+              time: visitor.time,
+            })}
           </Text>
         </View>
         <View className="max-w-[42%] flex-1">
-          <Text className="text-sm text-sec-text">Purpose</Text>
+          <Text className="text-sm text-sec-text">{t("visitors.card.purpose")}</Text>
           <Text className="mt-1 text-sm text-heading">{visitor.purpose}</Text>
         </View>
       </View>
@@ -71,14 +77,16 @@ export default function VisitorCard({
           accessibilityRole="button"
           className="flex-1 items-center rounded-2xl bg-primary py-3.5 active:opacity-[0.92]"
         >
-          <Text className="text-base font-bold text-white">Details</Text>
+          <Text className="text-base font-bold text-white">
+            {t("visitors.card.details")}
+          </Text>
         </Pressable>
 
         {isApproved ? (
           <Pressable
             onPress={() => onSharePress?.(visitor.id)}
             accessibilityRole="button"
-            accessibilityLabel="Share visit"
+            accessibilityLabel={t("visitors.a11y.shareVisit")}
             className="size-12 items-center justify-center rounded-2xl border border-card-border bg-white active:opacity-[0.92]"
           >
             <MaterialDesignIcons

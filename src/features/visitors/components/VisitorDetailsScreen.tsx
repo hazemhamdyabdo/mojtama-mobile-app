@@ -16,6 +16,7 @@ import VisitorTimelineCard from "@/features/visitors/components/VisitorTimelineC
 import type { Visitor } from "@/features/visitors/types";
 import { useRouter, type Href } from "expo-router";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 type VisitorDetailsScreenProps = {
   visitor: Visitor;
@@ -25,6 +26,7 @@ export default function VisitorDetailsScreen({
   visitor,
 }: VisitorDetailsScreenProps) {
   const router = useRouter();
+  const { t } = useTranslation();
   const actionsSheetRef = useRef<VisitorActionsBottomSheetRef>(null);
   const deleteSheetRef = useRef<DeleteVisitorBottomSheetRef>(null);
   const qrSheetRef = useRef<VisitorQrBottomSheetRef>(null);
@@ -61,17 +63,21 @@ export default function VisitorDetailsScreen({
 
           <View className="mt-4 rounded-2xl bg-slate-50 p-4">
             <Text className="text-base font-bold text-heading">
-              Contact Info
+              {t("visitors.details.contactInfo")}
             </Text>
             <View className="mt-3 flex-row gap-3">
               <View className="flex-1">
-                <Text className="text-sm text-sec-text">Phone number</Text>
+                <Text className="text-sm text-sec-text">
+                  {t("visitors.details.phoneNumber")}
+                </Text>
                 <Text className="mt-1 text-sm font-semibold text-heading">
                   {visitor.phone}
                 </Text>
               </View>
               <View className="flex-1">
-                <Text className="text-sm text-sec-text">Email Address</Text>
+                <Text className="text-sm text-sec-text">
+                  {t("visitors.details.emailAddress")}
+                </Text>
                 <Text className="mt-1 text-sm font-semibold text-heading">
                   {visitor.email ?? "—"}
                 </Text>
@@ -80,7 +86,9 @@ export default function VisitorDetailsScreen({
           </View>
 
           <View className="mt-4 flex-row items-center justify-between rounded-2xl bg-slate-50 p-4">
-            <Text className="text-base font-bold text-heading">Status</Text>
+            <Text className="text-base font-bold text-heading">
+              {t("visitors.details.status")}
+            </Text>
             <VisitorStatusBadge status={visitor.status} />
           </View>
 

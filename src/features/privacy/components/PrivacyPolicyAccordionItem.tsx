@@ -1,7 +1,15 @@
 import { colors } from "@/theme/colors";
 import type { PrivacyPolicy } from "@/features/privacy/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
+
+const POLICY_I18N_KEYS: Record<string, string> = {
+  "community-privacy": "community",
+  "visitor-policy": "visitor",
+  "smoking-policy": "smoking",
+  "noise-policy": "noise",
+};
 
 type PrivacyPolicyAccordionItemProps = {
   policy: PrivacyPolicy;
@@ -14,6 +22,9 @@ export default function PrivacyPolicyAccordionItem({
   isExpanded,
   onToggle,
 }: PrivacyPolicyAccordionItemProps) {
+  const { t } = useTranslation();
+  const policyKey = POLICY_I18N_KEYS[policy.id] ?? policy.id;
+
   return (
     <View className="mb-4">
       <Pressable
@@ -36,7 +47,7 @@ export default function PrivacyPolicyAccordionItem({
             isExpanded ? "text-primary" : "text-heading"
           }`}
         >
-          {policy.title}
+          {t(`privacy.policies.${policyKey}`)}
         </Text>
         <MaterialDesignIcons
           name={isExpanded ? "chevron-up" : "chevron-down"}

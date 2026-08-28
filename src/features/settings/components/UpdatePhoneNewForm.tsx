@@ -15,10 +15,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 export default function UpdatePhoneNewForm() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [selectedCountry, setSelectedCountry] =
     useState<AuthCountry>(DEFAULT_AUTH_COUNTRY);
 
@@ -59,7 +61,7 @@ export default function UpdatePhoneNewForm() {
   return (
     <View>
       <SettingsUpdateIntro
-        title="Update Your Number"
+        title={t("settings.update.phone.title")}
         subtitle="Enter Your New Number To Stay Reachable"
       />
 

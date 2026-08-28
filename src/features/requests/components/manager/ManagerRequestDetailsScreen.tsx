@@ -20,6 +20,7 @@ import MaterialDesignIcons from "@react-native-vector-icons/material-design-icon
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
 type ManagerRequestDetailsScreenProps = {
   request: ServiceRequest;
@@ -32,6 +33,7 @@ export default function ManagerRequestDetailsScreen({
   onUpdate,
   onDelete,
 }: ManagerRequestDetailsScreenProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const assignSheetRef = useRef<AssignWorkersBottomSheetRef>(null);
   const deleteSheetRef = useRef<DeleteRequestBottomSheetRef>(null);
@@ -104,17 +106,17 @@ export default function ManagerRequestDetailsScreen({
               className="mt-1 active:opacity-[0.92]"
             >
               <Text className="text-sm font-semibold text-primary">
-                View all
+                {t("common.viewAll")}
               </Text>
             </Pressable>
           ) : null}
 
           <View className="mt-6 ">
-            <RequestInfoRow label="Submitted by">
+            <RequestInfoRow label={t("requests.details.fields.submittedBy")}>
               <PersonValue person={request.submittedBy} />
             </RequestInfoRow>
 
-            <RequestInfoRow label="Location">
+            <RequestInfoRow label={t("requests.details.fields.location")}>
               <View className="flex-row items-center gap-1">
                 <MaterialDesignIcons
                   name="map-marker-outline"
@@ -128,7 +130,7 @@ export default function ManagerRequestDetailsScreen({
             </RequestInfoRow>
 
             {request.scheduledDate ? (
-              <RequestInfoRow label="Scheduled Date">
+              <RequestInfoRow label={t("requests.details.fields.scheduledDate")}>
                 <Text className="text-sm font-semibold text-heading">
                   {request.scheduledDate}
                 </Text>
@@ -136,22 +138,22 @@ export default function ManagerRequestDetailsScreen({
             ) : null}
 
             {request.assignedTo ? (
-              <RequestInfoRow label="Assigned to">
+              <RequestInfoRow label={t("requests.details.fields.assignedTo")}>
                 <PersonValue person={request.assignedTo} />
               </RequestInfoRow>
             ) : null}
 
-            <RequestInfoRow label="Request Type">
+            <RequestInfoRow label={t("requests.details.fields.requestType")}>
               <RequestTypeBadge requestType={request.requestType} />
             </RequestInfoRow>
 
             {request.issueType ? (
-              <RequestInfoRow label="Issue Type">
+              <RequestInfoRow label={t("requests.details.fields.issueType")}>
                 <RequestIssueTypeBadge issueType={request.issueType} />
               </RequestInfoRow>
             ) : null}
 
-            <RequestInfoRow label="Priority">
+            <RequestInfoRow label={t("requests.details.fields.priority")}>
               <RequestPriorityBadge priority={request.priority} />
             </RequestInfoRow>
           </View>
@@ -159,7 +161,7 @@ export default function ManagerRequestDetailsScreen({
           {request.scheduleTime ? (
             <View className="mt-2 flex-row items-center justify-between rounded-2xl bg-slate-50 p-4">
               <Text className="text-sm font-semibold text-heading">
-                Schedule
+                {t("requests.details.fields.schedule")}
               </Text>
               <View className="flex-row items-center gap-1.5">
                 <MaterialDesignIcons
@@ -175,7 +177,9 @@ export default function ManagerRequestDetailsScreen({
           ) : null}
 
           <View className="mt-3 flex-row items-center justify-between rounded-2xl bg-slate-50 p-4">
-            <Text className="text-sm font-semibold text-heading">Status</Text>
+            <Text className="text-sm font-semibold text-heading">
+              {t("requests.details.fields.status")}
+            </Text>
             <RequestStatusBadge status={request.status} />
           </View>
 
@@ -192,7 +196,7 @@ export default function ManagerRequestDetailsScreen({
               className="items-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
             >
               <Text className="text-base font-bold text-white">
-                Assign Request
+                {t("requests.actions.assign")}
               </Text>
             </Pressable>
 
@@ -202,7 +206,7 @@ export default function ManagerRequestDetailsScreen({
               className="items-center rounded-2xl border border-rejected-500 bg-white py-4 active:opacity-[0.92]"
             >
               <Text className="text-base font-bold text-rejected-500">
-                Delete Request
+                {t("requests.actions.delete")}
               </Text>
             </Pressable>
           </View>

@@ -1,8 +1,17 @@
 import { colors } from "@/theme/colors";
 import HelpFaqQuestionCard from "@/features/help/components/HelpFaqQuestionCard";
-import type { HelpFaqCategory } from "@/features/help/types";
+import type { HelpFaqCategory, HelpFaqCategoryId } from "@/features/help/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
+
+const FAQ_CATEGORY_I18N_KEYS: Record<HelpFaqCategoryId, string> = {
+  "maintenance-repairs": "maintenance",
+  "payments-billing": "payments",
+  emergencies: "emergencies",
+  "community-rules": "rules",
+  "app-communication": "app",
+};
 
 type HelpFaqCategoryItemProps = {
   category: HelpFaqCategory;
@@ -15,6 +24,9 @@ export default function HelpFaqCategoryItem({
   isExpanded,
   onToggle,
 }: HelpFaqCategoryItemProps) {
+  const { t } = useTranslation();
+  const categoryKey = FAQ_CATEGORY_I18N_KEYS[category.id];
+
   return (
     <View className="mb-4">
       <Pressable
@@ -37,7 +49,7 @@ export default function HelpFaqCategoryItem({
             isExpanded ? "text-primary" : "text-heading"
           }`}
         >
-          {category.title}
+          {t(`help.faqCategories.${categoryKey}`)}
         </Text>
         <MaterialDesignIcons
           name={isExpanded ? "chevron-up" : "chevron-down"}

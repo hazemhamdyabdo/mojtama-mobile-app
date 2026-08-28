@@ -1,6 +1,11 @@
+export type SuggestionActionId =
+  | "add-service"
+  | "create-announcement"
+  | "create-poll"
+  | "schedule-meeting";
+
 export type SuggestionAction = {
-  id: string;
-  label: string;
+  id: SuggestionActionId;
   icon: "briefcase-outline" | "bullhorn-outline" | "chart-bar" | "account-group-outline";
   responseType: "service-added" | "text";
   responseText?: string;

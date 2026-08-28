@@ -1,4 +1,5 @@
 import type { VisitorStatus } from "@/features/visitors/types";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 type VisitorStatusBadgeProps = {
@@ -11,19 +12,16 @@ function getStatusStyles(status: VisitorStatus) {
       return {
         container: "bg-approved-50",
         text: "text-approved-600",
-        label: "Approved",
       };
     case "pending":
       return {
         container: "bg-pending-50",
         text: "text-pending-700",
-        label: "Pending",
       };
     case "complete":
       return {
         container: "bg-primary-50",
         text: "text-primary",
-        label: "Complete",
       };
     default: {
       const exhaustive: never = status;
@@ -32,15 +30,14 @@ function getStatusStyles(status: VisitorStatus) {
   }
 }
 
-export default function VisitorStatusBadge({
-  status,
-}: VisitorStatusBadgeProps) {
+export default function VisitorStatusBadge({ status }: VisitorStatusBadgeProps) {
+  const { t } = useTranslation();
   const styles = getStatusStyles(status);
 
   return (
-    <View className={`rounded-full px-3 py-1 ${styles.container}`}>
-      <Text className={`text-xs font-semibold ${styles.text}`}>
-        {styles.label}
+    <View className={`rounded-full px-2.5 py-1 ${styles.container}`}>
+      <Text className={`text-xs font-medium ${styles.text}`}>
+        {t(`visitors.status.${status}`)}
       </Text>
     </View>
   );

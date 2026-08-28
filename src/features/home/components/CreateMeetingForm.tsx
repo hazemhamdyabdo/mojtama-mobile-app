@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import {
   I18nManager,
   Pressable,
@@ -46,6 +47,7 @@ type CreateMeetingFormProps = {
 export default function CreateMeetingForm({
   onSubmit,
 }: CreateMeetingFormProps) {
+  const { t } = useTranslation();
   const textAlign = I18nManager.isRTL ? "right" : "left";
 
   const dateSheetRef = useRef<DateTimePickerSheetRef>(null);
@@ -107,11 +109,11 @@ export default function CreateMeetingForm({
         showsVerticalScrollIndicator={false}
       >
         <Text className="mb-6 text-2xl font-bold text-heading">
-          Create Meeting
+          {t("home.postTypes.meeting")}
         </Text>
 
         <View className="mb-5">
-          <FormLabel label="Title" required />
+          <FormLabel label={t("home.create.fields.title")} required />
 
           <Controller
             control={control}
@@ -121,7 +123,7 @@ export default function CreateMeetingForm({
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                placeholder="Type meeting title"
+                placeholder={t("home.create.meeting.titlePlaceholder")}
                 placeholderTextColor={colors.secText}
                 className={`rounded-xl border bg-white px-4 text-base text-heading ${
                   errors.title ? "border-rejected-200" : "border-card-border"
@@ -139,7 +141,7 @@ export default function CreateMeetingForm({
         </View>
 
         <View className="mb-5">
-          <FormLabel label="Agenda" required />
+          <FormLabel label={t("home.create.meeting.agenda")} required />
 
           <Controller
             control={control}
@@ -149,7 +151,7 @@ export default function CreateMeetingForm({
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                placeholder="Agenda summary"
+                placeholder={t("home.create.meeting.agendaPlaceholder")}
                 placeholderTextColor={colors.secText}
                 multiline
                 textAlignVertical="top"
@@ -169,7 +171,7 @@ export default function CreateMeetingForm({
         </View>
 
         <View className="mb-5">
-          <FormLabel label="Date & Time" required />
+          <FormLabel label={t("home.create.meeting.dateTime")} required />
 
           <Pressable
             onPress={() => dateSheetRef.current?.open()}
@@ -183,7 +185,7 @@ export default function CreateMeetingForm({
                 date ? "text-heading" : "text-sec-text"
               }`}
             >
-              {date ? formatDate(date) : "Select Date"}
+              {date ? formatDate(date) : t("home.create.selectDate")}
             </Text>
             <MaterialDesignIcons
               name="calendar-blank-outline"
@@ -216,7 +218,7 @@ export default function CreateMeetingForm({
         </View>
 
         <View className="mb-5">
-          <FormLabel label="Location" required />
+          <FormLabel label={t("common.location")} required />
 
           <Pressable
             onPress={() => locationSheetRef.current?.open()}
@@ -231,7 +233,7 @@ export default function CreateMeetingForm({
                 location ? "text-heading" : "text-sec-text"
               }`}
             >
-              {location ? location.value : "Enter Meeting Location"}
+              {location ? location.value : t("home.create.meeting.selectLocation")}
             </Text>
             <MaterialDesignIcons name="chevron-down" color={colors.slate500} size={22} />
           </Pressable>
@@ -240,7 +242,7 @@ export default function CreateMeetingForm({
         </View>
 
         <View className="mb-5">
-          <FormLabel label="Led by" required />
+          <FormLabel label={t("home.create.meeting.ledBy")} required />
 
           <Pressable
             onPress={() => ledBySheetRef.current?.open()}
@@ -254,7 +256,7 @@ export default function CreateMeetingForm({
                 ledBy ? "text-heading" : "text-sec-text"
               }`}
             >
-              {ledBy ? ledBy.name : "Enter Meeting Leader"}
+              {ledBy ? ledBy.name : t("home.create.meeting.selectLeader")}
             </Text>
             <MaterialDesignIcons name="chevron-down" color={colors.slate500} size={22} />
           </Pressable>
@@ -287,7 +289,7 @@ export default function CreateMeetingForm({
         />
 
         <View className="mb-2">
-          <FormLabel label="Send invitations" />
+          <FormLabel label={t("home.create.meeting.invitations")} />
 
           <Pressable
             onPress={() => inviteSheetRef.current?.open()}
@@ -325,7 +327,7 @@ export default function CreateMeetingForm({
               </View>
             ) : (
               <Text className="flex-1 px-1 text-base text-sec-text">
-                Invite participants
+                {t("home.create.meeting.invite.title")}
               </Text>
             )}
 
@@ -340,13 +342,15 @@ export default function CreateMeetingForm({
         accessibilityRole="button"
         className="mt-4 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
       >
-        <Text className="text-base font-bold text-white">Create Meeting</Text>
+        <Text className="text-base font-bold text-white">
+          {t("home.create.submit.meeting")}
+        </Text>
       </Pressable>
 
       <DateTimePickerSheet
         ref={dateSheetRef}
-        title="Select Meeting Date"
-        confirmLabel="Select Meeting Date"
+        title={t("home.create.meeting.picker.date")}
+        confirmLabel={t("home.create.meeting.picker.date")}
         mode="date"
         value={date}
         minimumDate={new Date()}
@@ -357,8 +361,8 @@ export default function CreateMeetingForm({
 
       <DateTimePickerSheet
         ref={startTimeSheetRef}
-        title="Select Meeting Time"
-        confirmLabel="Select Meeting Start Time"
+        title={t("home.create.meeting.picker.startTime")}
+        confirmLabel={t("home.create.meeting.picker.startTime")}
         mode="time"
         value={startTime}
         onConfirm={(selected) =>
@@ -368,8 +372,8 @@ export default function CreateMeetingForm({
 
       <DateTimePickerSheet
         ref={endTimeSheetRef}
-        title="Select Meeting Time"
-        confirmLabel="Select Meeting End Time"
+        title={t("home.create.meeting.picker.endTime")}
+        confirmLabel={t("home.create.meeting.picker.endTime")}
         mode="time"
         value={endTime}
         onConfirm={(selected) =>
@@ -387,8 +391,8 @@ export default function CreateMeetingForm({
 
       <MembersBottomSheet
         ref={ledBySheetRef}
-        title="Led by"
-        searchPlaceholder="search name or email"
+        title={t("home.create.meeting.ledBy")}
+        searchPlaceholder={t("home.create.meeting.invite.searchPlaceholder")}
         members={DUMMY_MEMBERS}
         selectedIds={ledBy ? [ledBy.id] : []}
         onSelect={(member) =>
@@ -402,8 +406,8 @@ export default function CreateMeetingForm({
 
       <MembersBottomSheet
         ref={inviteSheetRef}
-        title="Invite Participants"
-        searchPlaceholder="Invite participants by name or email"
+        title={t("home.create.meeting.invite.title")}
+        searchPlaceholder={t("home.create.meeting.invite.searchPlaceholder")}
         members={DUMMY_MEMBERS}
         selectedIds={invitees.map((invitee) => invitee.id)}
         multiSelect

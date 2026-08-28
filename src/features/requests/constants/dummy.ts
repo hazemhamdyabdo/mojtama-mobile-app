@@ -11,12 +11,12 @@ import { colors } from "@/theme/colors";
 
 const dummyAvatar = require("@/features/home/constants/dummy-avatar.jpg");
 
-export const REQUEST_FILTERS: { id: RequestFilter; label: string }[] = [
-  { id: "all", label: "All" },
-  { id: "maintenance", label: "Maintenance" },
-  { id: "noise", label: "Noise" },
-  { id: "billing", label: "Billing" },
-  { id: "other", label: "Other" },
+export const REQUEST_FILTERS: { id: RequestFilter }[] = [
+  { id: "all" },
+  { id: "maintenance" },
+  { id: "noise" },
+  { id: "billing" },
+  { id: "other" },
 ];
 
 export const REQUEST_LOCATIONS = ["3A/B", "5A/B", "B-1", "C-3"];

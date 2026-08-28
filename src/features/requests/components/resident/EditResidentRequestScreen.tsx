@@ -10,6 +10,7 @@ import {
 } from "@/features/requests/utils/createRequest";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 type EditResidentRequestScreenProps = {
   request: ServiceRequest;
@@ -19,6 +20,7 @@ export default function EditResidentRequestScreen({
   request,
 }: EditResidentRequestScreenProps) {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleSubmit = (values: CreateRequestFormValues) => {
     updateRequestInState(applyFormValuesToRequest(request, values));
@@ -32,7 +34,7 @@ export default function EditResidentRequestScreen({
           <Pressable
             onPress={() => router.back()}
             accessibilityRole="button"
-            accessibilityLabel="Go back"
+            accessibilityLabel={t("common.back")}
             className="absolute left-0 active:opacity-[0.92]"
           >
             <View className="size-10 items-center justify-center rounded-full bg-primary-50">
@@ -44,7 +46,7 @@ export default function EditResidentRequestScreen({
             </View>
           </Pressable>
 
-          <Text className="text-lg font-bold text-heading">Edit Request</Text>
+          <Text className="text-lg font-bold text-heading">{t("requests.edit.title")}</Text>
         </View>
 
         <CreateRequestForm

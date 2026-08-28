@@ -1,15 +1,20 @@
-import type { SuggestionAction } from "@/features/chat/types";
+import type { SuggestionAction, SuggestionActionId } from "@/features/chat/types";
+
+export const SUGGESTION_I18N_KEYS: Record<SuggestionActionId, string> = {
+  "add-service": "addService",
+  "create-announcement": "createAnnouncement",
+  "create-poll": "createPoll",
+  "schedule-meeting": "scheduleMeeting",
+};
 
 export const AI_SUGGESTIONS: SuggestionAction[] = [
   {
     id: "add-service",
-    label: "Add New Service",
     icon: "briefcase-outline",
     responseType: "service-added",
   },
   {
     id: "create-announcement",
-    label: "Create an Announcement",
     icon: "bullhorn-outline",
     responseType: "text",
     responseText:
@@ -17,7 +22,6 @@ export const AI_SUGGESTIONS: SuggestionAction[] = [
   },
   {
     id: "create-poll",
-    label: "Create a Poll",
     icon: "chart-bar",
     responseType: "text",
     responseText:
@@ -25,16 +29,12 @@ export const AI_SUGGESTIONS: SuggestionAction[] = [
   },
   {
     id: "schedule-meeting",
-    label: "Schedule a Meeting",
     icon: "account-group-outline",
     responseType: "text",
     responseText:
       "I can schedule a meeting for you. Share the title, date, time, and whether it should be virtual or in person.",
   },
 ];
-
-export const WELCOME_MESSAGE =
-  "Hello Omar. I'm your AI assistant. I can help You Manage your gym, members, service, and more.";
 
 export const SERVICE_ADDED_DETAILS = {
   price: "$50",

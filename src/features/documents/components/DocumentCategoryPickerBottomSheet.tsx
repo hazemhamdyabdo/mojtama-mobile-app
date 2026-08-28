@@ -1,8 +1,7 @@
 import { colors } from "@/theme/colors";
-import {
-  DOCUMENT_CATEGORIES,
-  DOCUMENT_CATEGORY_LABELS,
-} from "@/features/documents/constants/dummy";
+import { DOCUMENT_CATEGORIES } from "@/features/documents/constants/dummy";
+import type { DocumentCategory } from "@/features/documents/types";
+import { translateLabel } from "@/localization/translateLabel";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import {
   BottomSheetBackdrop,
@@ -17,6 +16,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -33,6 +33,7 @@ export type DocumentCategoryPickerBottomSheetRef = {
 const DocumentCategoryPickerBottomSheet = forwardRef<
   DocumentCategoryPickerBottomSheetRef
 >(function DocumentCategoryPickerBottomSheet(_props, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const [config, setConfig] = useState<DocumentCategoryPickerConfig | null>(
@@ -81,7 +82,7 @@ const DocumentCategoryPickerBottomSheet = forwardRef<
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
         <Text className="mb-4 text-center text-base font-bold text-heading">
-          Select Category
+          {t("documents.picker.selectCategory")}
         </Text>
 
         {DOCUMENT_CATEGORIES.map((category) => {
@@ -100,7 +101,7 @@ const DocumentCategoryPickerBottomSheet = forwardRef<
               }`}
             >
               <Text className="text-base font-medium text-heading">
-                {DOCUMENT_CATEGORY_LABELS[category]}
+                {translateLabel(t, "documents.categories", category as DocumentCategory)}
               </Text>
               {isSelected ? (
                 <View className="size-6 items-center justify-center rounded-full bg-primary">

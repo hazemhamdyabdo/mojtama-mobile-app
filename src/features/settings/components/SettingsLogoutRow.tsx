@@ -1,12 +1,15 @@
 import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text } from "react-native";
 
 type SettingsLogoutRowProps = {
-  onPress?: () => void;
+  onPress: () => void;
 };
 
 export default function SettingsLogoutRow({ onPress }: SettingsLogoutRowProps) {
+  const { t } = useTranslation();
+
   return (
     <Pressable
       onPress={onPress}
@@ -14,7 +17,9 @@ export default function SettingsLogoutRow({ onPress }: SettingsLogoutRowProps) {
       className="flex-row items-center px-4 py-4 active:opacity-[0.92]"
     >
       <MaterialDesignIcons name="logout" color={colors.rejected} size={22} />
-      <Text className="ml-3 text-base font-medium text-rejected">Log Out</Text>
+      <Text className="ml-3 text-base font-medium text-rejected">
+        {t("settings.logout")}
+      </Text>
     </Pressable>
   );
 }

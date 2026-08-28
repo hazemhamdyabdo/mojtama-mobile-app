@@ -1,3 +1,5 @@
+import { translateLabel } from "@/localization/translateLabel";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type IssueTypeOption = {
@@ -18,6 +20,8 @@ export default function RequestIssueTypeGrid({
   selectedId,
   onSelect,
 }: RequestIssueTypeGridProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="mb-4">
       <Text className="mb-3 text-sm font-semibold text-heading">{title}</Text>
@@ -40,7 +44,7 @@ export default function RequestIssueTypeGrid({
                   isSelected ? "text-pending-700" : "text-slate-500"
                 }`}
               >
-                {option.label}
+                {translateLabel(t, "requests.issueTypes", option.id)}
               </Text>
             </Pressable>
           );

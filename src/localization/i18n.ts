@@ -6,7 +6,9 @@ import { initReactI18next } from "react-i18next";
 import { DevSettings, I18nManager } from "react-native";
 
 import ar from "./locales/ar.json";
+import arFeatures from "./locales/features/ar";
 import en from "./locales/en.json";
+import enFeatures from "./locales/features/en";
 
 export const supportedLanguages = ["en", "ar"] as const;
 export type SupportedLanguage = (typeof supportedLanguages)[number];
@@ -16,8 +18,20 @@ const PENDING_HREF_STORAGE_KEY = "@mojtama/pending_href";
 const RTL_RELOAD_GUARD_KEY = "@mojtama/rtl_reload_guard";
 
 const resources = {
-  en: { translation: en },
-  ar: { translation: ar },
+  en: {
+    translation: {
+      ...en,
+      ...enFeatures,
+      common: { ...en.common, ...enFeatures.common },
+    },
+  },
+  ar: {
+    translation: {
+      ...ar,
+      ...arFeatures,
+      common: { ...ar.common, ...arFeatures.common },
+    },
+  },
 } as const;
 
 const fallbackLanguage: SupportedLanguage = "en";

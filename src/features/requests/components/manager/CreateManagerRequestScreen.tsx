@@ -6,9 +6,12 @@ import { addRequestToState } from "@/features/requests/store/requestState";
 import { buildServiceRequestFromForm } from "@/features/requests/utils/createRequest";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
+
 export default function CreateManagerRequestScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleSubmit = (values: CreateRequestFormValues) => {
     addRequestToState(buildServiceRequestFromForm(values));
@@ -22,7 +25,7 @@ export default function CreateManagerRequestScreen() {
           <Pressable
             onPress={() => router.back()}
             accessibilityRole="button"
-            accessibilityLabel="Go back"
+            accessibilityLabel={t("common.back")}
             className="absolute left-0 active:opacity-[0.92]"
           >
             <View className="size-10 items-center justify-center rounded-full bg-primary-50">
@@ -35,7 +38,7 @@ export default function CreateManagerRequestScreen() {
           </Pressable>
 
           <Text className="text-lg font-bold text-heading">
-            Create Request
+            {t("requests.create.title")}
           </Text>
         </View>
 

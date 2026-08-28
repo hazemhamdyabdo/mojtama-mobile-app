@@ -7,9 +7,12 @@ import { buildServiceRequestFromForm } from "@/features/requests/utils/createReq
 import { SERVICE_USER } from "@/features/service/constants/dummy";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
+
 export default function CreateResidentRequestScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleSubmit = (values: CreateRequestFormValues) => {
     const newRequest = buildServiceRequestFromForm(values, {
@@ -28,7 +31,7 @@ export default function CreateResidentRequestScreen() {
           <Pressable
             onPress={() => router.back()}
             accessibilityRole="button"
-            accessibilityLabel="Go back"
+            accessibilityLabel={t("common.back")}
             className="absolute left-0 active:opacity-[0.92]"
           >
             <View className="size-10 items-center justify-center rounded-full bg-primary-50">
@@ -41,7 +44,7 @@ export default function CreateResidentRequestScreen() {
           </Pressable>
 
           <Text className="text-lg font-bold text-heading">
-            Create Request
+            {t("requests.create.title")}
           </Text>
         </View>
 

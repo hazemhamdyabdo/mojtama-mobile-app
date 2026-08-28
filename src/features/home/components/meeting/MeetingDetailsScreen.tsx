@@ -19,7 +19,9 @@ import MaterialDesignIcons from "@react-native-vector-icons/material-design-icon
 import { Image } from "expo-image";
 import { Redirect, useLocalSearchParams, useRouter } from "expo-router";
 import { useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
+
 type AttendeeTab = "team" | "residents";
 
 type MeetingDetailsScreenProps = {
@@ -33,6 +35,7 @@ function getMeetingPost(id: string | undefined): MeetingPost | undefined {
 export default function MeetingDetailsScreen({
   variant = "feed",
 }: MeetingDetailsScreenProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
   const meetingId = Array.isArray(id) ? id[0] : id;
@@ -82,7 +85,7 @@ export default function MeetingDetailsScreen({
         <Pressable
           onPress={() => router.back()}
           accessibilityRole="button"
-          accessibilityLabel="Go back"
+          accessibilityLabel={t("common.back")}
           className="absolute left-0 active:opacity-[0.92]"
         >
           <View className="size-10 items-center justify-center rounded-full bg-primary-50">
@@ -95,7 +98,9 @@ export default function MeetingDetailsScreen({
         </Pressable>
 
         <Text className="text-lg font-bold text-heading">
-          {isService ? "Meetings" : "Meeting Details"}
+          {isService
+            ? t("home.meeting.details.serviceTitle")
+            : t("home.meeting.details.title")}
         </Text>
 
         {!isService ? (
@@ -132,13 +137,13 @@ export default function MeetingDetailsScreen({
                 className="mt-1 active:opacity-[0.92]"
               >
                 <Text className="text-sm font-semibold text-primary">
-                  View all
+                  {t("common.viewAll")}
                 </Text>
               </Pressable>
             ) : null}
 
             <View className="mt-6">
-              <MeetingServiceInfoRow label="Lead by">
+              <MeetingServiceInfoRow label={t("home.meeting.details.fields.leadBy")}>
                 <View className="flex-row items-center gap-2">
                   <Image
                     source={meeting.leadBy.avatar}
@@ -151,13 +156,13 @@ export default function MeetingDetailsScreen({
                 </View>
               </MeetingServiceInfoRow>
 
-              <MeetingServiceInfoRow label="Type">
+              <MeetingServiceInfoRow label={t("common.type")}>
                 <Text className="text-sm font-semibold text-heading">
                   {meeting.meetingType}
                 </Text>
               </MeetingServiceInfoRow>
 
-              <MeetingServiceInfoRow label="Location">
+              <MeetingServiceInfoRow label={t("common.location")}>
                 <View className="flex-row items-center gap-1">
                   <MaterialDesignIcons
                     name="map-marker-outline"
@@ -170,7 +175,7 @@ export default function MeetingDetailsScreen({
                 </View>
               </MeetingServiceInfoRow>
 
-              <MeetingServiceInfoRow label="Status">
+              <MeetingServiceInfoRow label={t("home.meeting.details.fields.status")}>
                 <View
                   className={`rounded-full px-3 py-1 ${
                     isUpcoming ? "bg-primary-50" : "bg-slate-100"
@@ -187,8 +192,16 @@ export default function MeetingDetailsScreen({
               </MeetingServiceInfoRow>
             </View>
 
-            <MeetingScheduleCard label="Date" value={meeting.date} icon="calendar" />
-            <MeetingScheduleCard label="Time" value={meeting.time} icon="clock" />
+            <MeetingScheduleCard
+              label={t("home.meeting.details.fields.date")}
+              value={meeting.date}
+              icon="calendar"
+            />
+            <MeetingScheduleCard
+              label={t("home.meeting.details.fields.time")}
+              value={meeting.time}
+              icon="clock"
+            />
           </>
         ) : (
           <>
@@ -212,7 +225,7 @@ export default function MeetingDetailsScreen({
                 <Pressable
                   onPress={() => setLiked((prev) => !prev)}
                   accessibilityRole="button"
-                  accessibilityLabel={liked ? "Unlike meeting" : "Like meeting"}
+                  accessibilityLabel={t("home.engagement.like")}
                   hitSlop={8}
                   className="active:opacity-[0.92]"
                 >
@@ -226,12 +239,14 @@ export default function MeetingDetailsScreen({
                 <Pressable
                   onPress={() => likesSheetRef.current?.open(meeting.id)}
                   accessibilityRole="button"
-                  accessibilityLabel="View likes"
+                  accessibilityLabel={t("home.postDetails.likes", {
+                    count: displayedLikes,
+                  })}
                   hitSlop={8}
                   className="active:opacity-[0.92]"
                 >
                   <Text className="text-sm text-sec-text">
-                    {displayedLikes.toLocaleString()} Likes
+                    {t("home.postDetails.likes", { count: displayedLikes })}
                   </Text>
                 </Pressable>
               </View>
@@ -239,7 +254,9 @@ export default function MeetingDetailsScreen({
               <Pressable
                 onPress={() => commentsSheetRef.current?.open(meeting.id)}
                 accessibilityRole="button"
-                accessibilityLabel="View comments"
+                accessibilityLabel={t("home.postDetails.comments", {
+                  count: meeting.commentsCount,
+                })}
                 hitSlop={8}
                 className="flex-row items-center gap-1.5 active:opacity-[0.92]"
               >
@@ -249,7 +266,9 @@ export default function MeetingDetailsScreen({
                   size={18}
                 />
                 <Text className="text-sm text-sec-text">
-                  {meeting.commentsCount.toLocaleString()} Comments
+                  {t("home.postDetails.comments", {
+                    count: meeting.commentsCount,
+                  })}
                 </Text>
               </Pressable>
 
@@ -260,40 +279,60 @@ export default function MeetingDetailsScreen({
                   size={18}
                 />
                 <Text className="text-sm text-sec-text">
-                  {meeting.viewsCount.toLocaleString()} Views
+                  {t("home.postDetails.views", { count: meeting.viewsCount })}
                 </Text>
               </View>
             </View>
 
             <Text className="mb-3 mt-6 text-base font-bold text-heading">
-              Meeting information
+              {t("home.meeting.details.infoSection")}
             </Text>
 
             <View className="rounded-2xl border border-card-border bg-white">
-              <MeetingInfoRow label="Agenda" value={meeting.agenda} />
-              <MeetingInfoRow label="Date" value={meeting.date} />
               <MeetingInfoRow
-                label="Time"
+                label={t("home.meeting.details.fields.agenda")}
+                value={meeting.agenda}
+              />
+              <MeetingInfoRow
+                label={t("home.meeting.details.fields.date")}
+                value={meeting.date}
+              />
+              <MeetingInfoRow
+                label={t("home.meeting.details.fields.time")}
                 value={meeting.time}
                 accent={meeting.duration}
               />
-              <MeetingInfoRow label="Location" value={meeting.location} />
-              {meeting.meetingLink ? (
-                <MeetingInfoRow label="Meeting link" value={meeting.meetingLink} />
-              ) : null}
-              <MeetingInfoRow label="Created by" value={meeting.createdBy} />
-              <MeetingInfoRow label="Led by" value={meeting.leadBy.name} />
               <MeetingInfoRow
-                label="Visibility"
+                label={t("home.meeting.details.fields.location")}
+                value={meeting.location}
+              />
+              {meeting.meetingLink ? (
+                <MeetingInfoRow
+                  label={t("home.meeting.details.fields.meetingLink")}
+                  value={meeting.meetingLink}
+                />
+              ) : null}
+              <MeetingInfoRow
+                label={t("home.meeting.details.fields.createdBy")}
+                value={meeting.createdBy}
+              />
+              <MeetingInfoRow
+                label={t("home.meeting.details.fields.ledBy")}
+                value={meeting.leadBy.name}
+              />
+              <MeetingInfoRow
+                label={t("home.meeting.details.fields.visibility")}
                 value={meeting.visibility}
-                accent={meeting.isPublic ? "Public" : undefined}
+                accent={meeting.isPublic ? t("home.visibility.public") : undefined}
               />
             </View>
           </>
         )}
 
         <Text className="mb-3 mt-6 text-base font-bold text-heading">
-          {isService ? "Participants" : "Attendees"}
+          {isService
+            ? t("home.meeting.details.participants")
+            : t("home.meeting.details.attendees")}
         </Text>
 
         <View className="mb-4 flex-row border-b border-card-border">
@@ -309,7 +348,7 @@ export default function MeetingDetailsScreen({
                 activeTab === "team" ? "text-primary" : "text-sec-text"
               }`}
             >
-              Mojtama Team ({teamAttendees.length})
+              {t("home.meeting.details.team", { count: teamAttendees.length })}
             </Text>
           </Pressable>
 
@@ -325,7 +364,9 @@ export default function MeetingDetailsScreen({
                 activeTab === "residents" ? "text-primary" : "text-sec-text"
               }`}
             >
-              Residents ({residentAttendees.length})
+              {t("home.meeting.details.residents", {
+                count: residentAttendees.length,
+              })}
             </Text>
           </Pressable>
         </View>
@@ -339,7 +380,7 @@ export default function MeetingDetailsScreen({
         {!isService ? (
           <>
             <Text className="mb-3 mt-2 text-base font-bold text-heading">
-              Agenda
+              {t("home.meeting.details.agendaSection")}
             </Text>
 
             <View className="rounded-2xl border border-card-border bg-white px-4 py-4">
@@ -376,7 +417,9 @@ export default function MeetingDetailsScreen({
             accessibilityRole="button"
             className="flex-1 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
           >
-            <Text className="text-base font-bold text-white">Accept</Text>
+            <Text className="text-base font-bold text-white">
+              {t("home.meeting.actions.accept")}
+            </Text>
           </Pressable>
 
           <Pressable
@@ -384,7 +427,9 @@ export default function MeetingDetailsScreen({
             accessibilityRole="button"
             className="flex-1 items-center justify-center rounded-2xl border border-card-border bg-white py-4 active:opacity-[0.92]"
           >
-            <Text className="text-base font-bold text-heading">Decline</Text>
+            <Text className="text-base font-bold text-heading">
+              {t("home.meeting.actions.decline")}
+            </Text>
           </Pressable>
         </View>
       )}

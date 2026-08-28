@@ -1,5 +1,6 @@
 import { colors } from "@/theme/colors";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 type PostEngagementFooterProps = {
@@ -19,13 +20,15 @@ export default function PostEngagementFooter({
   onLikesPress,
   onCommentsPress,
 }: PostEngagementFooterProps) {
+  const { t } = useTranslation();
+
   return (
     <View className="mt-4 flex-row items-center gap-5">
       <View className="flex-row items-center gap-1.5">
         <Pressable
           onPress={onLikePress}
           accessibilityRole="button"
-          accessibilityLabel={liked ? "Unlike post" : "Like post"}
+          accessibilityLabel={t("home.engagement.like")}
           hitSlop={8}
           className="active:opacity-[0.92]"
         >
@@ -39,12 +42,12 @@ export default function PostEngagementFooter({
         <Pressable
           onPress={onLikesPress}
           accessibilityRole="button"
-          accessibilityLabel="View likes"
+          accessibilityLabel={t("home.postDetails.likes", { count: likesCount })}
           hitSlop={8}
           className="active:opacity-[0.92]"
         >
           <Text className="text-sm text-sec-text">
-            {likesCount.toLocaleString()} Likes
+            {t("home.postDetails.likes", { count: likesCount })}
           </Text>
         </Pressable>
       </View>
@@ -52,13 +55,15 @@ export default function PostEngagementFooter({
       <Pressable
         onPress={onCommentsPress}
         accessibilityRole="button"
-        accessibilityLabel="View comments"
+        accessibilityLabel={t("home.postDetails.comments", {
+          count: commentsCount,
+        })}
         hitSlop={8}
         className="flex-row items-center gap-1.5 active:opacity-[0.92]"
       >
         <MaterialDesignIcons name="comment-outline" color={colors.secText} size={18} />
         <Text className="text-sm text-sec-text">
-          {commentsCount.toLocaleString()} Comments
+          {t("home.postDetails.comments", { count: commentsCount })}
         </Text>
       </Pressable>
     </View>

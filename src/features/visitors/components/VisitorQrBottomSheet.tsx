@@ -14,6 +14,7 @@ import {
   useState,
   type ComponentProps,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -30,6 +31,7 @@ const VisitorQrBottomSheet = forwardRef<
   VisitorQrBottomSheetRef,
   VisitorQrBottomSheetProps
 >(function VisitorQrBottomSheet({ onDownload }, ref) {
+  const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const [visitor, setVisitor] = useState<Visitor | null>(null);
@@ -64,14 +66,13 @@ const VisitorQrBottomSheet = forwardRef<
       backgroundStyle={{
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        backgroundColor: colors.white,
       }}
     >
       <BottomSheetView
         style={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 16 }}
       >
         <Text className="mb-4 text-center text-base font-bold text-heading">
-          QR Code
+          {t("visitors.qr.title")}
         </Text>
 
         <View className="items-center">
@@ -83,7 +84,7 @@ const VisitorQrBottomSheet = forwardRef<
             <MaterialDesignIcons name="qrcode" color={colors.heading} size={180} />
           </View>
 
-          <Text className="mt-4 text-sm text-sec-text">Access Code</Text>
+          <Text className="mt-4 text-sm text-sec-text">{t("visitors.qr.accessCode")}</Text>
           <Text className="mt-1 text-3xl font-bold text-heading">
             {visitor?.accessCode ?? "—"}
           </Text>
@@ -91,13 +92,13 @@ const VisitorQrBottomSheet = forwardRef<
 
         <View className="mt-5 border-t border-card-border pt-4">
           <View className="flex-row items-center justify-between">
-            <Text className="text-sm text-sec-text">Visitor name</Text>
+            <Text className="text-sm text-sec-text">{t("visitors.qr.visitorName")}</Text>
             <Text className="text-sm font-semibold text-heading">
               {visitor?.name ?? "—"}
             </Text>
           </View>
           <View className="mt-2 flex-row items-center justify-between">
-            <Text className="text-sm text-sec-text">Expiry date</Text>
+            <Text className="text-sm text-sec-text">{t("visitors.qr.expiryDate")}</Text>
             <Text className="text-sm font-semibold text-heading">
               {visitor?.expiryDate ?? "—"}
             </Text>
@@ -118,7 +119,9 @@ const VisitorQrBottomSheet = forwardRef<
             color={colors.primary}
             size={20}
           />
-          <Text className="text-base font-bold text-primary">Download</Text>
+          <Text className="text-base font-bold text-primary">
+            {t("visitors.qr.download")}
+          </Text>
         </Pressable>
       </BottomSheetView>
     </BottomSheetModal>
