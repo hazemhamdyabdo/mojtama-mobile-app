@@ -1,12 +1,11 @@
-import LanguageSettingsView from "@/features/settings/components/LanguageSettingsView";
 import { logout } from "@/features/auth/api";
+import LanguageSettingsView from "@/features/settings/components/LanguageSettingsView";
 import SettingsFooter from "@/features/settings/components/SettingsFooter";
 import SettingsHeader from "@/features/settings/components/SettingsHeader";
 import SettingsLogoutRow from "@/features/settings/components/SettingsLogoutRow";
 import SettingsProfileCard from "@/features/settings/components/SettingsProfileCard";
 import SettingsRow from "@/features/settings/components/SettingsRow";
 import SettingsSection from "@/features/settings/components/SettingsSection";
-import SettingsToggleRow from "@/features/settings/components/SettingsToggleRow";
 import {
   ABOUT_SETTINGS_ITEMS,
   APP_SETTINGS_ITEMS,
@@ -82,9 +81,7 @@ export default function SettingsScreen() {
         presentationStyle="fullScreen"
         onRequestClose={() => setIsLanguageSettingsOpen(false)}
       >
-        <LanguageSettingsView
-          onBack={() => setIsLanguageSettingsOpen(false)}
-        />
+        <LanguageSettingsView onBack={() => setIsLanguageSettingsOpen(false)} />
       </Modal>
       <ScrollView
         className="flex-1"
@@ -133,11 +130,11 @@ export default function SettingsScreen() {
             />
           ))}
 
-          <SettingsToggleRow
+          {/* <SettingsToggleRow
             label={t("settings.darkTheme")}
             value={isDarkTheme}
             onValueChange={setIsDarkTheme}
-          />
+          /> */}
 
           <SettingsLogoutRow onPress={handleLogout} />
         </SettingsSection>
