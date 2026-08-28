@@ -3,13 +3,14 @@ import ProfileHeader from "@/features/profile/components/ProfileHeader";
 import ProfileInfoCard from "@/features/profile/components/ProfileInfoCard";
 import ProfileTabContent from "@/features/profile/components/ProfileTabContent";
 import ProfileTabs from "@/features/profile/components/ProfileTabs";
-import { PROFILE_USER } from "@/features/profile/constants/dummy";
+import { useUserState } from "@/features/settings/hooks/useUserState";
 import type { ProfileTab } from "@/features/profile/types";
 import { useState } from "react";
 import { ScrollView } from "react-native";
 
 export default function ProfileScreen() {
   const [activeTab, setActiveTab] = useState<ProfileTab>("support-requests");
+  const profile = useUserState();
 
   return (
     <ScreenSafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
@@ -21,7 +22,7 @@ export default function ProfileScreen() {
         <ProfileHeader />
 
         <ProfileInfoCard
-          profile={PROFILE_USER}
+          profile={profile}
           onEditAvatarPress={() => console.log("edit avatar")}
         />
 

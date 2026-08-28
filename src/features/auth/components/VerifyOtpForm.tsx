@@ -4,10 +4,9 @@ import {
   OTP_LENGTH,
   type OtpFormValues,
 } from "@/features/auth/schemas/otpSchema";
-import {
-  mapAuthRoleToServiceRole,
-  saveUserRole,
-} from "@/features/service/storage/userRole";
+import { verifyOtp } from "@/features/auth/api";
+import type { AuthUserRole } from "@/features/auth/types";
+import { MockApiError } from "@/utils/mockApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, type Href } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -42,6 +41,7 @@ function VerifyOtpFormFields({ phone, authRole }: VerifyOtpFormProps) {
     control,
     handleSubmit,
     setValue,
+    setError,
     watch,
     formState: { errors, isSubmitting },
   } = useForm<OtpFormValues>({
@@ -90,15 +90,22 @@ function VerifyOtpFormFields({ phone, authRole }: VerifyOtpFormProps) {
   };
 
   const onSubmit = async (values: OtpFormValues) => {
-    // TODO: connect to auth API
-    console.log("verify otp", { phone, otp: values.otp });
-
-    const serviceRole = mapAuthRoleToServiceRole(authRole);
-    if (serviceRole) {
-      await saveUserRole(serviceRole);
+    try {
+      await verifyOtp({
+        phone,
+        otp: values.otp,
+        role: authRole as AuthUserRole | undefined,
+      });
+      router.push("/(tabs)" as Href);
+    } catch (error) {
+      const message =
+        error instanceof MockApiError
+          ? error.message
+          : t("auth.verifyOtp.validation.genericError", {
+              defaultValue: "Unable to verify code. Please try again.",
+            });
+      setError("otp", { message });
     }
-
-    router.push("/(tabs)" as Href);
   };
 
   const formattedTimer = `00:${String(Math.max(secondsLeft, 0)).padStart(2, "0")}`;

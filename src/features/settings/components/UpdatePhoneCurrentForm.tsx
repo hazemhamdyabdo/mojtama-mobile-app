@@ -1,4 +1,5 @@
 import { formatPhoneNumberE164 } from "@/features/auth/schemas/phoneLoginSchema";
+import { requestPhoneUpdateOtp } from "@/features/settings/api";
 import {
   DEFAULT_AUTH_COUNTRY,
   type AuthCountry,
@@ -46,11 +47,13 @@ export default function UpdatePhoneCurrentForm() {
     setValue("countryIso", country.isoCode);
   };
 
-  const onSubmit = (values: UpdatePhoneFormValues) => {
+  const onSubmit = async (values: UpdatePhoneFormValues) => {
     const formattedPhone = formatPhoneNumberE164(
       selectedCountry.isoCode,
       values.phone,
     );
+
+    await requestPhoneUpdateOtp(formattedPhone);
 
     router.push({
       pathname: "/update-phone-verify",

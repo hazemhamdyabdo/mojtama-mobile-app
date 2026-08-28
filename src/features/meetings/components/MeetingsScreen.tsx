@@ -2,11 +2,10 @@ import { colors } from "@/theme/colors";
 import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import MeetingsHeader from "@/features/meetings/components/MeetingsHeader";
 import MeetingsTabs from "@/features/meetings/components/MeetingsTabs";
-import {
-  filterMeetingsByTab,
-  getMeetingPosts,
-  type MeetingsTab,
-} from "@/features/meetings/constants/dummy";
+import { respondToMeeting } from "@/features/meetings/api";
+import { filterMeetingsByTab, type MeetingsTab } from "@/features/meetings/constants/dummy";
+import { usePostsState } from "@/features/home/hooks/usePostsState";
+import { isMeetingPost } from "@/features/home/utils/buildPostFromForm";
 import MeetingPostCard from "@/features/home/components/post-types/MeetingPostCard";
 import { useUserRole } from "@/features/service/hooks/useUserRole";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
@@ -19,11 +18,12 @@ export default function MeetingsScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { role } = useUserRole();
+  const posts = usePostsState();
   const [activeTab, setActiveTab] = useState<MeetingsTab>("upcoming");
 
   const visibleMeetings = useMemo(
-    () => filterMeetingsByTab(getMeetingPosts(), activeTab),
-    [activeTab],
+    () => filterMeetingsByTab(posts.filter(isMeetingPost), activeTab),
+    [posts, activeTab],
   );
 
   const openMeetingDetails = (meetingId: string) => {
@@ -62,8 +62,8 @@ export default function MeetingsScreen() {
                 post={meeting}
                 variant="service"
                 onDetailsPress={() => openMeetingDetails(meeting.id)}
-                onAccept={() => console.log("accept meeting:", meeting.id)}
-                onDecline={() => console.log("decline meeting:", meeting.id)}
+                onAccept={() => void respondToMeeting(meeting.id, "attending")}
+                onDecline={() => void respondToMeeting(meeting.id, "declined")}
               />
             ))
           )}

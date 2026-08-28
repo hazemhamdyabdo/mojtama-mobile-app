@@ -1,3 +1,4 @@
+import { createVisitor } from "@/features/visitors/api";
 import VisitorForm from "@/features/visitors/components/VisitorForm";
 import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import VisitorFormHeader from "@/features/visitors/components/VisitorFormHeader";
@@ -10,8 +11,8 @@ export default function CreateVisitorScreen() {
   const router = useRouter();
   const { t } = useTranslation();
 
-  const handleSubmit = (values: VisitorFormValues) => {
-    console.log("create visit:", values);
+  const handleSubmit = async (values: VisitorFormValues) => {
+    await createVisitor(values);
     router.back();
   };
 

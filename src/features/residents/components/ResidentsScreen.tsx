@@ -1,3 +1,4 @@
+import { removeResident } from "@/features/residents/api";
 import GenerateInviteLinkCard from "@/features/residents/components/GenerateInviteLinkCard";
 import ScreenSafeAreaView from "@/components/ScreenSafeAreaView";
 import InviteLinkGeneratedBottomSheet, {
@@ -16,10 +17,9 @@ import ResidentFilterBottomSheet, {
 import ResidentsHeader from "@/features/residents/components/ResidentsHeader";
 import ResidentsSearchBar from "@/features/residents/components/ResidentsSearchBar";
 import {
-  DUMMY_RESIDENTS,
   matchesResidentFilters,
-  TOTAL_RESIDENTS_COUNT,
 } from "@/features/residents/constants/dummy";
+import { useResidentsState } from "@/features/residents/hooks/useResidentsState";
 import type { ResidentFilterCriteria } from "@/features/residents/types";
 import { EMPTY_RESIDENT_FILTER } from "@/features/residents/types";
 import { useRouter, type Href } from "expo-router";
@@ -35,7 +35,7 @@ export default function ResidentsScreen() {
   const actionsSheetRef = useRef<ResidentActionsBottomSheetRef>(null);
   const removeSheetRef = useRef<RemoveResidentBottomSheetRef>(null);
 
-  const [residents, setResidents] = useState(DUMMY_RESIDENTS);
+  const residents = useResidentsState();
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCriteria, setFilterCriteria] =
     useState<ResidentFilterCriteria>(EMPTY_RESIDENT_FILTER);
@@ -66,14 +66,12 @@ export default function ResidentsScreen() {
     actionsSheetRef.current?.open();
   };
 
-  const handleRemoveResident = () => {
+  const handleRemoveResident = async () => {
     if (!selectedResidentId) {
       return;
     }
 
-    setResidents((current) =>
-      current.filter((resident) => resident.id !== selectedResidentId),
-    );
+    await removeResident(selectedResidentId);
     setSelectedResidentId(null);
   };
 
@@ -100,9 +98,7 @@ export default function ResidentsScreen() {
 
           <Text className="mb-4 text-sm text-slate-500">
             Total Residents{" "}
-            <Text className="font-bold text-primary">
-              {TOTAL_RESIDENTS_COUNT}
-            </Text>
+            <Text className="font-bold text-primary">{residents.length}</Text>
           </Text>
 
           {filteredResidents.length > 0 ? (

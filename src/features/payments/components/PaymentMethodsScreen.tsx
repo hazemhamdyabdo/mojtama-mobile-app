@@ -1,3 +1,5 @@
+import { payBill } from "@/features/payments/api";
+import { MockApiError } from "@/utils/mockApi";
 import BankPickerBottomSheet, {
   type BankPickerBottomSheetRef,
 } from "@/features/payments/components/BankPickerBottomSheet";
@@ -50,6 +52,8 @@ export default function PaymentMethodsScreen({
   const [selectedBankId, setSelectedBankId] = useState("");
   const [selectedWalletId, setSelectedWalletId] = useState("");
   const [walletError, setWalletError] = useState("");
+  const [isPaying, setIsPaying] = useState(false);
+  const [paymentError, setPaymentError] = useState("");
 
   const selectedBank = PAYMENT_BANKS.find((bank) => bank.id === selectedBankId);
   const selectedWallet = PAYMENT_WALLETS.find(
@@ -80,12 +84,37 @@ export default function PaymentMethodsScreen({
     setWalletError("");
   };
 
-  const handleConfirmBankTransfer = (values: BankTransferFormValues) => {
-    console.log("confirm bank transfer", { billId: bill.id, ...values });
-    successSheetRef.current?.open();
+  const handleConfirmBankTransfer = async (values: BankTransferFormValues) => {
+    if (bill.status === "paid" || isPaying) {
+      return;
+    }
+
+    setPaymentError("");
+    setIsPaying(true);
+
+    try {
+      const bank = PAYMENT_BANKS.find((item) => item.id === values.bankId);
+      await payBill(bill.id, {
+        method: "bank-transfer",
+        paymentMethodLabel: bank?.name ?? "Bank transfer",
+      });
+      successSheetRef.current?.open();
+    } catch (error) {
+      setPaymentError(
+        error instanceof MockApiError
+          ? error.message
+          : t("payments.errors.generic", { defaultValue: "Payment failed" }),
+      );
+    } finally {
+      setIsPaying(false);
+    }
   };
 
-  const handleConfirmWallet = () => {
+  const handleConfirmWallet = async () => {
+    if (bill.status === "paid" || isPaying) {
+      return;
+    }
+
     const result = digitalWalletSchema.safeParse({
       walletId: selectedWalletId,
     });
@@ -95,11 +124,24 @@ export default function PaymentMethodsScreen({
       return;
     }
 
-    console.log("confirm wallet payment", {
-      billId: bill.id,
-      walletId: selectedWalletId,
-    });
-    successSheetRef.current?.open();
+    setPaymentError("");
+    setIsPaying(true);
+
+    try {
+      await payBill(bill.id, {
+        method: "digital-wallet",
+        paymentMethodLabel: selectedWallet?.name ?? "Digital wallet",
+      });
+      successSheetRef.current?.open();
+    } catch (error) {
+      setPaymentError(
+        error instanceof MockApiError
+          ? error.message
+          : t("payments.errors.generic", { defaultValue: "Payment failed" }),
+      );
+    } finally {
+      setIsPaying(false);
+    }
   };
 
   const handleConfirm = () => {
@@ -108,7 +150,7 @@ export default function PaymentMethodsScreen({
       return;
     }
 
-    handleConfirmWallet();
+    void handleConfirmWallet();
   };
 
   const handleViewDetails = () => {
@@ -147,13 +189,18 @@ export default function PaymentMethodsScreen({
       </ScrollView>
 
       <View className="border-t border-card-border px-4 py-4">
+        {paymentError ? (
+          <Text className="mb-3 text-sm text-rejected">{paymentError}</Text>
+        ) : null}
         <Pressable
           onPress={handleConfirm}
-          disabled={isSubmitting}
+          disabled={isSubmitting || isPaying || bill.status === "paid"}
           accessibilityRole="button"
           className="items-center rounded-2xl bg-primary py-4 active:opacity-[0.92] disabled:opacity-70"
         >
-          <Text className="text-base font-bold text-white">{t("common.confirm")}</Text>
+          <Text className="text-base font-bold text-white">
+            {isPaying ? t("common.loading", { defaultValue: "Processing..." }) : t("common.confirm")}
+          </Text>
         </Pressable>
       </View>
 

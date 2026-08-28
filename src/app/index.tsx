@@ -1,3 +1,5 @@
+import AppLoadingScreen from "@/components/AppLoadingScreen";
+import { hasValidMockSession } from "@/features/auth/storage/mockSession";
 import { consumePendingHref } from "@/localization/i18n";
 import { Redirect, type Href } from "expo-router";
 import { useEffect, useState } from "react";
@@ -8,15 +10,21 @@ export default function Index() {
   useEffect(() => {
     async function resolveInitialRoute() {
       const pendingHref = await consumePendingHref();
-      setTarget((pendingHref as Href | null) ?? "/(auth)/onboarding");
-      // setTarget((pendingHref as Href | null) ?? "/(tabs)");
+
+      if (pendingHref) {
+        setTarget(pendingHref as Href);
+        return;
+      }
+
+      const hasSession = await hasValidMockSession();
+      setTarget(hasSession ? "/(tabs)" : "/(auth)/onboarding");
     }
 
     void resolveInitialRoute();
   }, []);
 
   if (!target) {
-    return null;
+    return <AppLoadingScreen />;
   }
 
   return <Redirect href={target} />;

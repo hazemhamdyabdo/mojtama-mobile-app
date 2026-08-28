@@ -1,3 +1,4 @@
+import { deleteVisitor, updateVisitor } from "@/features/visitors/api";
 import DeleteVisitorBottomSheet, {
   type DeleteVisitorBottomSheetRef,
 } from "@/features/visitors/components/DeleteVisitorBottomSheet";
@@ -20,13 +21,13 @@ export default function EditVisitorScreen({ visitor }: EditVisitorScreenProps) {
   const { t } = useTranslation();
   const deleteSheetRef = useRef<DeleteVisitorBottomSheetRef>(null);
 
-  const handleSubmit = (values: VisitorFormValues) => {
-    console.log("update visit:", visitor.id, values);
+  const handleSubmit = async (values: VisitorFormValues) => {
+    await updateVisitor(visitor.id, values);
     router.back();
   };
 
-  const handleConfirmDelete = () => {
-    console.log("delete visitor:", visitor.id);
+  const handleConfirmDelete = async () => {
+    await deleteVisitor(visitor.id);
     router.dismissTo("/visitors" as Href);
   };
 

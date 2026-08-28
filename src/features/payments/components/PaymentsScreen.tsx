@@ -5,7 +5,7 @@ import PaymentsBillListSection from "@/features/payments/components/PaymentsBill
 import PaymentsHeader from "@/features/payments/components/PaymentsHeader";
 import PaymentsSearchBar from "@/features/payments/components/PaymentsSearchBar";
 import PaymentsTabs from "@/features/payments/components/PaymentsTabs";
-import { PAYMENT_BILLS, PAYMENT_HISTORY } from "@/features/payments/constants/dummy";
+import { usePaymentsState } from "@/features/payments/hooks/usePaymentsState";
 import type { PaymentBillFilter, PaymentTab } from "@/features/payments/types";
 import { useRouter, type Href } from "expo-router";
 import { useMemo, useState } from "react";
@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 
 function filterBills(
-  bills: typeof PAYMENT_BILLS,
+  bills: ReturnType<typeof usePaymentsState>["bills"],
   searchQuery: string,
   statusFilter: PaymentBillFilter,
 ) {
@@ -35,18 +35,19 @@ function filterBills(
 export default function PaymentsScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+  const { bills, history } = usePaymentsState();
   const [activeTab, setActiveTab] = useState<PaymentTab>("overview");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<PaymentBillFilter>("all");
 
   const overviewBills = useMemo(
-    () => filterBills(PAYMENT_BILLS, searchQuery, statusFilter),
-    [searchQuery, statusFilter],
+    () => filterBills(bills, searchQuery, statusFilter),
+    [bills, searchQuery, statusFilter],
   );
 
   const historyBills = useMemo(
-    () => filterBills(PAYMENT_HISTORY, searchQuery, statusFilter),
-    [searchQuery, statusFilter],
+    () => filterBills(history, searchQuery, statusFilter),
+    [history, searchQuery, statusFilter],
   );
 
   const openPaymentDetails = (billId: string) => {

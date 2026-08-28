@@ -1,3 +1,4 @@
+import { updateEmail } from "@/features/settings/api";
 import SettingsLabeledInput from "@/features/settings/components/SettingsLabeledInput";
 import SettingsPendingVerificationCard from "@/features/settings/components/SettingsPendingVerificationCard";
 import SettingsPrimaryButton from "@/features/settings/components/SettingsPrimaryButton";
@@ -25,9 +26,8 @@ export default function UpdateEmailNewForm() {
     defaultValues: { email: "" },
   });
 
-  const onSubmit = (values: UpdateEmailFormValues) => {
-    // TODO: connect to settings API
-    console.log("update email", values);
+  const onSubmit = async (values: UpdateEmailFormValues) => {
+    await updateEmail(values);
     router.back();
   };
 

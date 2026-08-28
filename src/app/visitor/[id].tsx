@@ -1,10 +1,14 @@
 import VisitorDetailsScreen from "@/features/visitors/components/VisitorDetailsScreen";
-import { getVisitorById } from "@/features/visitors/constants/dummy";
+import { useVisitorsState } from "@/features/visitors/hooks/useVisitorsState";
 import { Redirect, useLocalSearchParams } from "expo-router";
 
 export default function VisitorDetailsRoute() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const visitor = id ? getVisitorById(id) : undefined;
+  const visitors = useVisitorsState();
+  const visitorId = Array.isArray(id) ? id[0] : id;
+  const visitor = visitorId
+    ? visitors.find((item) => item.id === visitorId)
+    : undefined;
 
   if (!visitor) {
     return <Redirect href="/visitors" />;

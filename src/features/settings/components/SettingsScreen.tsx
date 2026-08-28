@@ -1,4 +1,5 @@
 import LanguageSettingsView from "@/features/settings/components/LanguageSettingsView";
+import { logout } from "@/features/auth/api";
 import SettingsFooter from "@/features/settings/components/SettingsFooter";
 import SettingsHeader from "@/features/settings/components/SettingsHeader";
 import SettingsLogoutRow from "@/features/settings/components/SettingsLogoutRow";
@@ -10,8 +11,9 @@ import {
   ABOUT_SETTINGS_ITEMS,
   APP_SETTINGS_ITEMS,
   PROFILE_SETTINGS_ITEMS,
-  SETTINGS_PROFILE,
 } from "@/features/settings/constants/dummy";
+import { useUserState } from "@/features/settings/hooks/useUserState";
+import { getSettingsProfile } from "@/features/settings/store/userState";
 import { useRouter, type Href } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -31,8 +33,10 @@ const SETTINGS_ITEM_I18N_KEYS: Record<string, string> = {
 export default function SettingsScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+  const user = useUserState();
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   const [isLanguageSettingsOpen, setIsLanguageSettingsOpen] = useState(false);
+  const profile = getSettingsProfile();
 
   const handleSettingsPress = (itemId: string) => {
     switch (itemId) {
@@ -65,8 +69,9 @@ export default function SettingsScreen() {
     }
   };
 
-  const handleLogout = () => {
-    console.log("log out");
+  const handleLogout = async () => {
+    await logout();
+    router.replace("/(auth)/onboarding" as Href);
   };
 
   return (
@@ -89,7 +94,7 @@ export default function SettingsScreen() {
         <SettingsHeader />
 
         <SettingsProfileCard
-          profile={SETTINGS_PROFILE}
+          profile={{ ...profile, name: user.name }}
           onPress={() => handleSettingsPress("profile")}
         />
 

@@ -1,10 +1,12 @@
 import PaymentDetailsScreen from "@/features/payments/components/PaymentDetailsScreen";
-import { getPaymentBillDetails } from "@/features/payments/constants/dummy";
+import { usePaymentsState } from "@/features/payments/hooks/usePaymentsState";
 import { Redirect, useLocalSearchParams } from "expo-router";
 
 export default function PaymentDetailsRoute() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const bill = id ? getPaymentBillDetails(id) : undefined;
+  const { details } = usePaymentsState();
+  const billId = Array.isArray(id) ? id[0] : id;
+  const bill = billId ? details[billId] : undefined;
 
   if (!bill) {
     return <Redirect href="/payments" />;

@@ -3,10 +3,9 @@ import {
   createLoginSchema,
   type LoginFormValues,
 } from "@/features/auth/schemas/loginSchema";
-import {
-  mapAuthRoleToServiceRole,
-  saveUserRole,
-} from "@/features/service/storage/userRole";
+import { loginWithEmail } from "@/features/auth/api";
+import type { AuthUserRole } from "@/features/auth/types";
+import { MockApiError } from "@/utils/mockApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, type Href } from "expo-router";
 import { useMemo } from "react";
@@ -81,6 +80,7 @@ function LoginFormFields({ authRole }: LoginFormFieldsProps) {
   const {
     control,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -91,15 +91,22 @@ function LoginFormFields({ authRole }: LoginFormFieldsProps) {
   });
 
   const onSubmit = async (values: LoginFormValues) => {
-    // TODO: connect to auth API
-    console.log("login", values);
-
-    const serviceRole = mapAuthRoleToServiceRole(authRole);
-    if (serviceRole) {
-      await saveUserRole(serviceRole);
+    try {
+      await loginWithEmail({
+        email: values.email,
+        password: values.password,
+        role: authRole as AuthUserRole | undefined,
+      });
+      router.push("/(tabs)" as Href);
+    } catch (error) {
+      const message =
+        error instanceof MockApiError
+          ? error.message
+          : t("auth.loginForm.validation.genericError", {
+              defaultValue: "Unable to sign in. Please try again.",
+            });
+      setError("password", { message });
     }
-
-    router.push("/(tabs)" as Href);
   };
 
   return (

@@ -2,6 +2,7 @@ import { colors } from "@/theme/colors";
 import { OTP_LENGTH } from "@/features/auth/schemas/otpSchema";
 import SettingsPrimaryButton from "@/features/settings/components/SettingsPrimaryButton";
 import SettingsUpdateIntro from "@/features/settings/components/SettingsUpdateIntro";
+import { MockApiError } from "@/utils/mockApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -28,7 +29,7 @@ type SettingsOtpFormProps = {
   subtitle: string;
   changeLinkLabel: string;
   onChangePress: () => void;
-  onSubmit: (otp: string) => void;
+  onSubmit: (otp: string) => void | Promise<void>;
 };
 
 export default function SettingsOtpForm({
@@ -40,6 +41,7 @@ export default function SettingsOtpForm({
 }: SettingsOtpFormProps) {
   const inputRefs = useRef<Array<TextInputType | null>>([]);
   const [secondsLeft, setSecondsLeft] = useState(RESEND_SECONDS);
+  const [apiError, setApiError] = useState("");
 
   const {
     control,
@@ -134,6 +136,8 @@ export default function SettingsOtpForm({
 
       {errors.otp ? (
         <Text className="mb-4 text-sm text-rejected">{errors.otp.message}</Text>
+      ) : apiError ? (
+        <Text className="mb-4 text-sm text-rejected">{apiError}</Text>
       ) : (
         <View className="mb-4" />
       )}
@@ -149,7 +153,18 @@ export default function SettingsOtpForm({
         label="Next"
         disabled={isSubmitting}
         onPress={() =>
-          void handleSubmit((values) => onSubmit(values.otp))()
+          void handleSubmit(async (values) => {
+            setApiError("");
+            try {
+              await onSubmit(values.otp);
+            } catch (error) {
+              setApiError(
+                error instanceof MockApiError
+                  ? error.message
+                  : "Invalid OTP code",
+              );
+            }
+          })()
         }
       />
     </View>

@@ -1,3 +1,9 @@
+import {
+  deleteDocument,
+  updateDocument,
+  uploadDocument,
+} from "@/features/documents/api";
+import { useDocumentsState } from "@/features/documents/hooks/useDocumentsState";
 import DocumentActionsBottomSheet, {
   type DocumentActionsBottomSheetRef,
 } from "@/features/documents/components/DocumentActionsBottomSheet";
@@ -12,11 +18,9 @@ import EditDocumentBottomSheet, {
 import UploadDocumentBottomSheet, {
   type UploadDocumentBottomSheetRef,
 } from "@/features/documents/components/UploadDocumentBottomSheet";
-import { DUMMY_DOCUMENTS } from "@/features/documents/constants/dummy";
 import type { DocumentFormValues } from "@/features/documents/schemas/documentSchema";
 import type {
   CommunityDocument,
-  DocumentCategory,
   DocumentCategoryFilter,
   SelectedDocumentFile,
 } from "@/features/documents/types";
@@ -29,34 +33,14 @@ import HelpStillNeedHelpCard from "@/features/help/components/HelpStillNeedHelpC
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, ScrollView, Text, View } from "react-native";
-function formatTodayDate(): string {
-  const today = new Date();
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  return `${monthNames[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
-}
 
 export default function DocumentsScreen() {
   const { t } = useTranslation();
+  const documents = useDocumentsState();
   const uploadSheetRef = useRef<UploadDocumentBottomSheetRef>(null);
   const actionsSheetRef = useRef<DocumentActionsBottomSheetRef>(null);
   const editSheetRef = useRef<EditDocumentBottomSheetRef>(null);
 
-  const [documents, setDocuments] =
-    useState<CommunityDocument[]>(DUMMY_DOCUMENTS);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] =
     useState<DocumentCategoryFilter>("all");
@@ -75,23 +59,11 @@ export default function DocumentsScreen() {
     });
   }, [documents, searchQuery, selectedCategory]);
 
-  const handleUpload = (
+  const handleUpload = async (
     values: DocumentFormValues,
     file: SelectedDocumentFile,
   ) => {
-    const newDocument: CommunityDocument = {
-      id: `d-${Date.now()}`,
-      title: values.title,
-      category: values.category as DocumentCategory,
-      fileType: file.fileType,
-      size: file.size,
-      date: formatTodayDate(),
-      fileUri: file.uri,
-      mimeType: file.mimeType,
-      fileName: file.name,
-    };
-
-    setDocuments((current) => [newDocument, ...current]);
+    await uploadDocument(values, file);
   };
 
   const getDocumentById = useCallback(
@@ -126,24 +98,15 @@ export default function DocumentsScreen() {
     [getDocumentById],
   );
 
-  const handleUpdate = (documentId: string, values: DocumentFormValues) => {
-    setDocuments((current) =>
-      current.map((document) =>
-        document.id === documentId
-          ? {
-              ...document,
-              title: values.title,
-              category: values.category as DocumentCategory,
-            }
-          : document,
-      ),
-    );
+  const handleUpdate = async (
+    documentId: string,
+    values: DocumentFormValues,
+  ) => {
+    await updateDocument(documentId, values);
   };
 
-  const handleDelete = (documentId: string) => {
-    setDocuments((current) =>
-      current.filter((document) => document.id !== documentId),
-    );
+  const handleDelete = async (documentId: string) => {
+    await deleteDocument(documentId);
   };
 
   return (
@@ -213,10 +176,13 @@ export default function DocumentsScreen() {
           void handleDocumentAction(documentId, downloadDocumentFile)
         }
         onEdit={(document) => editSheetRef.current?.open(document)}
-        onDelete={handleDelete}
+        onDelete={(documentId) => void handleDelete(documentId)}
       />
 
-      <EditDocumentBottomSheet ref={editSheetRef} onUpdate={handleUpdate} />
+      <EditDocumentBottomSheet
+        ref={editSheetRef}
+        onUpdate={(documentId, values) => void handleUpdate(documentId, values)}
+      />
     </ScreenSafeAreaView>
   );
 }

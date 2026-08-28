@@ -1,3 +1,4 @@
+import { deleteVisitor } from "@/features/visitors/api";
 import DeleteVisitorBottomSheet, {
   type DeleteVisitorBottomSheetRef,
 } from "@/features/visitors/components/DeleteVisitorBottomSheet";
@@ -31,8 +32,8 @@ export default function VisitorDetailsScreen({
   const deleteSheetRef = useRef<DeleteVisitorBottomSheetRef>(null);
   const qrSheetRef = useRef<VisitorQrBottomSheetRef>(null);
 
-  const handleDelete = () => {
-    console.log("delete visitor:", visitor.id);
+  const handleDelete = async () => {
+    await deleteVisitor(visitor.id);
     router.back();
   };
 

@@ -11,6 +11,8 @@ import {
   formatPhoneNumberE164,
   type PhoneLoginFormValues,
 } from "@/features/auth/schemas/phoneLoginSchema";
+import { requestOtp } from "@/features/auth/api";
+import { MockApiError } from "@/utils/mockApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, type Href } from "expo-router";
 import { AsYouType } from "libphonenumber-js";
@@ -48,6 +50,7 @@ function PhoneLoginFormFields({
   const {
     control,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<PhoneLoginFormValues>({
     resolver: zodResolver(phoneSchema),
@@ -57,19 +60,30 @@ function PhoneLoginFormFields({
     },
   });
 
-  const onSubmit = (values: PhoneLoginFormValues) => {
+  const onSubmit = async (values: PhoneLoginFormValues) => {
     const formattedPhone = formatPhoneNumberE164(
       selectedCountry.isoCode,
       values.phone,
     );
 
-    router.push({
-      pathname: "/verify-otp",
-      params: {
-        phone: formattedPhone,
-        ...(authRole ? { role: authRole } : {}),
-      },
-    });
+    try {
+      await requestOtp({ phone: formattedPhone });
+      router.push({
+        pathname: "/verify-otp",
+        params: {
+          phone: formattedPhone,
+          ...(authRole ? { role: authRole } : {}),
+        },
+      });
+    } catch (error) {
+      const message =
+        error instanceof MockApiError
+          ? error.message
+          : t("auth.phoneLogin.validation.genericError", {
+              defaultValue: "Unable to send code. Please try again.",
+            });
+      setError("phone", { message });
+    }
   };
 
   const textAlign = I18nManager.isRTL ? "right" : "left";

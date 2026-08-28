@@ -1,5 +1,4 @@
 import PostCard from "@/features/home/components/post-types/PostCard";
-import { DUMMY_POSTS } from "@/features/home/constants/dummy";
 import type { Post } from "@/features/home/types";
 import { View } from "react-native";
 
@@ -12,7 +11,7 @@ type PostsFeedProps = {
 };
 
 export default function PostsFeed({
-  posts = DUMMY_POSTS,
+  posts = [],
   onPostPress,
   onMenuPress,
   onLikesPress,

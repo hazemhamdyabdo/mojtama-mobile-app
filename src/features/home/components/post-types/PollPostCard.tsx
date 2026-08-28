@@ -1,12 +1,14 @@
-import { colors } from "@/theme/colors";
 import {
   PostCardHeader,
   PostCardShell,
 } from "@/features/home/components/post-types/PostCardShared";
+import { voteOnPoll } from "@/features/home/api";
+import { getPollVoteFromState } from "@/features/home/store/postState";
 import type { PollPost } from "@/features/home/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useMemo, useState } from "react";
 import { Pressable, Text, View } from "react-native";
+import { colors } from "@/theme/colors";
 
 const MAX_VISIBLE_OPTIONS = 3;
 
@@ -23,7 +25,8 @@ export default function PollPostCard({
   onMenuPress,
   onCommentsPress,
 }: PollPostCardProps) {
-  const [selectedOptionId, setSelectedOptionId] = useState(post.options[0]?.id);
+  const storedVoteId = getPollVoteFromState(post.id);
+  const selectedOptionId = storedVoteId ?? post.options[0]?.id;
   const [liked, setLiked] = useState(false);
   const [showAllOptions, setShowAllOptions] = useState(false);
 
@@ -36,6 +39,10 @@ export default function PollPostCard({
 
     return post.options.slice(0, MAX_VISIBLE_OPTIONS);
   }, [hiddenOptionsCount, post.options, showAllOptions]);
+
+  const handleVote = (optionId: string) => {
+    void voteOnPoll(post.id, optionId);
+  };
 
   return (
     <PostCardShell onPress={() => onPress?.(post.id)}>
@@ -61,7 +68,7 @@ export default function PollPostCard({
           return (
             <Pressable
               key={option.id}
-              onPress={() => setSelectedOptionId(option.id)}
+              onPress={() => handleVote(option.id)}
               accessibilityRole="radio"
               accessibilityState={{ selected: isSelected }}
               className={`flex-row items-center justify-between rounded-xl border px-4 py-3 active:opacity-[0.92] ${

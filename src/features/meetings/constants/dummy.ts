@@ -1,5 +1,9 @@
-import { DUMMY_POSTS } from "@/features/home/constants/dummy";
+import {
+  getPostFromState,
+  getPostsState,
+} from "@/features/home/store/postState";
 import type { MeetingPost } from "@/features/home/types";
+import { isMeetingPost } from "@/features/home/utils/buildPostFromForm";
 
 export const MEETINGS_TABS = [
   { id: "upcoming" as const, label: "Upcoming" },
@@ -9,9 +13,7 @@ export const MEETINGS_TABS = [
 export type MeetingsTab = (typeof MEETINGS_TABS)[number]["id"];
 
 export function getMeetingPosts(): MeetingPost[] {
-  return DUMMY_POSTS.filter(
-    (post): post is MeetingPost => post.type === "meeting",
-  );
+  return getPostsState().filter(isMeetingPost);
 }
 
 export function isUpcomingMeeting(meeting: MeetingPost): boolean {
@@ -36,7 +38,7 @@ export function getMeetingPostById(
     return undefined;
   }
 
-  const post = DUMMY_POSTS.find((item) => item.id === meetingId);
+  const post = getPostFromState(meetingId);
 
-  return post?.type === "meeting" ? post : undefined;
+  return post && isMeetingPost(post) ? post : undefined;
 }

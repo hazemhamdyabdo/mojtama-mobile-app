@@ -15,20 +15,74 @@ import PostActionsBottomSheet, {
 import PostsFeed from "@/features/home/components/PostsFeed";
 import SearchActionBar from "@/features/home/components/SearchActionBar";
 import TopHeader from "@/features/home/components/TopHeader";
-import type { PostType } from "@/features/home/types";
-import { DUMMY_POSTS } from "@/features/home/constants/dummy";
+import {
+  addComment,
+  deletePost,
+  getComments,
+  getLikes,
+  markPostAsUrgent,
+  movePostToDraft,
+} from "@/features/home/api";
+import { useUserState } from "@/features/settings/hooks/useUserState";
+import { useNotificationsState } from "@/features/notifications/hooks/useNotificationsState";
+import { usePostsState } from "@/features/home/hooks/usePostsState";
+import type { Post, PostType } from "@/features/home/types";
+import { isMeetingPost } from "@/features/home/utils/buildPostFromForm";
 import { useRouter, type Href } from "expo-router";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
+
+function filterPosts(
+  posts: Post[],
+  searchQuery: string,
+  selectedFilter: string,
+): Post[] {
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const filterType =
+    selectedFilter === "meetings" ? "meeting" : selectedFilter;
+
+  return posts.filter((post) => {
+    const matchesFilter =
+      selectedFilter === "all" || post.type === filterType;
+
+    const searchableText = [
+      post.title,
+      post.type === "meeting" ? post.body : "",
+      post.type !== "meeting" ? post.body : "",
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    const matchesSearch =
+      normalizedQuery.length === 0 ||
+      searchableText.includes(normalizedQuery);
+
+    return matchesFilter && matchesSearch;
+  });
+}
 
 export default function HomeScreen() {
   const router = useRouter();
+  const posts = usePostsState();
+  const user = useUserState();
+  const { unreadCount } = useNotificationsState();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
+  const [activeComments, setActiveComments] = useState<
+    Awaited<ReturnType<typeof getComments>>
+  >([]);
+  const [activeLikes, setActiveLikes] = useState<
+    Awaited<ReturnType<typeof getLikes>>
+  >([]);
   const createPostSheetRef = useRef<CreatePostBottomSheetRef>(null);
   const postActionsSheetRef = useRef<PostActionsBottomSheetRef>(null);
   const likesSheetRef = useRef<LikesBottomSheetRef>(null);
   const commentsSheetRef = useRef<CommentsBottomSheetRef>(null);
+
+  const visiblePosts = useMemo(
+    () => filterPosts(posts, searchQuery, selectedFilter),
+    [posts, searchQuery, selectedFilter],
+  );
 
   const handleAddPostPress = () => {
     createPostSheetRef.current?.open();
@@ -60,9 +114,9 @@ export default function HomeScreen() {
   };
 
   const handlePostPress = (postId: string) => {
-    const post = DUMMY_POSTS.find((item) => item.id === postId);
+    const post = posts.find((item) => item.id === postId);
 
-    if (post?.type === "meeting") {
+    if (post && isMeetingPost(post)) {
       router.push(`/meeting/${postId}` as Href);
       return;
     }
@@ -70,13 +124,18 @@ export default function HomeScreen() {
     router.push(`/post/${postId}` as Href);
   };
 
-  const handleLikesPress = (postId: string) => {
+  const handleLikesPress = async (postId: string) => {
+    const likes = await getLikes(postId);
+    setActiveLikes(likes);
     likesSheetRef.current?.open(postId);
   };
 
-  const handleCommentsPress = (postId: string) => {
+  const handleCommentsPress = async (postId: string) => {
+    const comments = await getComments(postId);
+    setActiveComments(comments);
     commentsSheetRef.current?.open(postId);
   };
+
   return (
     <View className="relative flex-1 bg-white">
       <ScrollView
@@ -86,6 +145,9 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         <TopHeader
+          name={user.name.split(" ")[0] ?? user.name}
+          unit={user.units[0]?.label ?? "Unit"}
+          notificationCount={unreadCount}
           onNotificationsPress={() => router.push("/notifications" as Href)}
         />
         <SearchActionBar
@@ -95,10 +157,11 @@ export default function HomeScreen() {
         />
         <FilterChip selectedId={selectedFilter} onSelect={setSelectedFilter} />
         <PostsFeed
+          posts={visiblePosts}
           onPostPress={handlePostPress}
           onMenuPress={handleMenuPress}
-          onLikesPress={handleLikesPress}
-          onCommentsPress={handleCommentsPress}
+          onLikesPress={(postId) => void handleLikesPress(postId)}
+          onCommentsPress={(postId) => void handleCommentsPress(postId)}
         />
       </ScrollView>
 
@@ -111,21 +174,24 @@ export default function HomeScreen() {
 
       <PostActionsBottomSheet
         ref={postActionsSheetRef}
-        onMoveToDraft={(postId) => console.log("move to draft:", postId)}
-        onEditPost={(postId) => console.log("edit post:", postId)}
+        onMoveToDraft={(postId) => void movePostToDraft(postId)}
+        onEditPost={(postId) => router.push(`/post/${postId}` as Href)}
         onMarkAsUrgent={(postId, isUrgent) =>
-          console.log("mark as urgent:", postId, isUrgent)
+          void markPostAsUrgent(postId, isUrgent)
         }
-        onDeletePost={(postId) => console.log("delete post:", postId)}
+        onDeletePost={(postId) => void deletePost(postId)}
       />
 
-      <LikesBottomSheet ref={likesSheetRef} />
+      <LikesBottomSheet ref={likesSheetRef} likes={activeLikes} />
 
       <CommentsBottomSheet
         ref={commentsSheetRef}
-        onSendComment={(postId, text) =>
-          console.log("send comment:", postId, text)
-        }
+        comments={activeComments}
+        onSendComment={(postId, text) => {
+          void addComment(postId, text).then((comment) => {
+            setActiveComments((current) => [comment, ...current]);
+          });
+        }}
       />
     </View>
   );

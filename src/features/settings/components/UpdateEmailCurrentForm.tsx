@@ -1,3 +1,4 @@
+import { requestEmailUpdateOtp } from "@/features/settings/api";
 import SettingsLabeledInput from "@/features/settings/components/SettingsLabeledInput";
 import SettingsPrimaryButton from "@/features/settings/components/SettingsPrimaryButton";
 import SettingsUpdateIntro from "@/features/settings/components/SettingsUpdateIntro";
@@ -24,7 +25,8 @@ export default function UpdateEmailCurrentForm() {
     defaultValues: { email: "" },
   });
 
-  const onSubmit = (values: UpdateEmailFormValues) => {
+  const onSubmit = async (values: UpdateEmailFormValues) => {
+    await requestEmailUpdateOtp(values.email);
     router.push({
       pathname: "/update-email-verify",
       params: { email: values.email },

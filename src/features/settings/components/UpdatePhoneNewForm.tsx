@@ -1,3 +1,4 @@
+import { updatePhone } from "@/features/settings/api";
 import { formatPhoneNumberE164 } from "@/features/auth/schemas/phoneLoginSchema";
 import {
   DEFAULT_AUTH_COUNTRY,
@@ -47,14 +48,13 @@ export default function UpdatePhoneNewForm() {
     setValue("countryIso", country.isoCode);
   };
 
-  const onSubmit = (values: UpdatePhoneFormValues) => {
+  const onSubmit = async (values: UpdatePhoneFormValues) => {
     const formattedPhone = formatPhoneNumberE164(
       selectedCountry.isoCode,
       values.phone,
     );
 
-    // TODO: connect to settings API
-    console.log("update phone", formattedPhone);
+    await updatePhone(formattedPhone);
     router.back();
   };
 

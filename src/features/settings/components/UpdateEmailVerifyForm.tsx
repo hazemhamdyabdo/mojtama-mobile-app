@@ -1,3 +1,4 @@
+import { verifyEmailUpdateOtp } from "@/features/settings/api";
 import SettingsOtpForm from "@/features/settings/components/SettingsOtpForm";
 import { useLocalSearchParams, useRouter, type Href } from "expo-router";
 
@@ -6,7 +7,8 @@ export default function UpdateEmailVerifyForm() {
   const { email } = useLocalSearchParams<{ email: string }>();
   const resolvedEmail = email ?? "your email";
 
-  const handleSubmit = () => {
+  const handleSubmit = async (otp: string) => {
+    await verifyEmailUpdateOtp(otp);
     router.push({
       pathname: "/update-email-new",
       params: { email: resolvedEmail },

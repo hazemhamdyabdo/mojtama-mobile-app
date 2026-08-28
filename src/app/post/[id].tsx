@@ -9,7 +9,17 @@ import LikesBottomSheet, {
 import PostActionsBottomSheet, {
   type PostActionsBottomSheetRef,
 } from "@/features/home/components/PostActionsBottomSheet";
-import { DUMMY_POSTS } from "@/features/home/constants/dummy";
+import {
+  addComment,
+  deletePost,
+  getComments,
+  getLikes,
+  markPostAsUrgent,
+  movePostToDraft,
+  voteOnPoll,
+} from "@/features/home/api";
+import { usePostById } from "@/features/home/hooks/usePostsState";
+import { getPollVoteFromState } from "@/features/home/store/postState";
 import type { Post } from "@/features/home/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
@@ -58,14 +68,24 @@ export default function PostDetailsScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
+  const postId = Array.isArray(id) ? id[0] : id;
+  const post = usePostById(postId);
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
+  const [activeComments, setActiveComments] = useState<
+    Awaited<ReturnType<typeof getComments>>
+  >([]);
+  const [activeLikes, setActiveLikes] = useState<
+    Awaited<ReturnType<typeof getLikes>>
+  >([]);
 
   const likesSheetRef = useRef<LikesBottomSheetRef>(null);
   const commentsSheetRef = useRef<CommentsBottomSheetRef>(null);
   const postActionsSheetRef = useRef<PostActionsBottomSheetRef>(null);
 
-  const post = DUMMY_POSTS.find((item) => item.id === id) ?? DUMMY_POSTS[0];
+  if (!post) {
+    return <Redirect href="/" />;
+  }
 
   if (post.type === "meeting") {
     return <Redirect href={`/meeting/${post.id}` as Href} />;
@@ -153,19 +173,29 @@ export default function PostDetailsScreen() {
 
         {post.type === "poll" ? (
           <View className="mt-4 gap-2">
-            {post.options.map((option) => (
-              <View
-                key={option.id}
-                className="flex-row items-center justify-between rounded-xl border border-card-border px-4 py-3"
-              >
-                <Text className="text-base font-semibold text-heading">
-                  {option.label}
-                </Text>
-                <Text className="text-sm font-medium text-primary">
-                  {t("home.postDetails.vote", { count: option.votes })}
-                </Text>
-              </View>
-            ))}
+            {post.options.map((option) => {
+              const isSelected =
+                getPollVoteFromState(post.id) === option.id;
+
+              return (
+                <Pressable
+                  key={option.id}
+                  onPress={() => void voteOnPoll(post.id, option.id)}
+                  className={`flex-row items-center justify-between rounded-xl border px-4 py-3 active:opacity-[0.92] ${
+                    isSelected
+                      ? "border-primary bg-primary-50"
+                      : "border-card-border"
+                  }`}
+                >
+                  <Text className="text-base font-semibold text-heading">
+                    {option.label}
+                  </Text>
+                  <Text className="text-sm font-medium text-primary">
+                    {t("home.postDetails.vote", { count: option.votes })}
+                  </Text>
+                </Pressable>
+              );
+            })}
           </View>
         ) : null}
 
@@ -187,8 +217,13 @@ export default function PostDetailsScreen() {
               />
             </Pressable>
 
-            <Pressable
-              onPress={() => likesSheetRef.current?.open(post.id)}
+          <Pressable
+            onPress={() => {
+              void getLikes(post.id).then((likes) => {
+                setActiveLikes(likes);
+                likesSheetRef.current?.open(post.id);
+              });
+            }}
               accessibilityRole="button"
               accessibilityLabel={t("home.a11y.viewLikes")}
               hitSlop={8}
@@ -201,7 +236,12 @@ export default function PostDetailsScreen() {
           </View>
 
           <Pressable
-            onPress={() => commentsSheetRef.current?.open(post.id)}
+            onPress={() => {
+              void getComments(post.id).then((comments) => {
+                setActiveComments(comments);
+                commentsSheetRef.current?.open(post.id);
+              });
+            }}
             accessibilityRole="button"
             accessibilityLabel={t("home.a11y.viewComments")}
             hitSlop={8}
@@ -254,7 +294,12 @@ export default function PostDetailsScreen() {
         </View>
 
         <Pressable
-          onPress={() => commentsSheetRef.current?.open(post.id)}
+          onPress={() => {
+            void getComments(post.id).then((comments) => {
+              setActiveComments(comments);
+              commentsSheetRef.current?.open(post.id);
+            });
+          }}
           accessibilityRole="button"
           className="mt-6 items-center justify-center rounded-xl border border-primary py-4 active:opacity-[0.92]"
         >
@@ -264,23 +309,30 @@ export default function PostDetailsScreen() {
         </Pressable>
       </ScrollView>
 
-      <LikesBottomSheet ref={likesSheetRef} />
+      <LikesBottomSheet ref={likesSheetRef} likes={activeLikes} />
 
       <CommentsBottomSheet
         ref={commentsSheetRef}
-        onSendComment={(postId, text) =>
-          console.log("send comment:", postId, text)
-        }
+        comments={activeComments}
+        onSendComment={(commentPostId, text) => {
+          void addComment(commentPostId, text).then((comment) => {
+            setActiveComments((current) => [comment, ...current]);
+          });
+        }}
       />
 
       <PostActionsBottomSheet
         ref={postActionsSheetRef}
-        onMoveToDraft={(postId) => console.log("move to draft:", postId)}
-        onEditPost={(postId) => console.log("edit post:", postId)}
-        onMarkAsUrgent={(postId, isUrgent) =>
-          console.log("mark as urgent:", postId, isUrgent)
+        onMoveToDraft={(commentPostId) => void movePostToDraft(commentPostId)}
+        onEditPost={(commentPostId) =>
+          router.push(`/post/${commentPostId}` as Href)
         }
-        onDeletePost={(postId) => console.log("delete post:", postId)}
+        onMarkAsUrgent={(commentPostId, isUrgent) =>
+          void markPostAsUrgent(commentPostId, isUrgent)
+        }
+        onDeletePost={(commentPostId) => {
+          void deletePost(commentPostId).then(() => router.back());
+        }}
       />
     </ScreenSafeAreaView>
   );

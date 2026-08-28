@@ -13,8 +13,17 @@ import MeetingServiceInfoRow from "@/features/home/components/meeting/MeetingSer
 import PostActionsBottomSheet, {
   type PostActionsBottomSheetRef,
 } from "@/features/home/components/PostActionsBottomSheet";
-import type { MeetingPost } from "@/features/home/types";
-import { getMeetingPostById } from "@/features/meetings/constants/dummy";
+import {
+  addComment,
+  deletePost,
+  getComments,
+  getLikes,
+  markPostAsUrgent,
+  movePostToDraft,
+} from "@/features/home/api";
+import { usePostById } from "@/features/home/hooks/usePostsState";
+import { isMeetingPost } from "@/features/home/utils/buildPostFromForm";
+import { respondToMeeting } from "@/features/meetings/api";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from "expo-image";
 import { Redirect, useLocalSearchParams, useRouter } from "expo-router";
@@ -28,10 +37,6 @@ type MeetingDetailsScreenProps = {
   variant?: "feed" | "service";
 };
 
-function getMeetingPost(id: string | undefined): MeetingPost | undefined {
-  return getMeetingPostById(id);
-}
-
 export default function MeetingDetailsScreen({
   variant = "feed",
 }: MeetingDetailsScreenProps) {
@@ -39,15 +44,21 @@ export default function MeetingDetailsScreen({
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
   const meetingId = Array.isArray(id) ? id[0] : id;
+  const post = usePostById(meetingId);
+  const meeting = post && isMeetingPost(post) ? post : undefined;
   const [liked, setLiked] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<AttendeeTab>("residents");
+  const [activeComments, setActiveComments] = useState<
+    Awaited<ReturnType<typeof getComments>>
+  >([]);
+  const [activeLikes, setActiveLikes] = useState<
+    Awaited<ReturnType<typeof getLikes>>
+  >([]);
 
   const likesSheetRef = useRef<LikesBottomSheetRef>(null);
   const commentsSheetRef = useRef<CommentsBottomSheetRef>(null);
   const postActionsSheetRef = useRef<PostActionsBottomSheetRef>(null);
-
-  const meeting = getMeetingPost(meetingId);
   const isService = variant === "service";
   const isUpcoming = meeting?.status.toLowerCase() === "upcoming";
 
@@ -413,7 +424,7 @@ export default function MeetingDetailsScreen({
       {(!isService || isUpcoming) && (
         <View className="flex-row gap-3 border-t border-card-border px-4 py-4">
           <Pressable
-            onPress={() => console.log("accept meeting:", meeting.id)}
+            onPress={() => void respondToMeeting(meeting.id, "attending")}
             accessibilityRole="button"
             className="flex-1 items-center justify-center rounded-2xl bg-primary py-4 active:opacity-[0.92]"
           >
@@ -423,7 +434,7 @@ export default function MeetingDetailsScreen({
           </Pressable>
 
           <Pressable
-            onPress={() => console.log("decline meeting:", meeting.id)}
+            onPress={() => void respondToMeeting(meeting.id, "declined")}
             accessibilityRole="button"
             className="flex-1 items-center justify-center rounded-2xl border border-card-border bg-white py-4 active:opacity-[0.92]"
           >
@@ -436,23 +447,30 @@ export default function MeetingDetailsScreen({
 
       {!isService ? (
         <>
-          <LikesBottomSheet ref={likesSheetRef} />
+          <LikesBottomSheet ref={likesSheetRef} likes={activeLikes} />
 
           <CommentsBottomSheet
             ref={commentsSheetRef}
-            onSendComment={(postId, text) =>
-              console.log("send comment:", postId, text)
-            }
+            comments={activeComments}
+            onSendComment={(commentPostId, text) => {
+              void addComment(commentPostId, text).then((comment) => {
+                setActiveComments((current) => [comment, ...current]);
+              });
+            }}
           />
 
           <PostActionsBottomSheet
             ref={postActionsSheetRef}
-            onMoveToDraft={(postId) => console.log("move to draft:", postId)}
-            onEditPost={(postId) => console.log("edit post:", postId)}
-            onMarkAsUrgent={(postId, isUrgent) =>
-              console.log("mark as urgent:", postId, isUrgent)
+            onMoveToDraft={(commentPostId) => void movePostToDraft(commentPostId)}
+            onEditPost={(commentPostId) =>
+              router.push(`/meeting/${commentPostId}`)
             }
-            onDeletePost={(postId) => console.log("delete post:", postId)}
+            onMarkAsUrgent={(commentPostId, isUrgent) =>
+              void markPostAsUrgent(commentPostId, isUrgent)
+            }
+            onDeletePost={(commentPostId) => {
+              void deletePost(commentPostId).then(() => router.back());
+            }}
           />
         </>
       ) : null}

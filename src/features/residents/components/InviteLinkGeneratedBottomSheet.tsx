@@ -1,7 +1,4 @@
-import {
-  DEFAULT_INVITE_LINK,
-  INVITE_LINK_EXPIRES_AT,
-} from "@/features/residents/constants/dummy";
+import { generateInvite } from "@/features/residents/api";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import {
   BottomSheetBackdrop,
@@ -26,11 +23,6 @@ export type InviteLinkGeneratedBottomSheetRef = {
   close: () => void;
 };
 
-function generateInviteLink(): string {
-  const suffix = Math.random().toString(36).slice(2, 10);
-  return `https://communityapp.com/invite/${suffix}`;
-}
-
 const InviteLinkGeneratedBottomSheet = forwardRef<
   InviteLinkGeneratedBottomSheetRef,
   object
@@ -38,14 +30,18 @@ const InviteLinkGeneratedBottomSheet = forwardRef<
   const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
-  const [inviteLink, setInviteLink] = useState(DEFAULT_INVITE_LINK);
+  const [inviteLink, setInviteLink] = useState("");
+  const [expiresAt, setExpiresAt] = useState("");
   const [showCopied, setShowCopied] = useState(false);
 
   useImperativeHandle(ref, () => ({
     open: () => {
-      setInviteLink(generateInviteLink());
-      setShowCopied(false);
-      bottomSheetRef.current?.present();
+      void generateInvite().then(({ link, expiresAt: expiry }) => {
+        setInviteLink(link);
+        setExpiresAt(expiry);
+        setShowCopied(false);
+        bottomSheetRef.current?.present();
+      });
     },
     close: () => bottomSheetRef.current?.dismiss(),
   }));
@@ -67,8 +63,11 @@ const InviteLinkGeneratedBottomSheet = forwardRef<
   };
 
   const handleRegenerateLink = () => {
-    setInviteLink(generateInviteLink());
-    setShowCopied(false);
+    void generateInvite().then(({ link, expiresAt: expiry }) => {
+      setInviteLink(link);
+      setExpiresAt(expiry);
+      setShowCopied(false);
+    });
   };
 
   return (
@@ -151,7 +150,7 @@ const InviteLinkGeneratedBottomSheet = forwardRef<
               </Text>
               <View className="mt-2 self-start rounded-full bg-primary-100 px-3 py-1">
                 <Text className="text-xs font-medium text-primary">
-                  Expire in 7 days · {INVITE_LINK_EXPIRES_AT}
+                  Expire in 7 days · {expiresAt}
                 </Text>
               </View>
             </View>

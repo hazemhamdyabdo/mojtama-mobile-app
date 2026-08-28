@@ -6,10 +6,8 @@ import VisitorQrBottomSheet, {
 } from "@/features/visitors/components/VisitorQrBottomSheet";
 import VisitorsHeader from "@/features/visitors/components/VisitorsHeader";
 import VisitorsTabs from "@/features/visitors/components/VisitorsTabs";
-import {
-  DUMMY_VISITORS,
-  getVisitorById,
-} from "@/features/visitors/constants/dummy";
+import { getVisitorFromState } from "@/features/visitors/store/visitorState";
+import { useVisitorsState } from "@/features/visitors/hooks/useVisitorsState";
 import type { VisitorsTab } from "@/features/visitors/types";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { useRouter, type Href } from "expo-router";
@@ -21,20 +19,21 @@ export default function VisitorsScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const qrSheetRef = useRef<VisitorQrBottomSheetRef>(null);
+  const visitors = useVisitorsState();
   const [activeTab, setActiveTab] = useState<VisitorsTab>("upcoming");
 
   const visibleVisitors = useMemo(
     () =>
-      DUMMY_VISITORS.filter((visitor) =>
+      visitors.filter((visitor) =>
         activeTab === "upcoming"
           ? visitor.status !== "complete"
           : visitor.status === "complete",
       ),
-    [activeTab],
+    [visitors, activeTab],
   );
 
   const handleQrPress = (visitorId: string) => {
-    const visitor = getVisitorById(visitorId);
+    const visitor = getVisitorFromState(visitorId);
 
     if (visitor) {
       qrSheetRef.current?.open(visitor);

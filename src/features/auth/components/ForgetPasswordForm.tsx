@@ -3,6 +3,8 @@ import {
   createForgetPasswordSchema,
   type ForgetPasswordFormValues,
 } from "@/features/auth/schemas/forgetPasswordSchema";
+import { requestPasswordReset } from "@/features/auth/api";
+import { MockApiError } from "@/utils/mockApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { useMemo } from "react";
@@ -22,6 +24,7 @@ function ForgetPasswordFormFields() {
   const {
     control,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<ForgetPasswordFormValues>({
     resolver: zodResolver(forgetPasswordSchema),
@@ -30,14 +33,20 @@ function ForgetPasswordFormFields() {
     },
   });
 
-  const onSubmit = (values: ForgetPasswordFormValues) => {
-    // TODO: connect to auth API
-    console.log("send reset link", values);
-
-    router.push({
-      pathname: "/reset-password",
-      params: { email: values.email },
-    });
+  const onSubmit = async (values: ForgetPasswordFormValues) => {
+    try {
+      await requestPasswordReset({ email: values.email });
+      router.push({
+        pathname: "/reset-password",
+        params: { email: values.email },
+      });
+    } catch (error) {
+      const message =
+        error instanceof MockApiError
+          ? error.message
+          : "Unable to send reset link. Please try again.";
+      setError("email", { message });
+    }
   };
 
   const textAlign = I18nManager.isRTL ? "right" : "left";

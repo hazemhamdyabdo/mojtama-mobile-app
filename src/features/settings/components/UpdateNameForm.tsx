@@ -1,4 +1,5 @@
-import { SETTINGS_PROFILE } from "@/features/settings/constants/dummy";
+import { updateName } from "@/features/settings/api";
+import { useUserState } from "@/features/settings/hooks/useUserState";
 import SettingsLabeledInput from "@/features/settings/components/SettingsLabeledInput";
 import SettingsPrimaryButton from "@/features/settings/components/SettingsPrimaryButton";
 import SettingsUpdateIntro from "@/features/settings/components/SettingsUpdateIntro";
@@ -15,6 +16,7 @@ import { View } from "react-native";
 export default function UpdateNameForm() {
   const router = useRouter();
   const { t } = useTranslation();
+  const user = useUserState();
 
   const {
     control,
@@ -23,13 +25,12 @@ export default function UpdateNameForm() {
   } = useForm<UpdateNameFormValues>({
     resolver: zodResolver(updateNameSchema),
     defaultValues: {
-      name: SETTINGS_PROFILE.name,
+      name: user.name,
     },
   });
 
-  const onSubmit = (values: UpdateNameFormValues) => {
-    // TODO: connect to settings API
-    console.log("update name", values);
+  const onSubmit = async (values: UpdateNameFormValues) => {
+    await updateName(values);
     router.back();
   };
 

@@ -1,3 +1,4 @@
+import { verifyPhoneUpdateOtp } from "@/features/settings/api";
 import SettingsOtpForm from "@/features/settings/components/SettingsOtpForm";
 import { useLocalSearchParams, useRouter, type Href } from "expo-router";
 
@@ -6,7 +7,8 @@ export default function UpdatePhoneVerifyForm() {
   const { phone } = useLocalSearchParams<{ phone: string }>();
   const resolvedPhone = phone ?? "your number";
 
-  const handleSubmit = () => {
+  const handleSubmit = async (otp: string) => {
+    await verifyPhoneUpdateOtp(otp);
     router.push({
       pathname: "/update-phone-new",
       params: { phone: resolvedPhone },

@@ -4,8 +4,10 @@ import {
   type ResetPasswordFormValues,
 } from "@/features/auth/schemas/resetPasswordSchema";
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
+import { resetPassword } from "@/features/auth/api";
+import { MockApiError } from "@/utils/mockApi";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter, type Href } from "expo-router";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -90,6 +92,7 @@ function PasswordField({
 
 function ResetPasswordFormFields() {
   const { t, i18n } = useTranslation();
+  const router = useRouter();
   const { email } = useLocalSearchParams<{ email?: string }>();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -102,6 +105,7 @@ function ResetPasswordFormFields() {
   const {
     control,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
@@ -111,9 +115,20 @@ function ResetPasswordFormFields() {
     },
   });
 
-  const onSubmit = (values: ResetPasswordFormValues) => {
-    // TODO: connect to auth API
-    console.log("reset password", { email, ...values });
+  const onSubmit = async (values: ResetPasswordFormValues) => {
+    try {
+      await resetPassword({
+        email: email ?? "",
+        password: values.password,
+      });
+      router.replace("/login" as Href);
+    } catch (error) {
+      const message =
+        error instanceof MockApiError
+          ? error.message
+          : "Unable to reset password. Please try again.";
+      setError("password", { message });
+    }
   };
 
   return (
